@@ -1,0 +1,438 @@
+@1 Les tableaux gardent les valeurs dans l’ordre.
+@2 `[0]` est le premier élément, `[1]` le deuxième.
+@3 `push` modifie l’original ; la décomposition fait une copie.
+@4 Les tableaux gardent les choses dans l’ordre.
+@5 `[0]` est la première chose, `[1]` la deuxième.
+@6 `push` modifie la liste ; `...` la copie.
+@7 Les tableaux sont ordonnés, indexés à partir de zéro et modifiables par défaut.
+@8 Typer honnêtement les lectures par indice : `T | undefined`.
+@9 Copier au lieu de modifier des tableaux partagés ; `readonly T[]` l’impose.
+@10 Un tableau est une liste, numérotée à partir de zéro.
+@11 Un tableau est une liste. On commence à compter à zéro !
+@12 Un **tableau** (*array*) contient des valeurs dans l’ordre :⏎⏎⟦F1⟧⏎⏎Les positions se comptent à partir de `0`. `fruits[0]` vaut `"apple"`, et `fruits.length` vaut `3`.⏎⏎`fruits.push("plum")` ajoute à la fin, et **modifie le tableau d’origine**. C’est une mutation. `[...fruits, "plum"]` crée plutôt un nouveau tableau et laisse le premier tranquille.
+@13 Un tableau est une liste entre crochets : `["apple", "pear"]`.⏎⏎On commence à compter à zéro, et il faut un peu de temps pour s’y habituer. Le premier élément est `[0]`, le deuxième est `[1]`.⏎⏎`.length` te dit combien il y a d’éléments.
+@14 Les tableaux sont indexés à partir de zéro et grandissent selon les besoins. Lire après la fin renvoie `undefined` au lieu de lever une erreur, et pourtant, par défaut, TypeScript type `fruits[5]` comme `string`, pas `string | undefined`. Active `noUncheckedIndexedAccess` pour rendre cela honnête.⏎⏎`push`, `pop`, `splice`, `sort` et `reverse` modifient sur place. La décomposition (`[...a, x]`) et les plus récents `toSorted`, `toReversed` et `with` renvoient des copies, ce qui compte dès que le tableau est partagé (l’état d’une interface, par exemple).⏎⏎`string[]` et `Array<string>` sont le même type ; `readonly string[]` retire du type les méthodes qui modifient.
+@15 Qu’est-ce qui s’affiche ?
+@16 Qu’est-ce que ça va montrer ?
+@17 L’indice `0` est le premier élément. `.length` est le nombre d’éléments.
+@18 Le premier fruit est à la place 0, le deuxième à la place 1, le troisième à la place 2.
+@19 L’indice 0 est le premier élément, donc `[2]` est le troisième. Il n’y a pas d’indice 3 : c’est pour ça qu’on compte avec `.length`.
+@20 La place 0, c’est le premier fruit, donc la place 2, c’est le troisième. Il n’y a pas de place 3 : c’est pour ça qu’on compte avec `.length`.
+@21 Les indices vont de `0` à `length - 1`, donc `fruits[2]` est le dernier élément. `fruits[3]` vaudrait `undefined` à l’exécution, et seul `noUncheckedIndexedAccess` fait que le type le dit.
+@22 `.at()` compte depuis la fin quand le nombre est négatif. Qu’est-ce qui s’affiche ?
+@23 `.at()` sait compter à l’envers depuis la fin ! Qu’est-ce que ça va montrer ?
+@24 `.at(0)` est le premier élément, comme `[0]`. `.at(-1)` est le dernier, `.at(-2)` celui d’avant.
+@25 `.at(0)` est le premier. Un nombre négatif part de l’autre bout : `-1`, c’est le tout dernier.
+@26 `.at(-1)` est le dernier élément, quelle que soit la longueur. C’est du JavaScript récent (2022), donc les anciens téléphones ne l’ont pas ; là-bas, `queue[queue.length - 1]` fait le même travail.
+@27 `-1` veut dire « le dernier », quelle que soit la longueur de la liste. C’est assez récent, alors les anciens téléphones utilisent `queue[queue.length - 1]` à la place.
+@28 `Array.prototype.at` (ES2022) accepte des indices négatifs relatifs à la fin, et son type de retour est `T | undefined` même sans `noUncheckedIndexedAccess`. Sur les moteurs antérieurs à ES2022, `queue[queue.length - 1]` est l’équivalent.
+@29 `queue.length - 1` est la position du dernier élément. Qu’est-ce qui s’affiche ?
+@30 `queue.length - 1` est la place du tout dernier. Qu’est-ce que ça va montrer ?
+@31 Il y a 3 éléments, donc `queue.length - 1` vaut `2` : le troisième élément.
+@32 La liste a 3 noms, et 3 - 1 font 2. Quel nom est à la place 2 ?
+@33 `queue.length - 1` désigne toujours le dernier élément. Les téléphones récents ont aussi un raccourci, `queue.at(-1)`, qui fait la même chose.
+@34 `length - 1` trouve toujours le dernier. Les téléphones récents ont un raccourci pour ça : `queue.at(-1)`.
+@35 L’indexation avec `length - 1` marche sur tous les moteurs. ES2022 a ajouté `queue.at(-1)` pour la même lecture ; cet appareil utilise le moteur Classique, donc la leçon montre la forme portable.
+@36 Lis le premier élément.
+@37 Prends le premier fruit.
+@38 Les tableaux sont numérotés à partir de zéro, pas de un.
+@39 Dans une liste, on commence à compter à 0, pas à 1.
+@40 Les tableaux commencent à 0, donc le premier élément est à l’indice `0`.
+@41 Les listes commencent à compter à 0, donc le premier fruit est à la place `0`.
+@42 L’indice `0` est le premier élément. Pour lire le dernier, `fruits[fruits.length - 1]` marche sur tous les moteurs ; les moteurs ES2022 ont aussi `fruits.at(-1)`.
+@43 Écris `secondItem` pour qu’elle renvoie le deuxième élément d’une liste.
+@44 Fais en sorte que `secondItem` renvoie la deuxième chose d’une liste.
+@45 Le deuxième élément se trouve à l’indice 1.
+@46 La deuxième chose est à la place 1.
+@47 Renvoyer un indice absent donne `undefined` : c’est pour ça que le type de retour dit `string | undefined`.
+@48 Si une liste est trop courte, demander une place qui n’existe pas donne `undefined` (rien). C’est pour ça que l’étiquette dit `string | undefined`.
+@49 `list[1]` vaut `undefined` quand la liste a moins de deux éléments. Le type de retour explicite `string | undefined` le dit honnêtement, et oblige les appelants à s’en occuper.
+@50 trois éléments
+@51 un seul élément donne undefined
+@52 La version courte.
+@53 Ce que tu as appris.
+@54 Les tableaux sont des listes ordonnées entre crochets.
+@55 Les indices commencent à 0 ; `.length` compte les éléments.
+@56 `push` modifie ; la décomposition copie.
+@57 Un tableau est une liste entre crochets.
+@58 On compte à partir de 0 ; `.length` dit combien il y en a.
+@59 `push` modifie la liste ; `...` fait une copie.
+@60 Indices à partir de zéro ; lire hors limites donne `undefined`, pas une erreur.
+@61 `noUncheckedIndexedAccess` type les lectures par indice comme `T | undefined`.
+@62 Savoir quelles méthodes modifient (`push`, `sort`) et lesquelles copient (décomposition, `toSorted`).
+@63 Pour aller plus loin : quel type TypeScript donne-t-il à `mixed` ?
+@64 Un défi : quel est le type de `mixed` ?
+@65 Le tableau contient des nombres et des chaînes, donc chaque élément est l’un ou l’autre.
+@66 La liste a des nombres et des mots. Chaque élément est un nombre ou un mot.
+@67 TypeScript infère un tableau d’union : chaque élément est une `string` ou un `number`, dans n’importe quel ordre.
+@68 Chaque élément peut être un nombre ou un mot, donc le type de la liste est `(string | number)[]`.
+@69 L’inférence des littéraux de tableau prend le meilleur type commun des éléments (ici une union) et élargit les littéraux. `as const` inférerait à la place le tuple `readonly [1, "two", 3]`.
+@70 Les boucles répètent du code : `for`, `for...of`, `while`.
+@71 Chaque tour doit avancer vers la fin, sinon la boucle ne s’arrête jamais.
+@72 `map`, `filter` et `find` sont des boucles avec un travail intégré.
+@73 Les boucles refont des choses encore et encore.
+@74 Une boucle a besoin d’un moyen de s’arrêter.
+@75 `map`, `filter` et `find` sont des boucles déguisées.
+@76 Choisir la boucle selon ce qu’on parcourt : des indices, des valeurs ou une condition.
+@77 Chaque boucle a besoin de quelque chose qui la fait avancer vers sa sortie.
+@78 `map`, `filter` et `reduce` expriment les boucles courantes de façon déclarative.
+@79 Une boucle exécute le même code encore et encore.
+@80 Une boucle dit au robot : recommence !
+@81 Écrire `console.log` dix fois, c’est fatigant. Une **boucle** répète du code pour toi.⏎⏎⟦F1⟧⏎⏎Une boucle `for` a trois parties : où commencer (`let i = 1`), quand continuer (`i <= 3`) et quoi faire après chaque tour (`i++`, « ajoute un »).⏎⏎Pour visiter chaque élément d’un tableau, `for...of` est plus simple : `for (const fruit of fruits) { … }`.⏎⏎`while (condition) { … }` répète tant que la condition est vraie. Si elle ne devient jamais fausse, la boucle ne finit jamais : cette app l’arrête au bout de deux secondes.
+@82 Écrire la même ligne dix fois, c’est ennuyeux. Une **boucle** le fait pour toi.⏎⏎⟦F1⟧⏎⏎Cette boucle compte : commence à 1, continue tant que `i` vaut 3 ou moins, et ajoute un à chaque fois (`i++`).⏎⏎Pour visiter chaque chose d’une liste, utilise `for...of` : `for (const fruit of fruits) { … }`, c’est-à-dire « pour chaque fruit de la liste ».⏎⏎Attention : une boucle qui ne s’arrête jamais continue pour toujours. Si ça arrive, cette app l’arrête au bout de deux secondes.
+@83 Trois formes couvrent presque toutes les boucles : le `for (init; test; update)` qui compte, `for...of` sur n’importe quel *itérable* (tableaux, chaînes, `Map`, `Set`), et `while` quand le nombre de tours est inconnu. `break` quitte la boucle ; `continue` passe au tour suivant.⏎⏎`for...in` parcourt les *clés de propriétés énumérables* sous forme de chaînes, y compris celles héritées. Garde-le pour les objets simples, où `Object.entries` est de toute façon souvent plus clair.⏎⏎`let` dans l’en-tête d’un `for` crée une nouvelle liaison à chaque itération, donc une fermeture créée dans la boucle voit la valeur de ce tour-là (avec `var`, elles en partagent toutes une seule). Cette app arrête une boucle emballée au bout de deux secondes ; les vrais environnements d’exécution, non.
+@84 Les boucles et les outils de listes
+@85 Plus tard, tu rencontreras `map`, `filter` et `find`. Ce sont des boucles avec un travail déjà intégré, souvent plus courtes, mais chacune d’elles est une boucle en dessous.
+@86 Plus tard, tu rencontreras `map`, `filter` et `find`. Ce sont des boucles avec un travail intégré. En dessous, ce sont toutes des boucles !
+@87 Qu’affiche cette boucle ?
+@88 Qu’est-ce que la boucle va montrer ?
+@89 Commence avec `i = 1`. Chaque tour affiche `i`, puis ajoute un, jusqu’à ce que `i <= 3` soit faux.
+@90 Commence à 1. Affiche-le, ajoute un, et recommence : arrête-toi quand tu dépasses 3.
+@91 La boucle tourne pour 1, 2 et 3. Quand `i` devient 4, `i <= 3` est faux, la boucle se termine, et la ligne d’après s’exécute une fois.
+@92 La boucle montre 1, 2 et 3. À 4, elle s’arrête, puis "done" est affiché une fois.
+@93 Le test `i <= 3` s’exécute avant chaque tour, y compris celui qui échoue quand `i` vaut `4`. L’exécution continue ensuite après la boucle, c’est pourquoi `done` s’affiche exactement une fois.
+@94 Visite chaque fruit de la liste.
+@95 Tu veux chaque *valeur* du tableau, pas ses positions. Quel mot-clé te donne les valeurs ?
+@96 Tu veux chaque fruit lui-même, pas son numéro de place. Quel petit mot fait ça ?
+@97 `for...of` visite chaque valeur du tableau. (`for...in` existe aussi, mais il parcourt les clés, c’est-à-dire pour un tableau `"0"`, `"1"`, `"2"`, ce qui est rarement ce que tu veux.)
+@98 `for...of` te donne chaque fruit, un par un. (`in` donne plutôt les numéros de place, et ce n’est pas ce qu’on veut ici.)
+@99 `for...of` utilise le protocole d’itération et produit les valeurs. `for...in` produirait les clés `"0"`, `"1"` et `"2"`, sous forme de chaînes.
+@100 Un compte à rebours avec `while`. Change le nombre de départ, ou fais-le compter vers le haut, puis exécute.
+@101 Un compte à rebours ! Change le nombre de départ, puis appuie sur Exécuter.
+@102 Écris `sumTo` pour qu’elle additionne tous les nombres entiers de 1 à `n`. `sumTo(3)` vaut 1 + 2 + 3 = 6.
+@103 Fais en sorte que `sumTo` additionne tous les nombres de 1 à `n`. `sumTo(3)` vaut 1 + 2 + 3 = 6.
+@104 Commence `total` à 0. Fais aller `i` de 1 à `n` (utilise `<=`), en ajoutant `i` à `total` à chaque tour.
+@105 Commence avec `total` à 0. Compte de 1 à `n` avec une boucle, et ajoute chaque nombre à `total`.
+@106 `for (let i = 1; i <= n; i++) { total += i; }`, puis `return total;`.
+@107 Écris `for (let i = 1; i <= n; i++) { total += i; }` puis `return total;`.
+@108 `total` recueille la réponse pendant que `i` va de 1 à `n`. Avec `n = 0`, la condition est fausse tout de suite, donc le corps de la boucle ne s’exécute jamais et c’est 0 qui revient.
+@109 `total` est la boîte qui recueille la somme. Quand `n` vaut 0, la boucle ne tourne pas du tout, donc la réponse reste 0.
+@110 Une boucle d’accumulation : `total` contient la somme en cours. La formule fermée `n * (n + 1) / 2` est en O(1), mais cette boucle est le motif que tu réutilises pour tout ce que fait `reduce`.
+@111 sumTo(3)
+@112 sumTo(1)
+@113 sumTo(10)
+@114 rien à additionner
+@115 `for (let i = 1; i <= n; i++)` compte ; `for (const item of list)` visite chaque élément.
+@116 `while` répète tant qu’une condition est vraie.
+@117 Une boucle doit pouvoir s’arrêter : quelque chose doit changer à chaque tour.
+@118 Une boucle `for` compte ; `for...of` visite chaque chose d’une liste.
+@119 `while` continue tant que quelque chose est vrai.
+@120 Chaque boucle a besoin d’un moyen de s’arrêter.
+@121 `for` pour compter, `for...of` pour les itérables, `while` pour un nombre de tours inconnu.
+@122 `for...in` parcourt des clés de type chaîne ; évite-le sur les tableaux.
+@123 `let` dans l’en-tête d’un `for` donne à chaque tour sa propre liaison.
+@124 Pour aller plus loin : écris `fizzBuzz(n)` : les nombres de 1 à `n` sous forme de chaînes, mais `"Fizz"` pour les multiples de 3, `"Buzz"` pour ceux de 5, `"FizzBuzz"` pour les deux.
+@125 Un défi : compte de 1 à `n`, mais dis Fizz pour les multiples de trois, Buzz pour ceux de cinq et FizzBuzz pour les deux !
+@126 Boucle de 1 à `n`. Vérifie d’abord 15 (les deux), puis 3, puis 5, sinon `String(i)`.
+@127 Compte avec une boucle. Vérifie d’abord « les deux » (15), puis 3, puis 5. Sinon, ajoute le nombre sous forme de texte.
+@128 L’ordre compte : teste « les deux » avant les cas simples, sinon 15 s’arrêterait à "Fizz".
+@129 Si tu vérifies 3 en premier, 15 dirait seulement "Fizz". Alors « les deux » passe en premier.
+@130 Vérifie d’abord la condition la plus spécifique ; `i % 15` équivaut à `i % 3 === 0 && i % 5 === 0` parce que 3 et 5 sont premiers entre eux.
+@131 jusqu’à 5
+@132 le quinzième
+@133 aucun
+@134 Les objets sont des paquets étiquetés.
+@135 `user.name` lit ; `user.age = 37` écrit.
+@136 L’imbrication est normale : `user.address.city`.
+@137 Les objets sont des sacs de choses étiquetées.
+@138 `user.name` lit ; `user.age = 37` modifie.
+@139 Des sacs dans des sacs, c’est normal : `user.address.city`.
+@140 TypeScript type les objets d’après leur forme.
+@141 Un changement fait par une référence est visible par toutes les autres.
+@142 Utiliser `?.` pour un accès imbriqué qui peut manquer.
+@143 Un objet regroupe des valeurs nommées.
+@144 Un objet est un sac de choses étiquetées.
+@145 Là où un tableau est une liste, un **objet** est un paquet de valeurs nommées :⏎⏎⟦F1⟧⏎⏎On lit une valeur avec un point : `user.name`. On la modifie avec `user.age = 37`.⏎⏎Les objets peuvent contenir d’autres objets, et c’est à ça que ressemblent en général les vraies données : `user.address.city`.
+@146 Un objet est un sac de choses étiquetées. Une personne a un nom, un âge et une couleur préférée : trois étiquettes dans un seul sac.⏎⏎Tu plonges la main dans le sac avec un point : `person.name`.
+@147 Le type d’un littéral d’objet est inféré d’après sa forme : `{ name: string; age: number; ready: boolean }`. TypeScript vérifie les formes, pas les noms, donc toute valeur qui a les bonnes propriétés convient (typage structurel).⏎⏎Les objets sont des valeurs par référence. Les affecter ou les passer les partage, donc un changement fait par une référence est visible par toutes les autres ; `const` ne l’empêche pas.⏎⏎La vérification des propriétés en trop ne s’applique qu’aux littéraux d’objet frais : `const u: User = { name: "Ada", extra: 1 }` est une erreur, mais le même objet passé via une variable ne l’est pas.
+@148 La première ligne lit une propriété. La troisième remplace `age` avant que la dernière ligne le lise.
+@149 D’abord, le nom est affiché. Puis l’âge augmente de un avant d’être affiché.
+@150 La première ligne lit `name`. Puis `age` est remplacé par un de plus qu’avant, donc le deuxième affichage donne 37.
+@151 D’abord, on lit `name`. Puis `age` reçoit un de plus qu’avant, donc la deuxième ligne montre 37.
+@152 Une écriture de propriété modifie l’objet sur place ; la liaison `const` désigne toujours le même objet. C’est permis : `const` contraint la liaison, pas la valeur.
+@153 Atteins la valeur imbriquée.
+@154 Plonge dans le sac qui est dans le sac.
+@155 `city` n’est pas directement une propriété de `user`. Quelle propriété de `user` la contient ?
+@156 La ville est dans un autre sac. Comment s’appelle ce sac ?
+@157 `city` se trouve dans `address`, donc tu passes d’abord par `address` : `user.address.city`.
+@158 `city` est dans `address`, donc tu passes d’abord par `address` : `user.address.city`.
+@159 Les accès aux membres s’enchaînent de gauche à droite : `user.address` donne l’objet intérieur, puis `.city` le lit. Si `address` pouvait manquer, `user.address?.city` donnerait `undefined` au lieu de lever une erreur.
+@160 Écris `fullName` pour qu’elle joigne le prénom et le nom d’une personne avec une espace.
+@161 Fais en sorte que `fullName` mette ensemble le prénom et le nom, avec une espace entre les deux.
+@162 Un littéral de gabarit avec `person.first`, une espace, et `person.last`.
+@163 Utilise des accents graves avec `person.first`, une espace, et `person.last`.
+@164 Ada Lovelace
+@165 un seul nom court
+@166 Les objets regroupent des valeurs nommées.
+@167 L’accès par point lit et écrit les propriétés.
+@168 On atteint les objets imbriqués un point à la fois.
+@169 Un point lit ou modifie une chose dans le sac.
+@170 Les sacs peuvent contenir des sacs : avance un point à la fois.
+@171 Les types objet sont structurels : la forme, pas le nom.
+@172 Les objets sont partagés par référence ; `const` ne les gèle pas.
+@173 La vérification des propriétés en trop ne s’applique qu’aux littéraux frais.
+@174 Pour aller plus loin : quel type TypeScript infère-t-il pour `point` ?
+@175 Un défi : quel est le type de `point` ?
+@176 Écris-le comme un type objet avec les deux noms de propriétés et leurs types.
+@177 Écris `{ ... }` avec les deux étiquettes et le genre de valeur que contient chacune.
+@178 Les propriétés peuvent être modifiées plus tard, donc elles s’élargissent en `number` même si l’objet est une `const`.
+@179 Les nombres à l’intérieur pourraient encore changer, donc leur type est juste `number`.
+@180 `const` ne fixe que la liaison ; les propriétés d’un objet sont modifiables et s’élargissent. `as const` donnerait `{ readonly x: 3; readonly y: 4 }`.
+@181 `const { a, b } = obj` et `const [x, y] = list`.
+@182 `{ ...obj, key: value }` copie, puis remplace.
+@183 Les mises à jour immuables évitent des catégories entières de bugs.
+@184 `const { a, b } = obj` et `const [x, y] = list` déballent.
+@185 `{ ...obj, key: value }` copie, puis change une chose.
+@186 Copier protège les autres parties du programme.
+@187 Mettre à jour de façon immuable : `{ ...obj, key: value }`.
+@188 Les copies sont superficielles ; `structuredClone` pour une copie profonde.
+@189 Les mises à jour immuables transforment « est-ce que ça a changé ? » en comparaison de références.
+@190 Prends ce dont tu as besoin, copie ce que tu modifies.
+@191 Sors ce dont tu as besoin. Copie avant de modifier.
+@192 La **déstructuration** déballe des valeurs dans des noms :⏎⏎⟦F1⟧⏎⏎La **décomposition** (*spread*) copie le contenu d’un objet ou d’un tableau dans un autre :⏎⏎⟦F2⟧⏎⏎Cette deuxième ligne, c’est l’habitude importante : fais une copie modifiée au lieu de retoucher l’original. Du code qui ne surprend pas le lecteur vaut plus que du code qui économise un caractère.
+@193 Déstructurer, c’est vider un sac directement dans tes mains : `const { name } = user;`.⏎⏎Décomposer, c’est copier tout le contenu d’un sac dans un nouveau, puis ajouter quelque chose : `{ ...user, age: 37 }`.⏎⏎L’ancien sac n’est pas touché. C’est pour ça que c’est sûr.
+@194 La déstructuration lie des propriétés ou des éléments à des noms, avec des valeurs par défaut (`const { age = 0 } = user`) et du renommage (`const { name: label } = user`). Le reste (*rest*) rassemble ce qui reste : `const { id, ...others } = user`.⏎⏎Les copies par décomposition sont **superficielles** : `{ ...user }` est un nouvel objet au premier niveau, mais les objets imbriqués restent partagés. Utilise `structuredClone` quand il te faut vraiment une copie profonde.⏎⏎Les propriétés qui viennent après gagnent : `{ ...user, age: 37 }` remplace `age`, alors que dans `{ age: 37, ...user }`, c’est la décomposition qui l’écraserait.
+@195 Changer une propriété, de deux façons.
+@196 Deux façons de changer une chose.
+@197 En modifiant
+@198 Ça marche, mais toutes les autres références à `user` changent aussi.
+@199 Ça marche, mais chaque partie du programme qui utilise `user` voit le changement.
+@200 En copiant
+@201 Un nouvel objet, avec une propriété différente. Rien d’autre ne bouge.
+@202 Une nouvelle copie avec une chose différente. L’original reste pareil.
+@203 Est-ce que l’original change ?
+@204 Est-ce que le premier change ?
+@205 `{ ...user, age: 37 }` construit un *nouvel* objet. Depuis quel objet chaque ligne affiche-t-elle ?
+@206 `...` fait une copie. Le changement va dans la copie, pas dans l’original.
+@207 La décomposition a fait une copie, puis `age: 37` a remplacé l’âge dans la copie seulement. `user` n’a jamais changé.
+@208 `...user` a fait une copie, et `age: 37` n’a changé que la copie. Le `user` d’origine a toujours 36.
+@209 La décomposition crée un nouvel objet, puis `age: 37` remplace cette propriété sur la copie. L’original est intact parce qu’aucune de ses propriétés n’a été écrite ; les objets imbriqués, eux, seraient encore partagés.
+@210 Écris `withDiscount` pour qu’elle renvoie un nouvel article dont le prix est réduit d’un pourcentage. Laisse l’original tranquille.
+@211 Fais en sorte que `withDiscount` renvoie un nouvel article moins cher. Laisse le premier tranquille.
+@212 Décompose `item` dans un nouvel objet, puis remplace `price`.
+@213 Copie `item` avec `...` dans un nouvel objet, puis donne-lui un nouveau `price`.
+@214 `return { ...item, price: item.price * (1 - percent / 100) };`
+@215 Écris `return { ...item, price: item.price * (1 - percent / 100) };`
+@216 25 % de réduction sur 200
+@217 l’original est intact
+@218 La déstructuration sort des valeurs par nom ou par position.
+@219 La décomposition copie le contenu dans un nouveau tableau ou objet.
+@220 Préfère copier quand tu changes une propriété de données partagées.
+@221 Déballer sort des valeurs par nom ou par place.
+@222 `...` copie des choses dans une nouvelle liste ou un nouveau sac.
+@223 Fais une copie quand tu changes quelque chose que d’autres utilisent aussi.
+@224 La déstructuration permet valeurs par défaut, renommage et reste.
+@225 La décomposition fait une copie superficielle ; les valeurs imbriquées restent partagées.
+@226 L’ordre des propriétés décide quelle valeur gagne.
+@227 Pour aller plus loin : écris `swap` pour une paire, avec la déstructuration.
+@228 Un défi : fais en sorte que `swap` transforme `[1, 2]` en `[2, 1]`.
+@229 `const [first, second] = pair;` puis renvoie-les dans l’autre sens.
+@230 Déballe la paire dans deux noms, puis rends-les dans l’autre ordre.
+@231 `[number, string]` est un *tuple* : un tableau de longueur fixe, avec un type pour chaque position. La déstructuration nomme les positions.
+@232 Un tuple est une courte liste où chaque place a son propre type. Déballer donne un nom à chaque place.
+@233 Les types tuple portent un type par position et une longueur fixe ; la déstructuration les conserve, donc `first` est un `number` et `second` une `string`.
+@234 échange
+@235 échange encore
+@236 `map` → nouveau tableau, même longueur.
+@237 `filter` → nouveau tableau, plus court.
+@238 `find` → un élément ou `undefined`.
+@239 `map` → une nouvelle liste, même longueur.
+@240 `filter` → une nouvelle liste, peut-être plus courte.
+@241 `find` → une chose, ou `undefined`.
+@242 Préférer les méthodes de tableau déclaratives aux boucles écrites à la main.
+@243 Traiter explicitement le `undefined` de `find`.
+@244 Utiliser un prédicat de type quand `filter` doit affiner.
+@245 Transformer, garder ou choisir.
+@246 Changer chaque élément, en garder certains, ou en trouver un.
+@247 Trois méthodes couvrent l’essentiel du travail sur les listes :⏎⏎- **`.map`** transforme chaque élément : le résultat a la même longueur.⏎- **`.filter`** garde les éléments qui passent un test : le résultat peut être plus court.⏎- **`.find`** renvoie la première correspondance, ou `undefined`.⏎⏎Chacune prend un **callback** : une fonction que tu lui confies, et que le tableau appelle une fois par élément.⏎⏎⟦F1⟧
+@248 Trois outils font presque tout le travail sur les listes :⏎⏎- `.map` change chaque élément.⏎- `.filter` ne garde que certains éléments.⏎- `.find` attrape le premier qui lui plaît.⏎⏎Tu donnes à chaque outil une petite règle, et il la suit pour chaque élément.
+@249 `map`, `filter` et `find` sont des méthodes d’ordre supérieur qui ne modifient jamais le tableau source, et elles sont entièrement typées : `map` infère le nouveau type d’élément à partir du callback, et `find` renvoie `T | undefined`.⏎⏎Un simple callback booléen laisse inchangé le type des éléments de `filter`. Pour l’affiner, utilise un prédicat de type : `items.filter((x): x is string => typeof x === "string")` donne `string[]`. (TypeScript 5.5 et les versions suivantes infèrent les prédicats simples comme celui-ci.)⏎⏎Chaque appel d’une chaîne alloue un tableau intermédiaire. Ça compte rarement, et la clarté l’emporte en général sur une boucle fusionnée à la main.
+@250 Laquelle te renvoie un seul élément ?
+@251 Laquelle renvoie une seule chose ?
+@252 Deux d’entre elles renvoient toujours un nouveau tableau. Une s’arrête à la première correspondance.
+@253 Deux d’entre elles renvoient une liste. Une s’arrête quand elle trouve ce qu’elle cherche.
+@254 `find` renvoie un élément, ou `undefined` quand rien ne correspond.
+@255 `find` renvoie un élément, ou `undefined` si rien ne correspond.
+@256 `find` renvoie le premier élément pour lequel le callback est « truthy », ou `undefined` ; `findIndex` renvoie son indice, ou `-1`. `map` et `filter` renvoient toujours des tableaux.
+@257 `.map`
+@258 `map` renvoie toujours un tableau.
+@259 `map` renvoie toujours une liste entière.
+@260 `.filter`
+@261 `filter` renvoie aussi un tableau, éventuellement plus court.
+@262 `filter` renvoie aussi une liste, peut-être plus courte.
+@263 `.find`
+@264 `map` renvoie un nouveau tableau avec chaque élément changé. `filter` ne renvoie que les éléments qui passent le test.
+@265 `map` change chaque nombre. `filter` ne garde que les pairs.
+@266 `map` multiplie chaque élément et en garde quatre. `filter` ne garde que les nombres pairs. Afficher un tableau le montre entre crochets.
+@267 `map` multiplie chaque nombre par 10, donc il y en a toujours quatre. `filter` ne garde que les nombres pairs. Les listes s’affichent entre crochets.
+@268 `map` garde la longueur ; `filter` ne garde que les éléments dont le callback a renvoyé une valeur « truthy ». Cette app affiche les tableaux de façon compacte, comme `[10,20,30,40]` ; les consoles de Node et des navigateurs ajoutent des espaces.
+@269 Écris `namesOf` (tous les noms) et `adults` (les personnes de 18 ans ou plus).
+@270 Fais `namesOf` (tous les noms) et `adults` (les personnes qui ont 18 ans ou plus).
+@271 Une méthode par fonction : `map` pour les noms, `filter` pour l’âge.
+@272 Utilise `map` pour obtenir les noms, et `filter` pour garder les grands.
+@273 les noms
+@274 seulement les adultes
+@275 l’adulte est gardé
+@276 `map` transforme, `filter` garde, `find` en choisit un.
+@277 Les trois prennent un callback qui s’exécute une fois par élément.
+@278 `find` peut renvoyer `undefined`, alors vérifie.
+@279 `map` change, `filter` garde, `find` en choisit un.
+@280 Chacune exécute ta petite fonction une fois pour chaque élément.
+@281 `find` peut renvoyer `undefined`, alors vérifie.
+@282 `map` : même longueur, nouveau type d’élément ; `filter` : un sous-ensemble ; `find` : `T | undefined`.
+@283 Aucune ne modifie la source.
+@284 Les prédicats de type permettent à `filter` d’affiner le type des éléments.
+@285 Pour aller plus loin : écris `adultNames` : les noms des personnes de 18 ans ou plus, par ordre alphabétique.
+@286 Un défi : fais en sorte que `adultNames` renvoie les noms des grands, dans l’ordre alphabétique.
+@287 `filter` pour les adultes, `map` vers les noms, puis `sort((a, b) => a.localeCompare(b))`.
+@288 D’abord, garde les grands, puis prends leurs noms, puis trie-les avec `localeCompare`.
+@289 Chaque étape passe un nouveau tableau à la suivante. `map` a déjà créé un tableau neuf, donc le trier ne change rien de ce qui appartient à l’appelant.
+@290 Chaque outil fabrique une nouvelle liste pour le suivant. Trier la nouvelle liste ne pose aucun risque.
+@291 L’enchaînement garde chaque transformation pure ; `localeCompare` fournit un comparateur sensible à la langue (passe une locale pour avoir des résultats identiques sur tous les appareils).
+@292 seulement les adultes, triés
+@293 personne
+@294 Trier correctement des nombres avec un comparateur.
+@295 Poser des questions oui/non sur toute une liste avec `some` et `every`.
+@296 Additionner une liste avec `reduce`.
+@297 Mettre une liste dans le bon ordre.
+@298 Demander « est-ce que l’un d’eux… ? » et « est-ce qu’ils sont tous… ? »
+@299 Additionner toute une liste en un seul nombre.
+@300 Donner un comparateur à `sort`, et trier une copie quand l’original compte.
+@301 Utiliser `some` et `every` pour les questions oui/non.
+@302 Utiliser `reduce` avec une valeur de départ pour totaliser une liste.
+@303 Donner une règle à `sort`, et copier d’abord.
+@304 `some` et `every` répondent oui ou non.
+@305 `reduce` additionne une liste.
+@306 Savoir quelles méthodes de tableau modifient.
+@307 Les prédicats court-circuitent ; `every([])` est vrai par vacuité.
+@308 Les accumulations ont besoin d’une valeur de départ explicite.
+@309 Quatre outils de plus pour les listes.
+@310 Quatre nouveaux outils pour tes listes.
+@311 ⟦F1⟧⏎⏎`sort` a besoin d’un **comparateur** : une fonction qui dit lequel de deux éléments vient en premier (un nombre négatif veut dire `a` d’abord). Sans comparateur, il compare les éléments comme du **texte**, donc `100` passe avant `9`.⏎⏎Attention : `sort` **modifie le tableau** sur lequel on l’appelle. Trie une copie quand l’original doit rester tel quel : `[...scores].sort(...)`.
+@312 `sort` met une liste en ordre. Donne-lui une petite règle : `(a, b) => a - b` veut dire « le plus petit d’abord ».⏎⏎`some` demande « est-ce qu’au moins un d’eux… ? » et `every` demande « est-ce qu’ils sont tous… ? ». Les deux répondent `true` ou `false`.⏎⏎`reduce` parcourt la liste et garde un total en cours, comme quand on compte des pièces dans un bocal.⏎⏎Attention : `sort` modifie ta liste ! Copie-la d’abord avec `[...list]` si tu veux garder l’ancien ordre.
+@313 `Array.prototype.sort` trie **sur place** et renvoie le même tableau ; sans comparateur, il convertit les éléments en chaînes et compare des unités de code UTF-16, c’est pourquoi `[10, 9, 1].sort()` donne `[1, 10, 9]`. Le comparateur renvoie un nombre négatif, zéro ou un nombre positif ; `a - b` donne l’ordre croissant pour les nombres, et `a.localeCompare(b)` pour le texte. Depuis ES2019, `sort` est stable.⏎⏎`some` et `every` court-circuitent, et `every` sur un tableau vide vaut `true` (vérité par vacuité). `reduce(fn, initial)` est une accumulation depuis la gauche ; passe toujours la valeur initiale, sinon un tableau vide lève une erreur et le type de l’accumulateur est inféré à partir du type des éléments.⏎⏎ES2023 ajoute `toSorted`, `toReversed` et `with`, qui ne modifient pas. Sur les moteurs qui ne les ont pas, copie d’abord : `[...xs].sort(cmp)`.
+@314 Trier sans règle. Qu’est-ce qui s’affiche ?
+@315 Trier sans règle… qu’est-ce que ça va montrer ?
+@316 Sans comparateur, `sort` compare les nombres comme du texte : "1", "10", "9", comme des mots dans un dictionnaire.
+@317 Sans règle, `sort` traite les nombres comme des mots. Dans un dictionnaire, "10" vient avant "9" parce que "1" vient avant "9".
+@318 L’ordre par défaut est l’ordre du texte. Donne un comparateur à `sort` pour les nombres : `(a, b) => a - b`.
+@319 Sans règle, les nombres sont triés comme des mots. Avec `(a, b) => a - b`, ils sont triés comme des nombres.
+@320 La comparaison par défaut se fait sur les unités de code des chaînes. Un comparateur numérique corrige ça ; pour l’ordre décroissant, utilise `b - a`.
+@321 Est-ce que tout le monde a réussi (50 ou plus) ?
+@322 Est-ce que tout le monde a eu au moins 50 ?
+@323 Tu veux `true` seulement quand le test est vrai pour *tous* les scores.
+@324 Quel outil demande « est-ce qu’ils sont TOUS… ? »
+@325 `every` répond à « tous ? » ; `some` répondrait à « au moins un ? ». `filter` et `map` renvoient des tableaux, pas un oui ou un non.
+@326 `every` veut dire « tous ». `some` veut dire « au moins un ». Les autres renvoient des listes, pas un oui ou un non.
+@327 `every` est le quantificateur universel, `some` le quantificateur existentiel ; les deux renvoient un `boolean` et s’arrêtent tôt.
+@328 Écris `total` avec `reduce` : elle additionne tous les prix.
+@329 Fais en sorte que `total` additionne tous les prix, avec `reduce`.
+@330 `prices.reduce((sum, price) => sum + price, 0)` : le `0` est le point de départ du total en cours.
+@331 Utilise `prices.reduce((sum, price) => sum + price, 0)`. Le `0`, c’est le bocal vide avec lequel tu commences.
+@332 Le deuxième argument, `0`, est la valeur de départ. Il fait aussi qu’une liste vide donne `0` au lieu d’une erreur.
+@333 Commencer à 0 veut dire qu’un panier vide coûte 0, au lieu de tout casser.
+@334 Avec une valeur initiale, `reduce` est défini même sur les tableaux vides, et l’accumulateur est typé d’après elle (`number`). Sans elle, `[].reduce(f)` lève une `TypeError`.
+@335 trois prix
+@336 un seul prix
+@337 panier vide
+@338 Écris `topThree` : les trois meilleurs scores, du plus haut au plus bas, **sans modifier** la liste reçue.
+@339 Fais en sorte que `topThree` renvoie les trois meilleurs scores, le meilleur d’abord, et laisse la liste d’origine tranquille.
+@340 Le code de départ trie le tableau d’origine. Copie-le d’abord avec `[...scores]`, puis trie la copie.
+@341 Le code de départ mélange la vraie liste. Fais une copie avec `[...scores]` et trie plutôt la copie.
+@342 Copier, puis trier : le tableau de l’appelant garde son ordre. `b - a` trie du plus haut au plus bas.
+@343 Copier d’abord protège la liste d’origine. `b - a` veut dire « le plus grand d’abord ».
+@344 Modifier un argument est un effet de bord surprenant pour les appelants. `[...xs].sort(cmp)` est le tri portable qui ne modifie rien ; sur les moteurs ES2023, `xs.toSorted(cmp)` dit la même chose directement.
+@345 les trois meilleurs, le meilleur d’abord
+@346 moins de trois
+@347 la liste d’origine n’a pas changé
+@348 `sort` a besoin d’un comparateur pour les nombres, et il modifie le tableau.
+@349 `some` et `every` répondent à des questions oui/non sur toute une liste.
+@350 `reduce(fn, start)` réduit une liste à une seule valeur.
+@351 `sort` a besoin d’une règle, et il modifie ta liste.
+@352 `some` = au moins un, `every` = tous.
+@353 `reduce` additionne des choses en une seule valeur.
+@354 Le `sort` par défaut compare des chaînes ; passe un comparateur et copie d’abord.
+@355 `every([])` vaut `true` ; les deux prédicats court-circuitent.
+@356 Donne toujours une valeur initiale à `reduce`.
+@357 Pour aller plus loin : `toSorted` trie une copie. Qu’est-ce qui s’affiche ?
+@358 Un défi : `toSorted` trie une copie. Qu’est-ce que ça va montrer ?
+@359 `toSorted` renvoie un nouveau tableau trié et laisse `original` tranquille.
+@360 `toSorted` fait une copie triée. La première liste reste comme elle était.
+@361 `toSorted` (2023), c’est `sort` sans la surprise : l’original garde son ordre.
+@362 `toSorted` est un outil plus récent qui ne modifie jamais ta liste.
+@363 `toSorted`, `toReversed`, `toSpliced` et `with` sont les équivalents ES2023, qui renvoient une copie, des méthodes qui modifient.
+@364 Trier une copie faite avec la décomposition. Qu’est-ce qui s’affiche ?
+@365 Trier une copie. Qu’est-ce que ça va montrer ?
+@366 `[...original]` est un nouveau tableau ; le trier laisse `original` tranquille.
+@367 `[...original]` est une copie. Trier la copie ne touche pas la première liste.
+@368 Copier, puis trier. Les téléphones récents ont aussi `original.toSorted(...)`, qui fait les deux d’un coup.
+@369 Copie d’abord, puis trie. Les téléphones récents ont un raccourci qui s’appelle `toSorted`.
+@370 La copie par décomposition est l’équivalent portable de `toSorted` d’ES2023, que le moteur de cet appareil ne fournit pas.
+@371 Ranger des valeurs par clé avec une `Map`.
+@372 Garder des valeurs uniques avec un `Set`.
+@373 Compter des choses avec une `Map<string, number>`.
+@374 Ranger des choses dans des tiroirs étiquetés.
+@375 Garder un sac sans doublons.
+@376 Compter combien de fois chaque mot apparaît.
+@377 Utiliser `Map` pour retrouver des valeurs par clé.
+@378 Utiliser `Set` pour l’unicité et les tests rapides « est-ce que c’est dedans ? ».
+@379 Les clés absentes donnent `undefined` : le gérer.
+@380 Les Maps ont des tiroirs étiquetés.
+@381 Les Sets ne gardent jamais de doublons.
+@382 Toujours vérifier qu’un tiroir peut être vide.
+@383 Les collections à clés battent les objets pour les clés dynamiques.
+@384 Tester l’appartenance à un Set se fait en O(1).
+@385 Attention à la sérialisation : Maps et Sets ne sont pas du JSON.
+@386 Deux collections faites pour retrouver des choses.
+@387 Deux nouvelles sortes de collections.
+@388 Une **Map** range des valeurs sous des clés :⏎⏎⟦F1⟧⏎⏎Un **Set** garde chaque valeur une seule fois, peu importe combien de fois tu l’ajoutes :⏎⏎⟦F2⟧⏎⏎Remarque que `get` peut renvoyer `undefined` : la clé peut ne pas être là. TypeScript t’oblige à t’en occuper.
+@389 Une **Map** est une commode avec des tiroirs étiquetés. Tu mets une valeur dans le tiroir étiqueté "Ada" et tu la retrouves grâce à cette étiquette.⏎⏎Un **Set** est un sac qui ne garde jamais de doublons. Mets "ts" dedans deux fois, il n’y sera quand même qu’une fois.⏎⏎Si tu demandes un tiroir qui n’existe pas, tu obtiens `undefined` : il n’y a rien.
+@390 `Map<K, V>` identifie les clés par l’égalité SameValueZero, donc n’importe quelle valeur (objets compris) peut servir de clé, l’ordre d’insertion est conservé, et `size` est en O(1). Préfère-la à un objet simple pour les clés dynamiques : pas de clés du prototype, pas de conversion des clés en chaînes, et des ajouts/suppressions rapides.⏎⏎`get` renvoie `V | undefined` ; affine avec `has` plus une vérification, ou utilise `??`. `Set<T>` offre l’appartenance en O(1) et le dédoublonnage : `[...new Set(xs)]` garde les premières occurrences dans l’ordre.⏎⏎Aucune des deux ne se sérialise avec `JSON.stringify` (les deux affichent `{}`) ; convertis avec `Object.fromEntries(map)` ou `[...set]`. ES2025 ajoute l’algèbre des ensembles (`union`, `intersection`), pas encore disponible sur tous les moteurs.
+@391 Le Set laisse tomber le deuxième `"cat"`. La Map a `"cat"` mais pas `"dog"`.
+@392 Le sac ne garde qu’un seul "cat". La commode a un tiroir "cat" mais pas de tiroir "dog".
+@393 Un Set garde un exemplaire de chaque valeur, donc la taille est 2. Une clé absente donne `undefined`.
+@394 Le sac contient deux animaux différents. Le tiroir "dog" n’existe pas, donc tu obtiens `undefined`.
+@395 L’appartenance à un Set dédoublonne selon SameValueZero ; `Map.get` pour une clé absente donne `undefined`, ce que reflète son type de retour `V | undefined`.
+@396 Tu dois compter combien de fois chaque mot apparaît dans un texte. Qu’est-ce qui convient le mieux ?
+@397 Tu veux compter combien de fois chaque mot apparaît. Qu’est-ce qui est le mieux ?
+@398 Il te faut passer d’un mot à un nombre, et ajouter les nouveaux mots quand ils arrivent.
+@399 Il te faut une étiquette (le mot) et un nombre pour chaque étiquette.
+@400 Une `Map<string, number>` associe chaque mot à son compte et gère n’importe quel mot, y compris ceux comme `"constructor"` qui entrent en conflit avec les propriétés des objets.
+@401 Une Map, c’est parfait : chaque mot est une étiquette, et son tiroir contient le compte.
+@402 `Map<string, number>` est le compteur idiomatique : clés dynamiques, pas de collision avec le prototype, `size` pour le nombre de mots distincts.
+@403 Une `Map<string, number>`
+@404 Un `Set<string>`
+@405 Un Set sait *quels* mots apparaissent, mais pas combien de fois.
+@406 Un sac sait quels mots sont là, mais pas combien il y en a de chaque.
+@407 Un `string[]`
+@408 Une simple liste peut contenir les mots, mais compter oblige à la parcourir encore et encore.
+@409 Une liste marcherait, mais il faudrait compter à la main à chaque fois.
+@410 Écris `countWords` : une Map qui associe chaque mot à son nombre d’apparitions.
+@411 Fais en sorte que `countWords` compte chaque mot avec une Map.
+@412 Boucle avec `for (const word of words)`. `counts.get(word) ?? 0` est le compte jusqu’ici ; remplace-le par ce nombre plus un.
+@413 Passe sur chaque mot. `counts.get(word) ?? 0` est combien tu en as jusqu’ici (0 s’il n’y en a pas). Remets ce nombre plus un.
+@414 `?? 0` transforme « pas encore compté » (`undefined`) en 0, ce qui satisfait aussi le vérificateur de types.
+@415 `?? 0` veut dire « si le tiroir est vide, commence à 0 ».
+@416 `get` renvoie `number | undefined` ; `?? 0` l’affine en `number` sans assertion non nulle. La Map garde les entrées dans l’ordre de première insertion.
+@417 compte les répétitions
+@418 compte d’un seul mot
+@419 aucun mot
+@420 Écris `unique` : la liste sans répétitions, dans l’ordre d’apparition.
+@421 Fais en sorte que `unique` renvoie la liste sans doublons.
+@422 Mets les éléments dans un `Set`, puis décompose-le à nouveau dans un tableau : `[...new Set(items)]`.
+@423 Verse la liste dans un sac sans doublons (`new Set(items)`), puis vide-le dans une liste avec `[...]`.
+@424 Un Set garde la première occurrence de chaque valeur, dans l’ordre ; la décomposition le retransforme en tableau.
+@425 Le sac jette les doublons et se souvient de l’ordre dans lequel les choses sont entrées.
+@426 `[...new Set(xs)]` est le dédoublonnage idiomatique en O(n) pour les primitives (les objets sont comparés par référence).
+@427 enlève les répétitions
+@428 déjà unique
+@429 vide
+@430 `Map<K, V>` range des valeurs par clé ; `get` peut renvoyer `undefined`.
+@431 `Set<T>` garde chaque valeur une seule fois.
+@432 `[...new Set(items)]` enlève les répétitions.
+@433 Une Map est une commode à tiroirs étiquetés.
+@434 Un Set est un sac sans doublons.
+@435 Les tiroirs vides donnent `undefined`, alors vérifie d’abord.
+@436 Préférer `Map` aux objets pour les clés dynamiques.
+@437 Traiter le `V | undefined` de `get` avec `??` ou une vérification.
+@438 Convertir Maps et Sets avant `JSON.stringify`.

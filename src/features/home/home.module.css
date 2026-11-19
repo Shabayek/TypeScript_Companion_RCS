@@ -1,0 +1,165 @@
+.page {
+  display: grid;
+  /* One column that never grows past the screen, whatever its content. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-6);
+  padding-top: var(--s-2);
+}
+
+.hero {
+  display: flex;
+  gap: var(--s-4);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.heroTitle {
+  font-size: var(--text-4);
+  margin-top: var(--s-1);
+}
+
+.heroLede {
+  color: var(--ink-soft);
+  max-width: 52ch;
+  margin-top: var(--s-2);
+}
+
+.continue {
+  display: grid;
+  gap: var(--s-2);
+  background:
+    radial-gradient(80% 120% at 100% 0%, var(--accent-soft), transparent 60%),
+    var(--surface);
+  border-color: var(--line-strong);
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+}
+
+.continueTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.continueMeta {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.continueTitle {
+  font-size: var(--text-3);
+}
+
+.continueLede {
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.continueRow {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  margin-top: var(--s-2);
+}
+
+.progressText {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--s-3);
+}
+
+.sectionHead h2,
+.tools h2 {
+  font-size: var(--text-2);
+}
+
+.sectionMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.trackLede {
+  color: var(--ink-muted);
+  font-size: var(--text--1);
+  margin: 0 0 var(--s-3);
+}
+
+.tools h2 {
+  margin-bottom: var(--s-3);
+}
+
+.toolGrid {
+  display: grid;
+  gap: var(--s-2);
+}
+
+@media (min-width: 700px) {
+  .toolGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.tool {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 1.2rem;
+}
+
+.tool strong {
+  display: block;
+  font-size: var(--text-0);
+}
+
+.toolNote {
+  display: block;
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+}
+
+/* "N steps ready to practise" (spaced practice, see /practice). */
+.practice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+
+.practiceTitle {
+  font-size: var(--text-1);
+  margin: 0;
+}
+
+/* Lessons added to parts of the course the learner already passed. */
+.newLessons {
+  display: grid;
+  gap: var(--s-2);
+  border-inline-start: 4px solid var(--warm);
+}
+.newLessonList {
+  margin: 0;
+  padding-inline-start: 1.2em;
+  display: grid;
+  gap: var(--s-1);
+}

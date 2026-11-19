@@ -1,0 +1,172 @@
+.page {
+  display: grid;
+  gap: var(--s-4);
+  max-width: 60rem;
+}
+
+.title {
+  font-size: var(--text-4);
+  margin: var(--s-1) 0 var(--s-2);
+}
+
+.searchRow {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: var(--s-2) 0;
+  background: linear-gradient(to bottom, var(--paper) 70%, transparent);
+}
+
+.list {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.entry {
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  padding: var(--s-2) var(--s-4) var(--s-3);
+}
+
+.entry summary {
+  cursor: pointer;
+  padding: var(--s-2) 0;
+  display: grid;
+  gap: 2px;
+}
+
+.term {
+  font-weight: 700;
+  font-size: var(--text-1);
+}
+
+.short {
+  color: var(--ink-muted);
+  font-size: var(--text-0);
+}
+
+.detail {
+  color: var(--ink-soft);
+  margin: var(--s-2) 0;
+}
+
+.related {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  margin-top: var(--s-2);
+}
+
+.relatedLink {
+  font-size: var(--text--1);
+  font-weight: 600;
+}
+
+.sectionTitle {
+  font-size: var(--text-2);
+  margin-top: var(--s-3);
+}
+
+.cheatEntry + .cheatEntry {
+  margin-top: var(--s-5);
+}
+
+.cheatTitle {
+  font-weight: 700;
+  font-size: var(--text-0);
+  margin-bottom: var(--s-2);
+}
+
+.cheatNote {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+  margin-top: var(--s-2);
+}
+
+.decoderGrid {
+  display: grid;
+  gap: var(--s-4);
+}
+
+@media (min-width: 820px) {
+  .decoderGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+.result {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.resultTitle {
+  font-size: var(--text-2);
+}
+
+.resultdl {
+  display: grid;
+  gap: var(--s-1);
+  margin: 0;
+}
+
+.resultdl div {
+  padding: var(--s-2) 0;
+  border-top: 1px solid var(--line);
+}
+
+.resultdl dt {
+  font-size: var(--text--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-muted);
+}
+
+.resultdl dd {
+  margin: 2px 0 0;
+  color: var(--ink-soft);
+}
+
+.allErrors {
+  display: grid;
+  gap: var(--s-1);
+  margin: 0;
+  padding-inline-start: 1.1em;
+}
+
+.allErrors button {
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  color: var(--accent-strong);
+  text-align: start;
+  font-size: var(--text-0);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.about {
+  display: grid;
+  gap: var(--s-4);
+  max-width: 46rem;
+}
+
+.aboutList {
+  display: grid;
+  gap: var(--s-2);
+  padding-inline-start: 1.15em;
+  color: var(--ink-soft);
+}
+
+.aboutList li::marker {
+  color: var(--accent);
+}
+
+.big {
+  font-size: var(--text-3);
+  font-family: var(--font-mono);
+  color: var(--accent-strong);
+}

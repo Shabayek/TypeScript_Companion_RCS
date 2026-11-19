@@ -1,0 +1,329 @@
+@1 Choose between two types with `T extends U ? X : Y`.
+@2 Chain conditions for several cases.
+@3 Use a conditional type in a type challenge.
+@4 Sort types into houses, like a sorting hat.
+@5 Ask several questions in a row.
+@6 Solve a type puzzle.
+@7 Conditional types are `if` for types.
+@8 They run while checking, not while running.
+@9 First match wins.
+@10 The hat sorts types.
+@11 It works before the code runs.
+@12 Ask good questions.
+@13 Type-level branching.
+@14 Deferred resolution.
+@15 Prefer simple types.
+@16 A ternary for types.
+@17 The sorting hat: it looks at a type and picks a house.
+@18 A **conditional type** picks one of two types, depending on whether a type fits another:⏎⏎⟦F1⟧⏎⏎Read `extends` here as "fits into": `"hello"` fits into `string`, so the first branch is chosen. It is a question asked while the code is being checked, not while it runs.
+@19 Imagine a sorting hat for types. You put a type under the hat, and the hat asks: "Are you a kind of text?" If yes, it says "text". If no, it asks the next question.⏎⏎The hat works while TypeScript is checking your code, before anything runs.
+@20 `T extends U ? X : Y` resolves when `T` is known; for a generic `T` it stays deferred until instantiation. Assignability (not equality) drives the choice, so `never` and `any` behave specially: `any` yields the union of both branches, and a naked `never` distributes to `never` (next lessons).⏎⏎Conditional types are the `if` of type-level programming; with `infer` and recursion they make the type system Turing-complete, which is powerful and easy to overuse: prefer the simplest type that documents intent.
+@21 Which branch does `Describe<42>` take?
+@22 Which house does the hat pick for `42`?
+@23 Is `42` a `string`? If not, is it a `number`?
+@24 Is 42 text? No. Is it a number?
+@25 `42` does not fit `string`, but it fits `number`, so the second branch wins.
+@26 42 is not text, but it is a number, so the hat says "number".
+@27 The literal `42` is assignable to `number`; nested conditionals are evaluated top-down.
+@28 Write `IsArray<T>`: `true` if `T` is an array, otherwise `false`.
+@29 Make a sorting hat `IsArray<T>` that says `true` for lists and `false` for everything else.
+@30 `type IsArray<T> = T extends unknown[] ? true : false;`
+@31 Ask: does `T` fit `unknown[]` (a list of anything)? Yes → `true`, no → `false`.
+@32 `readonly unknown[]` matches every array and tuple, including read-only ones; a plain `unknown[]` would say `false` for `readonly [1, 2]`.
+@33 Lists of any kind fit `readonly unknown[]`, even locked lists. Other things do not.
+@34 Mutable arrays are assignable to readonly ones, not the reverse, so the readonly form is the widest array pattern.
+@35 a list of numbers
+@36 a read-only tuple
+@37 a string is not
+@38 an object is not
+@39 Write `TypeName<T>`: `"string"`, `"number"`, `"boolean"`, `"function"` or `"object"`, like `typeof` at runtime.
+@40 Make `TypeName<T>` say which kind a type is: "string", "number", "boolean", "function" or "object".
+@41 Chain the questions: `T extends string ? "string" : T extends number ? "number" : …`. Functions fit `(...args: never[]) => unknown`.
+@42 Ask one question after another, like a chain of sorting hats.
+@43 Order matters: the first question that fits wins, just like `if … else if`.
+@44 The hat asks questions in order, and stops at the first "yes".
+@45 Function types are matched with `(...args: never[]) => unknown`, the widest callable pattern under `strictFunctionTypes` (parameters are contravariant, so `never[]` accepts any parameter list).
+@46 string
+@47 number
+@48 boolean
+@49 function
+@50 object
+@51 The short version.
+@52 What you learned.
+@53 `T extends U ? X : Y` chooses a type.
+@54 "Extends" means "fits into".
+@55 Chain conditions for several cases; order matters.
+@56 A sorting hat for types.
+@57 It asks "do you fit?" and picks a house.
+@58 Questions are asked in order.
+@59 Assignability drives the branch.
+@60 Deferred for generic `T`.
+@61 Keep type-level logic as simple as possible.
+@62 Capture part of a type with `infer` inside a conditional type.
+@63 Build your own `ReturnType`.
+@64 Unwrap arrays and promises.
+@65 Send a detective to find a hidden type.
+@66 Find what a machine gives back.
+@67 Find what is inside a list or a promise.
+@68 Extract types with patterns.
+@69 Build the utilities yourself to understand them.
+@70 Keep patterns shaped like the input.
+@71 Detectives find types inside types.
+@72 Lists, machines, promises.
+@73 Now you know how the helpers work.
+@74 `infer` enables type-level destructuring.
+@75 Variance affects multiple candidates.
+@76 Foundation for template parsing.
+@77 `infer` names a piece of a type so you can use it.
+@78 The detective finds a type hidden inside another type.
+@79 Inside the `extends` of a conditional type, `infer X` says "whatever is in this position, call it `X`":⏎⏎⟦F1⟧⏎⏎This is exactly how the built-in `ReturnType`, `Parameters` and `Awaited` work.
+@80 A type detective looks at a type and finds something hidden inside. "This is a list… of what? Aha! Of strings!"⏎⏎`infer` is the detective’s notebook: it writes down what it found under a name, so you can use it.
+@81 `infer` declares a type variable bound by pattern matching against the checked type; it is only allowed in the `extends` clause of a conditional type. Multiple candidates for the same variable produce a union (in covariant positions) or an intersection (in contravariant ones).⏎⏎Since TS 4.7, `infer X extends C` constrains the captured type (e.g. parse a number literal out of a template). Patterns must be shaped like the input: tuples for positional extraction, function types for signatures, template literals for strings.
+@82 What is `Found`?
+@83 What did the detective find?
+@84 `infer Item` captures what the array holds.
+@85 The list holds something. What?
+@86 `boolean[]` matches `(infer Item)[]` with `Item = boolean`.
+@87 It is a list of yes/no values, so the detective found `boolean`.
+@88 Pattern matching binds `Item` to the element type.
+@89 Build `MyReturnType<F>`: the type a function returns.
+@90 Send the detective to find what a machine gives back: build `MyReturnType<F>`.
+@91 `F extends (...args: never[]) => infer R ? R : never`.
+@92 Match any machine `(...args: never[]) => infer R`, then give back `R`.
+@93 The pattern describes "a function, returning something"; `infer R` names the something.
+@94 The detective matched "a machine that gives back something" and wrote down the something.
+@95 `never[]` parameters make the pattern match any function under contravariance; the built-in uses `any` for the same purpose.
+@96 a number
+@97 with parameters
+@98 a real function
+@99 not a function
+@100 Build `Unwrap<T>`: the value inside a `Promise`, or inside an array; anything else stays as it is.
+@101 Build `Unwrap<T>`: look inside a promise or a list and find what is in it. Anything else stays the same.
+@102 Two conditions: `T extends Promise<infer V> ? V : T extends (infer E)[] ? E : T`.
+@103 First ask "is it a promise of something?", then "is it a list of something?", otherwise keep `T`.
+@104 Each branch is a different pattern with its own `infer`.
+@105 The detective checks two places in turn.
+@106 Chained conditionals with different `infer` patterns; `Awaited` additionally recurses and handles thenables.
+@107 a promise
+@108 an array
+@109 anything else
+@110 `infer X` captures part of a type in a conditional type.
+@111 The pattern must look like the input: arrays, functions, promises.
+@112 `ReturnType`, `Parameters` and `Awaited` are built this way.
+@113 The detective finds hidden types.
+@114 It matches a pattern and writes down what it finds.
+@115 The built-in helpers use the same trick.
+@116 Pattern matching over type structure.
+@117 Only in `extends` clauses.
+@118 `infer X extends C` constrains captures.
+@119 See a conditional type apply to each member of a union.
+@120 Build `Exclude` and `Extract` yourself.
+@121 Turn distribution off with `[T]`.
+@122 See the hat sort each member of a group on its own.
+@123 Build your own sieve.
+@124 Make the hat look at the whole group at once.
+@125 Distribution maps over unions.
+@126 Filter unions with `never`.
+@127 Stop it with brackets when needed.
+@128 Groups are sorted one by one.
+@129 Sieves make things vanish.
+@130 Brackets keep groups together.
+@131 Know when distribution applies.
+@132 Handle `never` explicitly.
+@133 Build utilities from first principles.
+@134 Unions are handled one member at a time.
+@135 Given a group, the hat sorts each one separately.
+@136 When the checked type is a bare type parameter and you pass a union, the condition runs **for each member**, and the results are joined into a union again:⏎⏎⟦F1⟧⏎⏎`never` in a union disappears, which is how `MyExclude` drops members. To treat the union as one whole, wrap both sides in brackets: `[T] extends [unknown] ? T[] : never` gives `(string | number)[]`.
+@137 If you put a whole group under the sorting hat, it sorts each one separately, then puts the answers back together.⏎⏎A sieve works like that: each member is either kept or turned into `never`, which means "gone".
+@138 Distribution happens when the check type is a naked type parameter instantiated with a union; `never` distributes to `never` (an empty union), which surprises people: `IsNever<T> = T extends never ? true : false` gives `never` for `never`. Wrapping in a one-tuple (`[T] extends [never]`) disables distribution.⏎⏎Distribution is what makes `Exclude`, `Extract`, `NonNullable` and distributive `Omit` work; disabling it is needed when you reason about the union as a whole.
+@139 What is `Result`?
+@140 What comes out of the hat?
+@141 Each member of the union becomes its own array.
+@142 Each kind becomes its own list.
+@143 The condition ran once for `string` and once for `number`, giving two array types: a list of only strings, or a list of only numbers. Without distribution it would be `(string | number)[]`, a list that mixes both.
+@144 Each kind went under the hat by itself, so you get a list type for each.
+@145 Distribution maps each constituent. Beware `boolean`: it is `true | false`, so `ToArray<boolean>` is `false[] | true[]`.
+@146 Build `MyExclude<T, U>` and `MyExtract<T, U>` yourself.
+@147 Build your own sieves: `MyExclude` takes members out, `MyExtract` keeps only the matching ones.
+@148 `MyExclude<T, U> = T extends U ? never : T`; `MyExtract` swaps the branches.
+@149 For each member: if it fits `U`, throw it away (`never`), else keep it. `MyExtract` does the opposite.
+@150 Each member is tested on its own; `never` results vanish from the union.
+@151 Each member is checked alone, and "gone" ones disappear.
+@152 Distribution plus `never` absorption in unions.
+@153 exclude one
+@154 exclude by kind
+@155 extract
+@156 Fix `IsNever<T>` so `IsNever<never>` is `true`. (Hint: stop distribution.)
+@157 Fix `IsNever<T>` so it says `true` for `never`. The trick: put `T` in brackets.
+@158 Wrap both sides: `[T] extends [never] ? true : false`.
+@159 Write `[T] extends [never]` instead of `T extends never`.
+@160 `never` is an empty union, so distributing over it runs the condition zero times and gives `never`, not `true`. Brackets make TypeScript check it as a whole.
+@161 `never` is an empty group, so the hat never gets to say anything! Brackets make it look at the whole thing.
+@162 Distribution over the empty union yields `never`; the one-tuple wrapper makes the check non-distributive.
+@163 never is never
+@164 a union is not
+@165 A conditional over a bare `T` runs once per union member.
+@166 `never` results disappear, which is how `Exclude` works.
+@167 `[T] extends [U]` stops distribution.
+@168 The hat sorts each member separately.
+@169 "Gone" members vanish.
+@170 Brackets make it look at the whole group.
+@171 Distribution on naked type parameters.
+@172 `never` distributes to `never`.
+@173 One-tuples disable distribution.
+@174 Build a type by going through keys: `{ [K in keyof T]: … }`.
+@175 Add and remove `readonly` and `?` with `+` and `-`.
+@176 Write your own `Partial`, `Readonly` and `Mutable`.
+@177 Build a stamp machine that stamps every label.
+@178 Add or remove "maybe" and "locked" stamps.
+@179 Build your own shape machines.
+@180 Mapped types transform every property.
+@181 Utility types are just mapped types.
+@182 Modifiers are under your control.
+@183 Stamp every label.
+@184 Add or remove "maybe" and "locked".
+@185 Mapped types are type-level `map`.
+@186 Modifiers and homomorphism.
+@187 Compose with conditional types.
+@188 Go through the keys, build a property for each.
+@189 A stamp machine goes along every label and stamps it.
+@190 A **mapped type** loops over a set of keys and produces a property for each:⏎⏎⟦F1⟧
+@191 A stamp machine takes a shape and goes along every label, stamping it: "maybe", "locked", or "change this to yes/no".⏎⏎`[K in keyof T]` means "for every label K of T". `T[K]` is what was behind that label.
+@192 Mapped types over `keyof T` are homomorphic: they preserve the original modifiers (optional/readonly) unless changed with `+`/`-`, and distribute over union `T`. They also map tuples and arrays element-wise (`MyReadonly<[1, 2]>` is `readonly [1, 2]`).⏎⏎The key source can be any union (`[K in "a" | "b"]`), which is how `Record` is defined. Combine with `as` clauses (next lesson) to rename or filter keys.
+@193 What is `Checks`?
+@194 What does the stamp machine make?
+@195 Every key stays; every value type becomes `boolean`.
+@196 Same labels, but every one now holds yes or no.
+@197 The mapped type keeps the keys and replaces each value type.
+@198 Same labels, all stamped with `boolean`.
+@199 Homomorphic mapping over `keyof T` with a constant value type.
+@200 Build `MyPartial<T>` and `Mutable<T>` (removes `readonly`).
+@201 Build two stamp machines: `MyPartial` stamps "maybe", `Mutable` removes the "locked" stamp.
+@202 `{ [K in keyof T]?: T[K] }` and `{ -readonly [K in keyof T]: T[K] }`.
+@203 Use `?` after the key for "maybe", and `-readonly` in front to remove the lock.
+@204 `?` and `readonly` are modifiers; `-` removes one, and `+` (or nothing) adds it.
+@205 Stamps can be added or removed.
+@206 Modifier arithmetic on homomorphic mapped types.
+@207 partial
+@208 mutable
+@209 mutable can be written
+@210 Build `Nullable<T>`: every property may also be `null`.
+@211 Build a stamp machine that lets every label also hold `null`.
+@212 `{ [K in keyof T]: T[K] | null }`.
+@213 Keep each label, and add `| null` to what it holds.
+@214 Homomorphic mapping keeps modifiers, so optional properties stay optional.
+@215 Maybe-labels stay maybe-labels.
+@216 Modifiers are preserved by `keyof T` mappings.
+@217 adds null
+@218 keeps optional properties optional
+@219 `{ [K in keyof T]: … }` builds a property for every key.
+@220 `T[K]` is the original property type.
+@221 `+`/`-` add or remove `readonly` and `?`.
+@222 Stamp machines go along every label.
+@223 `T[K]` is what was behind the label.
+@224 Homomorphic mapped types preserve modifiers.
+@225 They map arrays and tuples too.
+@226 `Record` is a mapped type over a key union.
+@227 Rename keys in a mapped type with `as`.
+@228 Drop keys by remapping them to `never`.
+@229 Build `Getters<T>` and `PickByValue<T, V>`.
+@230 Teach the stamp machine to rename labels.
+@231 Make it throw some labels away.
+@232 Build a getter maker.
+@233 Rename and filter keys with `as`.
+@234 Build APIs like getters from data types.
+@235 Combine with conditionals.
+@236 Rename labels, throw some away.
+@237 Build getters from shapes.
+@238 Mix with the sorting hat.
+@239 Key remapping enables type-level API generation.
+@240 `never` filters.
+@241 Watch modifiers.
+@242 `as` renames or filters keys.
+@243 The stamp machine can write new names on the labels.
+@244 An `as` clause after the key computes a new key:⏎⏎⟦F1⟧⏎⏎Remapping a key to `never` drops it: that is how you filter properties by their type.
+@245 The stamp machine can also write a new name on each label: "name" becomes "getName".⏎⏎If it writes "never" on a label, that label is thrown away. That is how you keep only some labels.
+@246 Key remapping (TS 4.1) evaluates the `as` type per key; the result may be any property-key type, and `never` removes the entry. `string & K` narrows `keyof T` (which can include numbers and symbols) for template literals. Remapped mapped types are no longer homomorphic, so modifiers are not preserved automatically.
+@247 Build `Getters<T>`: for each property `x`, a method `getX(): T["x"]`.
+@248 Build a getter maker: for each label `x`, make `getX`, a machine that gives back what is behind `x`.
+@249 Remap each key with `as` and a template literal type: `` [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K] ``.
+@250 Use `as` with a template: `` `get${Capitalize<string & K>}` ``.
+@251 The `as` clause builds each new key from the old one with a template literal type.
+@252 Each label gets a new name, made from the old one.
+@253 `Capitalize` is an intrinsic string manipulation type; `string & K` excludes symbol keys.
+@254 renamed getters
+@255 the old names are gone
+@256 Build `PickByValue<T, V>`: only the properties whose type fits `V`.
+@257 Build a filter: keep only the labels whose value fits `V`.
+@258 `[K in keyof T as T[K] extends V ? K : never]: T[K]`.
+@259 Keep the key `K` when `T[K]` fits `V`; otherwise write `never` to drop it.
+@260 Mapping a key to `never` removes it, so the condition decides which properties survive.
+@261 Labels stamped "never" are thrown away.
+@262 Filtering via remapping to `never`.
+@263 only strings
+@264 only functions
+@265 `as` in a mapped type computes a new key.
+@266 Remapping to `never` drops the property.
+@267 Template literal types build new names.
+@268 The stamp machine can rename labels.
+@269 "never" throws a label away.
+@270 New names can be built from old ones.
+@271 Key remapping (`as`) per key.
+@272 Filtering by value type.
+@273 Not homomorphic: modifiers are not kept.
+@274 Build string patterns with template literal types.
+@275 Combine unions into every possible string.
+@276 Pull pieces out of a string type with `infer`.
+@277 Make labels from patterns.
+@278 Mix and match words.
+@279 Read pieces out of a label.
+@280 Model string formats as types.
+@281 Generate names from names.
+@282 Parse string types with `infer`.
+@283 Labels from patterns.
+@284 New names from old.
+@285 Reading labels with the detective.
+@286 String-level type programming.
+@287 Typed routes, events and CSS.
+@288 Recursion for full parsers.
+@289 Strings can be types, built from patterns.
+@290 A label maker for types.
+@291 ⟦F1⟧⏎⏎Unions inside a template combine every way; `infer` inside a template reads a piece back out.
+@292 A label maker prints labels from a pattern: `${Size}-${Colour}` makes every mix: small-red, small-blue, large-red, large-blue.⏎⏎And the detective can read a label: from "/users/:id" it finds "id".
+@293 Template literal types produce the cross product of interpolated unions (beware combinatorial blow-up; TypeScript caps unions at 100,000 members). Intrinsics `Uppercase`, `Lowercase`, `Capitalize` and `Uncapitalize` transform literals.⏎⏎Pattern matching with `infer` in templates is greedy from the left for the first placeholder; recursion parses whole strings (Module 19’s router does exactly that).
+@294 What is `Cell`?
+@295 What labels does the label maker make?
+@296 Every letter is combined with every digit.
+@297 Each letter with each number.
+@298 A template with unions produces every combination: 2 × 2 = 4 strings.
+@299 Each letter with each number: four labels.
+@300 Cross product of the interpolated unions.
+@301 Build `Handlers<Events>`: for each event name `e`, an optional `onE` method.
+@302 Build `Handlers`: for each event name like "click", a "maybe" label `onClick` holding a machine.
+@303 A mapped type over `Events`, renaming each key with `` as `on${Capitalize<K>}` ``, each one `?: () => void`.
+@304 Go through each event name `K` and rename it to `` `on${Capitalize<K>}` ``, as a "maybe" machine.
+@305 The keys are computed from the event names, so adding an event adds its handler slot.
+@306 New events get new handler labels automatically.
+@307 Key remapping over a string-literal union with `Capitalize`.
+@308 the handler names
+@309 all optional
+@310 only real events
+@311 Build `ParamName<T>`: from `"/users/:id"`, get `"id"`; with no `:`, `never`.
+@312 Send the detective into a label: from "/users/:id", find "id".
+@313 `T extends `${string}:${infer Name}` ? Name : never`.
+@314 Match "anything, then a colon, then the name", and give back the name.
+@315 `infer` in a template reads the piece after the colon. Module 19 builds a whole router type this way.
+@316 The detective found the name after the colon.
+@317 Template literal pattern matching; recursion handles multiple parameters.
+@318 one parameter
+@319 another
+@320 no parameter
+@321 Template literal types build string patterns.
+@322 Unions inside combine every way.
+@323 `infer` inside a template reads pieces out.
+@324 The label maker makes labels from patterns.
+@325 It mixes every word with every other.
+@326 The detective can read labels too.
+@327 Cross products and intrinsic string types.
+@328 Pattern matching over strings.
+@329 Mind union size limits.

@@ -1,0 +1,160 @@
+@1 Décrire chaque changement comme une action dans une union.
+@2 Écrire un reducer : `(state, action) => newState`.
+@3 Jouer avec la liste de tâches que fait tourner ton reducer.
+@4 Faire la liste de tout ce que tu peux faire à tes tâches.
+@5 Écrire la machine qui applique chacune.
+@6 Utiliser ta propre liste de tâches.
+@7 Des actions en entrée, de l’état en sortie.
+@8 Les reducers purs peuvent être rejoués et testés.
+@9 Dériver ce qui peut l’être.
+@10 Des messages en entrée, une nouvelle liste en sortie.
+@11 Les anciennes listes restent protégées.
+@12 Calculer les choses au lieu de les stocker.
+@13 Un état d’interface construit à partir d’événements.
+@14 Traitement exhaustif des actions.
+@15 La pureté permet le rejeu.
+@16 Chaque changement est une action ; une seule fonction les applique.
+@17 Chaque appui sur un bouton devient un message ; une seule machine les gère tous.
+@18 Un **reducer** prend l’état actuel et une action, et renvoie l’état suivant. Les actions forment une union discriminée :⏎⏎⟦F1⟧⏎⏎L’app ne modifie jamais la liste elle-même : chaque clic devient une action, et la liste à l’écran est ce que renvoie ton reducer, quoi que ce soit. C’est exactement comme ça que fonctionnent `useReducer` de React et Redux.
+@19 Chaque bouton de l’app de tâches envoie un petit message : « ajoute ceci », « coche cela », « enlève cela ».⏎⏎Ta machine, le *reducer*, lit chaque message et fabrique la nouvelle liste. L’écran montre juste ce que ta machine a fabriqué.
+@20 Les reducers sont des transitions d’état pures sur une union d’actions étiquetée ; le traitement exhaustif fait qu’un nouveau type d’action est une erreur de compilation tant qu’il n’est pas traité. Rejouer le journal des actions reproduit n’importe quel état (voyage dans le temps, annulation, tests).⏎⏎Le pilote du jeu fait passer tout le journal d’actions du joueur par ton reducer à chaque clic, donc la pureté n’est pas facultative : un reducer qui modifie son entrée corromprait le rejeu.
+@21 Écris `reducer` : `add` ajoute une nouvelle tâche à la fin (id = plus grand id + 1, en commençant à 1), `toggle` inverse `done`, `remove` supprime par id, `clearDone` enlève celles qui sont terminées. Ne modifie jamais l’ancienne liste.
+@22 Fabrique le reducer : "add" met une nouvelle tâche à la fin (son id vaut un de plus que le plus grand jusqu’ici), "toggle" coche ou décoche, "remove" en supprime une, "clearDone" enlève celles qui sont cochées.
+@23 `switch (action.type)`. `add` : trouve le plus grand id avec `reduce`, puis ajoute une nouvelle tâche par décomposition. `toggle` : `map`. `remove` et `clearDone` : `filter`.
+@24 Vérifie `action.type`. Pour "add", trouve le plus grand id et ajoute un. Pour "toggle", utilise `map`. Pour "remove" et "clearDone", utilise `filter`.
+@25 Chaque cas renvoie un nouveau tableau et ne touche jamais l’ancien, donc le jeu peut rejouer chaque action depuis le début.
+@26 Ta machine ne modifie jamais l’ancienne liste. Elle en fabrique toujours une nouvelle.
+@27 Chaque branche est une transformation pure ; le switch exhaustif sur l’union d’actions n’a pas besoin de default. Déduire le prochain id des données garde le reducer libre de tout compteur caché.
+@28 ajouter à une liste vide
+@29 les ids continuent d’augmenter
+@30 inverser
+@31 supprimer
+@32 enlever les terminées
+@33 l’ancienne liste n’est pas touchée
+@34 Écris `summary` : `"2 of 3 done"`, ou `"Nothing to do!"` pour une liste vide.
+@35 Fais en sorte que `summary` dise "2 of 3 done", ou "Nothing to do!" quand la liste est vide.
+@36 Compte celles qui sont terminées avec `filter(...).length`.
+@37 Compte celles qui sont cochées, puis fabrique la phrase.
+@38 Une valeur dérivée : calculée à partir de la liste, jamais stockée à côté.
+@39 Elle est calculée à partir de la liste à chaque fois, donc elle est toujours juste.
+@40 Un état dérivé calculé à la demande ne peut pas se désynchroniser de sa source.
+@41 certaines terminées
+@42 vide
+@43 Joue : chaque clic est une action pour ton reducer.
+@44 Joue avec ta liste de tâches ! Chaque clic passe par ton reducer.
+@45 Lance-le : le pilote fait passer le journal des actions par ton reducer.
+@46 La version courte.
+@47 Ce que tu as appris.
+@48 Modéliser les changements comme une union d’actions.
+@49 Un reducer renvoie l’état suivant sans modifier l’ancien.
+@50 L’écran affiche ce que renvoie le reducer.
+@51 Chaque bouton envoie un message.
+@52 Le reducer fabrique une nouvelle liste à partir de chaque message.
+@53 Tu as construit une vraie app de tâches !
+@54 Reducers : purs, exhaustifs, rejouables.
+@55 Dériver les ids et les résumés de l’état.
+@56 Le motif derrière `useReducer` et Redux.
+@57 Garder le stock dans une `Map<string, number>`.
+@58 Réapprovisionner sans modifier l’ancienne map.
+@59 Signaler une vente ratée avec un `Result` au lieu de lever une erreur.
+@60 Compter ce qu’il y a sur les étagères.
+@61 Ajouter du stock.
+@62 Dire « désolé, pas assez ! » de façon sûre.
+@63 Des collections à clés pour les inventaires.
+@64 Copie à l’écriture.
+@65 Les échecs comme valeurs.
+@66 Ta boutique compte tout.
+@67 De nouvelles copies pour chaque changement.
+@68 Des réponses polies quand il n’y en a plus.
+@69 Modélisation du domaine avec des Maps.
+@70 Mises à jour immuables sur les Maps.
+@71 Les erreurs comme valeurs dans l’API.
+@72 Une boutique, c’est une map qui va du produit à la quantité.
+@73 Ta boutique garde le compte de chaque chose sur les étagères.
+@74 Le stock est une `Map<string, number>`. Deux opérations le modifient :⏎⏎⟦F1⟧⏎⏎Vendre peut échouer (pas assez sur l’étagère). C’est un résultat attendu, quotidien, donc il revient sous forme de `Result` plutôt que d’exception. Les deux fonctions renvoient une **nouvelle** map.
+@75 Ta boutique a une commode : un tiroir par produit, avec un nombre dedans.⏎⏎Quand quelqu’un achète plus que ce que tu as, la boutique ne plante pas. Elle dit poliment : « Désolé, il n’en reste que 2. »
+@76 `ReadonlyMap` dans la signature documente et impose la non-modification ; `new Map(stock)` copie avant `set`. Un `Result` fait du stock insuffisant une partie du type de `sell`, donc les appelants le traitent.⏎⏎Copier toute la map à chaque opération est en O(n) ; pour de gros inventaires, utilise une map persistante ou garde la mutation locale derrière une API. Les types restent les mêmes.
+@77 Écris `restock` : une nouvelle map avec `amount` ajouté à l’article (en partant de 0 pour les nouveaux articles).
+@78 Fais en sorte que `restock` remette plus de quelque chose sur l’étagère, dans une nouvelle map.
+@79 Copie avec `new Map(stock)`, puis `set(item, (stock.get(item) ?? 0) + amount)`.
+@80 Fais une copie avec `new Map(stock)`. Puis mets l’ancien nombre (ou 0) plus la nouvelle quantité.
+@81 `new Map(stock)` copie chaque entrée, donc l’ancienne map n’est pas touchée.
+@82 La copie reçoit le changement ; l’ancienne commode reste pareille.
+@83 `ReadonlyMap` n’a pas `set`, donc la copie est obligatoire pour compiler.
+@84 ajoute à l’existant
+@85 un nouvel article
+@86 l’ancienne map n’a pas changé
+@87 Écris `sell` : s’il y en a assez, `{ ok: true, value: newStock }` ; sinon `{ ok: false, error: "Only N left" }`.
+@88 Fais `sell` : s’il y en a assez, rends le nouveau stock ; sinon, un poli "Only N left".
+@89 Lis `have` avec `?? 0`. Si `have < amount`, renvoie l’erreur ; sinon copie, mets `have - amount`, et renvoie ok.
+@90 Vérifie combien tu en as (ou 0). Pas assez ? Dis-le. Assez ? Fais une copie avec moins.
+@91 Les appelants doivent vérifier `ok` avant d’utiliser le nouveau stock, donc « pas assez » ne peut jamais être ignoré par accident.
+@92 Quiconque utilise `sell` doit d’abord lire l’étiquette. Pas de plantage surprise.
+@93 Le mode d’échec est dans la signature ; la branche de réussite renvoie une map neuve, donc une vente ratée laisse l’état intact par construction.
+@94 une vente
+@95 pas assez
+@96 article inconnu
+@97 Essaie : une journée à la boutique. Change les commandes et relance.
+@98 Essaie : fais tourner une journée dans ta boutique. Change les commandes et regarde ce qui se passe !
+@99 `Map<string, number>` garde les quantités par nom.
+@100 Copier avec `new Map(old)` avant de modifier.
+@101 Les échecs attendus reviennent sous forme de `Result`.
+@102 Une commode garde les quantités.
+@103 Les changements fabriquent une nouvelle commode.
+@104 « Pas assez » est une réponse polie, pas un plantage.
+@105 `ReadonlyMap` impose la copie à l’écriture.
+@106 `Result` pour les échecs du domaine.
+@107 `Object.fromEntries` pour sérialiser.
+@108 Décrire les avantages de type avec une table `Record<Element, Record<Element, number>>`.
+@109 Calculer une attaque comme une fonction pure qui renvoie un nouveau combattant.
+@110 Jouer un combat où tes fonctions font les calculs.
+@111 Faire une table de qui bat quoi.
+@112 Calculer combien une attaque fait mal.
+@113 Combattre un rival avec ton propre code !
+@114 Mettre les règles dans des données, typées pour être complètes.
+@115 Garder les tours purs.
+@116 Les jeux sont des boucles sur des fonctions pures.
+@117 Les tables rendent les règles faciles.
+@118 Les copies protègent les combattants.
+@119 Ton code fait tourner le jeu.
+@120 Des règles pilotées par les données.
+@121 Simulation déterministe.
+@122 Cœur fonctionnel, coquille impérative.
+@123 Les règles comme données, les tours comme fonctions.
+@124 Le feu bat la feuille, la feuille bat l’eau, l’eau bat le feu.
+@125 Les règles du jeu vivent dans une table de correspondance typée pour qu’aucune paire ne puisse être oubliée :⏎⏎⟦F1⟧⏎⏎Une attaque est une fonction qui va de l’attaquant, de l’attaque et du défenseur à un **nouveau** défenseur avec moins de points de vie. Le jeu l’appelle à chaque tour.
+@126 Chaque combattant appartient à un élément : le feu, l’eau ou la feuille. Le feu bat la feuille, la feuille bat l’eau, l’eau bat le feu, comme pierre-feuille-ciseaux !⏎⏎Une table dit à quel point chaque attaque est forte contre chaque élément. Ton code lit la table et calcule les dégâts.
+@127 Un `Record` imbriqué sur une union finie est une table 2D exhaustive : ajouter un élément impose une ligne et une colonne complètes. Les dégâts sont une fonction pure des entrées ; le pilote détient le seul état modifiable (les deux combattants et un générateur aléatoire avec graine pour le rival), donc chaque combat est reproductible à partir de `{ moves, seed }`.
+@128 Écris `effectiveness` : cherche à quel point une attaque est forte contre un élément.
+@129 Fais en sorte que `effectiveness` lise la table : à quel point cette attaque est-elle forte contre cet élément ?
+@130 `chart[move][defender]` : la ligne est l’attaque, la colonne est le défenseur.
+@131 Cherche la ligne de l’attaque, puis la colonne du défenseur : `chart[move][defender]`.
+@132 Comme les deux clés sont des `Element`, chaque recherche trouve forcément un nombre : pas de `undefined`, pas de paire manquante.
+@133 La table a toutes les paires, donc la réponse est toujours là.
+@134 Un `Record` sur une union finie type la recherche comme `number` de façon sûre, contrairement à une signature d’index.
+@135 le feu sur la feuille
+@136 le feu sur l’eau
+@137 même élément
+@138 Écris `attack` : dégâts = `power` de l’attaquant × efficacité, arrondi ; renvoie le défenseur avec autant de `hp` en moins (jamais en dessous de 0).
+@139 Fabrique `attack` : les dégâts valent la puissance de l’attaquant fois la force de l’attaque, arrondis. Rends le défenseur avec autant de points de vie en moins (mais jamais sous 0).
+@140 `Math.round(attacker.power * multiplier)` donne les dégâts ; renvoie `{ ...defender, hp: Math.max(0, defender.hp - damage) }`.
+@141 Calcule les dégâts, puis rends une copie du défenseur avec moins de points de vie (au moins 0).
+@142 Une fonction pure : les mêmes combattants et le même multiplicateur donnent toujours le même résultat, ce qui rend le combat rejouable.
+@143 Mêmes entrées, même résultat : le jeu peut rejouer chaque tour exactement.
+@144 La pureté plus un générateur aléatoire avec graine dans le pilote rendent les combats déterministes et testables.
+@145 un coup puissant
+@146 un coup faible, arrondi
+@147 jamais sous zéro
+@148 l’objet défenseur n’a pas changé
+@149 Combat ! Choisis ton attaque à chaque tour ; tes fonctions font les calculs.
+@150 C’est l’heure du combat ! Choisis une attaque à chaque tour. Ton code décide des dégâts.
+@151 Lance-le : chaque attaque passe par tes `effectiveness` et `attack`.
+@152 Un `Record<Element, Record<Element, number>>` contient toutes les règles.
+@153 Une attaque est une fonction pure qui renvoie un nouveau combattant.
+@154 La boucle de jeu ne fait qu’appeler tes fonctions.
+@155 Une table dit qui bat quoi.
+@156 Ton code calcule les dégâts.
+@157 Tu as construit un jeu de combat !
+@158 Des tables de correspondance exhaustives sur des unions.
+@159 Des transitions pures plus un générateur aléatoire avec graine sont reproductibles.
+@160 Le pilote est la seule couche avec état.

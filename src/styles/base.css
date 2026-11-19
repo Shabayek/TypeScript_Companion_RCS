@@ -1,0 +1,252 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 600px at 110% -10%, var(--accent-soft), transparent 60%),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: contain;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+a {
+  color: var(--accent-strong);
+  text-underline-offset: 3px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+ul,
+ol {
+  padding-inline-start: 1.15em;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: var(--s-4) var(--s-4) calc(var(--s-8) + var(--safe-bottom));
+}
+
+@media (min-width: 900px) {
+  .app-main {
+    padding-left: var(--s-6);
+    padding-right: var(--s-6);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--s-3);
+  top: -100px;
+  padding: var(--s-2) var(--s-4);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--r-sm);
+  z-index: 200;
+  transition: top var(--dur-fast) var(--ease);
+}
+
+.skip-link:focus {
+  top: calc(var(--safe-top) + var(--s-3));
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.stack > * + * {
+  margin-top: var(--s-4);
+}
+
+.stack-sm > * + * {
+  margin-top: var(--s-2);
+}
+
+.stack-lg > * + * {
+  margin-top: var(--s-6);
+}
+
+.row {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.row-between {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.grow { flex: 1 1 auto; }
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: var(--text--1);
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.muted { color: var(--ink-muted); }
+
+.prose {
+  max-width: var(--prose-measure);
+  color: var(--ink-soft);
+  line-height: 1.62;
+}
+
+.prose > * + * { margin-top: var(--s-3); }
+
+.prose h3 {
+  color: var(--ink);
+  font-size: var(--text-2);
+  margin-top: var(--s-5);
+}
+
+.prose ul,
+.prose ol { margin-top: var(--s-2); }
+
+.prose li + li { margin-top: var(--s-1); }
+
+/* Inline code only: code blocks (ui/CodeBlock) style their own. Long inline
+   code may wrap rather than push the page wider than a phone screen. */
+.prose :not(pre) > code {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  padding: 0.08em 0.34em;
+  font-size: 0.92em;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Text around a code block in lesson prose (see ui/Markdown). */
+.prose__part > * + * { margin-top: var(--s-3); }
+
+.prose strong { color: var(--ink); font-weight: 700; }
+
+.prose blockquote {
+  border-inline-start: 3px solid var(--accent);
+  padding-inline-start: var(--s-3);
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* Motion preference, both user setting and OS default, collapse to nothing. */
+:root[data-motion='reduced'] *,
+:root[data-motion='reduced'] *::before,
+:root[data-motion='reduced'] *::after {
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 1ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+@media print {
+  .app-nav,
+  .app-header,
+  .skip-link { display: none !important; }
+}
+
+/* A wrapper that only marks a region for scripts (e.g. `data-shortcut-scope`)
+   and must not change layout: it creates no box of its own. */
+.contents {
+  display: contents;
+}
+
+/* Code reads left to right in every language. Isolated, so an Arabic
+   sentence around inline code keeps its own order and the code keeps its. */
+code,
+kbd,
+pre,
+samp {
+  direction: ltr;
+  unicode-bidi: isolate;
+}

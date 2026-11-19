@@ -1,0 +1,270 @@
+@1 Typer un tableau de longueur fixe avec un type par position : un tuple.
+@2 Nommer les positions d’un tuple pour les lecteurs.
+@3 Promettre de ne pas modifier un tableau avec `readonly`.
+@4 Faire de courtes listes où chaque place a son propre type.
+@5 Donner un nom à chaque place.
+@6 Verrouiller une liste pour que personne ne la change.
+@7 Utiliser les tuples pour de petites paires évidentes.
+@8 Marquer `readonly` les paramètres tableau qu’on ne modifie pas.
+@9 Renvoyer des copies au lieu de modifier les entrées.
+@10 Les paires sont parfaites pour deux choses qui vont ensemble.
+@11 Verrouiller les listes que tu ne fais que regarder.
+@12 Faire des copies au lieu de modifier les choses.
+@13 Les tuples pour les résultats positionnels, les objets sinon.
+@14 Les paramètres `readonly` documentent et imposent la non-modification.
+@15 Les tableaux modifiables s’élargissent en readonly, pas l’inverse.
+@16 Certains tableaux ont une forme fixe.
+@17 Certaines listes ont toujours les mêmes places.
+@18 Un **tuple** est un tableau de longueur fixe, avec un type pour chaque position :⏎⏎⟦F1⟧⏎⏎Les noms (`word`, `count`) ne servent qu’aux lecteurs et aux éditeurs ; ils ne changent pas le type.⏎⏎Un tableau `readonly` ne peut pas être modifié par ce nom : pas de `push`, pas de `sort`, pas d’affectation à `list[0]`. Utilise-le pour les paramètres que tu promets de ne pas toucher :⏎⏎⟦F2⟧
+@19 Un tuple est une courte liste où chaque place a son propre travail. `["apple", 3]` pourrait vouloir dire « le mot apple, compté 3 fois ».⏎⏎Une liste `readonly` est verrouillée : tu peux regarder, mais pas ajouter, enlever ou échanger des choses.
+@20 Les types tuple fixent l’arité et le type de chaque indice ; les noms n’améliorent que l’outillage, et il existe des éléments facultatifs (`[a: string, b?: number]`) et de reste (`[string, ...number[]]`). Les littéraux de tableau infèrent des tableaux, pas des tuples, sauf s’ils sont typés par le contexte, annotés ou écrits `as const`.⏎⏎`readonly T[]` (alias `ReadonlyArray<T>`) retire les méthodes qui modifient et l’affectation par indice ; `T[]` est affectable à `readonly T[]` mais pas l’inverse. C’est uniquement à la compilation : rien n’est gelé à l’exécution (ça, c’est `Object.freeze`).⏎⏎Renvoie un tuple quand les positions sont évidentes d’après le contexte (`useState`), sinon préfère un objet avec des propriétés nommées.
+@21 Quel type obtient `count` ?
+@22 De quel type est `count` ?
+@23 La fonction renvoie `[string, number]`, et `count` est la position 1.
+@24 La place 0 est un mot et la place 1 est un nombre. Quelle place est `count` ?
+@25 Chaque position d’un tuple a son propre type, donc l’indice 1 est un `number` (l’indice 0 serait une `string`).
+@26 La place 1 contient le nombre, donc `count` est un nombre.
+@27 Indexer un tuple avec un indice littéral donne le type de cet élément ; un indice littéral hors limites est une erreur (TS2493).
+@28 Écris `minMax` : la plus petite et la plus grande valeur, sous forme de tuple `[min, max]`.
+@29 Fais en sorte que `minMax` rende le plus petit et le plus grand nombre, sous forme de paire.
+@30 `Math.min(...values)` et `Math.max(...values)`, renvoyés dans un tableau à deux éléments.
+@31 Décompose les nombres dans `Math.min` et `Math.max`, et rends les deux dans `[ ]`.
+@32 Le type de retour en tuple nommé dit aux appelants lequel est lequel : `const [low, high] = minMax(scores);`.
+@33 La paire a des noms, donc quiconque l’utilise sait quel nombre est le plus petit.
+@34 Le tuple nommé documente les positions et se déstructure naturellement. Pour une entrée vide, ceci renvoie `[Infinity, -Infinity]` ; décide si c’est acceptable ou renvoie `undefined`.
+@35 mélangés
+@36 une seule valeur
+@37 négatifs
+@38 `addItem` ne doit pas modifier la liste qu’on lui a donnée. Corrige-la sans changer ses types.
+@39 `addItem` n’a pas le droit de modifier la liste verrouillée. Corrige ça !
+@40 `push` n’existe pas sur un tableau `readonly`. Renvoie plutôt un nouveau tableau avec la décomposition.
+@41 Tu ne peux pas faire `push` dans une liste verrouillée. Fabrique une nouvelle liste avec `[...list, item]`.
+@42 `readonly` a transformé un effet de bord caché en erreur de type. La décomposition construit la nouvelle liste et laisse celle de l’appelant tranquille.
+@43 Le verrou a attrapé l’erreur, et la copie protège la première liste.
+@44 `ReadonlyArray` n’a pas `push`, donc la mutation est une erreur de compilation (TS2339). Renvoyer une copie rend la fonction pure.
+@45 ajoute l’élément
+@46 l’original n’a pas changé
+@47 La version courte.
+@48 Ce que tu as appris.
+@49 Un tuple fixe la longueur et le type de chaque position.
+@50 Les noms rendent les tuples lisibles.
+@51 Les tableaux `readonly` ne peuvent pas être modifiés par ce nom.
+@52 Les tuples sont de courtes listes avec un travail pour chaque place.
+@53 Les places peuvent avoir des noms.
+@54 Les listes verrouillées ne peuvent pas être changées.
+@55 Tuples : types par indice, éléments facultatifs et de reste.
+@56 Préférer les objets quand les positions ne sont pas évidentes.
+@57 `readonly` agit à la compilation ; `Object.freeze` à l’exécution.
+@58 Garder les valeurs exactes dans les types avec `as const`.
+@59 Déduire un type union d’une liste de valeurs.
+@60 Savoir que `as const` change les types, pas le comportement à l’exécution.
+@61 Dire à TypeScript de retenir les mots exacts.
+@62 Fabriquer un type à partir d’une liste.
+@63 Savoir que rien n’est vraiment gelé.
+@64 Écrire les valeurs une fois, en déduire les types.
+@65 `as const` pour des données exactes en lecture seule.
+@66 `Object.freeze` quand il faut aussi geler à l’exécution.
+@67 Écrire la liste une fois, et laisser le type suivre.
+@68 `as const` veut dire « exactement ceux-ci ».
+@69 Les vrais verrous ont besoin d’`Object.freeze`.
+@70 `as const` + accès indexé = des unions pilotées par les valeurs.
+@71 Uniquement à la compilation.
+@72 Marche récursivement sur les littéraux imbriqués.
+@73 `as const` garde les valeurs exactes.
+@74 `as const` dit à TypeScript de retenir les mots exacts.
+@75 Normalement, TypeScript élargit les valeurs dans les tableaux et les objets, parce qu’elles pourraient changer : `["small", "large"]` est un `string[]`. Ajoute `as const` et il garde les valeurs exactes, en lecture seule :⏎⏎⟦F1⟧⏎⏎Maintenant, la liste des valeurs et le type ne peuvent plus jamais être en désaccord : ajoute une taille au tableau et le type suit.
+@76 D’habitude, TypeScript pense « cette liste contient des mots ». Avec `as const`, il pense « cette liste contient exactement ces mots, et ils ne changent jamais ».⏎⏎Ensuite, tu peux fabriquer un type à partir de la liste : seuls ces mots-là sont autorisés.
+@77 Une assertion const infère le type le plus étroit : types littéraux, tuples `readonly` au lieu de tableaux, propriétés `readonly`, récursivement. `(typeof X)[number]` indexe le type tuple pour obtenir l’union de ses éléments ; `(typeof OBJ)[keyof typeof OBJ]` fait la même chose pour les valeurs d’un objet.⏎⏎C’est une opération purement au niveau des types : l’objet n’est pas gelé à l’exécution. Combine avec `satisfies` (`{…} as const satisfies Config`) pour valider la forme tout en gardant les littéraux. Les paramètres de type `const` de TS 5.0 appliquent la même inférence aux arguments génériques.
+@78 Quel type TypeScript donne-t-il à `DIRECTIONS` ?
+@79 Quel est le type de `DIRECTIONS` ?
+@80 `as const` garde chaque chaîne exacte, garde l’ordre et met tout en lecture seule.
+@81 Il retient les deux mots, dans l’ordre, et verrouille la liste.
+@82 Sans `as const`, ce serait `string[]`. Avec, c’est un tuple en lecture seule des deux chaînes exactes.
+@83 Sans `as const`, TypeScript saurait seulement « des mots ». Maintenant, il sait exactement lesquels.
+@84 Les assertions const produisent des types tuple readonly avec des types d’éléments littéraux, et `length` devient le littéral `2`.
+@85 Fais de `Size` exactement `"small" | "medium" | "large"`, déduit de la liste `SIZES` pour qu’ils ne puissent jamais être en désaccord.
+@86 Fais venir le type `Size` de la liste `SIZES`, pour que seuls ces trois mots soient autorisés.
+@87 Ajoute `as const` au tableau, puis `type Size = (typeof SIZES)[number];`.
+@88 Mets `as const` après la liste. Puis `type Size = (typeof SIZES)[number];`.
+@89 `typeof SIZES` est le type tuple, et l’indexer avec `number` donne l’union de tout ce qu’il contient.
+@90 Le type est fabriqué à partir de la liste, donc si tu ajoutes une taille à la liste, le type l’apprend aussi.
+@91 Une seule source de vérité : le tableau à l’exécution pilote le type. Le même motif fait fonctionner les listes d’options, les routes et les noms d’événements.
+@92 exactement les trois tailles
+@93 refuse les autres tailles
+@94 la liste ne peut pas changer
+@95 Un objet `as const` est-il gelé quand le code s’exécute ? Qu’est-ce qui s’affiche ?
+@96 L’objet `as const` est-il vraiment gelé ? Qu’est-ce que ça va montrer ?
+@97 `as const` ne change que ce que sait TypeScript. Les types disparaissent avant que le code s’exécute.
+@98 Les types disparaissent quand le code s’exécute. Est-ce que `as const` fait alors quelque chose ?
+@99 `as const` est effacé : à l’exécution, c’est un objet ordinaire. C’est `Object.freeze` qui gèle les objets pendant que le programme tourne.
+@100 Rien n’est gelé quand le code s’exécute. `as const` ne parle qu’à TypeScript. `Object.freeze` est le vrai verrou.
+@101 Les assertions de type ne produisent aucun code. Pour l’immuabilité à l’exécution, utilise `Object.freeze` (superficiel), dont le type de retour est `Readonly<T>`.
+@102 `as const` garde les valeurs exactes et les met en lecture seule.
+@103 `(typeof LIST)[number]` transforme une liste en type union.
+@104 Ça ne change que les types ; rien n’est gelé à l’exécution.
+@105 `as const` retient les mots exacts.
+@106 Un type peut être fabriqué à partir d’une liste.
+@107 C’est seulement pour TypeScript, pas un vrai verrou.
+@108 Les assertions const infèrent les types readonly les plus étroits.
+@109 Déduire les types des valeurs pour une source de vérité unique.
+@110 À combiner avec `satisfies` pour des littéraux validés.
+@111 Typer un objet dont on ne connaît pas les clés à l’avance.
+@112 Utiliser `Record<Keys, Value>` pour un ensemble fixe de clés.
+@113 Gérer les clés qui peuvent manquer.
+@114 Faire des dictionnaires avec n’importe quels mots comme clés.
+@115 Faire un dictionnaire qui doit avoir toutes les clés.
+@116 Attention : un mot peut ne pas être dans le dictionnaire.
+@117 Les signatures d’index pour les clés ouvertes.
+@118 `Record` avec une union pour des tables de correspondance complètes.
+@119 Toujours gérer les clés manquantes.
+@120 Les dictionnaires peuvent avoir n’importe quels mots.
+@121 Les listes de contrôle doivent avoir tous les mots.
+@122 Regarder avant de faire confiance à une recherche.
+@123 Ensembles de clés ouverts ou fermés.
+@124 Des lectures par indice honnêtes avec l’option.
+@125 Des tables de correspondance qui suivent les unions.
+@126 Quand on ne connaît pas les clés à l’avance.
+@127 Un dictionnaire dont tu ne connais pas encore les mots.
+@128 Une **signature d’index** type un objet dont les clés ne sont pas connues à l’avance :⏎⏎⟦F1⟧⏎⏎`Record<K, V>` dit la même chose plus brièvement, et avec une union de clés, il exige *chaque* clé :⏎⏎⟦F2⟧⏎⏎Attention : lire `counts["kiwi"]` est typé `number`, alors que ça vaut `undefined` à l’exécution. Vérifie d’abord, ou utilise `?? 0`.
+@129 Parfois, tu ne sais pas quels mots seront dans ton dictionnaire. `Record<string, number>` veut dire « n’importe quel mot peut être une clé, et chacun contient un nombre ».⏎⏎Avec une liste de mots autorisés, comme `Record<"apple" | "pear", number>`, chaque mot doit être là.⏎⏎Attention : si tu cherches un mot qui n’y est pas, tu obtiens `undefined`, même si TypeScript dit number.
+@130 `Record<K, V>` est le type mappé `{ [P in K]: V }` : avec une union finie de littéraux, il est exhaustif et fermé ; avec `string`, c’est une signature d’index. Les signatures d’index à clés `string` admettent aussi les clés numériques ; les signatures à motif de gabarit (`[key: `data-${string}`]: string`) sont permises aussi.⏎⏎Par défaut, les lectures par indice sont typées `V` plutôt que `V | undefined`. `noUncheckedIndexedAccess` les rend honnêtes, au prix d’affinages partout. `noPropertyAccessFromIndexSignature` impose en plus la syntaxe à crochets pour les clés non déclarées, ce qui rend l’accès dynamique visible. Pour des ajouts et suppressions fréquents ou des clés qui ne sont pas des chaînes, préfère `Map`.
+@131 Écris `tally` : compte les votes pour chaque nom dans un `Record<string, number>`.
+@132 Fais en sorte que `tally` compte combien de votes a eu chaque nom.
+@133 Pour chaque nom : `counts[name] = (counts[name] ?? 0) + 1;`.
+@134 Pour chaque nom, prends le compte jusqu’ici (ou 0), ajoute un, et remets-le.
+@135 `?? 0` gère les noms pas encore comptés. TypeScript ne t’aurait pas prévenu sans ça, parce que la lecture est typée `number`.
+@136 `?? 0` veut dire « si ce nom est nouveau, commence à 0 ».
+@137 La lecture `counts[name]` est `number` d’après le type mais `undefined` à l’exécution pour une nouvelle clé ; `??` le gère quelles que soient les options du compilateur.
+@138 compte les votes
+@139 aucun vote
+@140 Fais de `prices` un `Record<Fruit, number>` pour que chaque fruit doive avoir un prix, puis ajoute celui qui manque (une prune coûte 3).
+@141 Assure-toi que chaque fruit a un prix : utilise `Record<Fruit, number>`, puis ajoute la prune (elle coûte 3).
+@142 Change l’annotation en `Record<Fruit, number>` ; TypeScript te dit alors que `plum` manque.
+@143 Change le type en `Record<Fruit, number>`. TypeScript te dira que la prune manque.
+@144 Avec une union de clés, `Record` est une liste de contrôle : oublie un fruit et TypeScript dit lequel. Ajoute plus tard un fruit à `Fruit` et chaque liste de prix devra suivre.
+@145 Maintenant, le type est une liste de contrôle : chaque fruit doit être là, et aucun fruit inventé n’est permis.
+@146 Un `Record` à clés finies est un type objet fermé et exhaustif (clés manquantes : TS2741 ; clés en trop : TS2353), et c’est ainsi que les tables de correspondance restent synchronisées avec les unions.
+@147 un prix par fruit
+@148 pas de fruit inconnu
+@149 une prune coûte 3
+@150 Avec `noUncheckedIndexedAccess` activé, `stockOf` ne compile plus. Renvoie 0 pour les articles inconnus.
+@151 Avec un réglage plus strict, TypeScript dit qu’un article peut manquer. Rends 0 dans ce cas.
+@152 `stock[item]` est maintenant `number | undefined`. Utilise `?? 0`.
+@153 L’article peut ne pas être là. Utilise `?? 0` pour rendre 0 à la place.
+@154 L’option a fait dire la vérité au type (`number | undefined`), et le bug (renvoyer `undefined` pour les articles inconnus) est devenu une erreur de compilation.
+@155 Le réglage plus strict a trouvé un vrai bug : les articles inconnus ne rendaient rien du tout.
+@156 Sous `noUncheckedIndexedAccess`, les lectures via une signature d’index incluent `undefined` ; `??` affine et fournit la valeur par défaut à la fois. La plupart des bases de code strictes activent cette option.
+@157 un article connu
+@158 un article inconnu
+@159 `{ [key: string]: V }` et `Record<string, V>` autorisent n’importe quelle clé.
+@160 `Record<"a" | "b", V>` exige chaque clé.
+@161 Lire une clé absente donne `undefined` : vérifie-le.
+@162 `Record<string, number>` est un dictionnaire avec n’importe quels mots.
+@163 Avec une liste de mots, chaque mot doit être là.
+@164 Un mot absent donne `undefined`.
+@165 `Record` sur une union de littéraux est exhaustif et fermé.
+@166 Activer `noUncheckedIndexedAccess` pour des lectures honnêtes.
+@167 Utiliser `Map` pour les clés dynamiques souvent modifiées.
+@168 Combiner des types avec `&`.
+@169 Comparer `&` avec `interface … extends`.
+@170 Repérer les combinaisons impossibles (`never`).
+@171 Coller deux formes ensemble avec `&`.
+@172 Voir comment `extends` fait quelque chose de semblable.
+@173 Repérer les formes qui ne peuvent jamais exister.
+@174 Union : l’un ou l’autre. Intersection : les deux.
+@175 Préférer `extends` pour construire des formes à partir de formes.
+@176 Attention aux `never` silencieux.
+@177 `|` veut dire « ou », `&` veut dire « et ».
+@178 Faire grandir des formes avec `extends`.
+@179 Certaines formes sont impossibles.
+@180 `&` pour la composition, `extends` pour les hiérarchies.
+@181 Conflits : erreurs immédiates ou `never` silencieux.
+@182 Les intersections sont à la base du marquage (branding).
+@183 `A & B` a tout ce qu’ont les deux.
+@184 `&` colle deux formes ensemble.
+@185 Une union (`A | B`), c’est *l’un ou l’autre*. Une **intersection** (`A & B`), c’est *les deux à la fois* : une valeur doit avoir chaque propriété de `A` et de `B`.⏎⏎⟦F1⟧⏎⏎`interface Person extends Named, Aged {}` fait presque la même chose. La différence se voit lors des conflits : `extends` les signale ; `&` fabrique discrètement un type impossible.
+@186 Une union veut dire « ceci OU cela ». Une intersection, écrite `&`, veut dire « ceci ET cela, les deux à la fois ».⏎⏎Une chose `Named & Aged` doit avoir un nom ET un âge.
+@187 Les intersections de types objet fusionnent les membres ; les intersections de primitives incompatibles se réduisent à `never` (`string & number`), et une propriété dont les types sont en conflit devient `never`, ce qui rend l’objet entier inhabitable sans aucune erreur à la déclaration.⏎⏎`interface X extends A, B` vérifie la compatibilité immédiatement (TS2430) et est mis en cache par nom, ce qui aide aussi les temps de compilation sur les grosses bases de code. Les intersections brillent pour ajouter des capacités (`T & { id: string }`) et pour les types marqués (`string & { __brand: "Email" }`).
+@188 Les deux types de `id` ne sont pas d’accord. Quel est le type `Id` ?
+@189 Les deux formes ont un `id`, mais de sortes différentes. Quel est le type `Id` ?
+@190 Une valeur devrait avoir un `id` qui soit une chaîne *et* un nombre en même temps.
+@191 Est-ce que quelque chose peut être un mot et un nombre en même temps ?
+@192 Rien n’est à la fois une chaîne et un nombre, donc le type de la propriété est `never`, et aucun objet réel ne peut être un `Both`. Aucune erreur n’apparaît tant que tu n’essaies pas d’en créer un.
+@193 Rien ne peut être un mot et un nombre à la fois, donc la réponse est `never` : « impossible ».
+@194 `string & number` se réduit à `never`, et le conflit de propriété est silencieux à la déclaration du type. L’extension d’`interface` aurait signalé TS2430 à la place.
+@195 Fais de `Employee` une `Person` plus un `team: string`, avec `&`.
+@196 Fabrique une forme `Employee` : tout ce qu’a une `Person`, plus une `team`.
+@197 `type Employee = Person & { team: string };`
+@198 Colle `Person` et `{ team: string }` ensemble avec `&`.
+@199 Un `Employee` a chaque propriété des deux parties, et peut être utilisé partout où une `Person` est attendue.
+@200 Un Employee a tout ce qu’ont les deux formes, donc il compte aussi comme une Person.
+@201 Les intersections sont des sous-types de chacun de leurs constituants, donc `Employee` est affectable à `Person`.
+@202 a tout
+@203 un employé est une personne
+@204 l’équipe est obligatoire
+@205 Lequel te signale une propriété en conflit à l’endroit où tu déclares le type ?
+@206 Quelle façon te dit tout de suite quand deux formes ne sont pas d’accord ?
+@207 L’un signale le conflit ; l’autre fabrique discrètement un type impossible.
+@208 L’un se plaint tout de suite. L’autre ne dit rien.
+@209 `interface … extends` signale immédiatement les membres incompatibles. `&` produit silencieusement `never` pour la propriété en conflit.
+@210 `extends` se plaint tout de suite. `&` ne dit rien et fabrique une forme impossible.
+@211 L’extension d’interface vérifie l’affectabilité de l’interface dérivée vers chaque base (TS2430) ; les intersections sont calculées paresseusement et ne produisent jamais d’erreur par elles-mêmes.
+@212 `interface Both extends A, B {}`
+@213 `type Both = A & B`
+@214 Une intersection avec un conflit est juste un type impossible, sans erreur là où il est déclaré.
+@215 `&` ne se plaint pas. Il fabrique juste une forme impossible.
+@216 `A & B` a chaque propriété des deux.
+@217 `interface … extends` fait pareil et signale les conflits.
+@218 Les propriétés en conflit deviennent `never`.
+@219 `&` veut dire « les deux à la fois ».
+@220 `extends` est semblable, et il te prévient des problèmes.
+@221 Les formes impossibles deviennent `never`.
+@222 Les intersections fusionnent les membres des objets et réduisent les primitives en conflit à `never`.
+@223 Préférer `extends` pour les hiérarchies d’objets.
+@224 Utiliser `&` pour les mixins et les marques.
+@225 Voir comment une annotation élargit le type d’une valeur.
+@226 Vérifier une valeur par rapport à un type avec `satisfies` et garder le type précis.
+@227 Choisir entre annotation et `satisfies`.
+@228 Voir comment une étiquette peut faire oublier des détails à TypeScript.
+@229 Vérifier quelque chose sans oublier.
+@230 Choisir le bon.
+@231 Annotation : cette variable *est* de ce type.
+@232 `satisfies` : cette valeur *convient* à ce type.
+@233 Garder des types précis pour le code qui les utilise.
+@234 Une étiquette dit ce qu’est la boîte.
+@235 `satisfies`, c’est vérifier que ça convient.
+@236 Se souvenir des détails aide plus tard.
+@237 Choisir délibérément entre types déclarés et inférés.
+@238 `satisfies` garde la vérification des propriétés en trop.
+@239 Idéal pour les objets de configuration.
+@240 Vérifier une valeur sans perdre ses détails.
+@241 Vérifier une valeur, et se souvenir quand même de chaque détail.
+@242 Une annotation rend le type de la variable *exactement* le type annoté, donc des détails se perdent :⏎⏎⟦F1⟧⏎⏎`satisfies` vérifie la valeur par rapport au type (les fautes de frappe et les mauvaises valeurs restent des erreurs) mais garde le type inféré par TypeScript.
+@243 Quand tu mets une étiquette sur une boîte, TypeScript ne retient que l’étiquette. Il oublie ce qu’il y a vraiment dedans.⏎⏎`satisfies` veut dire « vérifie que ça respecte les règles », mais TypeScript se souvient toujours exactement de ce que tu as mis dedans.
+@244 `expr satisfies T` vérifie l’affectabilité de `expr` à `T` (avec la vérification des propriétés en trop et le typage contextuel venant de `T`) sans changer le type de l’expression. Une annotation remplace le type inféré par `T`.⏎⏎Utilise les annotations quand tu veux que le type déclaré soit le contrat (API publiques, variables modifiables que tu réaffecteras), `satisfies` pour les objets de configuration, les tables de correspondance et les littéraux dont tu veux garder les clés et valeurs précises. `as const satisfies T` garde aussi les types littéraux.
+@245 Quel type obtient `green` ?
+@246 De quel type est `green` ?
+@247 `satisfies` vérifie l’objet mais garde ce qui a vraiment été écrit.
+@248 La vérification passe, et TypeScript se souvient toujours de ce qu’il y a dedans.
+@249 Avec `satisfies`, `colors.green` garde son type inféré, `string`. Avec une annotation, ce serait `string | number[]`, et `toUpperCase` serait une erreur.
+@250 TypeScript se souvient que green est un mot, donc `toUpperCase` ne pose pas de problème.
+@251 Le type inféré de l’expression survit : `{ red: number[]; green: string }`, vérifié par rapport à `Palette` mais pas élargi vers lui.
+@252 Utilise `satisfies` au lieu de l’annotation, pour que `routes` n’ait que les clés qu’il a vraiment, et que chaque valeur doive quand même être une chaîne.
+@253 Remplace l’étiquette par `satisfies`, pour que TypeScript se souvienne exactement des routes qui existent.
+@254 `const routes = { home: "/", about: "/about" } satisfies Record<string, string>;`
+@255 Enlève `: Record<string, string>` et écris `satisfies Record<string, string>` après l’objet.
+@256 L’annotation rendait valide n’importe quelle clé de type chaîne, donc la faute de frappe `routes.abuot` compilait. `satisfies` garde les vraies clés et vérifie quand même les valeurs.
+@257 Avec l’étiquette, n’importe quelle route inventée était permise. Avec `satisfies`, seules les vraies le sont.
+@258 Annoter avec `Record<string, string>` effaçait l’ensemble des clés ; `satisfies` valide les valeurs tout en préservant `{ home: string; about: string }`.
+@259 connaît les clés
+@260 une faute de frappe est une erreur
+@261 les valeurs doivent être des chaînes
+@262 Une annotation remplace le type inféré.
+@263 `satisfies` vérifie la valeur et garde le type inféré.
+@264 L’utiliser pour les objets de configuration et les tables de correspondance.
+@265 Une étiquette fait oublier des détails à TypeScript.
+@266 `satisfies` vérifie et se souvient quand même.
+@267 Parfait pour les réglages et les listes de choses.
+@268 `satisfies` = vérification d’affectabilité sans élargissement.
+@269 Annoter les contrats ; `satisfies` pour les littéraux.
+@270 `as const satisfies T` pour une validation qui préserve les littéraux.

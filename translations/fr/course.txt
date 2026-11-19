@@ -1,0 +1,325 @@
+@1 Premier contact
+@2 Ce qu’est le code, et pourquoi les étiquettes de TypeScript en valent la peine.
+@3 Valeurs et noms
+@4 Du texte, des nombres, et la différence entre const et let.
+@5 Décisions
+@6 Comparaisons, branches, et choisir entre plusieurs chemins.
+@7 Collections
+@8 Tableaux, objets, et les trois méthodes qui font l’essentiel du travail.
+@9 Fonctions
+@10 Des recettes réutilisables, les fonctions fléchées et les callbacks.
+@11 Des types qui parlent
+@12 Formes, unions, affinage, et un générique bien honnête.
+@13 Des programmes qui grandissent
+@14 Modules, échecs, promesses, et des classes utilisées avec discernement.
+@15 Atelier
+@16 Cinq petits projets, construits avec tout ce qui précède.
+@17 Fonctions et types
+@18 Types de fonctions, surcharges, et vérifications qui instruisent TypeScript.
+@19 Les formes en profondeur
+@20 Tuples, valeurs exactes, dictionnaires, intersections et satisfies.
+@21 Modéliser avec des unions
+@22 Unions étiquetées, vérifications exhaustives, résultats et machines à états.
+@23 Les génériques en profondeur
+@24 Contraintes, keyof, classes génériques et fonctionnement de l’inférence.
+@25 La boîte à outils des types
+@26 Les types utilitaires qui construisent de nouveaux types à partir des tiens.
+@27 Données et asynchrone
+@28 Accumulation, mises à jour immuables, générateurs, promesses et données non fiables.
+@29 Classes et structure
+@30 Confidentialité, accesseurs, contrats, et construire par assemblage.
+@31 Atelier intermédiaire
+@32 Une app de tâches, une boutique et un jeu de combat, typés de bout en bout.
+@33 Penser au niveau des types
+@34 Types conditionnels, mappés et littéraux de gabarit : des programmes qui tournent sur les types.
+@35 Motifs de types avancés
+@36 Récursion, marques, variance, contrôle de l’inférence et événements typés.
+@37 Rigueur et outillage
+@38 Options du compilateur, déclarations, modules, validation et portes de sortie.
+@39 Atelier avancé
+@40 Une bibliothèque de schémas, un routeur typé, un moteur de machines à états et une aventure.
+@41 C’est quoi, un programme ?
+@42 Ce qu’est vraiment un programme
+@43 Les programmes comme instructions
+@44 Pourquoi ces étiquettes en plus ?
+@45 Pourquoi TypeScript existe
+@46 Ce que TypeScript ajoute à JavaScript
+@47 Ton premier programme
+@48 Ton premier programme qui tourne
+@49 Hello, world — et le premier échec
+@50 Les erreurs montrent le chemin
+@51 Lire les erreurs sans crainte
+@52 Diagnostiquer la première erreur
+@53 Les chaînes : les mots
+@54 Les chaînes, et ce qu’on peut en faire
+@55 Valeurs et opérations sur les chaînes
+@56 Des nombres qui comptent
+@57 Nombres et arithmétique
+@58 Valeurs numériques, opérateurs et arrondis
+@59 Des boîtes qui changent, des boîtes qui ne changent pas
+@60 let, const, et laisser TypeScript deviner
+@61 Liaisons, immuabilité et inférence
+@62 Du texte avec des trous
+@63 Les littéraux de gabarit
+@64 Littéraux de gabarit et interpolation
+@65 Des outils pour les mots
+@66 Les méthodes des chaînes
+@67 Méthodes des chaînes et immuabilité
+@68 C’est plus grand ? C’est pareil ?
+@69 Des comparaisons qui répondent vrai ou faux
+@70 Opérateurs d’égalité et de comparaison
+@71 Choisir un chemin
+@72 if, else if, else
+@73 Branchements et sortie anticipée
+@74 Qu’est-ce qui compte comme oui ?
+@75 Valeurs « truthy » et opérateur ternaire
+@76 Coercition, valeurs « falsy » et expressions conditionnelles
+@77 Plein de portes, et une sortie anticipée
+@78 switch, default et clauses de garde
+@79 Branchements multiples et retours anticipés
+@80 Des listes de choses
+@81 Les tableaux : des listes ordonnées
+@82 Tableaux, indices et opérations de base
+@83 Recommencer
+@84 Les boucles : refaire des choses
+@85 Les boucles : for, for...of et while
+@86 Des paquets d’infos
+@87 Objets et propriétés
+@88 Littéraux d’objet et accès aux propriétés
+@89 Déballer et copier
+@90 Déstructuration et décomposition
+@91 Déstructuration, reste et mises à jour immuables
+@92 Trois outils bien pratiques pour les listes
+@93 map, filter et find
+@94 Méthodes de tableau d’ordre supérieur
+@95 Encore des outils pour les listes
+@96 La boîte à outils des tableaux : sort, some, every, reduce
+@97 Tri, prédicats et accumulation
+@98 Des tiroirs étiquetés et des sacs sans doublons
+@99 Map et Set
+@100 Map, Set et collections à clés
+@101 De petites machines réutilisables
+@102 Tes premières fonctions utiles
+@103 Déclarations de fonctions, paramètres et retours
+@104 La façon courte d’écrire une machine
+@105 Types de retour et fonctions fléchées
+@106 Fonctions fléchées et types de retour explicites
+@107 Des entrées facultatives et sans fin
+@108 Valeurs par défaut, paramètres facultatifs et reste
+@109 Valeurs par défaut, paramètres facultatifs, paramètres du reste
+@110 Donner une machine à une autre machine
+@111 Callbacks et fonctions d’ordre supérieur
+@112 Fonctions comme valeurs, callbacks et composition
+@113 Donner un nom à une forme
+@114 type et interface
+@115 Alias de type ou interfaces
+@116 Ceci ou cela
+@117 Unions, types littéraux et affinage
+@118 Types union et affinage par le flot de contrôle
+@119 Des boîtes vides et des boîtes mystère
+@120 Valeurs facultatives, readonly et unknown
+@121 Optionalité, readonly, et la différence entre any et unknown
+@122 Un outil, plein de sortes
+@123 Les génériques sans la théorie
+@124 Les paramètres de type en pratique
+@125 Découper un grand programme en pièces
+@126 Les modules : import et export
+@127 Frontières de modules et exports explicites
+@128 Quand ça tourne mal
+@129 Les erreurs et try / catch
+@130 Gérer les échecs avec try/catch
+@131 Attendre sans s’arrêter
+@132 Les promesses et async / await
+@133 Promesses, fonctions async et ordre d’exécution
+@134 Des plans pour fabriquer des objets
+@135 Les classes : quand elles aident, quand elles n’aident pas
+@136 Classes, encapsulation et discernement
+@137 Construis un jeu de quiz
+@138 Projet : un compteur de points pour un quiz
+@139 Projet : score de quiz et pourcentages
+@140 Construis un suivi de budget
+@141 Projet : un suivi de budget
+@142 Projet : des totaux avec reduce
+@143 Construis une machine à histoires
+@144 Projet : un générateur d’histoires
+@145 Projet : génération déterministe
+@146 Guide le robot jusqu’à l’étoile
+@147 Projet : un labyrinthe pour robot
+@148 Projet : déplacement sur une grille et détection des collisions
+@149 Prends soin d’un animal
+@150 Projet : un animal virtuel
+@151 Projet : transitions d’état avec des mises à jour immuables
+@152 Décrire la prise d’une machine
+@153 Types de fonctions et callbacks
+@154 Expressions de type de fonction et typage contextuel
+@155 Une machine, deux réponses différentes
+@156 Les surcharges de fonctions
+@157 Signatures de surcharge, et quand les éviter
+@158 Apprendre à TypeScript à regarder dedans
+@159 Prédicats de type : value is Type
+@160 Gardes de type définies par l’utilisateur
+@161 S’arrêter si quelque chose cloche
+@162 Les fonctions d’assertion
+@163 Signatures d’assertion : asserts value is T
+@164 De courtes listes fixes, et des listes qu’on ne peut pas changer
+@165 Tuples et tableaux readonly
+@166 Tuples, éléments nommés et tableaux readonly
+@167 Figer les mots exacts
+@168 as const et types littéraux
+@169 Assertions const et unions déduites des valeurs
+@170 Des dictionnaires avec n’importe quels mots
+@171 Signatures d’index et Record
+@172 Signatures d’index, Record<K, V> et accès indexé non vérifié
+@173 Les deux à la fois
+@174 Intersections et extension
+@175 Types intersection ou extension d’interface
+@176 Vérifié, mais toujours exact
+@177 L’opérateur satisfies
+@178 satisfies : valider sans élargir
+@179 Une étiquette sur chaque sorte de chose
+@180 Les unions discriminées
+@181 Unions étiquetées et affinage par discriminant
+@182 On n’a oublié personne ?
+@183 Vérifications exhaustives avec never
+@184 Vérification d’exhaustivité avec never
+@185 Des listes numérotées et des listes de mots
+@186 Enums ou unions de littéraux
+@187 Enums, objets const et unions de littéraux
+@188 Un colis qui dit « ça a marché » ou « ça a échoué »
+@189 Un type Result au lieu de lever une erreur
+@190 Les erreurs comme valeurs avec Result<T, E>
+@191 Des feux tricolores pour ton code
+@192 De petites machines à états
+@193 Machines à états finis avec des unions discriminées
+@194 N’importe quelle sorte, tant qu’elle sait…
+@195 Les contraintes génériques
+@196 Contraindre les paramètres de type avec extends
+@197 La liste des étiquettes, et ce qu’il y a derrière chacune
+@198 keyof et types d’accès indexé
+@199 keyof, T[K] et accesseurs sûrs pour les clés
+@200 Une boîte qui se souvient de ce qu’elle contient
+@201 Interfaces et classes génériques
+@202 Interfaces génériques, classes et conteneurs
+@203 Deux sortes à la fois
+@204 Plusieurs paramètres de type, et des valeurs par défaut
+@205 Paramètres de type multiples et valeurs par défaut
+@206 Comment TypeScript devine la sorte
+@207 Comment fonctionne l’inférence générique
+@208 Inférence des arguments de type et paramètres de type const
+@209 Des changeurs de forme : peut-être, obligatoire et verrouillé
+@210 Partial, Required et Readonly
+@211 Utilitaires de modificateurs : Partial, Required, Readonly
+@212 Garder certaines étiquettes, enlever les autres
+@213 Pick et Omit
+@214 Pick, Omit et types de vue dérivés
+@215 Lire l’étiquette d’une machine
+@216 ReturnType, Parameters et Awaited
+@217 Utilitaires de fonctions : ReturnType, Parameters, Awaited
+@218 Des tamis pour les types
+@219 Exclude, Extract et NonNullable
+@220 Filtrer les unions : Exclude, Extract, NonNullable
+@221 Des machines à formes qui travaillent ensemble
+@222 Combiner les types utilitaires
+@223 Composer des utilitaires pour typer une API
+@224 Trier les choses en tas
+@225 reduce, correctement typé
+@226 Accumuler dans des objets avec des accumulateurs typés
+@227 Changer en faisant une nouvelle copie
+@228 Les mises à jour immuables
+@229 Mises à jour immuables de données imbriquées
+@230 Des machines qui distribuent une chose à la fois
+@231 Itérateurs et générateurs
+@232 Protocoles d’itération et fonctions génératrices
+@233 Attendre plein de choses à la fois
+@234 Promise.all, allSettled, race et any
+@235 Combinateurs de promesses et concurrence
+@236 Réessayer quand ça échoue
+@237 Erreurs asynchrones et nouvelles tentatives
+@238 Gestion des erreurs et nouvelles tentatives en code asynchrone
+@239 Vérifier les colis venus de l’extérieur
+@240 Vérifier des données inconnues en toute sécurité
+@241 Valider les données non fiables à la frontière
+@242 Des tiroirs secrets dans une classe
+@243 Modificateurs d’accès et #private
+@244 public, private, protected, readonly et #private
+@245 Des raccourcis malins pour les classes
+@246 Propriétés de paramètre, getters et static
+@247 Propriétés de paramètre, accesseurs et membres statiques
+@248 Les promesses qu’une classe doit tenir
+@249 implements et classes abstraites
+@250 Interfaces, implements et classes de base abstraites
+@251 Construire avec des briques plutôt qu’avec des arbres généalogiques
+@252 La composition plutôt que l’héritage
+@253 Composition, injection de dépendances et petites interfaces
+@254 Construis une liste de tâches
+@255 Projet : un reducer de tâches typé
+@256 Projet : un reducer sur une union discriminée d’actions
+@257 Tiens une petite boutique
+@258 Projet : l’inventaire d’une boutique avec Map
+@259 Projet : inventaire avec Map et Result
+@260 Feu, eau, feuille : un jeu de combat
+@261 Projet : un combat au tour par tour
+@262 Projet : tables de correspondance et transitions d’état pour un combat
+@263 Le choixpeau des types
+@264 Les types conditionnels
+@265 Types conditionnels : T extends U ? X : Y
+@266 Le détective des types
+@267 infer : extraire des types
+@268 Extraire des types avec infer
+@269 Le choixpeau trie chacun séparément
+@270 Types conditionnels distributifs
+@271 La distribution sur les unions, et comment l’empêcher
+@272 La machine à tampons
+@273 Les types mappés
+@274 Types mappés et modificateurs
+@275 Renommer les étiquettes avec la machine à tampons
+@276 Remappage des clés avec as
+@277 Remappage et filtrage des clés dans les types mappés
+@278 La machine à étiquettes
+@279 Les types littéraux de gabarit
+@280 Types littéraux de gabarit et analyse de chaînes
+@281 Des poupées dans des poupées
+@282 Les types récursifs
+@283 Types récursifs : Json, DeepReadonly et profondeur
+@284 Des étiquettes pour des valeurs qui se ressemblent
+@285 Les types marqués
+@286 Types marqués (nominaux) pour des primitives qui se ressemblent
+@287 Quelles boîtes vont dans quelles boîtes
+@288 La variance : quand des types génériques sont compatibles
+@289 Variance, solidité et annotations in/out
+@290 Ne devine pas à partir de celui-là !
+@291 NoInfer et paramètres de type const
+@292 Contrôler l’inférence : NoInfer<T> et const T
+@293 Trois façons de dire ce qui ressort
+@294 Générique, surcharge ou type de retour conditionnel
+@295 Choisir entre génériques, surcharges et types de retour conditionnels
+@296 Un tableau de messages avec des règles
+@297 Un émetteur d’événements typé
+@298 Un émetteur d’événements typé à partir d’une table d’événements
+@299 Des règles plus strictes qui attrapent plus d’erreurs
+@300 Les options strictes du compilateur
+@301 Au-delà de strict : les options qui valent le coup
+@302 Des étiquettes pour du code sans étiquettes
+@303 Fichiers de déclaration et declare
+@304 Déclarations ambiantes et fichiers .d.ts
+@305 Comment les fichiers se trouvent
+@306 Imports de types seuls et modules ES
+@307 Modules, imports de types seuls et résolution
+@308 Des vérificateurs réutilisables
+@309 Des validateurs composables à l’exécution
+@310 Validateurs composables : types et vérifications d’une seule source
+@311 Des sorties de secours, à utiliser avec prudence
+@312 Portes de sortie : any, as, ! et @ts-expect-error
+@313 Portes de sortie et migration de JavaScript avec discernement
+@314 Construis un vérificateur de formes qui instruit TypeScript
+@315 Projet : une mini-bibliothèque de validation
+@316 Projet : une bibliothèque de schémas façon zod avec Infer
+@317 Une carte qui lit les adresses
+@318 Projet : un routeur typé
+@319 Projet : des paramètres de route analysés au niveau des types
+@320 Une machine qui construit des feux tricolores
+@321 Projet : un moteur de machines à états typé
+@322 Projet : une machine à états générique avec états et événements inférés
+@323 Écris une aventure textuelle
+@324 Projet : un moteur d’aventure textuelle
+@325 Projet : un analyseur de commandes et un modèle du monde pour une aventure textuelle

@@ -1,0 +1,276 @@
+@1 Know what `strict` turns on, and which useful flags it leaves off.
+@2 Fix code under `exactOptionalPropertyTypes`, `noImplicitReturns` and `noImplicitOverride`.
+@3 Decide which flags a project should use.
+@4 Know what the strict settings are.
+@5 Fix code when stricter rules are switched on.
+@6 Choose rules for your own projects.
+@7 Choose compiler flags deliberately.
+@8 Extra flags catch real bugs.
+@9 Migrate one flag at a time.
+@10 Stricter rules find more mistakes.
+@11 Switch them on one by one.
+@12 Your code gets safer.
+@13 A flag policy is part of a codebase’s design.
+@14 `@tsconfig/strictest` as a baseline.
+@15 Stage migrations.
+@16 `strict` is the start, not the end.
+@17 TypeScript has extra rules you can switch on.
+@18 `"strict": true` switches on a family of checks: `strictNullChecks`, `noImplicitAny`, `strictFunctionTypes`, `strictBindCallApply`, `strictPropertyInitialization`, `useUnknownInCatchVariables` and more. Several valuable flags are **not** part of it:⏎⏎- `noUncheckedIndexedAccess`: index reads may be `undefined`.⏎- `exactOptionalPropertyTypes`: `x?: T` means "may be missing", not "may be `undefined`".⏎- `noImplicitReturns`: every path must return.⏎- `noImplicitOverride`: overriding a method requires `override`.⏎- `noPropertyAccessFromIndexSignature`: dynamic keys need brackets.⏎⏎In each exercise below, one flag is switched on. Fix the code it catches.
+@19 TypeScript has a "strict" switch that turns on lots of careful checks. But there are even more careful rules you can add.⏎⏎Each exercise below switches on one extra rule. Fix what it finds!
+@20 Adopting a flag in an existing codebase: enable it, count the errors, fix mechanically where possible (e.g. add `override`), and use `@ts-expect-error` sparingly to stage the rest. `exactOptionalPropertyTypes` and `noUncheckedIndexedAccess` are the most disruptive and the most valuable for data-heavy code; libraries should be compatible with consumers that enable them.⏎⏎`@tsconfig/strictest` bundles a recommended set. Flags are per project; in this course each step can switch them on individually.
+@21 With `exactOptionalPropertyTypes`, you cannot set `theme` to `undefined`. Make `reset` remove the property instead.
+@22 With this rule, a "maybe" label cannot be set to `undefined`. Make `reset` remove `theme` completely.
+@23 Destructure it away: `const { theme, ...rest } = settings; return rest;`.
+@24 Take `theme` out with `const { theme, ...rest } = settings;` and give back `rest`.
+@25 A property set to `undefined` still exists (`"theme" in settings` is true), which can override defaults when objects are merged. The flag makes "missing" and "undefined" different types.
+@26 A label holding `undefined` is still there! Removing it is what "missing" really means.
+@27 Under the flag, `theme?: T` excludes explicit `undefined` unless written `theme?: T | undefined`; this matters for spreads, `in` checks and `Object.keys`.
+@28 theme is gone
+@29 the rest stays
+@30 With `noImplicitReturns`, every path must return. Return `"keep going"` when the score is 50 or less.
+@31 With this rule, every path must give something back. Give back "keep going" for low scores.
+@32 Add a final `return "keep going";`.
+@33 Add `return "keep going";` at the end.
+@34 The return type allowed `undefined`, so falling off the end was silently accepted. The flag asks you to say what happens there.
+@35 Before, the low-score path gave back nothing, by accident. Now it is on purpose.
+@36 TS7030 flags paths that end without `return` when others return a value.
+@37 great
+@38 low scores
+@39 With `noImplicitOverride`, replacing a parent’s method needs the `override` keyword. Add it.
+@40 With this rule, you must say `override` when you replace a parent’s method.
+@41 Write `override describe(): string`.
+@42 Put `override` in front of `describe` in `Child`.
+@43 `override` documents intent, and if the base method is renamed, TypeScript reports that nothing is being overridden any more.
+@44 Now, if the parent’s method changes name, TypeScript will notice.
+@45 With the flag, `override` is required (TS4114) and an `override` of a non-existent member is an error (TS4113), catching silent breakage on refactors.
+@46 child
+@47 The short version.
+@48 What you learned.
+@49 `strict` is a family of checks, but not all of them.
+@50 `exactOptionalPropertyTypes`, `noImplicitReturns` and `noImplicitOverride` catch real bugs.
+@51 Turn flags on one at a time in existing code.
+@52 "strict" switches on lots of rules.
+@53 Extra rules catch even more mistakes.
+@54 Add them one at a time.
+@55 Know the strict family and what it omits.
+@56 Adopt disruptive flags incrementally.
+@57 Libraries should work under consumers’ flags.
+@58 Describe code that exists without TypeScript types, with `declare`.
+@59 Know what goes in a `.d.ts` file.
+@60 Write a declaration for a global.
+@61 Describe code that has no labels.
+@62 Know what a "labels only" file is.
+@63 Write labels for a global thing.
+@64 Type what you cannot see with `declare`.
+@65 Keep declarations accurate: they are trusted.
+@66 Prefer maintained types when available.
+@67 Labels for hidden things.
+@68 Labels must be right.
+@69 Use ready-made labels when you can.
+@70 Declarations are an API surface.
+@71 Trust but test.
+@72 Know `@types` and augmentation.
+@73 Types for code TypeScript cannot see.
+@74 Labels for things TypeScript cannot see.
+@75 Sometimes code exists, but not as TypeScript: a script tag on the page, a JavaScript library. `declare` tells TypeScript "this exists; here is its type", without creating anything:⏎⏎⟦F1⟧⏎⏎A **`.d.ts` file** holds only declarations: no values, no code that runs. Libraries ship them next to their JavaScript (`index.js` + `index.d.ts`), and DefinitelyTyped provides them for libraries that do not (`npm install -D @types/lodash`).
+@76 Sometimes a helper comes from somewhere else, like a tool the web page already has. TypeScript cannot see it, so it complains.⏎⏎`declare` is like writing a label for it: "there is a thing called `track`, and this is how you use it". The label makes no code; it only describes.
+@77 Ambient declarations (`declare const/function/class/namespace/module`, and `declare global { … }` inside modules) introduce types without emit. `.d.ts` files are produced with `declaration: true` (or `isolatedDeclarations` for fast parallel emit) and consumed via `types`/`typesVersions` in `package.json`.⏎⏎Module augmentation (`declare module "lib" { interface Options { … } }`) extends third-party types; it only works inside a module that imports or exports something. Keep hand-written declarations minimal and tested with type tests.
+@78 The page provides a global `analytics` object. Declare it: `track(event: string, data?: Record<string, string>): void`.
+@79 The web page already has an `analytics` helper. Write its label with `declare`, so TypeScript knows how to use it.
+@80 `declare const analytics: { track(event: string, data?: Record<string, string>): void };`
+@81 Write `declare const analytics: { track(…): void };` with the right inputs.
+@82 Nothing was created: `declare` only told TypeScript what the page provides, so calls are now checked.
+@83 The label makes no new code. It just lets TypeScript check how you use `analytics`.
+@84 Ambient `declare const` has no emit; the type is trusted, so keep it accurate (and test it, as here).
+@85 an event on its own
+@86 an event name must be text
+@87 data values must be text
+@88 What may a `.d.ts` file contain?
+@89 What goes in a labels-only file?
+@90 Does anything in it run?
+@91 Does any of it run?
+@92 Only types and declarations: interfaces, type aliases, `declare` statements. No values and no running code.
+@93 Only labels. Nothing in it runs.
+@94 Declaration files are type-only; implementation bodies and initialisers are errors (TS1183, TS1039).
+@95 Types and declarations only
+@96 Functions with their code, so they run faster
+@97 Nothing in a `.d.ts` file runs; the JavaScript lives elsewhere.
+@98 No code runs from that file.
+@99 `declare` describes something that exists without creating it.
+@100 `.d.ts` files contain only declarations.
+@101 Libraries ship them, or DefinitelyTyped provides them.
+@102 `declare` writes a label for something that exists.
+@103 Labels-only files never run.
+@104 Many libraries come with label files.
+@105 Ambient declarations, augmentation, `declare global`.
+@106 Emit with `declaration`/`isolatedDeclarations`.
+@107 Test hand-written declarations.
+@108 Use `import type` for imports that are only types.
+@109 Tell ES modules and CommonJS apart.
+@110 Know what `moduleResolution` and `verbatimModuleSyntax` do.
+@111 Borrow only labels from another file.
+@112 Know the two ways files share code.
+@113 Know how TypeScript finds files.
+@114 Mark type-only imports.
+@115 Prefer ES modules.
+@116 Match resolution to how code runs.
+@117 Labels-only imports vanish.
+@118 Use the modern way.
+@119 Tell TypeScript how files are found.
+@120 Explicit module syntax for single-file tools.
+@121 Resolution mirrors the runtime.
+@122 Interop needs care.
+@123 Imports that vanish, and imports that load.
+@124 Some imports bring code; some bring only labels.
+@125 ⟦F1⟧⏎⏎Two module systems exist: **ES modules** (`import`/`export`, the standard) and **CommonJS** (`require`/`module.exports`, older Node). Modern projects use ES modules.⏎⏎TypeScript also has to find the files: `moduleResolution: "bundler"` for projects built by Vite or esbuild, `"nodenext"` for code run directly by Node.
+@126 Files share code with `import` and `export`. Some imports bring real code; others bring only labels (types), and those disappear when the code runs.⏎⏎`import type` says "only labels, please", so it never loads the other file.
+@127 With `verbatimModuleSyntax` (recommended, TS 5.0), imports and exports are emitted exactly as written unless marked `type`, so single-file transpilers (esbuild, SWC, Babel, Node’s type stripping) behave like `tsc`; it supersedes `isolatedModules`, `importsNotUsedAsValues` and `preserveValueImports`.⏎⏎`moduleResolution: "nodenext"` enforces Node’s rules (explicit `.js` extensions in relative imports, `package.json` `exports`, `type: "module"`); `"bundler"` relaxes extensions but respects `exports`. CommonJS/ESM interop (`esModuleInterop`, default imports of CJS) is a common source of runtime-only errors.
+@128 The same module, two systems.
+@129 Two ways for files to share.
+@130 ES modules
+@131 The standard: static, analysable, works in browsers and Node.
+@132 The modern way, used everywhere today.
+@133 CommonJS
+@134 The older Node system: dynamic, still common in existing packages.
+@135 The older way, still found in many old projects.
+@136 With `verbatimModuleSyntax`, which import is removed from the JavaScript?
+@137 Which import disappears when the code runs?
+@138 Which one is marked as types only?
+@139 Which one says it only brings labels?
+@140 `import type` is always erased. A plain `import` is kept as written, even if you only use types from it.
+@141 The `import type` one disappears. The others stay.
+@142 Under `verbatimModuleSyntax`, only `type`-marked imports are elided; unmarked imports of types are an error (TS1484) so the intent is explicit.
+@143 `import type { User } from "./user";`
+@144 `import { loadUser } from "./api";`
+@145 That imports a value, which is kept.
+@146 That brings real code, so it stays.
+@147 Your code runs directly in Node as ES modules. Which `moduleResolution`?
+@148 Your code runs straight in Node. How should TypeScript find files?
+@149 Which setting follows Node’s own rules, including file extensions?
+@150 Which one copies Node’s rules exactly?
+@151 `"nodenext"` checks imports the way Node will run them, including `.js` extensions in relative paths.
+@152 "nodenext" copies Node’s rules, so what TypeScript accepts really works in Node.
+@153 `nodenext` models Node’s ESM/CJS dual resolution; `bundler` is for code a bundler transforms.
+@154 `"nodenext"`
+@155 `"bundler"`
+@156 That is for code built by a bundler, which is more forgiving than Node.
+@157 That one is for code that a build tool bundles first.
+@158 `import type` imports only types and is always erased.
+@159 ES modules are the standard; CommonJS is the older Node system.
+@160 `moduleResolution` decides how imports find files.
+@161 Some imports bring only labels.
+@162 Two ways to share code: new and old.
+@163 TypeScript needs to know how files are found.
+@164 Use `verbatimModuleSyntax`.
+@165 `nodenext` for Node, `bundler` for bundled apps.
+@166 Watch CJS/ESM interop.
+@167 Write small validators as type predicates.
+@168 Combine them with higher-order functions like `arrayOf`.
+@169 Get the checked type for free from the validator.
+@170 Make small checkers.
+@171 Combine them into bigger checkers.
+@172 Let TypeScript learn from them.
+@173 Build validation from small, typed pieces.
+@174 Compose instead of repeating.
+@175 Types follow checks.
+@176 Snap checkers together.
+@177 Check once, trust afterwards.
+@178 TypeScript learns as you check.
+@179 Composable runtime validation.
+@180 Predicates preserve narrowing.
+@181 Schemas generalise this.
+@182 Small checks that snap together.
+@183 Checkers that snap together like building blocks.
+@184 A **validator** is a type predicate over `unknown`. Small ones combine into bigger ones:⏎⏎⟦F1⟧⏎⏎Each combination both checks at runtime *and* tells TypeScript the resulting type.
+@185 A checker answers "is this the right kind?" and teaches TypeScript at the same time.⏎⏎Small checkers snap together: a "list of numbers" checker is made from a "number" checker.
+@186 Validators as predicates compose via higher-order functions (`arrayOf`, `optional`, `union`, `object`); the static type flows from the combinators, so runtime checks and types cannot drift. This is the core idea of schema libraries; Module 19 builds the `Infer<typeof schema>` side of it.⏎⏎Prefer returning parsed values (or `Result`) over booleans when you need error messages or transformations.
+@187 Write `arrayOf`: it turns a validator for `T` into a validator for `T[]`.
+@188 Make `arrayOf`: it turns a "number checker" into a "list of numbers checker".
+@189 Return `(value): value is T[] => Array.isArray(value) && value.every(item)`.
+@190 Give back a new checker: is it a list, and does every item pass `item`?
+@191 The returned function is itself a validator, so it narrows, and can be composed again (`arrayOf(arrayOf(isNumber))`).
+@192 The new checker teaches TypeScript too, and can be snapped onto yet another.
+@193 Higher-order predicates preserve narrowing through composition.
+@194 narrows to number[]
+@195 nests
+@196 numbers pass
+@197 a string fails
+@198 not an array
+@199 Write `optional`: a validator that also accepts `undefined`.
+@200 Make `optional`: a checker that also says yes to `undefined`.
+@201 `value === undefined || item(value)`.
+@202 Say yes if it is `undefined`, otherwise ask `item`.
+@203 `null` is not `undefined`: an optional field may be missing, but not `null` unless you say so.
+@204 Missing is fine; `null` is something else.
+@205 Distinguish absent from null; model `nullable` separately.
+@206 undefined passes
+@207 a string passes
+@208 null fails
+@209 A validator is a type predicate over `unknown`.
+@210 Higher-order functions combine validators.
+@211 The type comes from the validator, so they cannot disagree.
+@212 Checkers answer and teach at the same time.
+@213 Small checkers snap into big ones.
+@214 TypeScript learns from all of them.
+@215 Composable predicates.
+@216 One source for runtime and static types.
+@217 The basis of schema libraries.
+@218 Know what `any`, `as`, `!` and `@ts-expect-error` each give up.
+@219 Replace a risky `!` with a real check.
+@220 Migrate JavaScript to TypeScript step by step.
+@221 Know the emergency exits and what they cost.
+@222 Swap a risky shortcut for a real check.
+@223 Move old code to TypeScript bit by bit.
+@224 Escape hatches have a cost.
+@225 Prefer narrowing and validation.
+@226 Leave suppressions that expire.
+@227 Use emergency exits rarely.
+@228 Check instead of trusting.
+@229 Keep notes honest.
+@230 Judgement over dogma.
+@231 Measure and shrink `any`.
+@232 Migration is a process.
+@233 Every escape hatch switches off some checking.
+@234 Emergency exits are useful, but they switch off safety checks.
+@235 - `any`: turns checking off for a value, and everything it touches.⏎- `value as Type`: "trust me, it is this type" (no check at runtime).⏎- `value!`: "trust me, it is not `null` or `undefined`".⏎- `// @ts-expect-error`: "the next line has an error, on purpose"; it complains when the error goes away.⏎- `// @ts-ignore`: silences the next line forever, even after the error is fixed: avoid.⏎⏎When moving JavaScript to TypeScript, these help you start, with `allowJs`, `checkJs` and JSDoc types, then tighten file by file.
+@236 Escape hatches are like emergency exits: sometimes you need one, but an alarm should go off.⏎⏎`!` means "trust me, it is there". If you are wrong, the program breaks when it runs.
+@237 Assertions are unchecked; double assertions (`as unknown as T`) bypass even the overlap check. Prefer narrowing, validation, and precise types; confine unavoidable assertions to small, tested helpers. `@ts-expect-error` is self-cleaning, `@ts-ignore` is not; lint both (`@typescript-eslint/ban-ts-comment` with descriptions).⏎⏎Migration: enable `allowJs` + `checkJs` for JSDoc-typed checking, rename files incrementally, start with non-strict and turn flags on per directory (project references) or per line with `@ts-expect-error` budgets.
+@238 A double `as` compiles. What prints?
+@239 TypeScript was told a lie. What will it show?
+@240 `as` changes nothing at runtime: `count` is still the string `"5"`.
+@241 The label says number, but inside the box it is still the word "5".
+@242 TypeScript believed it was a number; at runtime `"5" + 1` joins text. Assertions never convert values.
+@243 The box really held a word, so 1 was glued on: "51".
+@244 Assertions are erased; `+` with a string operand concatenates.
+@245 `firstLongWord` crashes when no word is long enough. Remove the `!` and return `""` in that case.
+@246 `firstLongWord` breaks when no word is long. Remove the `!` and give back `""` instead.
+@247 Store the `find` result, check for `undefined`, then upper-case it.
+@248 Keep what `find` gives back. If it is `undefined`, give back `""`.
+@249 `find` can return `undefined`, and `!` hid that from TypeScript. A real check handles it.
+@250 The `!` hid a real problem. Checking makes it safe.
+@251 Non-null assertions silence TS2532/18048 without runtime protection.
+@252 finds one
+@253 none long enough
+@254 A test deliberately passes a wrong type. Which comment should mark that line?
+@255 A test breaks the rules on purpose. Which note should go above that line?
+@256 Which one complains if the error later disappears?
+@257 Which note notices when it is not needed any more?
+@258 `@ts-expect-error`: it documents the intended error, and reports when the line stops being an error, so it never goes stale.
+@259 `@ts-expect-error` tells you when it is no longer needed.
+@260 TS2578 on an unused `@ts-expect-error` keeps suppressions honest; the type challenges in this course use exactly that.
+@261 `// @ts-expect-error`
+@262 `// @ts-ignore`
+@263 It silences the line forever, even once the error is gone.
+@264 It hides the line forever, even when it is not needed.
+@265 Cast the argument with `as any`
+@266 That hides the error without saying it is intended, and spreads `any`.
+@267 That hides the problem and spreads "anything goes".
+@268 `any`, `as` and `!` switch checks off; use them rarely and deliberately.
+@269 Replace `!` with a real check where you can.
+@270 Prefer `@ts-expect-error` to `@ts-ignore`.
+@271 Emergency exits switch off safety checks.
+@272 A real check beats "trust me".
+@273 Use the note that tells you when it is not needed.
+@274 Assertions are unchecked: contain them.
+@275 Self-cleaning suppressions only.
+@276 Migrate incrementally with `checkJs`.

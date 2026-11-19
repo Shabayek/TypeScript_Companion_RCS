@@ -1,0 +1,109 @@
+.page {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.title {
+  font-size: var(--text-4);
+  margin: var(--s-1) 0 var(--s-2);
+}
+
+.samples {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.sample {
+  min-height: 40px;
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface);
+  font-size: var(--text--1);
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.sample[data-selected='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--paper);
+}
+
+.loading {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  color: var(--ink-muted);
+}
+
+.note {
+  display: grid;
+  gap: var(--s-2);
+  font-size: var(--text-0);
+  color: var(--ink-soft);
+}
+
+.note strong {
+  color: var(--ink);
+}
+
+/* Gallery and compiler flags. */
+.gallery {
+  display: grid;
+  gap: var(--s-1);
+  max-width: 32rem;
+}
+.galleryLabel {
+  font-weight: 700;
+  font-size: var(--text--1);
+}
+.flags {
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--s-2) var(--s-3);
+  background: var(--surface);
+}
+.flags summary {
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+.flagsHint {
+  margin: var(--s-1) 0;
+  font-size: var(--text--1);
+  color: var(--ink-soft);
+}
+.flagList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-2);
+}
+.flag {
+  display: flex;
+  gap: var(--s-2);
+  align-items: flex-start;
+  min-height: 32px;
+}
+.flag input {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-top: 3px;
+  flex: 0 0 auto;
+}
+.flag code {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.flagNote {
+  display: block;
+  font-size: var(--text--1);
+  color: var(--ink-soft);
+}

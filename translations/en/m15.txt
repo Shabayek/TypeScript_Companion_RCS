@@ -1,0 +1,160 @@
+@1 Describe every change as an action in a union.
+@2 Write a reducer: `(state, action) => newState`.
+@3 Play the to-do list your reducer runs.
+@4 Make a list of everything you can do to your to-dos.
+@5 Write the machine that applies each one.
+@6 Use your own to-do list.
+@7 Actions in, state out.
+@8 Pure reducers can be replayed and tested.
+@9 Derive what you can.
+@10 Messages in, new list out.
+@11 Old lists stay safe.
+@12 Work things out instead of storing them.
+@13 Event-sourced UI state.
+@14 Exhaustive action handling.
+@15 Purity enables replay.
+@16 Every change is an action; one function applies them.
+@17 Every button press becomes a message; one machine handles them all.
+@18 A **reducer** takes the current state and an action, and returns the next state. The actions form a discriminated union:⏎⏎⟦F1⟧⏎⏎The app never changes the list itself: every click becomes an action, and the list on screen is whatever your reducer returns. It is exactly how React’s `useReducer` and Redux work.
+@19 Every button in the to-do app sends a little message: "add this", "tick that", "remove that".⏎⏎Your machine, the *reducer*, reads each message and makes the new list. The screen just shows what your machine made.
+@20 Reducers are pure state transitions over a tagged action union; exhaustive handling means a new action type is a compile error until handled. Replaying the action log reproduces any state (time travel, undo, tests).⏎⏎The game driver folds the player’s whole action log through your reducer on every click, so purity is not optional: a reducer that mutates its input would corrupt the replay.
+@21 Write `reducer`: `add` appends a new todo (id = highest id + 1, starting at 1), `toggle` flips `done`, `remove` deletes by id, `clearDone` removes finished ones. Never change the old list.
+@22 Make the reducer: "add" puts a new to-do at the end (its id is one more than the biggest so far), "toggle" ticks or unticks, "remove" deletes one, "clearDone" removes the ticked ones.
+@23 `switch (action.type)`. `add`: find the highest id with `reduce`, then spread in a new todo. `toggle`: `map`. `remove` and `clearDone`: `filter`.
+@24 Check `action.type`. For "add", find the biggest id and add one. For "toggle", use `map`. For "remove" and "clearDone", use `filter`.
+@25 Each case returns a new array and never touches the old one, so the game can replay every action from the start.
+@26 Your machine never changes the old list. It always makes a new one.
+@27 Each branch is a pure transformation; the exhaustive switch over the action union needs no default. Deriving the next id from the data keeps the reducer free of hidden counters.
+@28 add to an empty list
+@29 ids keep growing
+@30 toggle
+@31 remove
+@32 clear done
+@33 the old list is untouched
+@34 Write `summary`: `"2 of 3 done"`, or `"Nothing to do!"` for an empty list.
+@35 Make `summary` say "2 of 3 done", or "Nothing to do!" when the list is empty.
+@36 Count the done ones with `filter(...).length`.
+@37 Count the ticked ones, then make the sentence.
+@38 A derived value: computed from the list, never stored next to it.
+@39 It is worked out from the list each time, so it is always right.
+@40 Derived state computed on demand cannot drift from its source.
+@41 some done
+@42 empty
+@43 Play: every click is an action for your reducer.
+@44 Play with your to-do list! Every click goes through your reducer.
+@45 Run it: the driver folds the action log through your reducer.
+@46 The short version.
+@47 What you learned.
+@48 Model changes as a union of actions.
+@49 A reducer returns the next state without changing the old one.
+@50 The screen shows whatever the reducer returns.
+@51 Every button sends a message.
+@52 The reducer makes a new list from each message.
+@53 You built a real to-do app!
+@54 Reducers: pure, exhaustive, replayable.
+@55 Derive ids and summaries from state.
+@56 The pattern behind `useReducer` and Redux.
+@57 Keep stock in a `Map<string, number>`.
+@58 Restock without changing the old map.
+@59 Report a failed sale as a `Result` instead of throwing.
+@60 Keep count of what is on the shelves.
+@61 Add more stock.
+@62 Say "sorry, not enough!" the safe way.
+@63 Keyed collections for inventories.
+@64 Copy on write.
+@65 Failures as values.
+@66 Your shop counts everything.
+@67 New copies for every change.
+@68 Polite answers when things run out.
+@69 Map-based domain modelling.
+@70 Immutable updates on Maps.
+@71 Errors as values at the API.
+@72 A shop is a map from product to count.
+@73 Your shop keeps a count of each thing on the shelves.
+@74 The stock is a `Map<string, number>`. Two operations change it:⏎⏎⟦F1⟧⏎⏎Selling can fail (not enough on the shelf). That is an expected, everyday outcome, so it comes back as a `Result` rather than an exception. Both functions return a **new** map.
+@75 Your shop has a chest of drawers: one drawer per product, with a number inside.⏎⏎When someone buys more than you have, the shop does not crash. It says politely: "Sorry, only 2 left."
+@76 `ReadonlyMap` in the signature documents and enforces non-mutation; `new Map(stock)` copies before `set`. A `Result` makes insufficient stock part of `sell`’s type, so callers handle it.⏎⏎Copying the whole map per operation is O(n); for large inventories use a persistent map or keep mutation local behind an API. The types stay the same.
+@77 Write `restock`: a new map with `amount` added to the item (starting from 0 for new items).
+@78 Make `restock` put more of something on the shelf, in a new map.
+@79 Copy with `new Map(stock)`, then `set(item, (stock.get(item) ?? 0) + amount)`.
+@80 Make a copy with `new Map(stock)`. Then put in the old number (or 0) plus the new amount.
+@81 `new Map(stock)` copies every entry, so the old map is untouched.
+@82 The copy gets the change; the old chest stays the same.
+@83 `ReadonlyMap` has no `set`, so the copy is required to compile.
+@84 adds to existing
+@85 a new item
+@86 the old map is unchanged
+@87 Write `sell`: if there is enough, `{ ok: true, value: newStock }`; otherwise `{ ok: false, error: "Only N left" }`.
+@88 Make `sell`: if there is enough, give back the new stock; if not, a polite "Only N left".
+@89 Read `have` with `?? 0`. If `have < amount`, return the error; otherwise copy, set `have - amount`, and return ok.
+@90 Check how many you have (or 0). Not enough? Say so. Enough? Make a copy with fewer.
+@91 Callers must check `ok` before using the new stock, so "not enough" can never be ignored by accident.
+@92 Whoever uses `sell` has to read the label first. No surprise crashes.
+@93 The failure mode is in the signature; the success branch returns a fresh map, so a failed sale leaves state untouched by construction.
+@94 a sale
+@95 not enough
+@96 unknown item
+@97 Try it: a day at the shop. Change the orders and run it again.
+@98 Try it: run a day at your shop. Change the orders and see what happens!
+@99 `Map<string, number>` keeps counts by name.
+@100 Copy with `new Map(old)` before changing.
+@101 Expected failures come back as a `Result`.
+@102 A chest of drawers keeps the counts.
+@103 Changes make a new chest.
+@104 "Not enough" is a polite answer, not a crash.
+@105 `ReadonlyMap` enforces copy-on-write.
+@106 `Result` for domain failures.
+@107 `Object.fromEntries` to serialise.
+@108 Describe type advantages with a `Record<Element, Record<Element, number>>` table.
+@109 Compute an attack as a pure function returning a new fighter.
+@110 Play a battle where your functions do the maths.
+@111 Make a table of what beats what.
+@112 Work out how much an attack hurts.
+@113 Battle a rival with your own code!
+@114 Put rules in data, typed to be complete.
+@115 Keep turns pure.
+@116 Games are loops over pure functions.
+@117 Tables make rules easy.
+@118 Copies keep fighters safe.
+@119 Your code runs the game.
+@120 Data-driven rules.
+@121 Deterministic simulation.
+@122 Functional core, imperative shell.
+@123 Rules as data, turns as functions.
+@124 Fire beats leaf, leaf beats water, water beats fire.
+@125 The rules of the game live in a lookup table typed so that no pair can be forgotten:⏎⏎⟦F1⟧⏎⏎An attack is a function from the attacker, the move and the defender to a **new** defender with fewer hit points. The game calls it every turn.
+@126 Each fighter belongs to an element: fire, water or leaf. Fire beats leaf, leaf beats water, water beats fire, like rock-paper-scissors!⏎⏎A table says how strong each attack is against each element. Your code reads the table and works out the damage.
+@127 A nested `Record` over a finite union is an exhaustive 2-D table: adding an element forces a full row and column. Damage is a pure function of inputs; the driver holds the only mutable state (the two fighters and a seeded RNG for the rival), so every battle is reproducible from `{ moves, seed }`.
+@128 Write `effectiveness`: look up how strong a move is against an element.
+@129 Make `effectiveness` read the table: how strong is this move against that element?
+@130 `chart[move][defender]`: the row is the move, the column is the defender.
+@131 Look up the move’s row, then the defender’s column: `chart[move][defender]`.
+@132 Because both keys are `Element`, every lookup is guaranteed to find a number: no `undefined`, no missing pair.
+@133 The table has every pair, so the answer is always there.
+@134 A `Record` over a finite union types the lookup as `number` soundly, unlike an index signature.
+@135 fire on leaf
+@136 fire on water
+@137 same element
+@138 Write `attack`: damage = attacker’s `power` × effectiveness, rounded; return the defender with that much less `hp` (never below 0).
+@139 Make `attack`: the damage is the attacker’s power times how strong the move is, rounded. Give back the defender with that many fewer hit points (but never below 0).
+@140 `Math.round(attacker.power * multiplier)` is the damage; return `{ ...defender, hp: Math.max(0, defender.hp - damage) }`.
+@141 Work out the damage, then give back a copy of the defender with fewer hit points (at least 0).
+@142 A pure function: the same fighters and multiplier always give the same result, which makes the battle replayable.
+@143 Same inputs, same result: the game can replay every turn exactly.
+@144 Purity plus a seeded RNG in the driver make battles deterministic and testable.
+@145 a strong hit
+@146 a weak hit, rounded
+@147 never below zero
+@148 the defender object is unchanged
+@149 Battle! Pick your move each turn; your functions do the maths.
+@150 Battle time! Pick a move each turn. Your code decides the damage.
+@151 Run it: each move goes through your `effectiveness` and `attack`.
+@152 A `Record<Element, Record<Element, number>>` holds every rule.
+@153 An attack is a pure function returning a new fighter.
+@154 The game loop just calls your functions.
+@155 A table says what beats what.
+@156 Your code works out the damage.
+@157 You built a battle game!
+@158 Exhaustive lookup tables over unions.
+@159 Pure transitions plus a seeded RNG are reproducible.
+@160 The driver is the only stateful layer.

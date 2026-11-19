@@ -1,0 +1,325 @@
+@1 First Contact
+@2 What code is, and why TypeScript is worth the labels.
+@3 Values & Names
+@4 Text, numbers, and the difference between const and let.
+@5 Decisions
+@6 Comparisons, branches, and choosing between paths.
+@7 Collections
+@8 Arrays, objects, and the three methods that do most of the work.
+@9 Functions
+@10 Reusable recipes, arrow functions, and callbacks.
+@11 Types That Talk
+@12 Shapes, unions, narrowing, and one honest generic.
+@13 Programs That Grow
+@14 Modules, failures, promises, and classes with judgement.
+@15 Studio
+@16 Five small projects, built from everything before.
+@17 Functions with Types
+@18 Function types, overloads, and checks that teach TypeScript.
+@19 Shapes in Depth
+@20 Tuples, exact values, dictionaries, intersections and satisfies.
+@21 Modelling with Unions
+@22 Tagged unions, exhaustive checks, results and state machines.
+@23 Generics in Depth
+@24 Constraints, keyof, generic classes and how inference works.
+@25 The Type Toolbox
+@26 Utility types that build new types from the ones you have.
+@27 Data & Async
+@28 Folding, immutable updates, generators, promises and untrusted data.
+@29 Classes & Structure
+@30 Privacy, accessors, contracts, and building with parts.
+@31 Intermediate Studio
+@32 A to-do app, a shop and a battle game, typed end to end.
+@33 Type-Level Thinking
+@34 Conditional, mapped and template literal types: programs that run on types.
+@35 Advanced Type Patterns
+@36 Recursion, brands, variance, inference control and typed events.
+@37 Strictness & Tooling
+@38 Compiler flags, declarations, modules, validation and escape hatches.
+@39 Advanced Studio
+@40 A schema library, a typed router, a state machine engine and an adventure.
+@41 What is a program?
+@42 What a program actually is
+@43 Programs as instructions
+@44 Why the extra labels?
+@45 Why TypeScript exists
+@46 What TypeScript adds to JavaScript
+@47 Your first program
+@48 Your first running program
+@49 Hello, world — and the first failure
+@50 Errors are directions
+@51 Reading errors without fear
+@52 Diagnosing the first error
+@53 Strings: the words
+@54 Strings, and what you can do with them
+@55 String values and operations
+@56 Numbers that count
+@57 Numbers and arithmetic
+@58 Numeric values, operators and rounding
+@59 Boxes that change, boxes that do not
+@60 let, const, and letting TypeScript guess
+@61 Bindings, immutability and inference
+@62 Text with holes in it
+@63 Template literals
+@64 Template literals and interpolation
+@65 Word tools
+@66 String methods
+@67 String methods and immutability
+@68 Is it bigger? Is it the same?
+@69 Comparisons that answer true or false
+@70 Equality and relational operators
+@71 Choosing a path
+@72 if, else if, else
+@73 Branching and early exit
+@74 What counts as yes?
+@75 Truthiness and the ternary
+@76 Coercion, falsy values and conditional expressions
+@77 Many doors, and one early exit
+@78 switch, default, and guard clauses
+@79 Multi-way branching and early returns
+@80 Lists of things
+@81 Arrays: ordered lists
+@82 Arrays, indexing and basic operations
+@83 Doing it again
+@84 Loops: doing things again
+@85 Loops: for, for...of and while
+@86 Bundles of facts
+@87 Objects and properties
+@88 Object literals and property access
+@89 Unpacking and copying
+@90 Destructuring and spread
+@91 Destructuring, rest and immutable updates
+@92 Three helpful list tools
+@93 map, filter and find
+@94 Higher-order array methods
+@95 More list tools
+@96 The array toolkit: sort, some, every, reduce
+@97 Sorting, predicates and folding
+@98 Labelled drawers and no-copies bags
+@99 Map and Set
+@100 Map, Set and keyed collections
+@101 Little machines you can reuse
+@102 Your first useful functions
+@103 Function declarations, parameters and returns
+@104 The short way to write a machine
+@105 Return types and arrow functions
+@106 Arrow functions and explicit return types
+@107 Optional and endless inputs
+@108 Default values, optional parameters and rest
+@109 Defaults, optional parameters, rest args
+@110 Handing a machine to a machine
+@111 Callbacks and higher-order functions
+@112 Functions as values, callbacks and composition
+@113 Naming a shape
+@114 type and interface
+@115 type aliases versus interfaces
+@116 This or that
+@117 Unions, literal types and narrowing
+@118 Union types and control-flow narrowing
+@119 Empty boxes and mystery boxes
+@120 Optional values, readonly, and unknown
+@121 Optionality, readonly, and the any/unknown distinction
+@122 One tool, many kinds
+@123 Generics without the theory
+@124 Type parameters in practice
+@125 Splitting a big program into rooms
+@126 Modules: import and export
+@127 Module boundaries and explicit exports
+@128 When things go wrong
+@129 Errors and try / catch
+@130 Failure handling with try/catch
+@131 Waiting without stopping
+@132 Promises and async / await
+@133 Promises, async functions and ordering
+@134 Blueprints for objects
+@135 Classes, when they help, when they do not
+@136 Classes, encapsulation and judgement
+@137 Build a quiz game
+@138 Project: a quiz scorer
+@139 Project: quiz scoring and percentages
+@140 Build a budget tracker
+@141 Project: a budget tracker
+@142 Project: totals with reduce
+@143 Build a story machine
+@144 Project: a story generator
+@145 Project: deterministic generation
+@146 Guide the robot to the star
+@147 Project: a robot maze
+@148 Project: grid movement and collision checks
+@149 Look after a pet
+@150 Project: a virtual pet
+@151 Project: state transitions with immutable updates
+@152 Describing a machine’s plug
+@153 Function types and callbacks
+@154 Function type expressions and contextual typing
+@155 One machine, two different answers
+@156 Function overloads
+@157 Overload signatures and when to avoid them
+@158 Teaching TypeScript to look inside
+@159 Type predicates: value is Type
+@160 User-defined type guards
+@161 Stop if something is wrong
+@162 Assertion functions
+@163 Assertion signatures: asserts value is T
+@164 Short fixed lists, and lists you cannot change
+@165 Tuples and readonly arrays
+@166 Tuples, labelled elements and readonly arrays
+@167 Freezing the exact words
+@168 as const and literal types
+@169 Const assertions and deriving unions from values
+@170 Dictionaries with any words
+@171 Index signatures and Record
+@172 Index signatures, Record<K, V> and unchecked index access
+@173 Both at once
+@174 Intersections and extending
+@175 Intersection types versus interface extension
+@176 Checked, but still exact
+@177 The satisfies operator
+@178 satisfies: validation without widening
+@179 Name tags on every kind of thing
+@180 Discriminated unions
+@181 Tagged unions and narrowing by discriminant
+@182 Did we forget anyone?
+@183 Exhaustive checks with never
+@184 Exhaustiveness checking with never
+@185 Numbered lists and lists of words
+@186 Enums versus literal unions
+@187 Enums, const objects and literal unions
+@188 A parcel that says “it worked” or “it failed”
+@189 A Result type instead of throwing
+@190 Errors as values with Result<T, E>
+@191 Traffic lights for your code
+@192 Small state machines
+@193 Finite state machines with discriminated unions
+@194 Any kind, as long as it can…
+@195 Generic constraints
+@196 Constraining type parameters with extends
+@197 The list of labels, and what is behind each
+@198 keyof and indexed access types
+@199 keyof, T[K] and key-safe accessors
+@200 A box that remembers what it holds
+@201 Generic interfaces and classes
+@202 Generic interfaces, classes and containers
+@203 Two kinds at once
+@204 Several type parameters, and defaults
+@205 Multiple type parameters and defaults
+@206 How TypeScript guesses the kind
+@207 How generic inference works
+@208 Type-argument inference and const type parameters
+@209 Shape changers: maybe, must and locked
+@210 Partial, Required and Readonly
+@211 Modifier utilities: Partial, Required, Readonly
+@212 Keep some labels, drop others
+@213 Pick and Omit
+@214 Pick, Omit and deriving view types
+@215 Reading a machine’s label
+@216 ReturnType, Parameters and Awaited
+@217 Function utilities: ReturnType, Parameters, Awaited
+@218 Sieves for types
+@219 Exclude, Extract and NonNullable
+@220 Filtering unions: Exclude, Extract, NonNullable
+@221 Shape machines working together
+@222 Combining utility types
+@223 Composing utilities into API types
+@224 Sorting things into piles
+@225 reduce, properly typed
+@226 Folding into objects with typed accumulators
+@227 Change by making a new copy
+@228 Immutable updates
+@229 Immutable updates of nested data
+@230 Machines that hand out one thing at a time
+@231 Iterators and generators
+@232 Iteration protocols and generator functions
+@233 Waiting for many things at once
+@234 Promise.all, allSettled, race and any
+@235 Promise combinators and concurrency
+@236 Try again when things fail
+@237 Async errors and retries
+@238 Error handling and retries in async code
+@239 Checking parcels from outside
+@240 Checking unknown data safely
+@241 Validating untrusted data at the boundary
+@242 Secret drawers in a class
+@243 Access modifiers and #private
+@244 public, private, protected, readonly and #private
+@245 Clever class shortcuts
+@246 Parameter properties, getters and static
+@247 Parameter properties, accessors and static members
+@248 Promises a class must keep
+@249 implements and abstract classes
+@250 Interfaces, implements and abstract base classes
+@251 Building with blocks instead of family trees
+@252 Composition over inheritance
+@253 Composition, dependency injection and small interfaces
+@254 Build a to-do list
+@255 Project: a typed to-do reducer
+@256 Project: a reducer over a discriminated action union
+@257 Run a little shop
+@258 Project: a shop inventory with Map
+@259 Project: inventory with Map and Result
+@260 Fire, water, leaf: a battle game
+@261 Project: a turn-based battle
+@262 Project: lookup tables and state transitions for a battle
+@263 The sorting hat for types
+@264 Conditional types
+@265 Conditional types: T extends U ? X : Y
+@266 The type detective
+@267 infer: pulling types out
+@268 Extracting types with infer
+@269 The hat sorts each one separately
+@270 Distributive conditional types
+@271 Distribution over unions, and how to stop it
+@272 The stamp machine
+@273 Mapped types
+@274 Mapped types and modifiers
+@275 Renaming labels with the stamp machine
+@276 Key remapping with as
+@277 Key remapping and filtering in mapped types
+@278 The label maker
+@279 Template literal types
+@280 Template literal types and string parsing
+@281 Dolls inside dolls
+@282 Recursive types
+@283 Recursive types: Json, DeepReadonly and depth
+@284 Name tags for look-alike values
+@285 Branded types
+@286 Branded (nominal) types for look-alike primitives
+@287 Which boxes fit into which
+@288 Variance: when generic types fit
+@289 Variance, soundness and in/out annotations
+@290 Do not guess from that one!
+@291 NoInfer and const type parameters
+@292 Controlling inference: NoInfer<T> and const T
+@293 Three ways to say what comes out
+@294 Generic, overload or conditional return types
+@295 Choosing between generics, overloads and conditional return types
+@296 A message board with rules
+@297 A type-safe event emitter
+@298 A type-safe event emitter from an event map
+@299 Stricter rules that catch more mistakes
+@300 Strict compiler flags
+@301 Beyond strict: the flags worth turning on
+@302 Labels for code without labels
+@303 Declaration files and declare
+@304 Ambient declarations and .d.ts files
+@305 How files find each other
+@306 Type-only imports and ES modules
+@307 Modules, type-only imports and resolution
+@308 Reusable checkers
+@309 Composable runtime validators
+@310 Composable validators: types and checks from one source
+@311 Emergency exits, used with care
+@312 Escape hatches: any, as, ! and @ts-expect-error
+@313 Escape hatches and migrating JavaScript with judgement
+@314 Build a shape checker that teaches TypeScript
+@315 Project: a tiny validation library
+@316 Project: a zod-style schema library with Infer
+@317 A map that reads addresses
+@318 Project: a typed router
+@319 Project: route parameters parsed at the type level
+@320 A machine that builds traffic lights
+@321 Project: a type-safe state machine engine
+@322 Project: a generic state machine with inferred states and events
+@323 Write a text adventure
+@324 Project: a text adventure engine
+@325 Project: a command parser and world model for a text adventure

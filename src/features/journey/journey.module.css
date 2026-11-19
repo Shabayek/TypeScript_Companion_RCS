@@ -1,0 +1,538 @@
+/* ------------------------------------------------------------------ *
+ * The journey map, track tabs, lesson rows and module pages.
+ * Logical properties throughout (inline-start/end), so right-to-left
+ * languages mirror the layout without extra rules.
+ * ------------------------------------------------------------------ */
+
+/* ------------------------------ tabs ------------------------------ */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+  padding: var(--s-1);
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  margin-block-end: var(--s-4);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tab {
+  flex: 1 1 auto;
+  min-height: 44px;
+  padding: 0 var(--s-4);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tab[aria-selected='true'] {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+
+.trackLede {
+  color: var(--ink-muted);
+  font-size: var(--text--1);
+  margin: 0 0 var(--s-3);
+}
+
+/* ----------------------------- modules ---------------------------- */
+
+.moduleList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-3);
+}
+
+.module {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  padding: var(--s-4);
+  border-inline-start: 4px solid var(--module-accent, var(--accent));
+}
+
+.module[data-current='true'] {
+  border-color: color-mix(in srgb, var(--module-accent, var(--accent)) 45%, var(--line));
+  border-inline-start-color: var(--module-accent, var(--accent));
+}
+
+.moduleHead {
+  position: relative;
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+}
+
+.moduleText {
+  display: grid;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.moduleNumber {
+  font-size: var(--text--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--module-accent, var(--accent));
+}
+
+.moduleTitle {
+  font-size: var(--text-1);
+  margin: 0;
+}
+
+/* The whole header is the tap target; the button's box is stretched over it. */
+.moduleToggle {
+  all: unset;
+  cursor: pointer;
+  color: var(--ink);
+  font-weight: inherit;
+  overflow-wrap: anywhere;
+}
+
+.moduleToggle::after {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--s-2));
+  border-radius: var(--r-md);
+}
+
+.moduleToggle:focus-visible {
+  outline: none;
+}
+
+.moduleToggle:focus-visible::after {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.moduleHead:hover .moduleToggle {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.moduleTagline {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+.moduleSummary {
+  font-size: var(--text--1);
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.current {
+  font-size: var(--text--1);
+  color: var(--module-accent, var(--accent));
+  font-weight: 700;
+}
+
+.chevron {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border-inline-end: 2.5px solid var(--ink-muted);
+  border-block-end: 2.5px solid var(--ink-muted);
+  transform: rotate(45deg);
+  margin-inline: var(--s-2);
+  margin-block-start: -6px;
+  transition: transform var(--dur-mid) var(--ease);
+}
+
+.module[data-expanded='true'] .chevron {
+  transform: rotate(225deg);
+  margin-block-start: 6px;
+}
+
+.tess {
+  position: absolute;
+  inset-block-start: calc(-1 * var(--s-6));
+  inset-inline-end: calc(-1 * var(--s-2));
+  pointer-events: none;
+}
+
+/* ------------------------------ lessons --------------------------- */
+
+.lessonList {
+  list-style: none;
+  margin: var(--s-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.lesson {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  color: var(--ink);
+  border: 1.5px solid transparent;
+  min-height: 52px;
+}
+
+a.lesson:hover {
+  background: var(--surface-2);
+}
+
+a.lesson[data-next='true'] {
+  border-color: color-mix(in srgb, var(--warm) 55%, transparent);
+  background: color-mix(in srgb, var(--warm-soft) 55%, var(--surface));
+}
+
+a.lesson[data-done='true'] .lessonIndex {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+/* Open only because every lesson is unlocked: a dotted ring, still inviting. */
+a.lesson[data-ahead='true'] .lessonIndex {
+  background: transparent;
+  border: 1.5px dotted var(--module-accent, var(--accent));
+  color: var(--ink-soft);
+}
+
+/* Locked lessons stay readable: their text says what unlocks them. Fading
+   them with opacity took the text down to 1.9:1. The dashed badge marks them. */
+.lesson[data-locked='true'] {
+  cursor: not-allowed;
+  color: var(--ink-soft);
+}
+
+.lesson[data-locked='true'] .lessonIndex {
+  background: transparent;
+  border: 1.5px dashed var(--line-strong);
+}
+
+.lessonIndex {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--ink-muted);
+  font-size: var(--text--1);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.lessonBody {
+  display: grid;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.lessonTitle {
+  font-weight: 600;
+  font-size: var(--text-0);
+  overflow-wrap: anywhere;
+}
+
+.lessonMeta {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+}
+
+.overviewLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-block-start: var(--s-2);
+  padding-inline: var(--s-3);
+  font-weight: 700;
+  font-size: var(--text--1);
+  color: var(--accent-strong);
+}
+
+.overviewLink::after {
+  content: '→';
+  margin-inline-start: var(--s-1);
+}
+
+:root[dir='rtl'] .overviewLink::after {
+  content: '←';
+}
+
+/* ------------------------- Story: a winding path ------------------ */
+
+.moduleList[data-variant='story'] {
+  gap: var(--s-6);
+  padding-block-start: var(--s-4);
+}
+
+.moduleList[data-variant='story'] .module {
+  width: min(90%, 34rem);
+  border-inline-start-width: 1px;
+  border-radius: var(--r-xl);
+  border-top: 6px solid var(--module-accent, var(--accent));
+}
+
+.moduleList[data-variant='story'] .module[data-side='end'] {
+  justify-self: end;
+}
+
+/* The dotted trail from one stop to the next. */
+.moduleList[data-variant='story'] .module:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 100%;
+  height: var(--s-6);
+  width: 40%;
+  border: 3px dotted var(--line-strong);
+  border-block-start: 0;
+  pointer-events: none;
+}
+
+.moduleList[data-variant='story'] .module[data-side='start']:not(:last-child)::after {
+  inset-inline-start: 50%;
+  border-inline-start: 0;
+  border-end-end-radius: var(--r-xl);
+}
+
+.moduleList[data-variant='story'] .module[data-side='end']:not(:last-child)::after {
+  inset-inline-end: 50%;
+  border-inline-end: 0;
+  border-end-start-radius: var(--r-xl);
+}
+
+.moduleList[data-variant='story'] .moduleTitle {
+  font-size: var(--text-2);
+}
+
+.moduleList[data-variant='story'] .lessonIndex {
+  width: 42px;
+  height: 42px;
+  font-size: var(--text-0);
+  background: color-mix(in srgb, var(--module-accent, var(--accent)) 14%, var(--surface));
+  color: var(--ink);
+}
+
+.moduleList[data-variant='story'] .lesson {
+  min-height: 60px;
+}
+
+.moduleList[data-variant='story'] .lessonTitle {
+  font-size: var(--text-1);
+}
+
+:root[data-motion='full'] .moduleList[data-variant='story'] a.lesson[data-next='true'] .lessonIndex {
+  animation: stone-bob 1.8s var(--ease) infinite;
+}
+
+@keyframes stone-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ------------------------- Pro: a dense list ---------------------- */
+
+.moduleList[data-variant='pro'] {
+  gap: var(--s-2);
+}
+
+.moduleList[data-variant='pro'] .module {
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-md);
+  box-shadow: none;
+}
+
+.moduleList[data-variant='pro'] .moduleText {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: var(--s-2);
+}
+
+.moduleList[data-variant='pro'] .moduleTitle {
+  font-size: var(--text-0);
+}
+
+.moduleList[data-variant='pro'] .moduleSummary,
+.moduleList[data-variant='pro'] .current {
+  grid-column: 1 / -1;
+  font-weight: 500;
+}
+
+.moduleList[data-variant='pro'] .lessonList {
+  margin-block-start: var(--s-2);
+  gap: 0;
+}
+
+.moduleList[data-variant='pro'] .lesson {
+  min-height: 44px;
+  padding-block: var(--s-1);
+}
+
+.moduleList[data-variant='pro'] .lessonIndex {
+  width: 26px;
+  height: 26px;
+  font-size: 0.75rem;
+}
+
+.moduleList[data-variant='pro'] .lessonTitle {
+  font-weight: 500;
+}
+
+/* ----------------------------- module page ------------------------ */
+
+.page {
+  display: grid;
+  gap: var(--s-5);
+  padding-top: var(--s-2);
+}
+
+.crumb {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  font-size: var(--text--1);
+  color: var(--accent-strong);
+}
+
+.crumb::before {
+  content: '←';
+  margin-inline-end: var(--s-1);
+}
+
+:root[dir='rtl'] .crumb::before {
+  content: '→';
+}
+
+.hero {
+  display: grid;
+  gap: var(--s-3);
+  border-inline-start: 5px solid var(--module-accent, var(--accent));
+}
+
+.heroTop {
+  display: flex;
+  gap: var(--s-4);
+  align-items: center;
+}
+
+.heroTitle {
+  font-size: var(--text-4);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.heroTagline {
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-5);
+  margin: 0;
+}
+
+.stats dt {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.stats dd {
+  margin: 0;
+  font-size: var(--text-3);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.lockedNote {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.ideas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  list-style: none;
+  margin: var(--s-2) 0 0;
+  padding: 0;
+}
+
+.idea {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 var(--s-3);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--text--1);
+}
+
+.idea:hover {
+  border-color: var(--module-accent, var(--accent));
+}
+
+.sectionTitle {
+  font-size: var(--text-2);
+  margin: 0;
+}
+
+.sectionNote {
+  margin: var(--s-1) 0 0;
+  color: var(--ink-muted);
+  font-size: var(--text--1);
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+
+.pagerLink {
+  display: grid;
+  gap: 2px;
+  min-height: 44px;
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  max-width: 48%;
+}
+
+.pagerLink[data-dir='next'] {
+  margin-inline-start: auto;
+  text-align: end;
+}
+
+.pagerLabel {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+  font-weight: 600;
+}

@@ -1,0 +1,216 @@
+@1 Write schemas that check values at runtime.
+@2 Combine them into an `object` schema.
+@3 Get the static type from a schema with `Infer<typeof schema>`.
+@4 Make checkers for words and numbers.
+@5 Combine them into a shape checker.
+@6 Let TypeScript read the shape from your checker.
+@7 Derive static types from runtime schemas.
+@8 Validate at the boundary, trust afterwards.
+@9 Keep the unsafe part tiny.
+@10 Describe once, check and type.
+@11 Check data from outside.
+@12 Your own mini zod!
+@13 Type-level and value-level in lockstep.
+@14 Combinator design.
+@15 Trust boundaries made explicit.
+@16 One definition, two results: a check and a type.
+@17 Describe a shape once, and get both a checker and a type.
+@18 Libraries like zod let you write a schema once and get both a runtime parser and a TypeScript type:⏎⏎⟦F1⟧⏎⏎You will build the core: `Schema<T>` is an object with `parse(value: unknown): T`. Primitive schemas check with `typeof`; `object` checks each field with its schema; `Infer` reads `T` back out with `infer`.
+@19 You will build a shape checker. You describe a shape once: "a name that is a word, an age that is a number".⏎⏎Your checker looks at real data and says whether it fits. And TypeScript reads the same description to learn the type. One description, two jobs!
+@20 `Schema<T>` is covariant in `T` (it only produces `T`), so `Schema<string>` fits `Schema<unknown>`. `object<Shape extends Record<string, Schema<unknown>>>(shape)` returns `Schema<{ [K in keyof Shape]: Infer<Shape[K]> }>`: a mapped type over the shape, extracting each field’s type with a conditional `infer`.⏎⏎The single cast inside `object` is the trust boundary: the loop has validated every field, which the type system cannot see. Real libraries add error paths, optional fields, unions, and transformations on the same skeleton.
+@21 Write `string()` and `number()`: schemas whose `parse` returns the value if it has the right type, and throws a `TypeError` ("Expected a string" / "Expected a number") otherwise.
+@22 Make `string()` and `number()`: checkers that give the value back if it is the right kind, or throw a `TypeError` if not.
+@23 In `parse`, check `typeof value`; after the check, `value` is narrowed, so you can return it.
+@24 Check `typeof value`. If it is wrong, throw. If it is right, give it back.
+@25 The starter converted instead of checking: `Number("36")` quietly accepts text. A validator must refuse wrong input, not fix it silently.
+@26 The starter changed the value instead of checking it. A checker must say "no" to wrong things.
+@27 Coercion hides malformed input; explicit refusal (or an explicit `coerce` schema) keeps data contracts honest.
+@28 a string passes
+@29 a number is refused
+@30 a number passes
+@31 text is refused
+@32 Write `Infer<S>` and `object(shape)`: it checks each field with its schema, and its type is built from the fields’ types.
+@33 Make `Infer` (it reads the type out of a checker) and `object` (it checks every field of a shape).
+@34 `type Infer<S> = S extends Schema<infer T> ? T : never;` and `object` returns `Schema<{ [K in keyof Shape]: Infer<Shape[K]> }>`.
+@35 Use the detective for `Infer`, and a stamp machine over the shape’s keys for `object`’s type.
+@36 In `parse`: reject non-objects, loop `for (const key in shape)`, parse `record[key]` with `shape[key]`, collect into `out`, and return `out as …` (one cast).
+@37 Check it is an object, then check each field with its own checker, and collect the results.
+@38 The mapped type turns `{ name: Schema<string>; age: Schema<number> }` into `{ name: string; age: number }`; the loop does the same thing at runtime. One description, two results.
+@39 The stamp machine and the detective build the type; the loop checks the data. Both read the same shape.
+@40 A homomorphic-style mapped type with `Infer<Shape[K]>` mirrors the runtime loop; unknown keys are dropped, which is zod’s default “strip” behaviour.
+@41 Infer of a primitive
+@42 the object type
+@43 parse returns the type
+@44 only schemas as fields
+@45 valid data
+@46 a wrong field
+@47 not an object
+@48 Try it: your library checking real data. Change the JSON and run it again.
+@49 Try it: your checker at work. Change the data and see what happens!
+@50 The short version.
+@51 What you learned.
+@52 A schema is an object with `parse(value: unknown): T`.
+@53 `object` combines field schemas; a mapped type builds its result type.
+@54 `Infer<typeof schema>` reads the type back out.
+@55 You built a checker that teaches TypeScript.
+@56 Small checkers combine into shape checkers.
+@57 One description, two jobs.
+@58 Schema combinators mirror type constructors.
+@59 One audited cast at the trust boundary.
+@60 The design behind zod, valibot and friends.
+@61 Parse every `:param` out of a route string at the type level.
+@62 Build a `Params<"/users/:id">` object type.
+@63 Match real paths at runtime, typed by the pattern.
+@64 Read the labels out of an address, in types.
+@65 Make the shape of what an address gives you.
+@66 Match real addresses.
+@67 Strings can drive types.
+@68 Recursion handles any number of parameters.
+@69 Runtime and types read the same source.
+@70 Addresses with blanks.
+@71 TypeScript reads the blanks.
+@72 A typed router!
+@73 Template-literal parsing.
+@74 Literal-typed APIs.
+@75 One cast at the boundary.
+@76 Route patterns are strings; their parameters can be types.
+@77 An address like "/users/:id" has a blank to fill in.
+@78 Web routers match paths like `/users/42/posts/7` against patterns like `/users/:id/posts/:postId`. With template literal types and recursion, TypeScript can read the parameter names straight out of the pattern:⏎⏎⟦F1⟧⏎⏎Then `match("/users/:id", path)` can return a `Params<"/users/:id">`, so `params.id` is checked and `params.name` is an error.
+@79 An address pattern like "/users/:id" has a blank called `id`. When a real address like "/users/42" comes in, the blank is filled with "42".⏎⏎The detective reads the blanks out of the pattern, one by one, even before the code runs. So TypeScript knows which blanks exist.
+@80 `ParamNames` peels one `:name/` segment per recursion step; the second branch handles the final segment. Each step is a tail position in a union, so depth grows with the number of parameters, well within limits.⏎⏎Frameworks (Express types, React Router, TanStack Router, Hono) use this to type `req.params` from the route literal. The runtime matcher is plain string splitting; the type does the bookkeeping.
+@81 Build `ParamNames<P>`: the union of every `:param` name in the pattern.
+@82 Send the detective through the whole address: find every blank’s name.
+@83 Two branches: a parameter followed by `/` and more (recurse on the rest), or a final parameter.
+@84 Find a blank followed by more address (and keep looking in the rest), or a blank at the very end.
+@85 `P extends `${string}:${infer Name}/${infer Rest}` ? Name | ParamNames<`/${Rest}`> : P extends `${string}:${infer Name}` ? Name : never`.
+@86 The first branch keeps going with the rest; the second catches the last blank.
+@87 The starter’s single pattern captured everything after the first colon ("id/posts/:postId"). Splitting on `/` and recursing reads one parameter at a time.
+@88 The first try grabbed too much. Stopping at the next `/` and looking again finds each blank.
+@89 Template inference is leftmost and shortest for `${string}`, but the last placeholder takes the remainder; recursion on the tail handles arbitrary parameter counts.
+@90 one parameter
+@91 two parameters
+@92 a parameter in the middle
+@93 none
+@94 Write `match(pattern, path)`: the parameters as an object typed `Params<P>`, or `null` if the path does not fit.
+@95 Make `match`: compare a pattern with a real address, and give back the filled-in blanks (or `null`).
+@96 Split both on `/`. Different lengths → `null`. For each part: a `:name` part stores the path part; any other part must be equal.
+@97 Cut both addresses at the `/`. Compare piece by piece: blanks collect the real value, other pieces must match exactly.
+@98 The runtime loop and the type-level recursion read the same pattern, so `found.id` is checked and `found.name` is an error.
+@99 The real matcher and the type both read the same pattern, so they always agree.
+@100 Generic `P` captures the literal; the single cast bridges the runtime record to the computed type.
+@101 typed parameters
+@102 unknown parameters are errors
+@103 matches
+@104 wrong length
+@105 wrong fixed part
+@106 no parameters
+@107 Recursive template literal types parse route patterns.
+@108 `Params<P>` maps parameter names to strings.
+@109 The runtime matcher is typed by the pattern literal.
+@110 The detective reads the blanks from the address.
+@111 TypeScript knows which blanks exist.
+@112 Your matcher fills them in.
+@113 Type-level parsing with recursion.
+@114 Literal-driven APIs.
+@115 How modern routers type params.
+@116 Infer a machine’s states and events from a config object.
+@117 Reject unknown target states with `NoInfer`.
+@118 Run the machine: `send(event)` returns the new state.
+@119 Describe a machine, and let TypeScript learn its states.
+@120 Catch spelling mistakes in the description.
+@121 Press buttons and watch the machine move.
+@122 Let configuration drive types.
+@123 Guard references with `NoInfer`.
+@124 Keep runtime logic tiny.
+@125 Describe, and the engine builds.
+@126 Mistakes are caught early.
+@127 You built a machine-maker!
+@128 Inference-driven DSLs.
+@129 Compile-time validation of configuration.
+@130 Small runtime, strong types.
+@131 One generic engine, any machine.
+@132 A machine that builds other machines.
+@133 Module 10’s state machines were hand-written. An **engine** takes a description and builds the machine:⏎⏎⟦F1⟧⏎⏎TypeScript infers the states (`"closed" | "opened" | "locked"`) from the keys and the events from the inner keys. With `NoInfer`, a typo like `"opned"` as a target is an error instead of a new state.
+@134 You write a description: which situations exist, and which button leads where. The engine turns it into a working machine.⏎⏎TypeScript reads the description too, so it knows every situation and every button, and it catches spelling mistakes.
+@135 `createMachine<S extends string, E extends string>(config: { initial: NoInfer<S>; states: Record<S, Partial<Record<E, NoInfer<S>>>> })`: `S` is inferred only from the `states` keys, `E` from the union of inner keys, and `NoInfer` turns every other state reference into a check.⏎⏎Unknown events are compile errors; events not valid in the current state are ignored at runtime (a legal, typed no-op), matching statechart semantics.
+@136 Write `createMachine`: it infers states and events, rejects unknown targets, and `send(event)` moves to the target state (or stays put).
+@137 Build the engine: `createMachine` learns the situations and buttons; `send` moves the machine (or keeps it where it is).
+@138 Type parameters `S` and `E`; config type `{ initial: NoInfer<S>; states: Record<S, Partial<Record<E, NoInfer<S>>>> }`.
+@139 Use two kinds, `S` (situations) and `E` (buttons), and wrap the places that mention a situation in `NoInfer`.
+@140 Keep `let current: S = config.initial;`. In `send`, read `config.states[current][event]`; if it is defined, move there; return `current`.
+@141 Remember the current situation. In `send`, look up where the button leads; if somewhere, go there.
+@142 All the safety comes from the types: the runtime code is a few lines. States and events are learned from the description, so there is nothing to keep in sync.
+@143 The engine is small, but TypeScript now knows every situation and button.
+@144 Inference sites are only the `states` keys (for `S`) and inner keys (for `E`); `NoInfer` makes all other references checks. `Partial<Record<E, …>>` allows per-state event subsets.
+@145 states and events are inferred
+@146 a typo in a target
+@147 a typo in the initial state
+@148 unknown events
+@149 moves on events
+@150 ignores events that do not apply
+@151 Try it: a traffic light from your engine. Add a state and see TypeScript learn it.
+@152 Try it: a traffic light built by your engine. Add a new colour!
+@153 A generic engine infers states and events from a description.
+@154 `NoInfer` turns extra references into checks.
+@155 Unknown events are compile errors; inapplicable ones are ignored.
+@156 One engine builds any machine.
+@157 TypeScript learns the situations and buttons.
+@158 Spelling mistakes are caught.
+@159 Choose inference sites deliberately.
+@160 Typed configuration objects as DSLs.
+@161 XState-style APIs in miniature.
+@162 Parse typed commands from text into a discriminated union.
+@163 Model a world of rooms with a `Record`.
+@164 Play the adventure your code runs.
+@165 Turn typed words into commands.
+@166 Build a little world of rooms.
+@167 Play your own adventure!
+@168 Text becomes typed commands.
+@169 Worlds are data.
+@170 Games are loops over small functions.
+@171 Type a command, and your code tells the story.
+@172 Rooms and doors are just data.
+@173 You can add more rooms!
+@174 Parsers produce unions.
+@175 Data over code for content.
+@176 The shell stays thin.
+@177 Text in, commands out, a world in between.
+@178 You type what to do, and your code tells the story.
+@179 A text adventure has three parts: a **parser** that turns text like `go north` into a command, a **world** of rooms with exits and items, and a loop that applies each command.⏎⏎⟦F1⟧⏎⏎You write the parser and the movement; the game’s driver runs the rest.
+@180 In a text adventure, you type what to do: "go north", "take key". Your code understands the words and moves you around a little world.⏎⏎First you teach it to understand commands. Then you build the rooms and the doors between them.
+@181 Parsing into a discriminated union at the edge means the game loop switches over a closed set of commands, exhaustively; invalid input is `null` (or a `Result` with a message). The world is data (`Record<RoomId, Room>`), so adding rooms never touches logic.⏎⏎A type predicate (`isDirection`) narrows the free-text argument into the `Direction` union without a cast.
+@182 Write `parse`: `go <direction>`, `take <item>`, `look` and `inventory` (or `i`) become commands; anything else is `null`. Ignore case and extra spaces.
+@183 Make `parse` understand "go north", "take key", "look" and "inventory" (or "i"). Anything else gives `null`.
+@184 Trim, lower-case and split on whitespace (`/\s+/`). The first word is the verb; the rest joined with spaces is the object. Use a type predicate to check the direction.
+@185 Tidy the text, make it small letters and split it into words. The first word says what to do; the rest is what to do it to.
+@186 The predicate `isDirection` turns a free word into a `Direction`, so `{ kind: "go", direction: object }` type-checks without a cast.
+@187 The checker makes sure only real directions become "go" commands.
+@188 Parsing returns the closed `Command` union; the game loop can then switch exhaustively. `split(/\s+/)` after `trim()` collapses runs of whitespace.
+@189 go
+@190 case and spaces
+@191 look
+@192 short inventory
+@193 a bad direction
+@194 nonsense
+@195 Write `go`: the id of the room in that direction from `roomId`, or `null` if there is no exit that way.
+@196 Make `go`: from this room, which room is in that direction? `null` if there is no door.
+@197 `WORLD[roomId]?.exits[direction] ?? null`.
+@198 Find the room, look at its exits in that direction, and give back `null` if there is nothing.
+@199 Rooms are data: adding a room or a door never changes `go`.
+@200 The world is just a list of rooms. Add rooms, and your code still works.
+@201 Data-driven world modelling; `?.` and `??` handle both unknown rooms and missing exits.
+@202 north from the hall
+@203 no door that way
+@204 an unknown room
+@205 Play your adventure. Your `parse` and `go` run every command.
+@206 Play your adventure! Type commands, or tap the suggestions.
+@207 Run it: each command goes through your `parse` and `go`.
+@208 Parse text into a discriminated union at the edge.
+@209 Keep the world as data in a `Record`.
+@210 The game loop switches over commands.
+@211 Your code understands typed commands.
+@212 The world is a list of rooms and doors.
+@213 You wrote an adventure game!
+@214 Parse at the boundary into closed types.
+@215 Data-driven worlds.
+@216 Exhaustive command handling.

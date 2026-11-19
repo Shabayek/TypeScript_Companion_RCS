@@ -1,0 +1,214 @@
+@1 Hide class members with `private` or `#private`.
+@2 Share members with subclasses with `protected`.
+@3 Know which privacy exists at runtime.
+@4 Keep some drawers of a class secret.
+@5 Share some with the family.
+@6 Know which secrets are real when the code runs.
+@7 Expose as little as you can.
+@8 Use `#` for real privacy.
+@9 Mark what must not change as `readonly`.
+@10 Keep secrets secret.
+@11 Real locks use `#`.
+@12 Lock what must not change.
+@13 Encapsulation: compile-time vs runtime.
+@14 Small public APIs.
+@15 `readonly` is shallow.
+@16 Decide who can touch what.
+@17 Some parts of a class are secret.
+@18 ⟦F1⟧⏎⏎`private` and `protected` are checked by TypeScript, then erased: at runtime the property is an ordinary one. A `#` field is private in JavaScript itself: nothing outside the class can reach it, even without types.
+@19 A class can have secret drawers. `private` means "only this class may open it", and TypeScript checks that.⏎⏎A `#` drawer is even more secret: it stays locked even when the code runs, with no TypeScript watching.⏎⏎`readonly` means you can look, but never put something new in.
+@20 TypeScript modifiers are compile-time only; `private` members are visible to `JSON.stringify`, `Object.keys`, and bracket access with a cast. ECMAScript `#private` fields are hard-private (brand-checked, not enumerable, not proxied) and work across compilation boundaries; they cannot be accessed from subclasses or tests.⏎⏎Use `#` for real encapsulation, `private` when you need TypeScript-only privacy (mocking in tests, `protected`-style hierarchies). `readonly` applies to the binding, not deep immutability.
+@21 What prints? Which fields appear?
+@22 Which drawers show up when the object is printed?
+@23 `private` is erased, so `balance` is an ordinary property at runtime. A `#` field is not a property at all.
+@24 TypeScript’s secret is gone when the code runs. The `#` secret stays hidden.
+@25 The `private` field shows up: it was only private while TypeScript checked the code. The `#pin` field stays hidden.
+@26 `balance` shows up, because TypeScript’s secret disappears when the code runs. `#pin` is still hidden.
+@27 `private` is erased to a normal own property; `#pin` lives in a private slot invisible to reflection.
+@28 Make `id` read-only and `secret` private, so the misuse below becomes a type error.
+@29 Lock `id` so it cannot change, and make `secret` a private drawer.
+@30 Add `readonly` before `id` and `private` before `secret`.
+@31 Write `readonly` in front of `id` and `private` in front of `secret`.
+@32 Outside code can still ask `check(guess)`, but can no longer read the secret or change the id.
+@33 People can still ask "is this the secret?", but cannot peek or change the id.
+@34 The public surface shrinks to `id` (read-only) and `check`; `private` is compile-time, so use `#secret` where runtime privacy matters.
+@35 the id can be read
+@36 the id cannot change
+@37 the secret is private
+@38 checking still works
+@39 checks a guess
+@40 Which keeps a value hidden even from plain JavaScript code with no types?
+@41 Which secret drawer stays locked even when TypeScript is not watching?
+@42 Which one is part of JavaScript itself?
+@43 Which one is a JavaScript lock, not a TypeScript one?
+@44 `#field` is enforced by the JavaScript engine. `private` only exists while TypeScript checks the code.
+@45 The `#` drawer is a real lock. `private` is only a TypeScript promise.
+@46 ECMAScript private names are hard privacy; TypeScript accessibility modifiers are erased annotations.
+@47 `#pin = 1234;`
+@48 `private pin = 1234;`
+@49 `private` disappears when compiled; the property is ordinary at runtime.
+@50 That secret vanishes when the code runs.
+@51 The short version.
+@52 What you learned.
+@53 `private`/`protected` are checked by TypeScript, then erased.
+@54 `#field` is private at runtime too.
+@55 `readonly` prevents reassignment.
+@56 Classes can have secret drawers.
+@57 `#` drawers stay locked when the code runs.
+@58 `readonly` means look, do not change.
+@59 Accessibility modifiers are compile-time.
+@60 ECMAScript `#private` is hard privacy.
+@61 Keep the public surface small.
+@62 Declare and assign fields in one go with parameter properties.
+@63 Compute and validate with `get` and `set`.
+@64 Put shared things on the class with `static`.
+@65 Write shorter classes.
+@66 Make values that are worked out when you ask.
+@67 Keep one thing for the whole class.
+@68 Short classes with parameter properties.
+@69 Computed and validated properties with accessors.
+@70 Class-wide members with `static`.
+@71 Classes can be short and clever.
+@72 Check what goes in.
+@73 Share things with `static`.
+@74 Mind erasable-syntax constraints.
+@75 Invariants in setters.
+@76 Named constructors.
+@77 Shorter classes, smarter properties.
+@78 Some clever class shortcuts.
+@79 ⟦F1⟧⏎⏎Callers read `t.fahrenheit` like a property, but it is worked out each time.
+@80 A *getter* looks like a label, but the class works the answer out each time you read it, like a thermometer that shows Fahrenheit.⏎⏎A *setter* checks what you put in, and can say "no!".⏎⏎`static` things belong to the whole class, not to each object, like a rule written on the blueprint.
+@81 Parameter properties (`constructor(private x: T)`) declare and initialise fields; they are TypeScript-only syntax (rejected by `erasableSyntaxOnly` and Node’s type stripping), so some codebases avoid them.⏎⏎Accessors should be cheap and side-effect-free on read; setters are a good place for invariants. `static` members live on the constructor; static factories (`fromFahrenheit`) name alternative constructors, and `static` blocks handle complex initialisation.
+@82 What prints?
+@83 What will it show?
+@84 `issued` is shared by the whole class, and goes up with every `new Ticket()`.
+@85 The counter belongs to the class, so all tickets share it.
+@86 One counter for the class: three tickets, and the last one got number 3.
+@87 Three tickets were made, and yours is number 3.
+@88 Static fields live on the constructor object and are shared by all instances.
+@89 Write `Temperature`: a `fahrenheit` getter, a `celsius` getter and setter (refusing below −273.15 with a `RangeError`), and a static `fromFahrenheit`.
+@90 Build `Temperature`: read it in Fahrenheit, set it in Celsius (but never colder than −273.15), and make one from Fahrenheit.
+@91 `get fahrenheit()` returns `this.celsiusValue * 1.8 + 32`. The setter checks `value < -273.15` first. The static method does `new Temperature((f - 32) / 1.8)`.
+@92 The Fahrenheit getter does the maths. The Celsius setter checks for "too cold" first. The static maker turns Fahrenheit back into Celsius.
+@93 Callers use plain property syntax, and the class keeps control: conversions happen on read, checks on write.
+@94 It looks like simple labels, but the class does the maths and the checking.
+@95 Accessor pairs share a name and type; the setter enforces the invariant, so no instance can hold an impossible temperature (except through the constructor, which could validate too).
+@96 boiling in fahrenheit
+@97 from fahrenheit
+@98 setting celsius
+@99 refuses the impossible
+@100 `constructor(private x: T)` declares and assigns a field.
+@101 `get`/`set` compute and validate behind property syntax.
+@102 `static` members belong to the class.
+@103 Shortcuts make classes shorter.
+@104 Getters work things out; setters check.
+@105 `static` things belong to the blueprint.
+@106 Parameter properties are TS-only syntax.
+@107 Accessors enforce invariants.
+@108 Static factories name constructors.
+@109 Check that a class fits an interface with `implements`.
+@110 Share code and require methods with an `abstract` class.
+@111 Know that abstract classes cannot be created directly.
+@112 Make a class promise to have certain parts.
+@113 Make a half-finished class for others to finish.
+@114 Know you cannot make the half-finished one.
+@115 Use interfaces as contracts.
+@116 Use abstract classes for shared behaviour.
+@117 Let TypeScript check both.
+@118 Promises and half-built classes.
+@119 TypeScript checks them.
+@120 Finish what you start.
+@121 `implements` for drift detection.
+@122 Abstract members enforce completion.
+@123 Composition is often simpler.
+@124 Contracts for classes.
+@125 A class can promise to have certain parts.
+@126 `implements` checks that a class has everything an interface asks for:⏎⏎⟦F1⟧⏎⏎An **abstract** class is a half-built class: it can share real code, and leave some methods for subclasses to write.⏎⏎⟦F2⟧
+@127 `implements` is a promise: "this class has every part the interface asks for". TypeScript checks the promise.⏎⏎An abstract class is half-built. It says "every animal can speak, but each kind of animal must say which sound". You cannot make a plain "animal", only a cat or a dog.
+@128 `implements` is a compile-time conformance check only: it does not contribute types to the class (parameters of implemented methods are not contextually typed). Structural typing means any object with the right shape is a `Shape` anyway; `implements` documents intent and catches drift at the class.⏎⏎Abstract classes combine a nominal-ish base with template methods; `abstract` members must be implemented by concrete subclasses (TS2515), and `new` on an abstract class is TS2511. Prefer interfaces plus composition unless you need shared implementation.
+@129 Make `Circle` implement `Shape`: add the missing `area` method (π × r², rounded).
+@130 Make `Circle` keep its promise to be a `Shape`: add the missing `area` machine (π × r², rounded).
+@131 Add `area(): number { return Math.round(Math.PI * this.radius ** 2); }`.
+@132 Add an `area()` method that gives back `Math.round(Math.PI * this.radius ** 2)`.
+@133 The error appeared at the class, naming the missing method, instead of somewhere later where a circle was used as a shape.
+@134 TypeScript pointed straight at the class and said which part was missing.
+@135 `implements` moves the conformance error (TS2420) to the declaration site.
+@136 a circle is a shape
+@137 area
+@138 Finish `Dog` so it extends `Animal`: its `sound()` is `"woof"`.
+@139 Finish the `Dog` class: it extends `Animal` and says "woof".
+@140 `sound()` just returns `"woof"`; `speak()` is inherited.
+@141 Make `sound()` give back "woof". `speak` comes from `Animal` for free.
+@142 `Animal` wrote `speak` once; each subclass only supplies its sound. That is the template-method pattern.
+@143 The half-built class did the talking; the dog only had to say which sound.
+@144 The abstract base calls an abstract hook; concrete subclasses implement it. TypeScript enforces that every concrete subclass does.
+@145 speaks
+@146 What happens with `new Animal()`?
+@147 What if you try to make a plain `Animal`?
+@148 Can you build something that is only half-built?
+@149 Can you make a half-built thing?
+@150 It is a type error: an abstract class can only be extended, not created directly.
+@151 TypeScript says no: you can only make a finished kind, like a Dog.
+@152 TS2511: cannot create an instance of an abstract class.
+@153 A type error
+@154 It works and `sound()` returns `undefined`
+@155 TypeScript stops it before it can run.
+@156 TypeScript does not let it happen.
+@157 `implements` checks a class against an interface.
+@158 `abstract` classes share code and require methods.
+@159 Abstract classes cannot be created directly.
+@160 `implements` is a promise TypeScript checks.
+@161 Half-built classes are finished by others.
+@162 You cannot make a half-built one.
+@163 Conformance checks at the declaration.
+@164 Template methods via abstract hooks.
+@165 Prefer interfaces plus composition.
+@166 Build behaviour from small parts that an object *has*.
+@167 Pass those parts in (dependency injection).
+@168 Swap a part for a test double.
+@169 Build objects from small parts, like blocks.
+@170 Hand the parts in from outside.
+@171 Swap in a pretend part for testing.
+@172 Prefer "has a" to "is a".
+@173 Inject dependencies.
+@174 Small interfaces, easy swaps.
+@175 Blocks beat family trees.
+@176 Parts come from outside.
+@177 Swap parts to test.
+@178 Dependency inversion in practice.
+@179 No mocking framework needed.
+@180 Shallow hierarchies only.
+@181 Has-a beats is-a, most of the time.
+@182 Build with blocks instead of family trees.
+@183 Inheritance chains get rigid: a `LoggingSavingEmailingUserService` is hard to change. Instead, give an object the parts it needs:⏎⏎⟦F1⟧⏎⏎The greeter *has* a logger. Any object with a `log` method fits, including a fake one in a test that just remembers messages.
+@184 Instead of "a greeter is a kind of logger", we say "a greeter has a logger", like a robot built from blocks: arms, wheels, a speaker.⏎⏎You can swap a block: a real speaker, or a pretend one for testing.
+@185 Composition with narrow interfaces plus constructor injection decouples policy from mechanism: `Greeter` depends on the `Logger` abstraction, not on `console`. Structural typing makes test doubles trivial (plain object literals), without mocking frameworks.⏎⏎Inheritance remains fine for genuine is-a hierarchies with shared invariants; prefer shallow ones. Functional composition (passing functions instead of objects) is the same idea with less ceremony.
+@186 Write `createMemoryLogger`: a `Logger` that stores messages, with `messages()` returning them. Then a `Greeter` can be tested with it.
+@187 Make `createMemoryLogger`, a pretend logger that remembers every message, so you can check what the greeter said.
+@188 Keep a `stored: string[]` inside the function; `log` pushes into it and `messages` returns a copy.
+@189 Keep a list inside. `log` adds to the list; `messages` gives back a copy of it.
+@190 The greeter never knew it was talking to a fake. Because it only depends on the `Logger` shape, any part that fits can be plugged in.
+@191 The greeter did not notice the pretend logger. That is the power of swappable blocks.
+@192 Dependency inversion: `Greeter` depends on an interface, and a closure-based object literal satisfies it structurally. Returning a copy keeps the internal array private.
+@193 remembers what the greeter logged
+@194 starts empty
+@195 A `Robot` needs to move and to speak. Which design is easier to change later?
+@196 A robot needs wheels and a speaker. Which way of building it is easier to change?
+@197 Which one lets you swap the speaker without touching the wheels?
+@198 Which way lets you swap one part without rebuilding everything?
+@199 Giving the robot a mover and a speaker lets you swap either one alone. A chain of subclasses ties them together.
+@200 Blocks can be swapped one at a time. A family tree cannot.
+@201 Composition varies behaviours independently; a class hierarchy fixes combinations at design time (the classic combinatorial explosion).
+@202 `new Robot(mover, speaker)`: the robot has both parts
+@203 `class Robot extends SpeakingMovingMachine`
+@204 Changing how it speaks means changing the whole chain.
+@205 To change the speaker you would have to change the whole family tree.
+@206 Give objects the parts they need, through the constructor.
+@207 Depend on small interfaces, not on concrete classes.
+@208 Swap parts freely, for example in tests.
+@209 Build with swappable blocks.
+@210 Hand the blocks in from outside.
+@211 Pretend blocks make testing easy.
+@212 Composition plus injection decouples code.
+@213 Structural typing makes doubles trivial.
+@214 Reserve inheritance for true is-a relations.

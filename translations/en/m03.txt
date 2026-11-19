@@ -1,0 +1,438 @@
+@1 Arrays keep values in order.
+@2 `[0]` is the first item, `[1]` the second.
+@3 `push` changes the original; spread makes a copy.
+@4 Arrays keep things in order.
+@5 `[0]` is the first thing, `[1]` the second.
+@6 `push` changes the list; `...` copies it.
+@7 Arrays are ordered, zero-indexed and mutable by default.
+@8 Type index reads honestly: `T | undefined`.
+@9 Copy instead of mutating shared arrays; `readonly T[]` enforces it.
+@10 An array is a list, numbered from zero.
+@11 An array is a list. Counting starts at zero!
+@12 An **array** holds values in order:⏎⏎⟦F1⟧⏎⏎Positions are counted from `0`. `fruits[0]` is `"apple"`, and `fruits.length` is `3`.⏎⏎`fruits.push("plum")` adds to the end — and **changes the original array**. That is a mutation. `[...fruits, "plum"]` makes a new array instead and leaves the first one alone.
+@13 An array is a list in square brackets: `["apple", "pear"]`.⏎⏎Counting starts at zero, which takes a while to get used to. The first item is `[0]`, the second is `[1]`.⏎⏎`.length` tells you how many items there are.
+@14 Arrays are zero-indexed and grow as needed. Reading past the end returns `undefined` instead of throwing, yet by default TypeScript types `fruits[5]` as `string`, not `string | undefined`. Turn on `noUncheckedIndexedAccess` to make that honest.⏎⏎`push`, `pop`, `splice`, `sort` and `reverse` mutate in place. Spread (`[...a, x]`) and the newer `toSorted`, `toReversed` and `with` return copies, which matters whenever the array is shared (UI state, for instance).⏎⏎`string[]` and `Array<string>` are the same type; `readonly string[]` removes the mutating methods from the type.
+@15 What prints?
+@16 What will it show?
+@17 Index `0` is the first item. `.length` is how many items there are.
+@18 The first fruit is at spot 0, the second at spot 1, the third at spot 2.
+@19 Index 0 is the first item, so `[2]` is the third. There is no index 3, which is why `.length` is how you count.
+@20 Spot 0 is the first fruit, so spot 2 is the third. There is no spot 3 — that is why we count with `.length`.
+@21 Indices run from `0` to `length - 1`, so `fruits[2]` is the last element. `fruits[3]` would be `undefined` at runtime, and only `noUncheckedIndexedAccess` makes the type say so.
+@22 `.at()` counts from the end when the number is negative. What prints?
+@23 `.at()` can count backwards from the end! What will it show?
+@24 `.at(0)` is the first item, like `[0]`. `.at(-1)` is the last one, `.at(-2)` the one before it.
+@25 `.at(0)` is the first one. A minus number starts from the other end: `-1` is the very last.
+@26 `.at(-1)` is the last item, whatever the length. It is newer JavaScript (2022), so older phones do not have it; there, `queue[queue.length - 1]` does the same job.
+@27 `-1` means "the last one", however long the list is. It is quite new, so older phones use `queue[queue.length - 1]` instead.
+@28 `Array.prototype.at` (ES2022) accepts negative indices relative to the end, and its return type is `T | undefined` even without `noUncheckedIndexedAccess`. On engines before ES2022, `queue[queue.length - 1]` is the equivalent.
+@29 `queue.length - 1` is the position of the last item. What prints?
+@30 `queue.length - 1` is the spot of the very last one. What will it show?
+@31 There are 3 items, so `queue.length - 1` is `2`: the third item.
+@32 The list has 3 names, and 3 - 1 is 2. Which name is at spot 2?
+@33 `queue.length - 1` always points at the last item. Newer phones also have a shortcut, `queue.at(-1)`, which does the same thing.
+@34 `length - 1` always finds the last one. Newer phones have a shortcut for it, `queue.at(-1)`.
+@35 Indexing with `length - 1` works on every engine. ES2022 added `queue.at(-1)` for the same read; this device runs the Classic engine, so the lesson shows the portable form.
+@36 Read the first item.
+@37 Get the first fruit.
+@38 Arrays are numbered from zero, not one.
+@39 Counting in a list starts at 0, not 1.
+@40 Arrays start at 0, so the first item is at index `0`.
+@41 Lists start counting at 0, so the first fruit is at spot `0`.
+@42 Index `0` is the first element. To read the last one, `fruits[fruits.length - 1]` works on every engine; ES2022 engines also have `fruits.at(-1)`.
+@43 Write `secondItem` so it returns the second item of a list.
+@44 Make `secondItem` give back the second thing in a list.
+@45 The second item lives at index 1.
+@46 The second thing is at spot 1.
+@47 Returning a missing index gives `undefined`, which is why the return type says `string | undefined`.
+@48 If a list is too short, asking for a missing spot gives `undefined` (nothing). That is why the label says `string | undefined`.
+@49 `list[1]` is `undefined` when the list has fewer than two items. The explicit `string | undefined` return type says so honestly, and forces callers to handle it.
+@50 three items
+@51 one item gives undefined
+@52 The short version.
+@53 What you learned.
+@54 Arrays are ordered lists in square brackets.
+@55 Indexing starts at 0; `.length` counts items.
+@56 `push` mutates; spread copies.
+@57 An array is a list in square brackets.
+@58 Counting starts at 0; `.length` says how many.
+@59 `push` changes the list; `...` makes a copy.
+@60 Zero-indexed; reading out of range gives `undefined`, not an error.
+@61 `noUncheckedIndexedAccess` types index reads as `T | undefined`.
+@62 Know which methods mutate (`push`, `sort`) and which copy (spread, `toSorted`).
+@63 Go further: what type does TypeScript give `mixed`?
+@64 A challenge: what is the type of `mixed`?
+@65 The array holds numbers and strings, so each item is one or the other.
+@66 The list has numbers and words. Each item is a number or a word.
+@67 TypeScript infers an array of a union: every item is a `string` or a `number`, in any order.
+@68 Each item could be a number or a word, so the list type is `(string | number)[]`.
+@69 Array literal inference takes the best common type of the elements (here a union) and widens literals. `as const` would infer the tuple `readonly [1, "two", 3]` instead.
+@70 Loops repeat code: `for`, `for...of`, `while`.
+@71 Each round must move towards the end, or the loop never stops.
+@72 `map`, `filter` and `find` are loops with a job built in.
+@73 Loops do things again and again.
+@74 A loop needs a way to stop.
+@75 `map`, `filter` and `find` are loops in disguise.
+@76 Choose the loop by what you walk: indices, values, or a condition.
+@77 Every loop needs something that moves it towards its exit.
+@78 `map`, `filter` and `reduce` say common loops declaratively.
+@79 A loop runs the same code again and again.
+@80 A loop tells the robot: do it again!
+@81 Writing `console.log` ten times is tiring. A **loop** repeats code for you.⏎⏎⟦F1⟧⏎⏎A `for` loop has three parts: where to start (`let i = 1`), when to keep going (`i <= 3`), and what to do after each round (`i++`, "add one").⏎⏎To visit every item in an array, `for...of` is simpler: `for (const fruit of fruits) { … }`.⏎⏎`while (condition) { … }` repeats as long as the condition is true. If it never becomes false, the loop never ends — this app stops it after two seconds.
+@82 Writing the same line ten times is boring. A **loop** does it for you.⏎⏎⟦F1⟧⏎⏎This loop counts: start at 1, keep going while `i` is 3 or less, and add one each time (`i++`).⏎⏎To visit every thing in a list, use `for...of`: `for (const fruit of fruits) { … }` — "for each fruit in the list".⏎⏎Careful: a loop that never stops keeps going forever. If that happens, this app stops it after two seconds.
+@83 Three forms cover almost every loop: the counting `for (init; test; update)`, `for...of` over any *iterable* (arrays, strings, `Map`, `Set`), and `while` when the number of rounds is unknown. `break` leaves the loop; `continue` skips to the next round.⏎⏎`for...in` walks *enumerable property keys* as strings, inherited ones included. Keep it for plain objects, where `Object.entries` is usually clearer anyway.⏎⏎`let` in a `for` header creates a fresh binding per iteration, so a closure created inside the loop sees that round's value (with `var`, they all share one). This app stops a runaway loop after two seconds; real runtimes do not.
+@84 Loops and list tools
+@85 Later you will meet `map`, `filter` and `find`. They are loops with a job already built in, and often shorter — but every one of them is a loop underneath.
+@86 Later you will meet `map`, `filter` and `find`. They are loops with a job built in. Underneath, they are all loops!
+@87 What does this loop print?
+@88 What will the loop show?
+@89 Start with `i = 1`. Each round prints `i`, then adds one, until `i <= 3` is false.
+@90 Start at 1. Show it, add one, and go again — stop when you pass 3.
+@91 The loop runs for 1, 2 and 3. When `i` becomes 4, `i <= 3` is false, the loop ends, and the line after it runs once.
+@92 The loop shows 1, 2 and 3. At 4 it stops, and then "done" is shown once.
+@93 The test `i <= 3` runs before every round, including the one that fails when `i` is `4`. Control then continues after the loop, which is why `done` prints exactly once.
+@94 Visit every fruit in the list.
+@95 You want each *value* in the array, not its positions. Which keyword gives you the values?
+@96 You want each fruit itself, not its spot number. Which small word does that?
+@97 `for...of` visits each value of the array. (`for...in` exists too, but it walks over keys — for an array, `"0"`, `"1"`, `"2"` — which is rarely what you want.)
+@98 `for...of` gives you each fruit, one by one. (`in` gives the spot numbers instead, which is not what we want here.)
+@99 `for...of` uses the iteration protocol and yields values. `for...in` would yield the keys `"0"`, `"1"` and `"2"`, as strings.
+@100 A countdown with `while`. Change the start number, or make it count up — then run it.
+@101 A countdown! Change the start number, then press Run.
+@102 Write `sumTo` so it adds up every whole number from 1 to `n`. `sumTo(3)` is 1 + 2 + 3 = 6.
+@103 Make `sumTo` add up all the numbers from 1 to `n`. `sumTo(3)` is 1 + 2 + 3 = 6.
+@104 Start `total` at 0. Loop `i` from 1 to `n` (use `<=`), adding `i` to `total` each round.
+@105 Start with `total` at 0. Count from 1 to `n` with a loop, and add each number to `total`.
+@106 `for (let i = 1; i <= n; i++) { total += i; }` — then `return total;`.
+@107 Write `for (let i = 1; i <= n; i++) { total += i; }` and then `return total;`.
+@108 `total` collects the answer while `i` walks from 1 to `n`. With `n = 0` the condition is false at once, so the loop body never runs and 0 comes back.
+@109 `total` is the box that collects the sum. When `n` is 0, the loop does not run at all, so the answer stays 0.
+@110 An accumulator loop: `total` holds the running sum. The closed form `n * (n + 1) / 2` is O(1), but this loop is the pattern you reuse for everything `reduce` does.
+@111 sumTo(3)
+@112 sumTo(1)
+@113 sumTo(10)
+@114 nothing to add
+@115 `for (let i = 1; i <= n; i++)` counts; `for (const item of list)` visits each item.
+@116 `while` repeats while a condition is true.
+@117 A loop must be able to stop: something has to change each round.
+@118 A `for` loop counts; `for...of` visits every thing in a list.
+@119 `while` keeps going while something is true.
+@120 Every loop needs a way to stop.
+@121 `for` to count, `for...of` for iterables, `while` for an unknown number of rounds.
+@122 `for...in` walks string keys; avoid it on arrays.
+@123 `let` in a `for` header gives each round its own binding.
+@124 Go further: write `fizzBuzz(n)`: the numbers 1 to `n` as strings, but `"Fizz"` for multiples of 3, `"Buzz"` for 5, `"FizzBuzz"` for both.
+@125 A challenge: count from 1 to `n`, but say Fizz for threes, Buzz for fives and FizzBuzz for both!
+@126 Loop from 1 to `n`. Check 15 first (both), then 3, then 5, else `String(i)`.
+@127 Count with a loop. Check "both" first (15), then 3, then 5. Otherwise add the number as text.
+@128 The order matters: test "both" before the single cases, or 15 would stop at "Fizz".
+@129 If you check 3 first, 15 would only say "Fizz". So "both" goes first.
+@130 Check the most specific condition first; `i % 15` is equivalent to `i % 3 === 0 && i % 5 === 0` because 3 and 5 are coprime.
+@131 up to 5
+@132 the fifteenth
+@133 none
+@134 Objects are labelled bundles.
+@135 `user.name` reads; `user.age = 37` writes.
+@136 Nesting is normal: `user.address.city`.
+@137 Objects are bags of labelled things.
+@138 `user.name` reads; `user.age = 37` changes.
+@139 Bags in bags are normal: `user.address.city`.
+@140 TypeScript types objects by their shape.
+@141 A change through one reference is visible through all of them.
+@142 Use `?.` for nested access that may be missing.
+@143 An object groups named values.
+@144 An object is a bag of labelled things.
+@145 Where an array is a list, an **object** is a bundle of named values:⏎⏎⟦F1⟧⏎⏎Read a value with a dot: `user.name`. Change it with `user.age = 37`.⏎⏎Objects can hold other objects, which is how real data usually looks: `user.address.city`.
+@146 An object is a bag of labelled things. A person has a name, an age, and a favourite colour — three labels in one bag.⏎⏎You reach into the bag with a dot: `person.name`.
+@147 An object literal's type is inferred from its shape: `{ name: string; age: number; ready: boolean }`. TypeScript checks shapes, not names, so any value with the right properties fits (structural typing).⏎⏎Objects are reference values. Assigning or passing one shares it, so a change made through one reference is visible through all of them; `const` does not prevent that.⏎⏎Excess property checks apply only to fresh object literals: `const u: User = { name: "Ada", extra: 1 }` is an error, but the same object passed via a variable is not.
+@148 The first line reads a property. The third line replaces `age` before the last line reads it.
+@149 First the name is shown. Then the age goes up by one before it is shown.
+@150 The first line reads `name`. Then `age` is replaced with one more than before, so the second print is 37.
+@151 First we read the `name`. Then `age` gets one more than before, so the second line shows 37.
+@152 A property write mutates the object in place; the `const` binding still points at the same object. That is allowed: `const` constrains the binding, not the value.
+@153 Reach the nested value.
+@154 Reach into the bag inside the bag.
+@155 `city` is not a property of `user` directly. Which property of `user` contains it?
+@156 The city is inside another bag. What is that bag called?
+@157 `city` lives inside `address`, so you walk through `address` first: `user.address.city`.
+@158 `city` is inside `address`, so you go through `address` first: `user.address.city`.
+@159 Member access chains left to right: `user.address` yields the inner object, then `.city` reads from it. If `address` could be missing, `user.address?.city` gives `undefined` instead of throwing.
+@160 Write `fullName` so it joins a person’s first and last name with a space.
+@161 Make `fullName` put the first and last name together, with a space between.
+@162 A template literal with `person.first`, a space, and `person.last`.
+@163 Use backticks with `person.first`, a space, and `person.last`.
+@164 Ada Lovelace
+@165 single short name
+@166 Objects group named values.
+@167 Dot access reads and writes properties.
+@168 Nested objects are reached one dot at a time.
+@169 A dot reads or changes one thing in the bag.
+@170 Bags can hold bags: go one dot at a time.
+@171 Object types are structural: shape, not name.
+@172 Objects are shared by reference; `const` does not freeze them.
+@173 Excess property checks apply to fresh literals only.
+@174 Go further: what type does TypeScript infer for `point`?
+@175 A challenge: what is the type of `point`?
+@176 Write it as an object type with the two property names and their types.
+@177 Write `{ ... }` with both labels and what kind of value each holds.
+@178 The properties can be changed later, so they widen to `number` even though the object is a `const`.
+@179 The numbers inside could still change, so their type is just `number`.
+@180 `const` only fixes the binding; object properties are mutable and widen. `as const` would give `{ readonly x: 3; readonly y: 4 }`.
+@181 `const { a, b } = obj` and `const [x, y] = list`.
+@182 `{ ...obj, key: value }` copies then overrides.
+@183 Immutable updates prevent whole classes of bugs.
+@184 `const { a, b } = obj` and `const [x, y] = list` unpack.
+@185 `{ ...obj, key: value }` copies, then changes one thing.
+@186 Copying keeps other parts of the program safe.
+@187 Update immutably: `{ ...obj, key: value }`.
+@188 Copies are shallow; `structuredClone` for a deep copy.
+@189 Immutable updates turn "did it change?" into a reference comparison.
+@190 Take what you need, copy what you change.
+@191 Take out what you need. Copy before you change.
+@192 **Destructuring** unpacks values into names:⏎⏎⟦F1⟧⏎⏎**Spread** copies the contents of one object or array into another:⏎⏎⟦F2⟧⏎⏎That second line is the important habit: make a changed copy instead of editing the original. Code that does not surprise the reader is worth more than code that saves a character.
+@193 Destructuring is unpacking a bag straight into your hands: `const { name } = user;`.⏎⏎Spread is copying everything out of one bag into a new one, then adding something: `{ ...user, age: 37 }`.⏎⏎The old bag is untouched. That is why it is safe.
+@194 Destructuring binds properties or elements to names, with defaults (`const { age = 0 } = user`) and renaming (`const { name: label } = user`). Rest collects the remainder: `const { id, ...others } = user`.⏎⏎Spread copies are **shallow**: `{ ...user }` is a new top-level object, but nested objects are still shared. Use `structuredClone` when you really need a deep copy.⏎⏎Later properties win: `{ ...user, age: 37 }` overrides `age`, whereas in `{ age: 37, ...user }` the spread would overwrite it.
+@195 Changing one property, two ways.
+@196 Two ways to change one thing.
+@197 Mutating
+@198 Works — but every other reference to `user` changes too.
+@199 This works — but every part of the program that uses `user` sees the change.
+@200 Copying
+@201 A new object, one property different. Nothing else moves.
+@202 A new copy with one thing different. The original stays the same.
+@203 Does the original change?
+@204 Does the first one change?
+@205 `{ ...user, age: 37 }` builds a *new* object. Which object does each line print from?
+@206 `...` makes a copy. The change goes into the copy, not the original.
+@207 Spread made a copy, then `age: 37` replaced the age in the copy only. `user` never changed.
+@208 `...user` made a copy, and `age: 37` changed only the copy. The original `user` is still 36.
+@209 The spread creates a new object, then `age: 37` overrides that property on the copy. The original is untouched because none of its properties was written; nested objects, though, would still be shared.
+@210 Write `withDiscount` so it returns a new item with the price reduced by a percentage. Leave the original alone.
+@211 Make `withDiscount` give back a new item with a cheaper price. Leave the first one alone.
+@212 Spread `item` into a new object, then override `price`.
+@213 Copy `item` with `...` into a new object, then give it a new `price`.
+@214 `return { ...item, price: item.price * (1 - percent / 100) };`
+@215 Write `return { ...item, price: item.price * (1 - percent / 100) };`
+@216 25% off 200
+@217 the original is untouched
+@218 Destructuring pulls values out by name or position.
+@219 Spread copies contents into a new array or object.
+@220 Prefer copying when you change one property of shared data.
+@221 Unpacking takes values out by name or by place.
+@222 `...` copies things into a new list or bag.
+@223 Make a copy when you change something that others use too.
+@224 Destructuring supports defaults, renaming and rest.
+@225 Spread makes a shallow copy; nested values stay shared.
+@226 Property order decides which value wins.
+@227 Go further: write `swap` for a pair, using destructuring.
+@228 A challenge: make `swap` turn `[1, 2]` into `[2, 1]`.
+@229 `const [first, second] = pair;` then return them the other way round.
+@230 Unpack the pair into two names, then give them back in the other order.
+@231 `[number, string]` is a *tuple*: an array with a fixed length and a type for each position. Destructuring names the positions.
+@232 A tuple is a short list where each spot has its own type. Unpacking gives each spot a name.
+@233 Tuple types carry per-position types and a fixed length; destructuring preserves them, so `first` is `number` and `second` is `string`.
+@234 swaps
+@235 swaps again
+@236 `map` → new array, same length.
+@237 `filter` → new array, shorter.
+@238 `find` → one item or `undefined`.
+@239 `map` → a new list, same length.
+@240 `filter` → a new list, maybe shorter.
+@241 `find` → one thing, or `undefined`.
+@242 Prefer declarative array methods to hand-written loops.
+@243 Handle `find`'s `undefined` explicitly.
+@244 Use a type predicate when `filter` should narrow.
+@245 Transform, keep, or pick.
+@246 Change every item, keep some, or find one.
+@247 Three methods cover most list work:⏎⏎- **`.map`** transforms every item — the result has the same length.⏎- **`.filter`** keeps the items that pass a test — the result can be shorter.⏎- **`.find`** returns the first match, or `undefined`.⏎⏎Each one takes a **callback**: a function you hand over, which the array calls once per item.⏎⏎⟦F1⟧
+@248 Three tools do almost all list work:⏎⏎- `.map` changes every item.⏎- `.filter` keeps only some items.⏎- `.find` grabs the first one it likes.⏎⏎You give each tool a small rule, and it follows that rule for every item.
+@249 `map`, `filter` and `find` are higher-order methods that never mutate the source array, and they are fully typed: `map` infers the new element type from the callback, and `find` returns `T | undefined`.⏎⏎A plain boolean callback leaves `filter`'s element type unchanged. To narrow it, use a type predicate: `items.filter((x): x is string => typeof x === "string")` gives `string[]`. (TypeScript 5.5 and later infer simple predicates like this one.)⏎⏎Each call in a chain allocates an intermediate array. That rarely matters, and clarity usually beats a hand-fused loop.
+@250 Which one gives you a single item back?
+@251 Which one gives back just one thing?
+@252 Two of them always return a new array. One stops at the first match.
+@253 Two of them give back a list. One stops when it finds what it looks for.
+@254 `find` returns one item — or `undefined` when nothing matches.
+@255 `find` gives back one item — or `undefined` if nothing matches.
+@256 `find` returns the first element for which the callback is truthy, or `undefined`; `findIndex` returns its index, or `-1`. `map` and `filter` always return arrays.
+@257 `.map`
+@258 `map` always returns an array.
+@259 `map` always gives back a whole list.
+@260 `.filter`
+@261 `filter` returns an array too, possibly a shorter one.
+@262 `filter` gives back a list too, maybe a shorter one.
+@263 `.find`
+@264 `map` returns a new array with each item changed. `filter` returns only the items that pass the test.
+@265 `map` changes each number. `filter` keeps only the even ones.
+@266 `map` multiplies each item, keeping four items. `filter` keeps only even numbers. Printing an array shows it in brackets.
+@267 `map` multiplies every number by 10, so there are still four. `filter` keeps only the even numbers. Lists are shown in square brackets.
+@268 `map` keeps the length; `filter` keeps only the elements whose callback returned truthy. This app prints arrays compactly, as `[10,20,30,40]`; Node and browser consoles add spaces.
+@269 Write `namesOf` (every name) and `adults` (people aged 18 or over).
+@270 Make `namesOf` (every name) and `adults` (people who are 18 or older).
+@271 One method per function: `map` for names, `filter` for age.
+@272 Use `map` to get the names, and `filter` to keep the grown-ups.
+@273 names
+@274 only adults
+@275 the adult is kept
+@276 `map` transforms, `filter` keeps, `find` picks one.
+@277 All three take a callback that runs once per item.
+@278 `find` can return `undefined`, so check it.
+@279 `map` changes, `filter` keeps, `find` picks one.
+@280 Each one runs your little function once for every item.
+@281 `find` can give back `undefined`, so check it.
+@282 `map`: same length, new element type; `filter`: a subset; `find`: `T | undefined`.
+@283 None of them mutate the source.
+@284 Type predicates let `filter` narrow the element type.
+@285 Go further: write `adultNames`: the names of people aged 18 or over, in alphabetical order.
+@286 A challenge: make `adultNames` give back the grown-ups’ names, in ABC order.
+@287 `filter` the adults, `map` to names, then `sort((a, b) => a.localeCompare(b))`.
+@288 First keep the grown-ups, then take their names, then sort them with `localeCompare`.
+@289 Each step hands a new array to the next. `map` already made a fresh array, so sorting it changes nothing the caller owns.
+@290 Each tool makes a new list for the next one. Sorting the new list is safe.
+@291 Chaining keeps each transformation pure; `localeCompare` gives a locale-aware comparator (pass a locale for deterministic results across devices).
+@292 adults only, sorted
+@293 nobody
+@294 Sort numbers correctly with a comparator.
+@295 Ask yes/no questions of a whole list with `some` and `every`.
+@296 Add a list up with `reduce`.
+@297 Put a list in the right order.
+@298 Ask "is any of them…?" and "are all of them…?"
+@299 Add a whole list up into one number.
+@300 Give `sort` a comparator, and sort a copy when the original matters.
+@301 Use `some` and `every` for yes/no questions.
+@302 Use `reduce` with a starting value to total a list.
+@303 Give `sort` a rule, and copy first.
+@304 `some` and `every` answer yes or no.
+@305 `reduce` adds a list up.
+@306 Know which array methods mutate.
+@307 Predicates short-circuit; `every([])` is vacuously true.
+@308 Folds need an explicit seed.
+@309 Four more tools for lists.
+@310 Four new tools for your lists.
+@311 ⟦F1⟧⏎⏎`sort` needs a **comparator**: a function that says which of two items comes first (a negative number means `a` first). Without one, it compares items as **text**, so `100` comes before `9`.⏎⏎Careful: `sort` **changes the array** it is called on. Sort a copy when the original must stay as it was: `[...scores].sort(...)`.
+@312 `sort` puts a list in order. Give it a little rule: `(a, b) => a - b` means "smallest first".⏎⏎`some` asks "is at least one of them…?" and `every` asks "are all of them…?". Both answer `true` or `false`.⏎⏎`reduce` walks along the list and keeps a running total, like counting coins into a jar.⏎⏎Watch out: `sort` changes your list! Copy it first with `[...list]` if you want to keep the old order.
+@313 `Array.prototype.sort` sorts **in place** and returns the same array; without a comparator it converts elements to strings and compares UTF-16 code units, which is why `[10, 9, 1].sort()` is `[1, 10, 9]`. The comparator returns a negative number, zero or a positive number; `a - b` is ascending for numbers, and `a.localeCompare(b)` for text. Since ES2019, `sort` is stable.⏎⏎`some` and `every` short-circuit, and `every` on an empty array is `true` (vacuous truth). `reduce(fn, initial)` is a left fold; always pass the initial value, or an empty array throws and the accumulator type is inferred from the element type.⏎⏎ES2023 adds non-mutating `toSorted`, `toReversed` and `with`. On engines without them, copy first: `[...xs].sort(cmp)`.
+@314 Sorting without a rule. What prints?
+@315 Sorting with no rule… what will it show?
+@316 Without a comparator, `sort` compares the numbers as text: "1", "10", "9", like words in a dictionary.
+@317 Without a rule, `sort` treats the numbers like words. In a dictionary, "10" comes before "9" because "1" comes before "9".
+@318 The default order is text order. Give `sort` a comparator for numbers: `(a, b) => a - b`.
+@319 Without a rule, numbers get sorted like words. With `(a, b) => a - b` they are sorted like numbers.
+@320 The default comparison is by string code units. A numeric comparator fixes it; for descending order use `b - a`.
+@321 Did everyone pass (50 or more)?
+@322 Did everybody get at least 50?
+@323 You want `true` only when the test is true for *all* the scores.
+@324 Which tool asks "are ALL of them…?"
+@325 `every` answers "all of them?"; `some` would answer "at least one?". `filter` and `map` give back arrays, not a yes or no.
+@326 `every` means "all of them". `some` means "at least one". The others give back lists, not a yes or no.
+@327 `every` is the universal quantifier, `some` the existential one; both return `boolean` and stop early.
+@328 Write `total` with `reduce`: it adds up all the prices.
+@329 Make `total` add up all the prices, using `reduce`.
+@330 `prices.reduce((sum, price) => sum + price, 0)`: the `0` is where the running total starts.
+@331 Use `prices.reduce((sum, price) => sum + price, 0)`. The `0` is the empty jar you start with.
+@332 The second argument, `0`, is the starting value. It also makes an empty list give `0` instead of an error.
+@333 Starting with 0 means an empty basket costs 0, instead of breaking.
+@334 With an initial value, `reduce` is total over empty arrays and the accumulator is typed from it (`number`). Without one, `[].reduce(f)` throws a `TypeError`.
+@335 three prices
+@336 one price
+@337 empty basket
+@338 Write `topThree`: the three highest scores, highest first, **without changing** the list it is given.
+@339 Make `topThree` give back the three best scores, best first, and leave the original list alone.
+@340 The starter sorts the original array. Copy it first with `[...scores]`, then sort the copy.
+@341 The starter mixes up the real list. Make a copy with `[...scores]` and sort the copy instead.
+@342 Copy, then sort: the caller’s array keeps its order. `b - a` sorts from highest to lowest.
+@343 Copying first keeps the original list safe. `b - a` means "biggest first".
+@344 Mutating an argument is a surprising side effect for callers. `[...xs].sort(cmp)` is the portable non-mutating sort; on ES2023 engines, `xs.toSorted(cmp)` says the same thing directly.
+@345 best three, best first
+@346 fewer than three
+@347 the original list is unchanged
+@348 `sort` needs a comparator for numbers, and it changes the array.
+@349 `some` and `every` answer yes/no questions about a whole list.
+@350 `reduce(fn, start)` folds a list into one value.
+@351 `sort` needs a rule, and it changes your list.
+@352 `some` = at least one, `every` = all of them.
+@353 `reduce` adds things up into one value.
+@354 Default `sort` compares strings; pass a comparator and copy first.
+@355 `every([])` is `true`; both predicates short-circuit.
+@356 Always give `reduce` an initial value.
+@357 Go further: `toSorted` sorts a copy. What prints?
+@358 A challenge: `toSorted` sorts a copy. What will it show?
+@359 `toSorted` returns a new, sorted array and leaves `original` alone.
+@360 `toSorted` makes a sorted copy. The first list stays as it was.
+@361 `toSorted` (2023) is `sort` without the surprise: the original keeps its order.
+@362 `toSorted` is a newer tool that never changes your list.
+@363 `toSorted`, `toReversed`, `toSpliced` and `with` are the ES2023 copy-returning counterparts of the mutating methods.
+@364 Sorting a copy made with spread. What prints?
+@365 Sorting a copy. What will it show?
+@366 `[...original]` is a new array; sorting it leaves `original` alone.
+@367 `[...original]` is a copy. Sorting the copy does not touch the first list.
+@368 Copy, then sort. Newer phones also have `original.toSorted(...)`, which does both in one go.
+@369 Copy first, then sort. Newer phones have a shortcut called `toSorted`.
+@370 The spread copy is the portable equivalent of ES2023 `toSorted`, which this device’s engine does not provide.
+@371 Store values by key with a `Map`.
+@372 Keep unique values with a `Set`.
+@373 Count things with a `Map<string, number>`.
+@374 Keep things in labelled drawers.
+@375 Keep a bag with no copies.
+@376 Count how many times each word appears.
+@377 Use `Map` to look values up by key.
+@378 Use `Set` for uniqueness and fast "is it in there?" checks.
+@379 Missing keys give `undefined`: handle it.
+@380 Maps have labelled drawers.
+@381 Sets never keep copies.
+@382 Always check a drawer might be empty.
+@383 Keyed collections beat objects for dynamic keys.
+@384 Membership checks on a Set are O(1).
+@385 Mind serialisation: Maps and Sets are not JSON.
+@386 Two collections made for looking things up.
+@387 Two new kinds of collection.
+@388 A **Map** stores values under keys:⏎⏎⟦F1⟧⏎⏎A **Set** keeps each value once, however many times you add it:⏎⏎⟦F2⟧⏎⏎Notice `get` can return `undefined`: the key might not be there. TypeScript makes you handle that.
+@389 A **Map** is a chest of drawers with labels. You put a value in the drawer labelled "Ada" and find it again by that label.⏎⏎A **Set** is a bag that never keeps copies. Put "ts" in twice and it is still only in there once.⏎⏎If you ask for a drawer that does not exist, you get `undefined`: nothing there.
+@390 `Map<K, V>` keys by SameValueZero equality, so any value (objects included) can be a key, insertion order is preserved, and `size` is O(1). Prefer it to a plain object for dynamic keys: no prototype keys, no string coercion of keys, and fast add/delete.⏎⏎`get` returns `V | undefined`; narrow with `has` plus a check, or use `??`. `Set<T>` gives O(1) membership and de-duplication: `[...new Set(xs)]` keeps first occurrences in order.⏎⏎Neither serialises with `JSON.stringify` (both print `{}`); convert with `Object.fromEntries(map)` or `[...set]`. ES2025 adds set algebra (`union`, `intersection`), not yet on every engine.
+@391 The Set drops the second `"cat"`. The Map has `"cat"` but not `"dog"`.
+@392 The bag keeps only one "cat". The chest has a "cat" drawer but no "dog" drawer.
+@393 A Set keeps one of each value, so the size is 2. A missing key gives `undefined`.
+@394 The bag has two different pets. The "dog" drawer does not exist, so you get `undefined`.
+@395 Set membership de-duplicates by SameValueZero; `Map.get` for an absent key is `undefined`, reflected in its `V | undefined` return type.
+@396 You need to count how often each word appears in a text. Which fits best?
+@397 You want to count how many times each word appears. Which is best?
+@398 You need to go from a word to a number, and add new words as they turn up.
+@399 You need a label (the word) and a number for each label.
+@400 A `Map<string, number>` maps each word to its count and handles any word, including ones like `"constructor"` that clash with object properties.
+@401 A Map is perfect: each word is a label, and its drawer holds the count.
+@402 `Map<string, number>` is the idiomatic counter: dynamic keys, no prototype collisions, `size` for the number of distinct words.
+@403 A `Map<string, number>`
+@404 A `Set<string>`
+@405 A Set knows *which* words appear, but not how many times.
+@406 A bag knows which words are there, but not how many of each.
+@407 A `string[]`
+@408 A plain list can hold the words, but counting means searching it again and again.
+@409 A list would work, but you would have to count by hand each time.
+@410 Write `countWords`: a Map from each word to how often it appears.
+@411 Make `countWords` count each word with a Map.
+@412 Loop with `for (const word of words)`. `counts.get(word) ?? 0` is the count so far; set it to that plus one.
+@413 Go through each word. `counts.get(word) ?? 0` is how many you have so far (0 if none). Put back that number plus one.
+@414 `?? 0` turns "not counted yet" (`undefined`) into 0, which also satisfies the type checker.
+@415 `?? 0` means "if the drawer is empty, start at 0".
+@416 `get` returns `number | undefined`; `?? 0` narrows it to `number` without a non-null assertion. The Map keeps first-insertion order for the entries.
+@417 counts repeats
+@418 count of one word
+@419 no words
+@420 Write `unique`: the list without repeats, in first-seen order.
+@421 Make `unique` give back the list with no copies.
+@422 Put the items in a `Set`, then spread it back into an array: `[...new Set(items)]`.
+@423 Pour the list into a no-copies bag (`new Set(items)`), then tip it out into a list with `[...]`.
+@424 A Set keeps the first of each value, in order; spreading turns it back into an array.
+@425 The bag throws copies away and remembers the order things went in.
+@426 `[...new Set(xs)]` is the idiomatic O(n) de-duplication for primitives (objects are compared by reference).
+@427 drops repeats
+@428 already unique
+@429 empty
+@430 `Map<K, V>` stores values by key; `get` may return `undefined`.
+@431 `Set<T>` keeps each value once.
+@432 `[...new Set(items)]` removes repeats.
+@433 A Map is a chest of labelled drawers.
+@434 A Set is a bag with no copies.
+@435 Empty drawers give `undefined`, so check first.
+@436 Prefer `Map` to objects for dynamic keys.
+@437 Handle `V | undefined` from `get` with `??` or a check.
+@438 Convert Maps and Sets before `JSON.stringify`.

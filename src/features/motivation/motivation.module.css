@@ -1,0 +1,138 @@
+/* Today card, level bar, Tess's speech bubble. */
+
+.today {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.todayTitle {
+  font-size: var(--text-1);
+  margin: 0;
+}
+
+.todayGrid {
+  display: grid;
+  gap: var(--s-3);
+}
+
+@media (min-width: 560px) {
+  .todayGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.goal,
+.streak {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+}
+
+.goal > div,
+.streak > div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.statLabel {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+}
+
+.statValue {
+  font-size: var(--text-1);
+  font-weight: 700;
+}
+
+.flame {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  fill: var(--line-strong);
+}
+
+.flame[data-lit='true'] {
+  background: var(--warm-soft);
+  fill: var(--warm);
+}
+
+.today[data-mode='pro'] {
+  gap: var(--s-2);
+}
+
+.today[data-mode='story'] .statValue {
+  font-size: var(--text-2);
+}
+
+/* ------------------------------- level ----------------------------- */
+
+.level {
+  display: grid;
+  gap: var(--s-1);
+}
+
+.levelTop {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.levelName {
+  font-weight: 700;
+}
+
+.levelNumber {
+  color: var(--accent-strong);
+}
+
+.levelXp,
+.levelNext {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  height: 10px;
+  border-radius: var(--r-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--warm));
+  transition: width var(--dur-slow) var(--ease);
+}
+
+/* ------------------------------- Tess ------------------------------ */
+
+.says {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-2);
+}
+
+.bubble {
+  position: relative;
+  margin: 0;
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-lg);
+  border-end-start-radius: var(--r-xs);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.says[data-mascot='false'] .bubble {
+  border-end-start-radius: var(--r-lg);
+}

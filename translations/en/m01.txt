@@ -1,0 +1,298 @@
+@1 Strings are text inside quotes.
+@2 Use `.length`, `.toUpperCase()` and `+`.
+@3 Tools return new text instead of changing the original.
+@4 Words in code are strings, in quotes.
+@5 `.length`, `.toUpperCase()` and `+` are string tools.
+@6 The tools make new words and leave the old ones alone.
+@7 Treat strings as values: no method mutates them.
+@8 Keep numbers and strings apart in your types to avoid accidental concatenation.
+@9 Know the core methods: `length`, `includes`, `slice`, `trim`, `split`.
+@10 A string is text in quotes.
+@11 Words in code are called strings. They go in quotes.
+@12 A **string** is text. You write it inside quotes, and it can be as short as `""` or as long as a paragraph.⏎⏎Strings come with useful tools attached:⏎⏎- `.length` counts the characters.⏎- `.toUpperCase()` returns a shouting copy.⏎- `.includes("x")` asks whether a piece of text is inside.⏎⏎None of those tools change the original. They hand you a new string.
+@13 A string is text wearing a pair of quotes, like `"hello"`.⏎⏎Strings come with tools. `.length` counts letters. `.toUpperCase()` shouts the text back.⏎⏎The tools give you a **new** string. The old one stays exactly as it was.
+@14 `string` is an immutable primitive: every method returns a new value. `.length`, `.toUpperCase()`, `.includes()`, `.slice()`, `.trim()` and `.split()` cover most daily work.⏎⏎Concatenation with `+` converts the other operand to a string (`"n=" + 1` is `"n=1"`). Convenient, and also where `"36" + 1 === "361"` comes from: one more reason to keep numbers and strings apart in your types.⏎⏎Strings compare by value: two strings with the same characters are `===`.
+@15 `+` joins text. What prints?
+@16 `+` sticks words together. What will it show?
+@17 First the two pieces are joined into one word. Then `.length` counts it, and the next line prints the word.
+@18 First the two words become one. Then the robot counts its letters, and then shows the word.
+@19 `+` glues the two pieces into `TypeScript`. Counting the letters gives 10, and then the word itself prints.
+@20 `+` sticks "Type" and "Script" into `TypeScript`. That has 10 letters, and then the word itself is shown.
+@21 Concatenation produces `"TypeScript"`, ten UTF-16 code units. The two `console.log` calls print in statement order: the length first, then the string.
+@22 Which line gives you a string?
+@23 Which line makes a string?
+@24 Strings are text in quotes. Look for the quotes.
+@25 Look for the one with quotes around it.
+@26 Quotes make a string. `7` is a number, and `true` is a boolean.
+@27 Quotes make a string. `7` on its own is a number, and `true` is a yes-or-no value.
+@28 The literal decides the type: quotes make a `string`, a bare numeral a `number`, `true` a `boolean`. On a `const`, TypeScript infers the literal types `"7"`, `7` and `true`.
+@29 `const x = 7;`
+@30 That is a number. No quotes.
+@31 That is a number. There are no quotes.
+@32 `const x = "7";`
+@33 `const x = true;`
+@34 That is a boolean: true or false.
+@35 That is a yes-or-no value (a boolean): true or false.
+@36 Write `greet` so it returns `Hello, ` followed by the name.
+@37 Make `greet` give back `Hello, ` and then the name.
+@38 You need a return statement that joins the greeting and the parameter.
+@39 Use `return` and `+` to stick "Hello, " and `name` together.
+@40 `return "Hello, " + name;` — the space after the comma matters.
+@41 Write `return "Hello, " + name;` — keep the space after the comma.
+@42 `+` joins two strings into one. The parameter `name` is already a string, so no conversion is needed.
+@43 `+` sticks two strings into one. `name` is already a string, so they fit together.
+@44 Both operands are `string`, so `+` is plain concatenation and the return type would be inferred as `string` anyway. The annotation documents the contract and catches a wrong branch early.
+@45 greet("Ada")
+@46 greet("Sam")
+@47 works with an empty name
+@48 The short version.
+@49 What you learned.
+@50 Strings are text in quotes.
+@51 `+` joins strings; `.length` counts characters.
+@52 String tools return a new string; they do not change the old one.
+@53 Strings are words in quotes.
+@54 `+` sticks strings together; `.length` counts letters.
+@55 String tools make a new string. The old one stays the same.
+@56 `string` is an immutable primitive; its methods return new strings.
+@57 `+` concatenates and converts the other operand to a string.
+@58 Strings compare by value with `===`.
+@59 Numbers are written bare: `7`, not `"7"`.
+@60 `%` is the remainder operator.
+@61 Round on purpose with `Math.round`.
+@62 Write numbers without quotes: `7`, not `"7"`.
+@63 `%` finds what is left over.
+@64 `Math.round` turns 3.5 into a whole number.
+@65 `number` is a double; integers are exact only up to 2^53 − 1.
+@66 `0.1 + 0.2 !== 0.3`: compare with a tolerance, or use integers.
+@67 `Math.round`, `Math.floor` and `Math.trunc` differ on negatives.
+@68 Numbers are numbers. No quotes.
+@69 Numbers are just numbers. No quotes!
+@70 TypeScript has one **number** type for whole numbers and decimals alike: `7`, `-3`, `2.5`.⏎⏎The operators are the ones you already know: `+ - * /`. There is also `%`, which gives the remainder: `10 % 3` is `1`.⏎⏎A decimal answer is normal. `7 / 2` is `3.5`, not `3`. If you need a whole number, ask for one: `Math.round(7 / 2)`.
+@71 Numbers do not wear quotes. `7` is a number. `"7"` is text that happens to look like one.⏎⏎You can add `+`, subtract `-`, multiply `*`, and divide `/`.⏎⏎Dividing does not throw away the decimal: half of 7 is 3.5.
+@72 `number` is an IEEE 754 double: there is no separate integer type. Integers are exact up to `Number.MAX_SAFE_INTEGER` (2^53 − 1); beyond that, use `bigint` (`10n`).⏎⏎Division never truncates: `7 / 2` is `3.5`. `Math.floor`, `Math.trunc` and `Math.round` give integers and differ on negative numbers. `%` is a remainder, not a modulo: `-7 % 3` is `-1`.⏎⏎Floating point is binary, so `0.1 + 0.2` is `0.30000000000000004`. For money, store integer cents and format at the edges.
+@73 What do these two lines print?
+@74 What will these two lines show?
+@75 `/` divides and keeps any decimal part. `%` gives the remainder after dividing.
+@76 `/` shares a number out. `%` says how much is left over.
+@77 Division keeps the decimal part, so `7 / 2` is `3.5`. `%` gives the remainder after dividing: 10 fits 3 threes, with 1 left over.
+@78 `7 / 2` shares 7 into two equal parts: 3.5 each. `%` tells you what is left over: 10 makes three groups of 3, with 1 left.
+@79 `/` is floating-point division, so `7 / 2` is `3.5`. `%` is the remainder with the sign of the dividend: `10 % 3` is `1`, and `-10 % 3` would be `-1`.
+@80 Fill in the operator that halves a number.
+@81 Pick the sign that cuts a number in half.
+@82 Halving means dividing by 2. Which operator divides?
+@83 Cutting in half means sharing between 2. Which sign shares?
+@84 Division is `/`. `10 / 2` is `5`.
+@85 Dividing uses `/`. `10 / 2` is `5`.
+@86 `/` always produces a double; `10 / 2` is exactly `5` because the result is representable. Use `Math.trunc(a / b)` when you need integer division.
+@87 Write `area` so it returns width multiplied by height.
+@88 Make `area` give back the width times the height.
+@89 Multiply the two parameters and return the result.
+@90 Multiply the two numbers with `*` and give back the answer with `return`.
+@91 area(3, 4)
+@92 area(2, 2)
+@93 handles decimals
+@94 Numbers need no quotes.
+@95 `+ - * /` work as expected; `%` gives the remainder.
+@96 Division keeps decimals unless you round.
+@97 Numbers do not need quotes.
+@98 `+ - * /` work like in maths; `%` finds what is left over.
+@99 Dividing can give a number with a dot, like 3.5.
+@100 One `number` type, a 64-bit float; `bigint` for larger integers.
+@101 `/` never truncates; `%` keeps the sign of the dividend.
+@102 Round deliberately, and store money as integer cents.
+@103 Go further: write `average` so it rounds to one decimal place.
+@104 A challenge: make `average` give the middle value, rounded to one decimal.
+@105 Add the values, divide by `values.length`, then `Math.round(x * 10) / 10` keeps one decimal. Guard the empty list first.
+@106 Add them all up and divide by how many there are. To keep one decimal: times 10, round, divide by 10. An empty list gives 0.
+@107 `Math.round` only rounds to whole numbers, so scale up by 10, round, and scale back down.
+@108 Rounding works on whole numbers, so we make the number 10 times bigger, round it, then make it small again.
+@109 `Math.round(x * 10) / 10` rounds half-up at one decimal; for display prefer `toFixed(1)` (a string) or `Intl.NumberFormat`, and remember binary floating point cannot represent most decimals exactly.
+@110 whole result
+@111 one decimal
+@112 rounded
+@113 empty list
+@114 Reach for `const` first.
+@115 `let` is for values that are genuinely replaced.
+@116 Inference handles the obvious cases; annotate the edges.
+@117 Pick `const` first.
+@118 Use `let` only when the value really changes.
+@119 TypeScript often guesses the label for you.
+@120 Default to `const`; use `let` only for real reassignment.
+@121 Inference gives `const` a literal type and widens `let`.
+@122 Annotate parameters and exports; let locals infer.
+@123 Use `const` unless the value changes.
+@124 Use `const` unless the value will change.
+@125 Two words create a name: `const` and `let`.⏎⏎- `const` means this name always points at this value.⏎- `let` means the value will be replaced later.⏎⏎Start with `const`. It is true more often than people expect, and it tells the next reader something useful.⏎⏎You almost never need to write the type. `const age = 36` already tells TypeScript it is a number. That is **inference**, and it is usually better than a hand-written **annotation**.
+@126 `const` boxes never get a new thing put inside. `let` boxes can be emptied and refilled.⏎⏎Most boxes never need to change, so start with `const`. If you later find out you need to swap the value, change the word to `let`.⏎⏎You also do not need to write the type. The computer can see that `36` is a number.
+@127 `const` prevents *reassignment* of the binding, not mutation of the value: a `const` array can still be `push`ed. `let` and `const` are block-scoped and unusable before their declaration (the temporal dead zone); avoid `var`, which is function-scoped and hoisted.⏎⏎Inference is flow-based. `const city = "Lagos"` has the literal type `"Lagos"`; `let city = "Lagos"` widens to `string`, because it may change. That difference is what makes literal unions work (Module 5).⏎⏎Annotate where inference cannot see intent (parameters, exported functions, public APIs) and let it handle locals.
+@128 Same value, two levels of detail.
+@129 The same box, with a label and without.
+@130 Annotated
+@131 Correct, but the type is already obvious from the value.
+@132 This works, but the label is not needed: the value already says it is a number.
+@133 Inferred
+@134 Shorter, and just as safe. Add annotations at the edges of functions instead.
+@135 Shorter, and just as safe. TypeScript works the label out for you.
+@136 Which one should be `const`?
+@137 Which ones are right?
+@138 Ask of each line: is the value ever replaced later? `const` cannot be reassigned.
+@139 Does the value change later? `const` boxes can never change.
+@140 `host` never changes, so `const` says so. `count` is replaced on the next line, so it needs `let`.
+@141 `host` never changes, so it is a `const`. `count` gets a new value on the next line, so it needs `let`.
+@142 `host` is never reassigned, so `const` documents and enforces that. `count` is reassigned and needs `let`. The third option does not compile: TS2588, `Cannot assign to 'total' because it is a constant`.
+@143 `const host = "localhost";` — never reassigned
+@144 `let count = 0; count = count + 1;` — reassigned
+@145 `const total = 0; total = total + 5;`
+@146 That is an error: `const` cannot be reassigned. Use `let` if the total really changes.
+@147 This breaks: a `const` box cannot get a new value. Use `let` if it changes.
+@148 What prints?
+@149 What will it show?
+@150 Follow `score` line by line: what is it after the second line? `bonus` takes that value.
+@151 Follow the box `score`: 5, then add 2. `bonus` copies it.
+@152 `score` starts at 5, then becomes 7. `bonus` copies that 7.
+@153 `score` starts at 5, then becomes 7. `bonus` gets a copy of that 7.
+@154 Numbers are primitives, copied by value: `bonus` receives `7`, and later changes to `score` would not affect it. Objects behave differently; they are shared by reference (Module 3).
+@155 Write `totalFor` so it returns price × quantity.
+@156 Make `totalFor` give back the price times how many.
+@157 Create a `const` holding the multiplication, then return it.
+@158 Make a `const` that holds the multiplication, then `return` it.
+@159 totalFor(2.5, 4)
+@160 totalFor(3, 3)
+@161 totalFor(0, 5)
+@162 `const` for values that stay; `let` for values that change.
+@163 Let TypeScript infer types from the value.
+@164 Annotate function parameters and return types, not local variables.
+@165 `const` for boxes that stay the same; `let` for boxes that change.
+@166 TypeScript can work out the label from the value.
+@167 Functions get labels for what goes in and what comes out.
+@168 `const` forbids reassignment, not mutation.
+@169 `let` and `const` are block-scoped; leave `var` behind.
+@170 `const` infers literal types, `let` widens; annotate the boundaries.
+@171 Go further: what type does TypeScript give `city`?
+@172 A challenge: what type does TypeScript give `city`?
+@173 A `const` can never change, so TypeScript can be more precise than `string`.
+@174 `city` can never change. So TypeScript knows exactly which word is in it.
+@175 A `const` gets the *literal* type `"Lagos"`: that exact text and nothing else. The `let` gets `string`, because it may change later.
+@176 `city` is a `const`, so its type is exactly `"Lagos"`. `town` is a `let`, so it could change: its type is just `string`.
+@177 Literal widening: `const` declarations keep the literal type, while mutable `let` bindings widen to the primitive. `as const` extends the same idea to objects and arrays.
+@178 Backticks, not quotes.
+@179 `${...}` is the slot for a value.
+@180 Templates read better than long `+` chains.
+@181 Use backticks, not quotes.
+@182 `${...}` is the hole for a value.
+@183 Holes are easier to read than lots of `+`.
+@184 Prefer template literals to `+` chains whenever values are involved.
+@185 Keep interpolated expressions small.
+@186 Template literal *types* reuse the syntax at the type level.
+@187 Backticks let you drop values into text.
+@188 Backticks let you put values inside words.
+@189 A **template literal** uses backticks instead of quotes. Inside it, `${...}` runs a small expression and puts the result into the text.⏎⏎⟦F1⟧⏎⏎Compared with `"Hi, " + name + "!"`, the template version keeps the shape of the sentence visible. For anything with more than one value, prefer it.
+@190 Backticks are special quotes with a slot in them. Whatever you put in the `${...}` slot gets printed inside the sentence.⏎⏎⟦F1⟧⏎⏎This is much tidier than gluing pieces together with `+`.
+@191 Template literals (backticks) support interpolation with `${expr}` and literal line breaks. Each value is converted to a string much like `String(value)`, so an object becomes `"[object Object]"`: format it yourself, for example with `JSON.stringify`.⏎⏎Any expression works inside `${…}`, including calls and ternaries, but keep it short; a named variable reads better than logic inside a string.⏎⏎TypeScript also has *template literal types*, such as ``type Id = `user-${number}` ``, which reuse the same syntax at the type level.
+@192 What is printed?
+@193 Replace each `${...}` with the value of the name inside it. Keep every other character as written.
+@194 Fill each hole `${...}` with what is in the box of that name.
+@195 Each `${...}` is replaced by the value inside it. The rest of the text, including the spaces, stays exactly as written.
+@196 Each `${...}` is a hole. The value fills the hole, and the other words stay just as they are.
+@197 Each `${…}` is evaluated and converted to a string; the literal text around it, whitespace included, is kept verbatim. The number `7` becomes `"7"`.
+@198 Put the name into the sentence.
+@199 The value lives in a variable. Which variable holds the name?
+@200 Which box holds "Sam"? Put its name in the hole.
+@201 Inside `${...}` you write an expression, not a string. `name` refers to the variable; `"name"` would print the word "name".
+@202 Inside `${...}` you write the box name, without quotes. `name` means "what is in the box"; `"name"` would just show the word name.
+@203 The content of `${…}` is an expression evaluated in the current scope, so `name` resolves to the binding. A string literal there, `${"name"}`, would just insert that text.
+@204 Write `label` so it returns `Ada scored 7 points`.
+@205 Make `label` give back `Ada scored 7 points`.
+@206 Use backticks, and put each parameter inside its own `${...}`.
+@207 Use backticks, and put each value in its own `${...}` hole.
+@208 `return `${name} scored ${score} points`;`
+@209 Write return, then backticks around: `${name} scored ${score} points`.
+@210 label("Ada", 7)
+@211 label("Sam", 0)
+@212 Backticks make a template literal.
+@213 `${...}` inserts a value into the text.
+@214 Any expression works inside the braces, including maths.
+@215 Backticks make text with holes.
+@216 `${...}` is a hole for a value.
+@217 You can even do maths inside a hole.
+@218 Backticks enable interpolation and multi-line strings.
+@219 `${expr}` evaluates any expression and converts the result to a string.
+@220 Objects become `[object Object]`; format them explicitly.
+@221 Go further: template literals work for types too. Make `Greeting` accept only text that starts with `"Hello, "`.
+@222 A challenge: types can have holes too! Make `Greeting` only allow words that start with `"Hello, "`.
+@223 Use a template literal type: `` `Hello, ${string}` ``.
+@224 Write the type with backticks and a hole: `` `Hello, ${string}` ``.
+@225 A template literal *type* describes a pattern of text. `${string}` is a hole that any text fits.
+@226 The type has a hole, just like a template literal. Any words fit in the hole, but the start must be "Hello, ".
+@227 Template literal types (TS 4.1) compose literal and primitive types into string patterns; they power typed routes, CSS units and event names.
+@228 a proper greeting
+@229 another one
+@230 refuses other text
+@231 Measure and search text with `length` and `includes`.
+@232 Cut text with `slice`, split it with `split`, glue it with `join`.
+@233 Tidy text with `trim` and case changes.
+@234 Count letters and look for words.
+@235 Cut words up and glue them back together.
+@236 Tidy up messy text.
+@237 Strings have methods for measuring, searching, cutting and tidying.
+@238 They always return a new string.
+@239 Chain them to build clear recipes.
+@240 Words have a toolbox.
+@241 The tools make new words and leave yours alone.
+@242 Use tools one after another.
+@243 Treat strings as immutable values.
+@244 Prefer `slice` to the legacy `substr`.
+@245 Mind code units versus characters.
+@246 Text comes with its own tools.
+@247 Words come with a toolbox!
+@248 Every string has **methods**: small tools you call with a dot.⏎⏎⟦F1⟧⏎⏎One rule to remember: these tools **never change the original string**. They give you back a new one, so keep the result in a variable or use it straight away.
+@249 Words have tools you can use with a dot: `word.length` counts the letters, `word.toUpperCase()` makes them BIG.⏎⏎`slice` cuts out a piece, `split` chops a sentence into a list, and `join` glues a list back into one piece of text.⏎⏎The tools never change your word. They make a new one for you, like a photocopier.
+@250 Strings are immutable primitives: every method returns a new string, and `s.toUpperCase()` on its own line is a no-op. Chain the calls instead: `input.trim().toLowerCase()`.⏎⏎`slice(start, end)` takes an exclusive end and accepts negative indices from the end. `split` with a string or regex returns `string[]`, and `join` is its inverse. `includes`, `startsWith` and `endsWith` return booleans; `indexOf` returns `-1` when nothing is found.⏎⏎`length` counts UTF-16 code units, not characters: `"👋".length` is `2`. For user-visible characters, iterate with `for…of` or use `Intl.Segmenter`.
+@251 `trim` removes the spaces at both ends first. `slice(0, 4)` keeps positions 0, 1, 2 and 3.
+@252 First the spaces at the ends are swept away. Then `slice(0, 4)` keeps the first four letters.
+@253 `"TypeScript"` has 10 letters once the spaces are gone; `slice(0, 4)` stops *before* index 4; `split` makes a list and `join` glues it back with a new separator.
+@254 Without the spaces, "TypeScript" has 10 letters. `slice(0, 4)` stops just before spot 4. `split` cuts at the commas and `join` glues the pieces back with " + ".
+@255 `trim` strips leading and trailing whitespace (10 code units remain), `slice` uses a half-open range `[0, 4)`, and `split(",").join(" + ")` is the idiomatic replace-all for a fixed separator.
+@256 What does `name.toUpperCase();` on its own line do to `name`?
+@257 What happens to `name` after `name.toUpperCase();`?
+@258 String methods give back a new string. Does anything catch it here?
+@259 The tool makes a new word. Is the new word kept anywhere?
+@260 Nothing changes: the upper-case copy is made and thrown away. Write `name = name.toUpperCase()` (with `let`) or use the result directly.
+@261 Nothing happens to `name`! The BIG copy is made and then forgotten. Keep it: `const loud = name.toUpperCase();`.
+@262 Strings are immutable, so the call returns a new value that is discarded. Linters can flag this (`no-unused-expressions`); assign or return the result.
+@263 `name` becomes upper case
+@264 Strings never change in place. The method returns a new string.
+@265 The word itself never changes. The tool makes a new one.
+@266 Nothing: the new string is thrown away
+@267 It is an error
+@268 It runs fine; it just has no effect.
+@269 No error: it just does nothing useful.
+@270 Write `initials` so `"Ada Lovelace"` gives `"AL"`. Extra spaces must not matter.
+@271 Make `initials` turn `"Ada Lovelace"` into `"AL"`. Extra spaces should not matter.
+@272 `split(" ")` gives the words (and some empty strings when there are extra spaces). Drop the empty ones, take `slice(0, 1)` of each, upper-case it, then `join("")`.
+@273 Chop the name at the spaces with `split(" ")`. Throw away the empty pieces, take the first letter of each piece with `slice(0, 1)`, make it BIG, and glue them with `join("")`.
+@274 A chain of small tools reads like a recipe: split, drop empties, take the first letter, upper-case, join.
+@275 Each tool does one small job, one after another: chop, tidy, pick, make big, glue.
+@276 Method chaining over the intermediate `string[]` keeps each step pure. `slice(0, 1)` is safer than `[0]` here: on an empty string it returns `""` rather than `undefined`.
+@277 two names
+@278 extra spaces
+@279 one name
+@280 `length`, `includes`, `slice`, `split`, `join`, `trim` and case changes cover most text work.
+@281 String methods return new strings; the original never changes.
+@282 Chain small steps: `text.trim().toLowerCase()`.
+@283 Words have tools: count, look for, cut, chop, glue, tidy.
+@284 The tools make new words; your word never changes.
+@285 You can use tools one after another.
+@286 Strings are immutable; every method returns a new value.
+@287 `slice` takes a half-open range and negative indices.
+@288 `length` counts UTF-16 code units, not visible characters.
+@289 Go further: write `slugify` so `"  Hello Big World! "` becomes `"hello-big-world"`.
+@290 A challenge: make `slugify` turn `"  Hello Big World! "` into `"hello-big-world"`.
+@291 Trim, lower-case, remove anything that is not a letter, digit or space with `replace(/[^a-z0-9 ]/g, "")`, then split on spaces, drop empties and join with `"-"`.
+@292 Tidy the ends, make it small letters, remove the punctuation with `replace(/[^a-z0-9 ]/g, "")`, then chop at spaces and glue with dashes.
+@293 A regular expression (`/[^a-z0-9 ]/g`) describes "anything that is not a lowercase letter, digit or space", and `replace` with the `g` flag removes every match.
+@294 `/[^a-z0-9 ]/g` is a pattern that means "anything that is not a small letter, a number or a space". `replace` throws all of those away.
+@295 Character classes with `^` negate; the `g` flag replaces all matches. `replaceAll` (ES2021) needs either a string or a global regex.
+@296 spaces become dashes
+@297 punctuation goes
+@298 already a slug

@@ -1,0 +1,244 @@
+@1 Écrire le type d’une fonction : `(value: number) => string`.
+@2 Laisser TypeScript typer les paramètres d’un callback d’après l’endroit où il est utilisé.
+@3 Savoir ce qu’un callback `void` a le droit de renvoyer.
+@4 Décrire ce qu’une machine prend et ce qu’elle rend.
+@5 Laisser TypeScript remplir les étiquettes pour toi.
+@6 Savoir ce que `void` veut dire pour une machine que tu donnes.
+@7 Nommer les types de fonctions avec un alias `type`.
+@8 Laisser le typage contextuel faire le travail pour les callbacks.
+@9 Les fonctions peuvent renvoyer des fonctions.
+@10 Les machines ont des types, elles aussi.
+@11 Laisser TypeScript remplir les étiquettes.
+@12 Une machine peut construire des machines.
+@13 Modéliser un comportement avec des types de fonctions.
+@14 Préférer le typage contextuel aux annotations répétées.
+@15 Les fermetures capturent la configuration.
+@16 Une fonction a un type, comme n’importe quelle valeur.
+@17 Une machine a une forme, elle aussi : ce qui entre, ce qui sort.
+@18 Les fonctions sont des valeurs, donc elles ont des types. Un **type de fonction** liste les paramètres et le type de retour :⏎⏎⟦F1⟧⏎⏎Remarque que `(value) => …` n’a pas d’annotation : TypeScript sait déjà que `value` est un `number`, parce que la fonction va dans un emplacement `Formatter`. C’est le **typage contextuel**, et c’est pour ça que les callbacks ont rarement besoin d’annotations.
+@19 Le type d’une machine dit ce qui entre et ce qui sort : `(value: number) => string` veut dire « un nombre entre, des mots sortent ».⏎⏎Quand tu donnes une machine à une autre machine, TypeScript sait déjà ce qui entre, donc tu n’as pas à réécrire les étiquettes.
+@20 Une expression de type de fonction `(a: A, b: B) => R` est structurelle : les noms des paramètres servent de documentation, et une fonction avec *moins* de paramètres est affectable (les arguments en trop sont ignorés à l’exécution). Les paramètres sont vérifiés de façon bivariante pour les méthodes mais contravariante pour les propriétés typées comme fonctions sous `strictFunctionTypes`.⏎⏎Le typage contextuel fait descendre le type attendu dans les paramètres des flèches, alors annote à la frontière (l’alias `Formatter` ou le paramètre) et laisse les callbacks être inférés. Un type de retour `void` en position de *callback* veut dire « la valeur de retour est ignorée », donc `(n) => arr.push(n)` est accepté là où `(n: number) => void` est attendu.⏎⏎Pour des signatures d’appel avec des propriétés, utilise un type objet : `{ (value: number): string; label: string }`.
+@21 Quel type TypeScript donne-t-il à `labels` ?
+@22 Quel est le type de `labels` ?
+@23 `map` rassemble tout ce que la fonction renvoie. Que renvoie un `Formatter` ?
+@24 Chaque nombre passe par `shout`. Quelle sorte de chose sort à chaque fois ?
+@25 Chaque nombre passe par un `Formatter`, qui renvoie une `string`, donc le résultat est un `string[]`.
+@26 Des nombres entrent et des mots sortent, donc tu obtiens une liste de mots : `string[]`.
+@27 `map<U>` infère `U` d’après le type de retour du callback, ici `string` grâce à l’alias `Formatter`.
+@28 Lesquelles de ces fonctions peuvent être passées là où `(value: number) => void` est attendu ? Choisis toutes celles qui conviennent.
+@29 Quelles machines rentrent dans un emplacement qui dit `(value: number) => void` ? Choisis toutes celles qui conviennent.
+@30 Un callback peut utiliser moins de paramètres que ceux qu’on lui offre, et la valeur de retour d’un callback `void` est ignorée.
+@31 Une machine peut ignorer des choses qu’on lui donne, et tout ce qu’elle rend est jeté.
+@32 Les deux fonctions à un paramètre conviennent : la valeur de retour d’un callback `void` est ignorée. Une fonction qui *a besoin* de deux paramètres ne convient pas, car un seul sera donné.
+@33 Les machines à une entrée conviennent, même si elles rendent quelque chose (c’est ignoré). Celle qui a besoin de deux entrées ne les recevra pas.
+@34 Affectabilité des types de fonctions : moins de paramètres, ça va ; plus de paramètres obligatoires, non ; et n’importe quel type de retour est affectable à un retour `void` dans cette position.
+@35 `(n) => console.log(n)`
+@36 `(n) => n * 2`
+@37 `(a: number, b: number) => a + b`
+@38 Elle exige deux paramètres, mais les appelants n’en passeront qu’un.
+@39 Elle a besoin de deux entrées, mais elle n’en recevrait qu’une.
+@40 Écris `makeGreeter` : elle prend une salutation et renvoie une fonction qui salue un nom, donc `makeGreeter("Hi")("Ada")` vaut `"Hi, Ada!"`.
+@41 Fabrique `makeGreeter`, une machine qui construit des machines à saluer : `makeGreeter("Hi")("Ada")` donne `"Hi, Ada!"`.
+@42 Renvoie une fonction fléchée qui utilise à la fois `greeting` et `name` dans un littéral de gabarit.
+@43 Rends une petite machine fléchée qui met ensemble `greeting` et `name` avec des accents graves.
+@44 Le type de retour `Greeter` type `name` pour toi, et la fonction intérieure se souvient de `greeting` (une fermeture).
+@45 Comme l’emplacement dit `Greeter`, TypeScript sait déjà que `name` est du texte. Et la petite machine se souvient de la salutation.
+@46 Le type de retour déclaré type par le contexte la flèche renvoyée ; la fermeture capture `greeting`. Renvoyer des fonctions permet de construire un comportement configurable sans classes.
+@47 hi
+@48 hello
+@49 réutilisable
+@50 `log` ne correspond pas au type `Listener`. Corrige son paramètre.
+@51 La machine `log` n’a pas la bonne prise. Corrige l’étiquette de son entrée.
+@52 Un `Listener` reçoit une `string`. Que dit `log` qu’il reçoit ?
+@53 L’emplacement dit qu’un mot entre. Que dit `log` qui entre ?
+@54 Enlever la mauvaise annotation laisse le typage contextuel donner à `message` le bon type, `string`. Écrire `(message: string)` marche aussi.
+@55 Une fois la mauvaise étiquette enlevée, TypeScript met la bonne tout seul.
+@56 Une annotation de paramètre qui contredit le contexte est une erreur (une `string` ne peut pas être passée à un paramètre `number`). La supprimer laisse le contexte fournir `string`.
+@57 prévient un écouteur
+@58 La version courte.
+@59 Ce que tu as appris.
+@60 Un type de fonction s’écrit `(params) => returnType`.
+@61 Les callbacks reçoivent leurs types de paramètres du contexte.
+@62 La valeur de retour d’un callback `void` est ignorée.
+@63 Le type d’une machine dit ce qui entre et ce qui sort.
+@64 TypeScript remplit les étiquettes des machines que tu donnes.
+@65 Les machines peuvent rendre des machines.
+@66 Les types de fonctions sont structurels ; moins de paramètres, c’est affectable.
+@67 Annoter aux frontières, inférer à l’intérieur.
+@68 `void` en position de callback ignore les retours.
+@69 Écrire des signatures de surcharge quand le type de retour dépend du type de l’argument.
+@70 Savoir que les appelants ne voient que les surcharges.
+@71 Préférer une union ou un générique quand ça suffit.
+@72 Donner à une machine deux façons d’être utilisée.
+@73 Savoir quelle façon TypeScript choisit.
+@74 Rester simple quand une seule façon suffit.
+@75 Les surcharges relient les types d’entrée aux types de sortie.
+@76 Les écrire au-dessus d’une seule implémentation.
+@77 Ne pas les utiliser quand une union suffit.
+@78 Une machine peut avoir plusieurs façons d’être utilisée.
+@79 Chaque façon dit ce qui sort.
+@80 Rester simple quand on peut.
+@81 Les surcharges modélisent des types de paramètres et de retour corrélés.
+@82 Garder le corps honnête : il n’est pas vérifié pour chaque surcharge.
+@83 Préférer les génériques pour « même type en entrée, même type en sortie ».
+@84 Surcharges : plusieurs signatures, un seul corps.
+@85 Une machine, plusieurs façons de l’utiliser.
+@86 Parfois, ce que renvoie une fonction dépend de ce que tu lui donnes. Les **surcharges** listent chaque façon de l’appeler, suivies d’une seule implémentation :⏎⏎⟦F1⟧⏎⏎Les appelants ne voient que les deux premières lignes. La troisième signature appartient au corps et doit être compatible avec toutes les autres.
+@87 Certaines machines rendent des choses différentes selon ce que tu y mets. Mets un mot, récupère un nombre. Mets une liste de mots, récupère une liste de nombres.⏎⏎Les surcharges sont une liste de « façons d’utiliser cette machine ». TypeScript choisit la première façon qui convient.
+@88 La résolution des surcharges essaie les signatures de haut en bas et prend la première qui correspond, donc ordonne-les de la plus spécifique à la plus générale. La signature d’implémentation n’est pas appelable de l’extérieur ; elle doit être affectable depuis chaque surcharge, et TypeScript ne vérifie pas que le type de retour de chaque surcharge correspond à ce que le corps renvoie pour cette entrée : garde donc le corps honnête.⏎⏎N’utilise les surcharges que quand le type de retour dépend du *type* de l’argument d’une façon qu’une union ne peut pas exprimer. Si la relation est « même type en entrée, même type en sortie », un générique est plus simple ; si c’est « n’importe lequel de ceux-ci, même résultat », un paramètre union suffit.
+@89 Quelle surcharge utilise `many` ? Quel type obtient-il ?
+@90 Quelle façon d’utiliser `parse` est choisie pour `many` ? Quel type obtient-il ?
+@91 L’argument est un tableau de chaînes. Quelle signature accepte ça ?
+@92 Une liste de mots entre. Quelle façon d’utiliser `parse` prend une liste ?
+@93 La deuxième surcharge correspond à un `string[]`, donc `many` est un `number[]`, pas le vague `number | number[]` du corps.
+@94 Une liste est entrée, donc c’est la deuxième façon qui est utilisée, et une liste de nombres sort.
+@95 L’appel est résolu par rapport à la liste des surcharges, jamais par rapport à la signature d’implémentation, donc les appelants obtiennent le `number[]` précis.
+@96 Ajoute des surcharges à `double` pour qu’une chaîne donne une `string` et qu’un nombre donne un `number`.
+@97 Apprends deux façons à `double` : un mot entre, un mot sort ; un nombre entre, un nombre sort.
+@98 Ajoute deux signatures au-dessus de l’implémentation : `function double(value: string): string;` et `function double(value: number): number;`.
+@99 Écris deux lignes de plus au-dessus de la machine : une pour les mots et une pour les nombres, chacune terminée par `;`.
+@100 L’implémentation reste telle quelle ; les deux lignes de surcharge vont juste au-dessus.
+@101 Garde la machine telle quelle. Ajoute juste les deux lignes au-dessus.
+@102 Avec les surcharges, chaque appelant obtient le type exact de ce qu’il a passé. Sans elles, chaque appelant devait à nouveau affiner `string | number`.
+@103 Maintenant, TypeScript sait : des mots entrent, des mots sortent ; des nombres entrent, des nombres sortent.
+@104 C’est le cas d’usage canonique des surcharges : un type de retour corrélé au type de l’argument. Un générique `T extends string | number` ne marcherait pas ici, car `value * 2` n’est pas un `T`.
+@105 du texte donne du texte
+@106 un nombre donne un nombre
+@107 tout le reste est refusé
+@108 double du texte
+@109 double un nombre
+@110 `len(value: string | unknown[]): number` renvoie un nombre dans les deux cas. As-tu besoin de surcharges ?
+@111 `len` rend toujours un nombre, quoi qu’il entre. A-t-elle besoin de deux façons ?
+@112 Les surcharges méritent leur place quand le *type de retour* change avec l’entrée.
+@113 Est-ce que la réponse change de sorte selon ce qui entre ?
+@114 Non : le type de retour est toujours `number`, donc un paramètre union dit tout. Les surcharges ne feraient qu’ajouter de la lecture.
+@115 Non. Elle donne toujours un nombre, donc une seule façon simple suffit.
+@116 Un paramètre union suffit quand la sortie ne dépend pas du membre passé. Les surcharges se dégradent aussi quand les appelants tiennent une union (`len(x)` avec `x: string | unknown[]` ne correspondrait à aucune surcharge).
+@117 Non, un paramètre union suffit
+@118 Oui, une surcharge par type d’entrée
+@119 Le type de retour ne change jamais, donc les surcharges n’ajoutent que des lignes.
+@120 La réponse est toujours un nombre, donc des façons en plus n’apportent rien.
+@121 Les surcharges listent les façons d’appeler une fonction, puis une seule implémentation.
+@122 Les appelants ne voient que les surcharges, essayées dans l’ordre.
+@123 Ne les utiliser que quand le type de retour dépend du type de l’entrée.
+@124 Les surcharges sont des façons d’utiliser une seule machine.
+@125 TypeScript choisit la première façon qui convient.
+@126 Si la réponse est toujours de la même sorte, tu n’en as pas besoin.
+@127 Ordonner les surcharges du spécifique au général.
+@128 La signature d’implémentation est invisible pour les appelants.
+@129 Préférer unions ou génériques quand ils expriment la relation.
+@130 Écrire une fonction dont le résultat affine un type : `value is string`.
+@131 L’utiliser dans `if` et dans `filter`.
+@132 Savoir que TypeScript fait confiance à un prédicat, qu’il ait raison ou tort.
+@133 Fabriquer ton propre vérificateur « est-ce un… ? ».
+@134 T’en servir pour trier des choses.
+@135 Savoir que TypeScript croit ce que dit ton vérificateur.
+@136 Les prédicats de type apprennent tes propres vérifications à TypeScript.
+@137 Ils affinent dans les conditions et dans `filter`.
+@138 On leur fait confiance, on ne les vérifie pas.
+@139 Fabriquer tes propres vérificateurs « est-ce un… ? ».
+@140 Ils aident à trier les listes.
+@141 S’assurer qu’ils disent la vérité.
+@142 Gardes : `(x: A) => x is B`.
+@143 Prédicats inférés pour les corps simples.
+@144 Tester les gardes ; ce sont des assertions.
+@145 Tes propres vérifications peuvent affiner les types.
+@146 Tu peux apprendre à TypeScript une nouvelle façon de regarder dans la boîte.
+@147 `typeof` et `in` affinent les types. Ta propre fonction aussi, si son type de retour est un **prédicat de type** :⏎⏎⟦F1⟧⏎⏎Quand `isFish(pet)` est vrai, TypeScript sait que `pet` est un `Fish` ; sinon, c’est un `Bird`. Un simple type de retour `boolean` ne lui apprendrait rien.
+@148 Parfois, tu veux ton propre vérificateur « est-ce un poisson ? ». Si le vérificateur dit `pet is Fish`, TypeScript le croit.⏎⏎Une fois que la vérification a dit oui, TypeScript sait que c’est un poisson et te laisse utiliser `swim`. Si elle dit non, ça doit être l’oiseau.
+@149 Une garde de type définie par l’utilisateur `(x: A) => x is B` (où `B` est affectable à `A`) affine l’argument dans la branche vraie et, pour les unions, aux membres restants dans la branche fausse. `Array.prototype.filter` a une surcharge qui prend un prédicat, donc `xs.filter(isFish)` est un `Fish[]`.⏎⏎Depuis TS 5.5, les prédicats sont aussi *inférés* pour les corps de fonctions simples sans annotation de retour, par exemple `(x) => x !== undefined`. En écrire un explicitement documente l’intention.⏎⏎Le corps n’est pas vérifié : un prédicat est une assertion non vérifiée avec une interface booléenne. Garde les gardes petites et teste-les.
+@150 Quel type a `names` après le filtrage avec le prédicat ?
+@151 Une fois que le vérificateur a fait le tri, de quel type est `names` ?
+@152 `isDefined` promet `value is T`. `filter` utilise cette promesse pour changer le type des éléments.
+@153 Le vérificateur jette les vides, et il le dit à TypeScript.
+@154 `filter` a une version spéciale pour les prédicats de type : le résultat ne garde que la partie `T`, donc `undefined` disparaît aussi du type.
+@155 Le vérificateur a enlevé les vides, et l’a dit à TypeScript. Donc la liste ne contient plus que des mots.
+@156 `filter<S extends T>(pred: (value: T) => value is S): S[]` affine le type des éléments ; un simple callback `boolean` laisserait `(string | undefined)[]`.
+@157 Modifie `isFish` pour qu’elle affine : son type de retour doit être un prédicat de type.
+@158 Fais en sorte que `isFish` instruise TypeScript : change ce qu’elle dit rendre.
+@159 Remplace `boolean` par `pet is Fish`.
+@160 Au lieu de `boolean`, écris `pet is Fish`.
+@161 Même corps, même comportement à l’exécution ; seul le type de retour a changé. Maintenant, TypeScript apprend de chaque appel.
+@162 Le vérificateur marche exactement pareil. Mais maintenant, TypeScript l’écoute.
+@163 Le prédicat relie le résultat booléen à un affinage de `pet` ; le code d’exécution est identique, et c’est aussi pour ça que rien ne vérifie que le corps est d’accord avec l’affirmation.
+@164 affine dans un if
+@165 la branche else est un Bird
+@166 filter ne garde que les poissons
+@167 un poisson
+@168 un oiseau
+@169 `function isString(x: unknown): x is string { return true; }` Que se passe-t-il ?
+@170 Et si un vérificateur disait toujours oui, même pour des nombres ?
+@171 Est-ce que TypeScript vérifie que le corps correspond à la promesse ?
+@172 Est-ce que TypeScript revérifie ton vérificateur ?
+@173 Ça compile. TypeScript fait confiance à un prédicat de type, donc un prédicat faux fait passer du code faux à la vérification de types, et ça échoue à l’exécution à la place. Garde les prédicats simples et testés.
+@174 TypeScript croit ton vérificateur, même quand il se trompe ! Donc un vérificateur menteur cause des problèmes plus tard.
+@175 Les prédicats de type sont des assertions non vérifiées. Préfère les prédicats inférés ou de petites gardes testées ; pour les données non fiables, valide la structure (les bibliothèques de schémas font ça).
+@176 Ça compile, et TypeScript le croit
+@177 TypeScript signale que le corps ne vérifie rien
+@178 Rien ne compare le corps à la promesse. C’est ça, le risque.
+@179 TypeScript ne vérifie pas l’intérieur de ton vérificateur.
+@180 `value is Type` comme type de retour permet à une fonction d’affiner.
+@181 Ça marche dans `if` et dans `filter`.
+@182 TypeScript fait confiance au prédicat, alors garde-le juste.
+@183 Ton propre vérificateur peut instruire TypeScript.
+@184 Ça marche avec `if` et avec `filter`.
+@185 TypeScript croit ton vérificateur, alors fais-le juste.
+@186 Les gardes définies par l’utilisateur affinent les deux branches pour les unions.
+@187 `filter` a une surcharge pour les prédicats.
+@188 Les prédicats ne sont pas vérifiés ; préfère ceux qui sont inférés (TS 5.5+).
+@189 Écrire une fonction qui lève une erreur quand une vérification échoue.
+@190 Lui donner un type de retour `asserts` pour que TypeScript affine après l’appel.
+@191 Choisir entre un prédicat et une assertion.
+@192 Fabriquer un vérificateur qui arrête tout si quelque chose cloche.
+@193 Après lui, TypeScript sait que la vérification est passée.
+@194 Choisir la bonne sorte de vérificateur.
+@195 Les fonctions d’assertion transforment des vérifications à l’exécution en connaissance de types.
+@196 Elles ne renvoient rien et lèvent une erreur en cas d’échec.
+@197 Les utiliser pour ce qui doit être vrai.
+@198 Les vérificateurs-arbitres arrêtent les mauvaises valeurs.
+@199 Après eux, TypeScript fait confiance à la valeur.
+@200 Assertions : validation aux frontières, préconditions, fonctions utilitaires de test.
+@201 Elles se combinent avec les prédicats.
+@202 Attention à TS2775 pour les fonctions fléchées.
+@203 Vérifier, ou lever une erreur : ensuite, TypeScript sait.
+@204 Un vérificateur qui arrête le programme quand quelque chose cloche.
+@205 Un prédicat de type renvoie `true` ou `false`. Une **fonction d’assertion** ne renvoie rien : elle lève une erreur quand la vérification échoue. Son type de retour dit à TypeScript ce qui est vrai *après* l’appel :⏎⏎⟦F1⟧⏎⏎Une forme plus courte, `asserts condition`, dit « si ceci se termine normalement, la condition était vraie ».
+@206 Certains vérificateurs ne répondent pas oui ou non. Ils arrêtent simplement tout si quelque chose cloche, comme un arbitre qui siffle.⏎⏎Si le programme passe le vérificateur, c’est que la vérification a réussi. TypeScript le sait, donc après cette ligne, il traite la valeur comme étant du bon type.
+@207 `asserts x is T` affine `x` pour le reste de la portée après l’appel ; `asserts cond` affine selon la « truthiness » de l’expression passée en argument. La fonction doit renvoyer `void` (ou lever une erreur), et la cible de l’appel doit être déclarée avec un type explicite (une déclaration de fonction, ou une `const` au type annoté), sinon TypeScript signale TS2775.⏎⏎Utilise les prédicats quand les deux branches comptent (`if (isX(v)) … else …`) et les assertions pour les invariants qui doivent arrêter l’exécution (analyse, fonctions utilitaires de test, préconditions internes). Le module `assert` de Node et les bibliothèques de test utilisent exactement ces signatures.
+@208 Qu’est-ce qui s’affiche ?
+@209 Qu’est-ce que ça va montrer ?
+@210 `1 + 1 === 3` est faux, donc `assert` lève une erreur avant que `"fine"` s’affiche.
+@211 1 + 1 ne fait pas 3, donc le vérificateur arrête tout avant "fine".
+@212 L’assertion échoue, donc elle lève une erreur et la ligne suivante ne s’exécute jamais. `catch` affiche le message.
+@213 Le vérificateur a sifflé, donc "fine" n’a jamais eu lieu. La partie catch affiche le message à la place.
+@214 Une assertion n’est qu’une fonction qui peut lever une erreur ; la signature `asserts` n’affecte que l’analyse du flot de contrôle après un retour réussi.
+@215 Écris `assertIsNumber` : elle lève une `TypeError` disant `Expected a number, got <type>` sauf si la valeur est un nombre, et TypeScript affine après l’appel.
+@216 Fais `assertIsNumber` : si la valeur n’est pas un nombre, lève une `TypeError` ("Expected a number, got …"). Après elle, TypeScript doit savoir que c’est un nombre.
+@217 Type de retour : `asserts value is number`. Corps : `if (typeof value !== "number") throw new TypeError(...)`.
+@218 Mets `asserts value is number` comme type de retour, et lève une `TypeError` quand `typeof value` n’est pas `"number"`.
+@219 Le type de retour `asserts` est le contrat : si la fonction se termine, `value` est un nombre. C’est le throw qui rend cela vrai.
+@220 Passer le vérificateur veut dire que la valeur est vraiment un nombre. Le throw s’en assure.
+@221 L’affinage s’applique à l’expression passée en argument, dans la portée de l’appelant, après l’appel. Lever une `TypeError` (plutôt qu’une simple `Error`) permet aux appelants de distinguer les échecs de validation.
+@222 affine après l’appel
+@223 accepte un nombre
+@224 refuse du texte
+@225 Tu dois traiter les deux cas : dessiner un cercle, ou dessiner un carré. Prédicat ou assertion ?
+@226 Tu veux faire une chose pour les cercles et une autre pour les carrés. Quel vérificateur ?
+@227 Une assertion lève une erreur dans le cas « non ». Veux-tu t’arrêter, ou faire autre chose ?
+@228 Veux-tu que le programme s’arrête, ou qu’il fasse l’autre chose ?
+@229 Un prédicat : `if (isCircle(shape)) … else …` garde les deux branches. Une assertion, c’est pour « ceci doit être vrai, sinon on s’arrête ».
+@230 Le vérificateur oui/non, pour pouvoir faire une chose ou l’autre. Le vérificateur-arbitre arrêterait tout.
+@231 Les prédicats font des branches ; les assertions imposent des invariants. Utiliser une assertion pour des branchements ordinaires transforme des cas attendus en exceptions.
+@232 Un prédicat de type (`shape is Circle`)
+@233 Une fonction d’assertion (`asserts shape is Circle`)
+@234 Une assertion lève une erreur pour les carrés, alors qu’ici les carrés sont un cas normal.
+@235 Ça arrêterait le programme pour chaque carré !
+@236 Une fonction d’assertion lève une erreur quand une vérification échoue.
+@237 `asserts value is T` affine après l’appel.
+@238 Les prédicats font des branches ; les assertions arrêtent.
+@239 Certains vérificateurs arrêtent tout si quelque chose cloche.
+@240 Après eux, TypeScript sait que la vérification est passée.
+@241 Utilise les vérificateurs oui/non quand les deux réponses sont normales.
+@242 `asserts x is T` et `asserts cond` affinent le code qui suit.
+@243 Les cibles d’appel ont besoin de types explicites (TS2775).
+@244 Utiliser les assertions pour les invariants, pas pour le flot de contrôle.

@@ -1,0 +1,63 @@
+{
+  "name": "typescript-companion",
+  "private": true,
+  "version": "1.1.0",
+  "type": "module",
+  "description": "An offline-first, friendly TypeScript course for all ages.",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run typecheck && vite build && npm run check:android",
+    "check": "npm run typecheck && npm run lint && vitest run && vite build && npm run check:android",
+    "preview": "vite preview --host 127.0.0.1 --port 4173 --strictPort",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint . --max-warnings=0",
+    "validate:content": "vitest run tests/content.test.ts",
+    "content:catalog": "vite-node scripts/generateCatalog.ts",
+    "i18n:extract": "vite-node scripts/i18n/extract.ts --",
+    "i18n:build": "vite-node scripts/i18n/build.ts --",
+    "check:android": "node scripts/check-android-ready.ts"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.7.1",
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/language": "^6.10.8",
+    "@codemirror/state": "^6.5.0",
+    "@codemirror/view": "^6.35.3",
+    "@fontsource-variable/inter": "^5.1.0",
+    "@fontsource-variable/noto-sans-arabic": "^5.3.0",
+    "@fontsource/atkinson-hyperlegible": "^5.1.0",
+    "esbuild-wasm": "^0.24.2",
+    "markdown-it": "^14.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "typescript": "^5.7.2",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@playwright/test": "^1.49.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.17.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "globals": "^15.14.0",
+    "jsdom": "^25.0.1",
+    "typescript-eslint": "^8.18.0",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
+  }
+}

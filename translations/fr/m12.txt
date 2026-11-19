@@ -1,0 +1,266 @@
+@1 Rendre chaque propriété facultative avec `Partial<T>`, pour les mises à jour.
+@2 Rendre chaque propriété obligatoire avec `Required<T>`.
+@3 Verrouiller un type objet avec `Readonly<T>`.
+@4 Transformer chaque étiquette en étiquette « peut-être ».
+@5 Transformer chaque « peut-être » en « obligatoire ».
+@6 Verrouiller une forme pour que rien ne puisse changer.
+@7 Dériver les types au lieu de les réécrire.
+@8 `Partial` pour les changements, `Readonly` pour les promesses.
+@9 Ils n’agissent que sur le premier niveau.
+@10 Les machines à formes évitent d’écrire les formes deux fois.
+@11 Peut-être, obligatoire et verrouillé.
+@12 Elles ne changent que les étiquettes du premier niveau.
+@13 Les types utilitaires se composent.
+@14 Superficiels par conception.
+@15 Associer les mises à jour `Partial` à la décomposition.
+@16 Les types utilitaires construisent de nouveaux types à partir d’anciens.
+@17 Des machines qui changent les formes.
+@18 TypeScript fournit des **types utilitaires** qui transforment un type que tu as déjà :⏎⏎⟦F1⟧⏎⏎`Partial` est parfait pour « modifier certains de ces champs » : l’appelant ne passe que ce qui change.
+@19 TypeScript a des machines qui changent les formes. Tu leur donnes une forme, et elles t’en rendent une nouvelle.⏎⏎`Partial` rend chaque étiquette « peut-être » : tu ne remplis que celles que tu veux changer. `Readonly` verrouille chaque étiquette pour que rien ne puisse être changé.
+@20 Ce sont des types mappés homomorphes : `Partial<T> = { [K in keyof T]?: T[K] }`, `Required<T>` retire le `?` avec `-?`, et `Readonly<T>` ajoute `readonly`. Ils sont superficiels : les objets imbriqués gardent leurs propres modificateurs (un `DeepPartial` demande de la récursion).⏎⏎Pour les mises à jour, `Partial<T>` va avec la décomposition ; remarque que sans `exactOptionalPropertyTypes`, `{ name: undefined }` est un partiel valide et écraserait une valeur par `undefined` lors de la décomposition.
+@21 Qu’est-ce que `Changes` ? Écris-le comme un type objet.
+@22 Écris la forme de `Changes`.
+@23 Chaque propriété de `Settings` reste, mais chacune reçoit un `?`.
+@24 Les mêmes étiquettes, mais chacune devient « peut-être » avec `?`.
+@25 `Partial` garde chaque propriété et la rend facultative. TypeScript l’affiche comme `{ theme?: string | undefined; fontSize?: number | undefined }`, qui est le même type.
+@26 Les mêmes étiquettes, toutes « peut-être » maintenant.
+@27 Le type mappé ajoute le modificateur `?` ; avec les réglages par défaut, `?: T` et `?: T | undefined` sont identiques, c’est pourquoi les deux écritures sont acceptées.
+@28 Écris `updateUser` : l’utilisateur avec les changements donnés appliqués, sous forme d’un nouvel objet.
+@29 Fais en sorte que `updateUser` rende un nouvel utilisateur avec les changements appliqués.
+@30 Décompose d’abord l’utilisateur, puis les changements : les propriétés qui viennent après gagnent.
+@31 Copie l’utilisateur avec `...user`, puis mets les changements par-dessus avec `...changes`.
+@32 L’ordre de décomposition compte : les propriétés de `changes` viennent en dernier, donc elles gagnent. L’utilisateur d’origine n’est pas touché.
+@33 Les changements vont par-dessus, donc ils gagnent. L’ancien utilisateur reste pareil.
+@34 La décomposition d’objet est une fusion superficielle où la droite l’emporte ; le type de retour `User` tient toujours, car les propriétés définies de `Partial<User>` ont les types de `User`.
+@35 ne change que le nom
+@36 aucun changement
+@37 Fais en sorte que `freeze` renvoie une version `Readonly`, pour que réaffecter une propriété du résultat soit une erreur.
+@38 Fais en sorte que `freeze` rende une version verrouillée : la modifier doit être une erreur.
+@39 Change le type de retour en `Readonly<Point>` ; `Object.freeze` renvoie déjà ça.
+@40 Dis que la machine rend `Readonly<Point>`.
+@41 Maintenant, le type correspond à la réalité : l’objet est gelé à l’exécution, et TypeScript interdit d’y écrire.
+@42 L’objet est vraiment verrouillé, et maintenant TypeScript le sait aussi.
+@43 `Object.freeze` renvoie `Readonly<T>` ; annoter avec le type modifiable plus large jetait cette information.
+@44 lire, ça va
+@45 écrire est une erreur
+@46 garde les valeurs
+@47 La version courte.
+@48 Ce que tu as appris.
+@49 `Partial<T>` rend chaque propriété facultative : parfait pour les mises à jour.
+@50 `Required<T>` les rend toutes obligatoires.
+@51 `Readonly<T>` interdit de réaffecter les propriétés.
+@52 `Partial` transforme les étiquettes en « peut-être ».
+@53 `Required` les transforme en « obligatoire ».
+@54 `Readonly` les verrouille.
+@55 Les utilitaires de modificateurs sont des types mappés homomorphes.
+@56 Ils sont superficiels.
+@57 Attention à `undefined` dans les mises à jour partielles.
+@58 Garder certaines propriétés avec `Pick<T, Keys>`.
+@59 En enlever certaines avec `Omit<T, Keys>`.
+@60 Dériver des types de vue (comme un profil public) d’un seul type source.
+@61 Ne garder que les étiquettes que tu veux.
+@62 Jeter les étiquettes que tu ne veux pas.
+@63 Fabriquer une petite forme à partir d’une grande.
+@64 Un type source, plusieurs vues dérivées.
+@65 `Pick` pour inclure, `Omit` pour exclure.
+@66 Attention aux fautes de frappe dans `Omit`.
+@67 Fabriquer de petites formes à partir de grandes.
+@68 Garder ou jeter des étiquettes.
+@69 Bien orthographier avec `Omit`.
+@70 Types de vue via `Pick`/`Omit`.
+@71 La vérification des clés diffère.
+@72 Distribuer explicitement sur les unions.
+@73 Des formes plus petites à partir d’une plus grande.
+@74 Tailler une grande forme à la bonne taille.
+@75 `Pick` garde les clés que tu listes ; `Omit` garde toutes les autres :⏎⏎⟦F1⟧⏎⏎Les types dérivés restent synchronisés : ajoute un champ à `User` et `PublicUser` le reçoit automatiquement, alors que `password` ne peut jamais s’y glisser.
+@76 `Pick`, c’est comme choisir les autocollants à garder : « je veux l’id et le nom ».⏎⏎`Omit`, c’est l’inverse : « tout sauf le mot de passe ».⏎⏎Ajoute une nouvelle étiquette à la grande forme, et les petites formes se mettent à jour toutes seules.
+@77 `Pick<T, K extends keyof T>` exige de vraies clés ; `Omit<T, K extends keyof any>` non, donc une faute de frappe dans `Omit` n’omet silencieusement rien. Un `StrictOmit<T, K extends keyof T> = Omit<T, K>` plus strict l’attrape.⏎⏎`Omit` sur une union n’est pas distributif (`Omit<A | B, "x">` ne garde que les clés communes) ; utilise `T extends unknown ? Omit<T, K> : never` pour une version distributive.
+@78 Quelles sont les clés de `PublicUser` ?
+@79 Quelles étiquettes a `PublicUser` ?
+@80 `Omit` garde chaque clé sauf `password`.
+@81 Tout sauf le mot de passe.
+@82 `Omit` a enlevé `password`, donc il reste trois clés.
+@83 L’étiquette du mot de passe a disparu ; il reste trois étiquettes.
+@84 `keyof Omit<T, K>` vaut `Exclude<keyof T, K>`.
+@85 Définis `Card` comme le `name` et l’`avatar` d’un `Profile`, et `PublicProfile` comme tout sauf `phone`, tous deux dérivés de `Profile`.
+@86 Fabrique `Card` (seulement le nom et l’avatar) et `PublicProfile` (tout sauf le téléphone), tous deux taillés dans `Profile`.
+@87 `type Card = Pick<Profile, "name" | "avatar">;` et `type PublicProfile = Omit<Profile, "phone">;`
+@88 Utilise `Pick` pour la carte et `Omit` pour le profil public.
+@89 Les deux sont dérivés, donc renommer ou ajouter un champ dans `Profile` les met à jour, et le numéro de téléphone ne peut pas fuiter dans la vue publique.
+@90 Taillés dans la grande forme, donc ils restent toujours synchronisés avec elle.
+@91 La vérification des propriétés en trop refuse le littéral `phone` par rapport à `PublicProfile` ; dériver les types de vue empêche les DTO de dériver.
+@92 une carte, c’est juste le nom et l’avatar
+@93 pas de téléphone en public
+@94 un téléphone ne peut pas se glisser dedans
+@95 `Omit<User, "pasword">` (une faute de frappe). Que se passe-t-il ?
+@96 Et si tu écris mal l’étiquette dans `Omit` ?
+@97 Est-ce que `Omit` exige que ses clés existent sur le type ?
+@98 Est-ce que `Omit` vérifie l’orthographe ?
+@99 Rien ne te prévient : `Omit` accepte n’importe quelle clé, donc il n’omet rien et `password` reste. `Pick` l’aurait attrapé.
+@100 Aucun avertissement ! Le mot de passe reste. `Pick` remarquerait l’erreur, `Omit` non.
+@101 Le `K extends keyof any` d’`Omit` autorise les clés inconnues par conception ; définis une variante stricte ou utilise `satisfies` sur les listes de clés quand ça compte.
+@102 Ça compile, et `password` est toujours là
+@103 TypeScript signale la clé inconnue
+@104 C’est vrai pour `Pick`, pas pour `Omit`.
+@105 `Pick` le ferait. `Omit` ne vérifie pas.
+@106 `Pick<T, K>` garde les clés listées.
+@107 `Omit<T, K>` les enlève.
+@108 Les types dérivés restent synchronisés avec leur source.
+@109 `Pick` garde les étiquettes que tu choisis.
+@110 `Omit` jette celles que tu nommes.
+@111 Les petites formes suivent la grande.
+@112 `Pick` vérifie les clés ; `Omit` non.
+@113 `Omit` n’est pas distributif sur les unions.
+@114 Dériver les DTO des types du domaine.
+@115 Obtenir le type de retour d’une fonction avec `ReturnType<typeof fn>`.
+@116 Obtenir ses paramètres sous forme de tuple avec `Parameters`.
+@117 Déballer un type de promesse avec `Awaited`.
+@118 Demander à une machine ce qu’elle rend.
+@119 Demander ce dont elle a besoin.
+@120 Regarder dans une promesse.
+@121 Faire des fonctions la source de vérité de leurs types.
+@122 Combiner `Awaited` et `ReturnType` pour le code asynchrone.
+@123 Les enveloppes restent synchronisées.
+@124 Lire les étiquettes au lieu de les recopier.
+@125 On peut regarder dans les promesses.
+@126 Les copies ne deviennent jamais périmées.
+@127 Dériver des types de valeurs avec `typeof`.
+@128 Déballer les promesses avec `Awaited`.
+@129 Garder précises les enveloppes d’ordre supérieur.
+@130 On peut lire les types sur les fonctions.
+@131 Lire l’étiquette d’une machine.
+@132 Parfois, c’est la fonction qui est la source de vérité. Lis les types dessus au lieu de les écrire deux fois :⏎⏎⟦F1⟧⏎⏎`typeof createUser` transforme d’abord la valeur (la fonction) en son type ; les utilitaires le décortiquent ensuite.
+@133 Une machine a une étiquette qui dit ce qui entre et ce qui sort. `ReturnType` lit la partie « ce qui sort » ; `Parameters` lit la partie « ce qui entre ».⏎⏎Une machine async rend une promesse. `Awaited` regarde dans la promesse, ce que tu obtiens finalement.
+@134 `ReturnType<F>` et `Parameters<F>` sont des types conditionnels qui utilisent `infer` (tu les écriras toi-même au module 16). Pour les fonctions surchargées, ils utilisent la *dernière* surcharge. `Awaited<T>` déballe récursivement les thenables, comme `await`.⏎⏎Utilise-les quand une bibliothèque n’exporte pas les types dont tu as besoin (`Parameters<typeof fetch>[1]`), ou pour garder les enveloppes synchronisées (`(...args: Parameters<typeof f>) => ReturnType<typeof f>`).
+@135 Qu’est-ce que `Loaded` ?
+@136 Qu’obtiens-tu finalement de `loadScore` ?
+@137 Le `ReturnType` d’une fonction async est une `Promise<…>` ; `Awaited` la déballe.
+@138 La machine async rend une promesse. `Awaited` regarde dedans.
+@139 `ReturnType` donne `Promise<number>`, et `Awaited` la déballe en `number`.
+@140 La promesse contient un nombre, donc `Awaited` donne `number`.
+@141 Les fonctions async renvoient `Promise<T>` ; `Awaited` reproduit au niveau des types le déballage que fait `await`.
+@142 Type `logged` pour qu’elle prenne exactement les mêmes arguments que `greet` et renvoie le même type, avec `Parameters` et `ReturnType`.
+@143 Fais en sorte que `logged` prenne les mêmes entrées que `greet` et rende la même chose, en lisant l’étiquette de `greet`.
+@144 `function logged(...args: Parameters<typeof greet>): ReturnType<typeof greet>`.
+@145 Utilise `...args: Parameters<typeof greet>` pour les entrées et `ReturnType<typeof greet>` pour la sortie.
+@146 Change les paramètres de `greet` et `logged` suit automatiquement. Aucune copie à oublier.
+@147 Si `greet` change, `logged` change avec elle.
+@148 `Parameters` donne un tuple nommé, donc le paramètre du reste `...args` garde les noms et l’arité ; le redécomposer dans `greet` passe la vérification sans forçage.
+@149 même type de résultat
+@150 mêmes arguments
+@151 types des arguments vérifiés
+@152 salue toujours
+@153 `ReturnType<typeof fn>` est ce que renvoie `fn`.
+@154 `Parameters<typeof fn>` est un tuple des types de ses paramètres.
+@155 `Awaited<T>` déballe les promesses.
+@156 `ReturnType` lit ce qui sort.
+@157 `Parameters` lit ce qui entre.
+@158 `Awaited` regarde dans une promesse.
+@159 Les utilitaires de fonctions sont des types conditionnels avec `infer`.
+@160 Surcharges : c’est la dernière signature qui gagne.
+@161 Parfait pour les enveloppes et les entrailles non typées des bibliothèques.
+@162 Retirer des membres d’une union avec `Exclude`.
+@163 Ne garder que les membres qui correspondent avec `Extract`.
+@164 Retirer `null` et `undefined` avec `NonNullable`.
+@165 Enlever des choses d’un « ceci ou cela ».
+@166 Ne garder que les choses qui correspondent.
+@167 Jeter les vides.
+@168 Filtrer les unions au lieu de les réécrire.
+@169 Nommer un membre d’une union étiquetée avec `Extract`.
+@170 Retirer `null` avec `NonNullable`.
+@171 Utiliser des tamis sur les types « ceci ou cela ».
+@172 Garder tes types synchronisés.
+@173 On peut jeter les vides.
+@174 Utilitaires de filtrage d’unions.
+@175 La distributivité sur les paramètres de type nus.
+@176 Se préparer aux types conditionnels (M16).
+@177 Filtrer une union comme une liste.
+@178 Un tamis pour les types.
+@179 Ces utilitaires filtrent les membres d’une union :⏎⏎⟦F1⟧
+@180 Une union, c’est comme un sac de choix. Ces outils sont des tamis :⏎⏎`Exclude` retire certains choix. `Extract` ne garde que ceux qui correspondent. `NonNullable` jette les vides (`null` et `undefined`).
+@181 Ce sont des types conditionnels distributifs : `Exclude<T, U> = T extends U ? never : T` est appliqué à chaque membre de `T`, et les membres `never` disparaissent du résultat. `Extract` est le complément ; `NonNullable<T> = T & {}` (depuis TS 4.8).⏎⏎`Extract<Union, { type: "click" }>` est la façon idiomatique de nommer un membre d’une union discriminée sans le répéter.
+@182 Qu’est-ce que `Live` ?
+@183 Que reste-t-il dans `Live` ?
+@184 Pars des trois et enlève `"archived"`.
+@185 Enlève "archived" du sac.
+@186 `Exclude` retire les membres affectables à `"archived"`.
+@187 "archived" est parti ; les deux autres restent.
+@188 Chaque membre est testé par rapport à `"archived"` et transformé en `never` ou en lui-même.
+@189 Nomme les membres : `KeyEvent` est le membre `"key"` d’`AppEvent`, et `PointerEvents` est chaque membre sauf lui.
+@190 Utilise des tamis : `KeyEvent` ne garde que l’événement de touche ; `PointerEvents` garde tous les autres.
+@191 `Extract<AppEvent, { type: "key" }>` et `Exclude<AppEvent, { type: "key" }>`.
+@192 Garde avec `Extract`, retire avec `Exclude`, les deux avec `{ type: "key" }`.
+@193 Les deux sont dérivés d’`AppEvent`, donc ajouter un type d’événement les met à jour automatiquement.
+@194 Les tamis travaillent sur le sac d’événements, donc ils restent à jour.
+@195 Filtrer par une forme partielle marche parce que chaque membre est testé pour son affectabilité à `{ type: "key" }`.
+@196 le membre key
+@197 les deux autres
+@198 Qu’est-ce que `Name` ?
+@199 Que reste-t-il dans `Name` ?
+@200 `NonNullable` retire `null` et `undefined`.
+@201 Jette les vides.
+@202 Seul `string` survit une fois `null` et `undefined` retirés.
+@203 Il ne reste que la sorte « mot ».
+@204 `NonNullable<T>` vaut `T & {}`, ce qui retire `null` et `undefined` d’une union.
+@205 `Exclude<U, X>` retire des membres ; `Extract<U, X>` garde ceux qui correspondent.
+@206 Les deux marchent avec des formes partielles comme `{ type: "key" }`.
+@207 Les tamis enlèvent des choses ou en gardent.
+@208 Ils peuvent faire correspondre par une étiquette, comme `type`.
+@209 `NonNullable` jette les vides.
+@210 Les types conditionnels distributifs filtrent les unions.
+@211 Les membres `never` disparaissent.
+@212 Nommer les membres d’union avec `Extract`.
+@213 Construire les types d’une API de création/mise à jour à partir d’un seul modèle.
+@214 Imbriquer des utilitaires : `Partial<Omit<User, "id">>`.
+@215 Lire un type composé de l’intérieur vers l’extérieur.
+@216 Enchaîner les machines à formes.
+@217 Fabriquer les formes pour « nouveau » et « modification ».
+@218 Lire un long type de l’intérieur vers l’extérieur.
+@219 Une seule source de vérité pour chaque modèle.
+@220 Composer des utilitaires pour la création, la mise à jour et les vues.
+@221 Bien nommer les types composés.
+@222 Une grande forme, plein de petites.
+@223 Enchaîner les machines à formes.
+@224 Garder des noms clairs.
+@225 La composition au niveau des types fait passer la conception d’API à l’échelle.
+@226 Les types dérivés attrapent les dérives à la compilation.
+@227 Simplifier les infobulles avec des types utilitaires.
+@228 Les utilitaires se composent.
+@229 On peut enchaîner les machines à formes.
+@230 Une API typique a besoin de plusieurs formes de la même chose. Dérive-les toutes d’un seul modèle :⏎⏎⟦F1⟧⏎⏎Lis les utilitaires imbriqués de l’intérieur vers l’extérieur : `Partial<Omit<User, "id">>`, c’est « User sans id, puis tout facultatif ».
+@231 Tu peux enchaîner les machines à formes : d’abord couper certaines étiquettes, puis rendre le reste « peut-être ».⏎⏎Lis-les de l’intérieur vers l’extérieur, comme quand on ouvre des boîtes dans des boîtes.
+@232 La composition garde un seul modèle faisant autorité et chaque forme de transport dérivée de lui, donc un champ renommé casse à la compilation chaque endroit d’appel concerné. Quand un type composé devient illisible dans les infobulles, donne-lui un nom ou aplatis-le avec un type utilitaire comme `type Simplify<T> = { [K in keyof T]: T[K] } & {}`.⏎⏎Sois délibéré sur ce qui appartient au serveur (identifiants, horodatages) et modélise-le avec `Omit`, plutôt que de tout rendre facultatif.
+@233 Définis `NewTask` (une `Task` sans `id` ni `done`) et `TaskUpdate` (n’importe lesquels des champs de `NewTask`, tous facultatifs).
+@234 Fabrique `NewTask` (une tâche sans `id` ni `done`) et `TaskUpdate` (n’importe lesquels de ces champs, tous « peut-être »).
+@235 `type NewTask = Omit<Task, "id" | "done">;` et `type TaskUpdate = Partial<NewTask>;`
+@236 D’abord, coupe `id` et `done` avec `Omit` ; puis rends tout « peut-être » avec `Partial`.
+@237 Le serveur possède `id` et `done` ; les clients ne peuvent ni les envoyer ni les changer. Ajoute un champ à `Task` et les deux formes suivent.
+@238 Seules les bonnes étiquettes peuvent être envoyées. Si `Task` grandit, les autres formes grandissent aussi.
+@239 La vérification des propriétés en trop sur les littéraux d’objet fait respecter la propriété des champs gérés par le serveur ; les types restent dérivés d’un seul modèle.
+@240 une nouvelle tâche a un titre et une échéance
+@241 pas d’id sur une nouvelle tâche
+@242 une mise à jour peut changer un seul champ
+@243 une mise à jour ne peut pas changer l’id
+@244 Écris `applyUpdate` : la tâche avec une mise à jour appliquée.
+@245 Fais en sorte que `applyUpdate` rende la tâche avec les changements appliqués.
+@246 Décompose la tâche, puis la mise à jour.
+@247 Copie la tâche, puis mets la mise à jour par-dessus.
+@248 Comme `TaskUpdate` ne peut contenir ni `id` ni `done`, la décomposition ne peut jamais les changer.
+@249 La mise à jour ne peut pas toucher `id` ni `done`, donc ils restent protégés.
+@250 Le type de `update` garantit que la décomposition ne peut pas écraser les champs du serveur (sauf valeurs `undefined` explicites sans `exactOptionalPropertyTypes`).
+@251 renomme
+@252 Lis-le de l’intérieur vers l’extérieur : qu’est-ce que `Draft` ?
+@253 Ouvre les boîtes depuis l’intérieur : qu’est-ce que `Draft` ?
+@254 D’abord, `Pick` garde `title` et `due` ; puis `Partial` les rend facultatifs.
+@255 D’abord, garde `title` et `due` ; puis rends-les « peut-être ».
+@256 De l’intérieur vers l’extérieur : choisir deux champs, puis les rendre tous deux facultatifs.
+@257 Deux étiquettes gardées, toutes deux « peut-être ».
+@258 Les types mappés homomorphes se composent ; le résultat est `{ title?: string; due?: string }`.
+@259 Dériver chaque forme d’API d’un seul modèle.
+@260 Imbriquer les utilitaires et les lire de l’intérieur vers l’extérieur.
+@261 Utiliser `Omit` pour les champs qui appartiennent au serveur.
+@262 Lire de l’intérieur vers l’extérieur.
+@263 Certaines étiquettes appartiennent au serveur.
+@264 Un modèle, plusieurs types de transport dérivés.
+@265 Nommer ou simplifier les types composés pour la lisibilité.
+@266 Modéliser explicitement à qui appartiennent les champs.

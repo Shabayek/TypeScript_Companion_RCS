@@ -1,0 +1,298 @@
+@1 Les chaînes sont du texte entre guillemets.
+@2 Utiliser `.length`, `.toUpperCase()` et `+`.
+@3 Les outils renvoient un nouveau texte au lieu de modifier l’original.
+@4 Dans le code, les mots sont des chaînes, entre guillemets.
+@5 `.length`, `.toUpperCase()` et `+` sont des outils pour les chaînes.
+@6 Les outils fabriquent de nouveaux mots et laissent les anciens tranquilles.
+@7 Traiter les chaînes comme des valeurs : aucune méthode ne les modifie.
+@8 Séparer nombres et chaînes dans les types pour éviter les concaténations accidentelles.
+@9 Connaître les méthodes essentielles : `length`, `includes`, `slice`, `trim`, `split`.
+@10 Une chaîne, c’est du texte entre guillemets.
+@11 Dans le code, les mots s’appellent des chaînes. Ils vont entre guillemets.
+@12 Une **chaîne** (*string*), c’est du texte. Tu l’écris entre guillemets, et elle peut être aussi courte que `""` ou aussi longue qu’un paragraphe.⏎⏎Les chaînes viennent avec des outils bien pratiques :⏎⏎- `.length` compte les caractères.⏎- `.toUpperCase()` renvoie une copie en majuscules.⏎- `.includes("x")` demande si un morceau de texte se trouve dedans.⏎⏎Aucun de ces outils ne modifie l’original. Ils te donnent une nouvelle chaîne.
+@13 Une chaîne, c’est du texte qui porte une paire de guillemets, comme `"hello"`.⏎⏎Les chaînes ont des outils. `.length` compte les lettres. `.toUpperCase()` te renvoie le texte en criant.⏎⏎Les outils te donnent une **nouvelle** chaîne. L’ancienne reste exactement comme elle était.
+@14 `string` est une primitive immuable : chaque méthode renvoie une nouvelle valeur. `.length`, `.toUpperCase()`, `.includes()`, `.slice()`, `.trim()` et `.split()` couvrent l’essentiel du travail quotidien.⏎⏎La concaténation avec `+` convertit l’autre opérande en chaîne (`"n=" + 1` donne `"n=1"`). Pratique, et c’est aussi de là que vient `"36" + 1 === "361"` : une raison de plus de séparer nombres et chaînes dans tes types.⏎⏎Les chaînes se comparent par valeur : deux chaînes avec les mêmes caractères sont `===`.
+@15 `+` joint du texte. Qu’est-ce qui s’affiche ?
+@16 `+` colle les mots ensemble. Qu’est-ce que ça va montrer ?
+@17 D’abord, les deux morceaux sont joints en un seul mot. Puis `.length` le compte, et la ligne suivante affiche le mot.
+@18 D’abord, les deux mots n’en font plus qu’un. Puis le robot compte ses lettres, et ensuite il montre le mot.
+@19 `+` colle les deux morceaux en `TypeScript`. En comptant les lettres, on obtient 10, puis le mot lui-même s’affiche.
+@20 `+` colle "Type" et "Script" en `TypeScript`. Ça fait 10 lettres, puis le mot lui-même s’affiche.
+@21 La concaténation produit `"TypeScript"`, soit dix unités de code UTF-16. Les deux appels à `console.log` affichent dans l’ordre des instructions : d’abord la longueur, puis la chaîne.
+@22 Quelle ligne te donne une chaîne ?
+@23 Quelle ligne crée une chaîne ?
+@24 Les chaînes sont du texte entre guillemets. Cherche les guillemets.
+@25 Cherche celle qui a des guillemets autour.
+@26 Les guillemets font une chaîne. `7` est un nombre, et `true` est un booléen.
+@27 Les guillemets font une chaîne. `7` tout seul est un nombre, et `true` est une valeur oui-ou-non.
+@28 C’est le littéral qui décide du type : des guillemets font une `string`, un chiffre nu un `number`, `true` un `boolean`. Sur une `const`, TypeScript infère les types littéraux `"7"`, `7` et `true`.
+@29 `const x = 7;`
+@30 C’est un nombre. Pas de guillemets.
+@31 C’est un nombre. Il n’y a pas de guillemets.
+@32 `const x = "7";`
+@33 `const x = true;`
+@34 C’est un booléen : vrai ou faux.
+@35 C’est une valeur oui-ou-non (un booléen) : true ou false.
+@36 Écris `greet` pour qu’elle renvoie `Hello, ` suivi du nom.
+@37 Fais en sorte que `greet` renvoie `Hello, ` puis le nom.
+@38 Il te faut une instruction return qui joint la salutation et le paramètre.
+@39 Utilise `return` et `+` pour coller "Hello, " et `name`.
+@40 `return "Hello, " + name;` : l’espace après la virgule compte.
+@41 Écris `return "Hello, " + name;` en gardant l’espace après la virgule.
+@42 `+` joint deux chaînes en une seule. Le paramètre `name` est déjà une chaîne, donc aucune conversion n’est nécessaire.
+@43 `+` colle deux chaînes en une seule. `name` est déjà une chaîne, donc elles vont bien ensemble.
+@44 Les deux opérandes sont des `string`, donc `+` est une simple concaténation et le type de retour serait de toute façon inféré comme `string`. L’annotation documente le contrat et attrape tôt une branche fautive.
+@45 greet("Ada")
+@46 greet("Sam")
+@47 marche avec un nom vide
+@48 La version courte.
+@49 Ce que tu as appris.
+@50 Les chaînes sont du texte entre guillemets.
+@51 `+` joint des chaînes ; `.length` compte les caractères.
+@52 Les outils des chaînes renvoient une nouvelle chaîne ; ils ne modifient pas l’ancienne.
+@53 Les chaînes sont des mots entre guillemets.
+@54 `+` colle les chaînes ensemble ; `.length` compte les lettres.
+@55 Les outils des chaînes fabriquent une nouvelle chaîne. L’ancienne reste pareille.
+@56 `string` est une primitive immuable ; ses méthodes renvoient de nouvelles chaînes.
+@57 `+` concatène et convertit l’autre opérande en chaîne.
+@58 Les chaînes se comparent par valeur avec `===`.
+@59 Les nombres s’écrivent nus : `7`, pas `"7"`.
+@60 `%` est l’opérateur de reste.
+@61 Arrondir volontairement avec `Math.round`.
+@62 Écrire les nombres sans guillemets : `7`, pas `"7"`.
+@63 `%` trouve ce qui reste.
+@64 `Math.round` transforme 3.5 en nombre entier.
+@65 `number` est un flottant double ; les entiers ne sont exacts que jusqu’à 2^53 − 1.
+@66 `0.1 + 0.2 !== 0.3` : comparer avec une tolérance, ou utiliser des entiers.
+@67 `Math.round`, `Math.floor` et `Math.trunc` diffèrent sur les négatifs.
+@68 Les nombres sont des nombres. Pas de guillemets.
+@69 Les nombres sont juste des nombres. Pas de guillemets !
+@70 TypeScript a un seul type **number**, pour les entiers comme pour les décimaux : `7`, `-3`, `2.5`.⏎⏎Les opérateurs sont ceux que tu connais déjà : `+ - * /`. Il y a aussi `%`, qui donne le reste : `10 % 3` vaut `1`.⏎⏎Un résultat décimal, c’est normal. `7 / 2` vaut `3.5`, pas `3`. Si tu veux un nombre entier, demande-le : `Math.round(7 / 2)`. (En code, la virgule décimale s’écrit avec un point.)
+@71 Les nombres ne portent pas de guillemets. `7` est un nombre. `"7"` est du texte qui lui ressemble.⏎⏎Tu peux additionner `+`, soustraire `-`, multiplier `*` et diviser `/`.⏎⏎Diviser ne jette pas la partie décimale : la moitié de 7, c’est 3.5 (en code, on écrit la virgule avec un point).
+@72 `number` est un double IEEE 754 : il n’y a pas de type entier séparé. Les entiers sont exacts jusqu’à `Number.MAX_SAFE_INTEGER` (2^53 − 1) ; au-delà, utilise `bigint` (`10n`).⏎⏎La division ne tronque jamais : `7 / 2` vaut `3.5`. `Math.floor`, `Math.trunc` et `Math.round` donnent des entiers et diffèrent sur les nombres négatifs. `%` est un reste, pas un modulo : `-7 % 3` vaut `-1`.⏎⏎La virgule flottante est binaire, donc `0.1 + 0.2` vaut `0.30000000000000004`. Pour l’argent, stocke des centimes entiers et formate aux bords.
+@73 Qu’affichent ces deux lignes ?
+@74 Qu’est-ce que ces deux lignes vont montrer ?
+@75 `/` divise et garde la partie décimale. `%` donne le reste de la division.
+@76 `/` partage un nombre. `%` dit combien il reste.
+@77 La division garde la partie décimale, donc `7 / 2` vaut `3.5`. `%` donne le reste après la division : dans 10, il y a 3 fois 3, et il reste 1.
+@78 `7 / 2` partage 7 en deux parts égales : 3.5 chacune. `%` te dit ce qui reste : 10, ça fait trois groupes de 3, et il en reste 1.
+@79 `/` est une division à virgule flottante, donc `7 / 2` vaut `3.5`. `%` est le reste, avec le signe du dividende : `10 % 3` vaut `1`, et `-10 % 3` vaudrait `-1`.
+@80 Complète avec l’opérateur qui divise un nombre par deux.
+@81 Choisis le signe qui coupe un nombre en deux.
+@82 Diviser par deux, c’est diviser par 2. Quel opérateur divise ?
+@83 Couper en deux, c’est partager entre 2. Quel signe partage ?
+@84 La division, c’est `/`. `10 / 2` vaut `5`.
+@85 Pour diviser, on utilise `/`. `10 / 2` vaut `5`.
+@86 `/` produit toujours un double ; `10 / 2` vaut exactement `5` parce que le résultat est représentable. Utilise `Math.trunc(a / b)` quand il te faut une division entière.
+@87 Écris `area` pour qu’elle renvoie la largeur multipliée par la hauteur.
+@88 Fais en sorte que `area` renvoie la largeur fois la hauteur.
+@89 Multiplie les deux paramètres et renvoie le résultat.
+@90 Multiplie les deux nombres avec `*` et rends la réponse avec `return`.
+@91 area(3, 4)
+@92 area(2, 2)
+@93 gère les décimaux
+@94 Les nombres n’ont pas besoin de guillemets.
+@95 `+ - * /` marchent comme prévu ; `%` donne le reste.
+@96 La division garde les décimales, sauf si tu arrondis.
+@97 Les nombres n’ont pas besoin de guillemets.
+@98 `+ - * /` marchent comme en maths ; `%` trouve ce qui reste.
+@99 Diviser peut donner un nombre avec un point, comme 3.5.
+@100 Un seul type `number`, un flottant 64 bits ; `bigint` pour les entiers plus grands.
+@101 `/` ne tronque jamais ; `%` garde le signe du dividende.
+@102 Arrondis délibérément, et stocke l’argent en centimes entiers.
+@103 Pour aller plus loin : écris `average` pour qu’elle arrondisse à une décimale.
+@104 Un défi : fais en sorte que `average` donne la valeur moyenne, arrondie à une décimale.
+@105 Additionne les valeurs, divise par `values.length`, puis `Math.round(x * 10) / 10` garde une décimale. Traite d’abord le cas de la liste vide.
+@106 Additionne-les toutes et divise par leur nombre. Pour garder une décimale : fois 10, arrondir, diviser par 10. Une liste vide donne 0.
+@107 `Math.round` n’arrondit qu’à l’entier, donc multiplie par 10, arrondis, puis redivise.
+@108 L’arrondi marche sur les nombres entiers, alors on rend le nombre 10 fois plus grand, on l’arrondit, puis on le rapetisse.
+@109 `Math.round(x * 10) / 10` arrondit au demi supérieur à une décimale ; pour l’affichage, préfère `toFixed(1)` (une chaîne) ou `Intl.NumberFormat`, et souviens-toi que la virgule flottante binaire ne peut pas représenter exactement la plupart des décimaux.
+@110 résultat entier
+@111 une décimale
+@112 arrondi
+@113 liste vide
+@114 Prendre `const` d’abord.
+@115 `let` est pour les valeurs vraiment remplacées.
+@116 L’inférence gère les cas évidents ; annoter les bords.
+@117 Choisir `const` d’abord.
+@118 N’utiliser `let` que si la valeur change vraiment.
+@119 TypeScript devine souvent l’étiquette pour toi.
+@120 `const` par défaut ; `let` seulement pour une vraie réaffectation.
+@121 L’inférence donne à `const` un type littéral et élargit celui de `let`.
+@122 Annoter les paramètres et les exports ; laisser les variables locales être inférées.
+@123 Utilise `const`, sauf si la valeur change.
+@124 Utilise `const`, sauf si la valeur va changer.
+@125 Deux mots créent un nom : `const` et `let`.⏎⏎- `const` veut dire que ce nom désigne toujours cette valeur.⏎- `let` veut dire que la valeur sera remplacée plus tard.⏎⏎Commence par `const`. C’est vrai plus souvent qu’on ne le pense, et ça apprend quelque chose d’utile au prochain lecteur.⏎⏎Tu n’as presque jamais besoin d’écrire le type. `const age = 36` dit déjà à TypeScript que c’est un nombre. C’est l’**inférence**, et elle vaut en général mieux qu’une **annotation** écrite à la main.
+@126 Dans une boîte `const`, on ne met jamais rien de nouveau. Une boîte `let` peut être vidée et remplie à nouveau.⏎⏎La plupart des boîtes n’ont jamais besoin de changer, alors commence par `const`. Si tu découvres plus tard qu’il faut changer la valeur, remplace le mot par `let`.⏎⏎Tu n’as pas non plus besoin d’écrire le type. L’ordinateur voit bien que `36` est un nombre.
+@127 `const` empêche la *réaffectation* de la liaison, pas la mutation de la valeur : on peut toujours faire `push` sur un tableau `const`. `let` et `const` ont une portée de bloc et sont inutilisables avant leur déclaration (la zone morte temporelle) ; évite `var`, qui a une portée de fonction et est remonté (hoisting).⏎⏎L’inférence suit le flot du code. `const city = "Lagos"` a le type littéral `"Lagos"` ; `let city = "Lagos"` s’élargit en `string`, parce qu’il peut changer. C’est cette différence qui fait fonctionner les unions de littéraux (module 5).⏎⏎Annote là où l’inférence ne peut pas voir l’intention (paramètres, fonctions exportées, API publiques) et laisse-la gérer les variables locales.
+@128 La même valeur, à deux niveaux de détail.
+@129 La même boîte, avec étiquette et sans.
+@130 Annoté
+@131 Correct, mais le type est déjà évident d’après la valeur.
+@132 Ça marche, mais l’étiquette n’est pas nécessaire : la valeur dit déjà que c’est un nombre.
+@133 Inféré
+@134 Plus court, et tout aussi sûr. Mets plutôt les annotations aux bords des fonctions.
+@135 Plus court, et tout aussi sûr. TypeScript trouve l’étiquette pour toi.
+@136 Laquelle devrait être `const` ?
+@137 Lesquelles sont justes ?
+@138 Pour chaque ligne, demande-toi : la valeur est-elle remplacée plus tard ? Une `const` ne peut pas être réaffectée.
+@139 Est-ce que la valeur change plus tard ? Les boîtes `const` ne peuvent jamais changer.
+@140 `host` ne change jamais, donc `const` le dit. `count` est remplacé à la ligne suivante, donc il lui faut `let`.
+@141 `host` ne change jamais, donc c’est une `const`. `count` reçoit une nouvelle valeur à la ligne suivante, donc il lui faut `let`.
+@142 `host` n’est jamais réaffecté, donc `const` le documente et l’impose. `count` est réaffecté et a besoin de `let`. La troisième option ne compile pas : TS2588, `Cannot assign to 'total' because it is a constant`.
+@143 `const host = "localhost";` (jamais réaffecté)
+@144 `let count = 0; count = count + 1;` (réaffecté)
+@145 `const total = 0; total = total + 5;`
+@146 C’est une erreur : une `const` ne peut pas être réaffectée. Utilise `let` si le total change vraiment.
+@147 Ça casse : une boîte `const` ne peut pas recevoir de nouvelle valeur. Utilise `let` si elle change.
+@148 Qu’est-ce qui s’affiche ?
+@149 Qu’est-ce que ça va montrer ?
+@150 Suis `score` ligne par ligne : que vaut-il après la deuxième ligne ? `bonus` prend cette valeur.
+@151 Suis la boîte `score` : 5, puis on ajoute 2. `bonus` la copie.
+@152 `score` commence à 5, puis devient 7. `bonus` copie ce 7.
+@153 `score` commence à 5, puis devient 7. `bonus` reçoit une copie de ce 7.
+@154 Les nombres sont des primitives, copiées par valeur : `bonus` reçoit `7`, et les changements ultérieurs de `score` ne l’affecteraient pas. Les objets se comportent différemment : ils sont partagés par référence (module 3).
+@155 Écris `totalFor` pour qu’elle renvoie prix × quantité.
+@156 Fais en sorte que `totalFor` renvoie le prix fois la quantité.
+@157 Crée une `const` qui contient la multiplication, puis renvoie-la.
+@158 Fais une `const` qui contient la multiplication, puis renvoie-la avec `return`.
+@159 totalFor(2.5, 4)
+@160 totalFor(3, 3)
+@161 totalFor(0, 5)
+@162 `const` pour les valeurs qui restent ; `let` pour celles qui changent.
+@163 Laisse TypeScript inférer les types à partir de la valeur.
+@164 Annote les paramètres et les types de retour des fonctions, pas les variables locales.
+@165 `const` pour les boîtes qui restent pareilles ; `let` pour celles qui changent.
+@166 TypeScript peut trouver l’étiquette à partir de la valeur.
+@167 Les fonctions reçoivent des étiquettes pour ce qui entre et ce qui sort.
+@168 `const` interdit la réaffectation, pas la mutation.
+@169 `let` et `const` ont une portée de bloc ; laisse `var` derrière toi.
+@170 `const` infère des types littéraux, `let` élargit ; annote les frontières.
+@171 Pour aller plus loin : quel type TypeScript donne-t-il à `city` ?
+@172 Un défi : quel type TypeScript donne-t-il à `city` ?
+@173 Une `const` ne peut jamais changer, donc TypeScript peut être plus précis que `string`.
+@174 `city` ne peut jamais changer. Alors TypeScript sait exactement quel mot il y a dedans.
+@175 Une `const` reçoit le type *littéral* `"Lagos"` : exactement ce texte et rien d’autre. Le `let` reçoit `string`, parce qu’il peut changer plus tard.
+@176 `city` est une `const`, donc son type est exactement `"Lagos"`. `town` est un `let`, il pourrait changer : son type est juste `string`.
+@177 Élargissement des littéraux : les déclarations `const` gardent le type littéral, tandis que les liaisons `let` modifiables s’élargissent au type primitif. `as const` étend la même idée aux objets et aux tableaux.
+@178 Des accents graves, pas des guillemets.
+@179 `${...}` est l’emplacement pour une valeur.
+@180 Les gabarits se lisent mieux que de longues chaînes de `+`.
+@181 Utilise des accents graves, pas des guillemets.
+@182 `${...}` est le trou pour une valeur.
+@183 Les trous sont plus faciles à lire que plein de `+`.
+@184 Préférer les littéraux de gabarit aux chaînes de `+` dès qu’il y a des valeurs.
+@185 Garder les expressions interpolées petites.
+@186 Les *types* littéraux de gabarit réutilisent la syntaxe au niveau des types.
+@187 Les accents graves permettent de glisser des valeurs dans du texte.
+@188 Les accents graves permettent de mettre des valeurs dans des mots.
+@189 Un **littéral de gabarit** utilise des accents graves au lieu de guillemets. À l’intérieur, `${...}` exécute une petite expression et place le résultat dans le texte.⏎⏎⟦F1⟧⏎⏎Comparée à `"Hi, " + name + "!"`, la version gabarit garde la forme de la phrase visible. Dès qu’il y a plus d’une valeur, préfère-la.
+@190 Les accents graves sont des guillemets spéciaux avec un emplacement dedans. Tout ce que tu mets dans l’emplacement `${...}` est affiché au milieu de la phrase.⏎⏎⟦F1⟧⏎⏎C’est bien plus propre que de coller des morceaux avec `+`.
+@191 Les littéraux de gabarit (accents graves) permettent l’interpolation avec `${expr}` et les sauts de ligne littéraux. Chaque valeur est convertie en chaîne à peu près comme `String(value)`, donc un objet devient `"[object Object]"` : formate-le toi-même, par exemple avec `JSON.stringify`.⏎⏎N’importe quelle expression marche dans `${…}`, y compris des appels et des ternaires, mais garde-la courte ; une variable nommée se lit mieux que de la logique dans une chaîne.⏎⏎TypeScript a aussi des *types littéraux de gabarit*, comme ``type Id = `user-${number}` ``, qui réutilisent la même syntaxe au niveau des types.
+@192 Qu’est-ce qui est affiché ?
+@193 Remplace chaque `${...}` par la valeur du nom qu’il contient. Garde tous les autres caractères tels qu’ils sont écrits.
+@194 Remplis chaque trou `${...}` avec ce qu’il y a dans la boîte de ce nom.
+@195 Chaque `${...}` est remplacé par la valeur qu’il contient. Le reste du texte, espaces compris, reste exactement tel qu’il est écrit.
+@196 Chaque `${...}` est un trou. La valeur remplit le trou, et les autres mots restent exactement comme ils sont.
+@197 Chaque `${…}` est évalué et converti en chaîne ; le texte littéral autour, espaces compris, est gardé tel quel. Le nombre `7` devient `"7"`.
+@198 Mets le nom dans la phrase.
+@199 La valeur vit dans une variable. Quelle variable contient le nom ?
+@200 Quelle boîte contient "Sam" ? Mets son nom dans le trou.
+@201 Dans `${...}`, tu écris une expression, pas une chaîne. `name` désigne la variable ; `"name"` afficherait le mot « name ».
+@202 Dans `${...}`, tu écris le nom de la boîte, sans guillemets. `name` veut dire « ce qu’il y a dans la boîte » ; `"name"` afficherait juste le mot name.
+@203 Le contenu de `${…}` est une expression évaluée dans la portée courante, donc `name` se résout vers la liaison. Un littéral de chaîne à cet endroit, `${"name"}`, insérerait simplement ce texte.
+@204 Écris `label` pour qu’elle renvoie `Ada scored 7 points`.
+@205 Fais en sorte que `label` renvoie `Ada scored 7 points`.
+@206 Utilise des accents graves, et mets chaque paramètre dans son propre `${...}`.
+@207 Utilise des accents graves, et mets chaque valeur dans son propre trou `${...}`.
+@208 `return `${name} scored ${score} points`;`
+@209 Écris return, puis des accents graves autour de : `${name} scored ${score} points`.
+@210 label("Ada", 7)
+@211 label("Sam", 0)
+@212 Les accents graves font un littéral de gabarit.
+@213 `${...}` insère une valeur dans le texte.
+@214 N’importe quelle expression marche entre les accolades, y compris des calculs.
+@215 Les accents graves font du texte avec des trous.
+@216 `${...}` est un trou pour une valeur.
+@217 Tu peux même faire des calculs dans un trou.
+@218 Les accents graves permettent l’interpolation et les chaînes sur plusieurs lignes.
+@219 `${expr}` évalue n’importe quelle expression et convertit le résultat en chaîne.
+@220 Les objets deviennent `[object Object]` : formate-les explicitement.
+@221 Pour aller plus loin : les littéraux de gabarit marchent aussi pour les types. Fais en sorte que `Greeting` n’accepte que du texte qui commence par `"Hello, "`.
+@222 Un défi : les types aussi peuvent avoir des trous ! Fais en sorte que `Greeting` n’autorise que des mots qui commencent par `"Hello, "`.
+@223 Utilise un type littéral de gabarit : `` `Hello, ${string}` ``.
+@224 Écris le type avec des accents graves et un trou : `` `Hello, ${string}` ``.
+@225 Un *type* littéral de gabarit décrit un motif de texte. `${string}` est un trou dans lequel n’importe quel texte rentre.
+@226 Le type a un trou, comme un littéral de gabarit. N’importe quels mots rentrent dans le trou, mais le début doit être "Hello, ".
+@227 Les types littéraux de gabarit (TS 4.1) composent des types littéraux et primitifs en motifs de chaînes ; ils font fonctionner les routes typées, les unités CSS et les noms d’événements.
+@228 une vraie salutation
+@229 une autre
+@230 refuse les autres textes
+@231 Mesurer et chercher dans du texte avec `length` et `includes`.
+@232 Couper du texte avec `slice`, le découper avec `split`, le recoller avec `join`.
+@233 Nettoyer du texte avec `trim` et les changements de casse.
+@234 Compter les lettres et chercher des mots.
+@235 Découper les mots et les recoller.
+@236 Ranger du texte en désordre.
+@237 Les chaînes ont des méthodes pour mesurer, chercher, couper et nettoyer.
+@238 Elles renvoient toujours une nouvelle chaîne.
+@239 Les enchaîner pour écrire des recettes claires.
+@240 Les mots ont une boîte à outils.
+@241 Les outils fabriquent de nouveaux mots et laissent les tiens tranquilles.
+@242 Utiliser les outils l’un après l’autre.
+@243 Traiter les chaînes comme des valeurs immuables.
+@244 Préférer `slice` à l’ancien `substr`.
+@245 Distinguer unités de code et caractères.
+@246 Le texte vient avec ses propres outils.
+@247 Les mots viennent avec une boîte à outils !
+@248 Chaque chaîne a des **méthodes** : de petits outils que l’on appelle avec un point.⏎⏎⟦F1⟧⏎⏎Une règle à retenir : ces outils **ne modifient jamais la chaîne d’origine**. Ils t’en rendent une nouvelle, alors garde le résultat dans une variable ou utilise-le tout de suite.
+@249 Les mots ont des outils que tu utilises avec un point : `word.length` compte les lettres, `word.toUpperCase()` les met en GRAND.⏎⏎`slice` découpe un morceau, `split` coupe une phrase en liste, et `join` recolle une liste en un seul morceau de texte.⏎⏎Les outils ne modifient jamais ton mot. Ils t’en fabriquent un nouveau, comme une photocopieuse.
+@250 Les chaînes sont des primitives immuables : chaque méthode renvoie une nouvelle chaîne, et `s.toUpperCase()` seul sur sa ligne ne fait rien. Enchaîne plutôt les appels : `input.trim().toLowerCase()`.⏎⏎`slice(start, end)` prend une fin exclue et accepte des indices négatifs comptés depuis la fin. `split` avec une chaîne ou une regex renvoie `string[]`, et `join` est son inverse. `includes`, `startsWith` et `endsWith` renvoient des booléens ; `indexOf` renvoie `-1` quand rien n’est trouvé.⏎⏎`length` compte des unités de code UTF-16, pas des caractères : `"👋".length` vaut `2`. Pour les caractères visibles, parcours avec `for…of` ou utilise `Intl.Segmenter`.
+@251 `trim` enlève d’abord les espaces aux deux bouts. `slice(0, 4)` garde les positions 0, 1, 2 et 3.
+@252 D’abord, les espaces aux bouts sont balayés. Puis `slice(0, 4)` garde les quatre premières lettres.
+@253 `"TypeScript"` a 10 lettres une fois les espaces partis ; `slice(0, 4)` s’arrête *avant* l’indice 4 ; `split` fait une liste et `join` la recolle avec un nouveau séparateur.
+@254 Sans les espaces, "TypeScript" a 10 lettres. `slice(0, 4)` s’arrête juste avant la place 4. `split` coupe aux virgules et `join` recolle les morceaux avec " + ".
+@255 `trim` supprime les espaces au début et à la fin (il reste 10 unités de code), `slice` utilise un intervalle semi-ouvert `[0, 4)`, et `split(",").join(" + ")` est la façon idiomatique de tout remplacer pour un séparateur fixe.
+@256 Que fait `name.toUpperCase();` seul sur sa ligne à `name` ?
+@257 Qu’arrive-t-il à `name` après `name.toUpperCase();` ?
+@258 Les méthodes de chaîne renvoient une nouvelle chaîne. Est-ce que quelque chose la récupère ici ?
+@259 L’outil fabrique un nouveau mot. Est-ce que le nouveau mot est gardé quelque part ?
+@260 Rien ne change : la copie en majuscules est créée puis jetée. Écris `name = name.toUpperCase()` (avec `let`) ou utilise directement le résultat.
+@261 Il n’arrive rien à `name` ! La copie en GRAND est créée, puis oubliée. Garde-la : `const loud = name.toUpperCase();`.
+@262 Les chaînes sont immuables, donc l’appel renvoie une nouvelle valeur qui est jetée. Les linters peuvent le signaler (`no-unused-expressions`) ; affecte ou renvoie le résultat.
+@263 `name` passe en majuscules
+@264 Les chaînes ne changent jamais sur place. La méthode renvoie une nouvelle chaîne.
+@265 Le mot lui-même ne change jamais. L’outil en fabrique un nouveau.
+@266 Rien : la nouvelle chaîne est jetée
+@267 C’est une erreur
+@268 Ça s’exécute sans problème ; ça n’a simplement aucun effet.
+@269 Pas d’erreur : ça ne fait juste rien d’utile.
+@270 Écris `initials` pour que `"Ada Lovelace"` donne `"AL"`. Les espaces en trop ne doivent pas compter.
+@271 Fais en sorte que `initials` transforme `"Ada Lovelace"` en `"AL"`. Les espaces en trop ne doivent pas compter.
+@272 `split(" ")` donne les mots (et quelques chaînes vides quand il y a des espaces en trop). Écarte les vides, prends `slice(0, 1)` de chacun, mets-le en majuscule, puis `join("")`.
+@273 Coupe le nom aux espaces avec `split(" ")`. Jette les morceaux vides, prends la première lettre de chaque morceau avec `slice(0, 1)`, mets-la en GRAND, et recolle le tout avec `join("")`.
+@274 Une chaîne de petits outils se lit comme une recette : découper, écarter les vides, prendre la première lettre, mettre en majuscule, joindre.
+@275 Chaque outil fait un petit travail, l’un après l’autre : couper, ranger, choisir, agrandir, coller.
+@276 Enchaîner les méthodes sur le `string[]` intermédiaire garde chaque étape pure. `slice(0, 1)` est plus sûr que `[0]` ici : sur une chaîne vide, il renvoie `""` plutôt que `undefined`.
+@277 deux noms
+@278 espaces en trop
+@279 un seul nom
+@280 `length`, `includes`, `slice`, `split`, `join`, `trim` et les changements de casse couvrent l’essentiel du travail sur le texte.
+@281 Les méthodes de chaîne renvoient de nouvelles chaînes ; l’original ne change jamais.
+@282 Enchaîne de petites étapes : `text.trim().toLowerCase()`.
+@283 Les mots ont des outils : compter, chercher, couper, découper, coller, ranger.
+@284 Les outils fabriquent de nouveaux mots ; ton mot ne change jamais.
+@285 Tu peux utiliser les outils l’un après l’autre.
+@286 Les chaînes sont immuables ; chaque méthode renvoie une nouvelle valeur.
+@287 `slice` prend un intervalle semi-ouvert et des indices négatifs.
+@288 `length` compte des unités de code UTF-16, pas des caractères visibles.
+@289 Pour aller plus loin : écris `slugify` pour que `"  Hello Big World! "` devienne `"hello-big-world"`.
+@290 Un défi : fais en sorte que `slugify` transforme `"  Hello Big World! "` en `"hello-big-world"`.
+@291 Enlève les espaces aux bouts, passe en minuscules, supprime tout ce qui n’est pas une lettre, un chiffre ou une espace avec `replace(/[^a-z0-9 ]/g, "")`, puis découpe aux espaces, écarte les vides et joins avec `"-"`.
+@292 Range les bouts, mets tout en petites lettres, enlève la ponctuation avec `replace(/[^a-z0-9 ]/g, "")`, puis coupe aux espaces et recolle avec des tirets.
+@293 Une expression régulière (`/[^a-z0-9 ]/g`) décrit « tout ce qui n’est pas une lettre minuscule, un chiffre ou une espace », et `replace` avec le drapeau `g` supprime chaque correspondance.
+@294 `/[^a-z0-9 ]/g` est un motif qui veut dire « tout ce qui n’est pas une petite lettre, un chiffre ou une espace ». `replace` jette tout ça.
+@295 Les classes de caractères avec `^` sont des négations ; le drapeau `g` remplace toutes les correspondances. `replaceAll` (ES2021) demande soit une chaîne, soit une regex globale.
+@296 les espaces deviennent des tirets
+@297 la ponctuation disparaît
+@298 déjà un slug

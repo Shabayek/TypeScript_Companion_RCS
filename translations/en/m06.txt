@@ -1,0 +1,242 @@
+@1 Files are modules with private scope.
+@2 Exports are promises to other files.
+@3 Import only what you use.
+@4 Files keep their things private.
+@5 `export` is a promise to other files.
+@6 Only `import` what you use.
+@7 Keep modules cohesive and their exports minimal.
+@8 Type-only imports disappear at build time.
+@9 Avoid import cycles; move shared code into its own module.
+@10 One file, one job. Share only what is needed.
+@11 One file, one job. Share only what others need.
+@12 A **module** is a file with its own scope. Nothing leaks out unless you `export` it, and nothing comes in unless you `import` it.⏎⏎⟦F1⟧⏎⏎That boundary is a feature. A reader of `app.ts` can see exactly where `add` came from, and a name in one module cannot silently collide with a name in another.⏎⏎Keep the exported surface small. The fewer things a module promises, the more freely you can change what is inside it.
+@13 A big program is easier in smaller rooms. Each room is a file.⏎⏎Doors are `export` (letting something out) and `import` (bringing something in).⏎⏎If you do not open a door, nobody can see inside the room.
+@14 Each ES module has its own top-level scope and is evaluated once, on first import; imports are live, read-only bindings. Prefer named exports to `default`: names stay consistent across files and refactor well.⏎⏎Use `import type { User } from "./user"` for type-only imports. They are erased completely, which avoids runtime cycles and side effects; `verbatimModuleSyntax` makes the distinction mandatory.⏎⏎A module's exports are its API: everything exported is something you have promised not to break.
+@15 One long file, or two focused ones.
+@16 One long file, or two small ones?
+@17 One file
+@18 Fine for a demo. Painful at four hundred lines.
+@19 Fine for something small. Hard work when it gets long.
+@20 Two modules
+@21 Each file can be read, tested and changed on its own.
+@22 Each file can be read, tested and changed by itself.
+@23 What does `export` do?
+@24 `export` and `import` come as a pair. What does one file have to do so another can `import` from it?
+@25 Think of sharing: what lets another file use something from this one?
+@26 It makes a value importable from other modules. Everything else stays private to the file.
+@27 It lets other files use the value. Everything else stays private inside the file, like a room with a closed door.
+@28 `export` adds a binding to the module's public interface. Modules never write to the global object, which is what ended the era of script-tag globals.
+@29 Makes a value available to other modules
+@30 Runs the file immediately
+@31 Importing runs a file, but `export` itself only publishes a value.
+@32 Bringing a file in runs it, but `export` only shares a value.
+@33 Puts the value on the global object
+@34 That is what modules exist to avoid. Exports are explicit, not global.
+@35 Putting things everywhere is what files are meant to avoid. You choose what to share.
+@36 Put the file back in a working order.
+@37 Put the file back in the right order.
+@38 Imports come first. A function must be declared before the line that calls it runs.
+@39 Start with the `import`. Make the function before you use it.
+@40 Imports go at the top so the dependency is visible immediately. The function is declared, then called at the bottom.
+@41 The `import` goes at the top, so you can see what the file needs. Then the function is made, and at the bottom it is used.
+@42 `import` declarations are resolved before the module body runs, wherever they appear; convention puts them first so dependencies are visible. The function declaration is then called at the bottom.
+@43 The short version.
+@44 What you learned.
+@45 A module is a file with its own scope.
+@46 `export` publishes; `import` brings in.
+@47 Small public surfaces are easier to change.
+@48 A module is a file with its own private space.
+@49 `export` shares; `import` brings in.
+@50 Share only what is needed.
+@51 Modules have a private top-level scope and are evaluated once.
+@52 Prefer named exports; use `import type` for types.
+@53 Every export is a public API commitment.
+@54 Go further: what does `import type { User } from "./user";` do?
+@55 A challenge: what does `import type` mean?
+@56 Think about what is left once the types are erased.
+@57 Types disappear when the code runs. What happens to an import of only types?
+@58 `import type` brings in types only. It is removed completely from the JavaScript, so it can never load a file or create a dependency cycle at runtime.
+@59 It borrows only labels (types). When the code runs, that line is gone.
+@60 Type-only imports are always elided; with `verbatimModuleSyntax`, regular imports are kept as written, so `import type` (or inline `type` modifiers) is how you mark type-only dependencies.
+@61 Imports only the type; the line disappears from the JavaScript
+@62 Loads the module, then copies its types
+@63 Nothing is loaded at runtime: types do not exist there.
+@64 Nothing is loaded when the code runs. Types are gone by then.
+@65 It is the same as `import`, just shorter to type
+@66 A normal `import` may load the module at runtime. `import type` never does.
+@67 A normal import can load a file. `import type` never does.
+@68 Failures are part of the design.
+@69 Wrap the risky line, not everything.
+@70 `catch` must do something useful.
+@71 Things going wrong is part of the plan.
+@72 Put only the risky line inside `try`.
+@73 Exceptions for the unexpected, results for the expected.
+@74 Never swallow an error without a decision.
+@75 Narrow `unknown` errors with `instanceof Error`.
+@76 Plan for the bad case, not just the good one.
+@77 Plan for when things go wrong, not just for when they go right.
+@78 Some failures are expected: a file is missing, text is not valid JSON, a network request times out. `try` / `catch` lets you keep going instead of stopping the whole program.⏎⏎⟦F1⟧⏎⏎Two habits make this useful:⏎⏎- Only wrap the risky line, not the whole function.⏎- Do something meaningful in `catch` — log, retry, or return a safe value. Swallowing an error silently is how bugs become mysteries.
+@79 Sometimes things go wrong: the text is not valid, the file is missing.⏎⏎`try` is where you put the risky bit. `catch` is your plan B.⏎⏎Without a plan, the whole program stops.
+@80 In a `catch` clause the error is typed `unknown` (`useUnknownInCatchVariables`, part of `strict`), because anything can be thrown. Narrow with `error instanceof Error` before reading `.message`.⏎⏎Keep `try` blocks small so you only catch the failure you expect, and re-throw what you cannot handle. `finally` runs either way and is the place for cleanup.⏎⏎For expected failures, consider returning a result instead of throwing: `{ ok: true; value: T } | { ok: false; error: string }`. The compiler then makes every caller handle the failure case.
+@81 The same bad input, two outcomes.
+@82 The same bad input, two endings.
+@83 No plan
+@84 One bad string stops everything downstream.
+@85 One bad bit of text stops everything after it.
+@86 With a plan
+@87 Bad input becomes a boring zero instead of an outage.
+@88 The bad text just becomes 0, and the program keeps going.
+@89 Where does the risky line belong?
+@90 Where does the risky line go?
+@91 `catch` only handles errors thrown inside its matching `try` block.
+@92 `try` is the safety net. Where should the risky line be?
+@93 Inside `try`. `catch` only runs when something in `try` throws.
+@94 Inside `try`. `catch` only runs if something inside `try` goes wrong.
+@95 Only exceptions thrown while the `try` block runs reach `catch`. Code outside it is unprotected, and an error thrown inside `catch` propagates as usual.
+@96 Inside the `try` block
+@97 Inside the `catch` block
+@98 `catch` runs after a failure, so it cannot prevent it.
+@99 `catch` runs after something goes wrong, so it cannot stop it from happening.
+@100 Outside both blocks
+@101 Then nothing catches the failure.
+@102 Then nothing is there to catch the problem.
+@103 Write `readCount` so bad JSON gives 0 instead of crashing.
+@104 Make `readCount` give 0 for bad text, instead of breaking.
+@105 `JSON.parse` throws on bad input, so wrap it in `try` and return 0 from `catch`.
+@106 `JSON.parse` breaks on bad text, so put it inside `try`, and give back 0 in `catch`.
+@107 valid JSON
+@108 not JSON at all
+@109 missing the count
+@110 `try` holds the risky code; `catch` runs on failure.
+@111 Return a safe value so callers can keep going.
+@112 `try` holds the risky code; `catch` runs if it goes wrong.
+@113 Give back a safe answer so the program can keep going.
+@114 Always decide what to do when something breaks.
+@115 A caught error is `unknown`: narrow it before use.
+@116 Small `try` blocks; re-throw what you cannot handle; `finally` for cleanup.
+@117 A result type makes failure part of the signature.
+@118 Go further: write `parseAge`: a whole number from 0 to 150, or throw an `Error` with the message `"Not an age: <text>"`.
+@119 A challenge: make `parseAge` turn text into an age, or throw an error if it is not a real age.
+@120 `Number(text)` gives `NaN` for words. `Number.isInteger` is false for `NaN` and decimals. Watch out: `Number("")` is `0`.
+@121 Turn the text into a number. If it is not a whole number from 0 to 150 (or the text is empty), `throw new Error(...)`.
+@122 Throw at the boundary, where bad input arrives, so the rest of the program only ever sees real ages.
+@123 Checking the text as soon as it arrives means the rest of your code can trust the age.
+@124 `Number("")` is `0` and `Number(" 7 ")` is `7`, so validate the text as well as the number. In TypeScript, `catch (error)` gives `unknown`: narrow with `instanceof Error`.
+@125 a real age
+@126 not a number
+@127 too old
+@128 empty text
+@129 Promises represent work in progress.
+@130 `async`/`await` reads like normal code.
+@131 Ordering is not the same as line order.
+@132 A promise is work that is still happening.
+@133 `async` and `await` read like normal code.
+@134 What runs first is not always the line on top.
+@135 Microtasks run before timers; line order is not execution order.
+@136 Handle every rejection.
+@137 `Promise.all` for concurrency, `allSettled` for partial failure.
+@138 A promise is a value that arrives later.
+@139 A promise is an answer that arrives later.
+@140 Some work takes time. A **promise** represents a result that is not ready yet.⏎⏎⟦F1⟧⏎⏎`async` marks a function that will pause at `await`. The pause does not block the rest of the program: other work continues while it waits.⏎⏎The part that catches people out is ordering. Code after an `await` runs later, even if the promise is already resolved.
+@141 A promise is a note that says "your answer is coming".⏎⏎`await` means "wait here, but let everything else keep going".⏎⏎It does not freeze the page. It only pauses this one function.
+@142 A `Promise<T>` is pending, fulfilled with a `T`, or rejected. An `async` function always returns a promise; `await` suspends that function and resumes it in a microtask once the promise settles.⏎⏎Microtasks (promise reactions) run after the current synchronous code and before the next task (timers, I/O, events). That is why `.then` callbacks run after the rest of the current script, yet before `setTimeout(…, 0)`.⏎⏎Consecutive `await`s serialise independent work: start both and wait together with `Promise.all([a(), b()])`, or `Promise.allSettled` when one failure should not discard the others. An unhandled rejection is a bug: always `await` or `.catch`.
+@143 Look closely at the order.
+@144 Look carefully at the order!
+@145 Code inside `.then(...)` runs after the current code has finished, even if the promise is already resolved.
+@146 The `.then` part waits its turn. It runs after the lines below it.
+@147 `.then` schedules its callback for after the current code finishes. So `three` prints before `two`, even though the promise was already resolved.
+@148 `.then` says "do this later, when you are free". So "three" is shown before "two", even though the promise was ready straight away.
+@149 The `.then` reaction is queued as a microtask, which only runs once the current synchronous script has finished. So `three` logs before `two`, even though the promise was already fulfilled.
+@150 Two ways to wait.
+@151 .then
+@152 Works, but the flow reads sideways.
+@153 This works, but you read it sideways.
+@154 async / await
+@155 Top to bottom, like synchronous code.
+@156 You read it from top to bottom, like normal code.
+@157 What does `await` do to the rest of the app?
+@158 `await` is only allowed in `async` functions. What does it pause: that function, or everything?
+@159 Think of waiting for a friend: do you stop the whole world, or just wait yourself?
+@160 It pauses only the async function. Other events, clicks and renders continue while the value is pending.
+@161 It pauses only this one function. The rest of the app — clicks, buttons, drawing — keeps going while it waits.
+@162 `await` hands control back to the event loop; the rest of the async function resumes later as a microtask. Nothing else is blocked in the meantime.
+@163 Freezes the whole page until the value arrives
+@164 That would be a blocking wait. JavaScript avoids that on purpose.
+@165 That would freeze everything. JavaScript avoids that on purpose.
+@166 Pauses this function while other work continues
+@167 Turns the promise into a plain value immediately
+@168 It waits for the value; it cannot make it arrive sooner.
+@169 It waits for the answer. It cannot make it arrive faster.
+@170 A promise is a future value.
+@171 `await` pauses one function, not the whole program.
+@172 Code after an `await` runs later than you might expect.
+@173 A promise is an answer that comes later.
+@174 Code after an `await` can run later than you think.
+@175 A promise is pending, fulfilled or rejected.
+@176 `await` resumes in a microtask, after the current synchronous code.
+@177 Run independent work concurrently with `Promise.all`.
+@178 Go further: a timer, a promise and plain code. What prints?
+@179 A challenge: a timer, a promise and normal code. What will it show, in order?
+@180 Plain code runs first, then promise callbacks, then timers, even a timer of 0 ms.
+@181 First the normal lines, then the promise jobs, then the timers — even a timer with 0.
+@182 Promise callbacks (microtasks) run as soon as the current code finishes; timers wait for the next turn of the event loop.
+@183 Promise jobs jump the queue ahead of timers. So "c" comes before "d".
+@184 After the script, the microtask queue is drained (`c`) before the next macrotask (the timer, `d`). That is why `await` continuations run before `setTimeout(fn, 0)`.
+@185 Classes bundle state and behaviour.
+@186 `new` makes an instance; `private` protects internals.
+@187 Use them with judgement, not by default.
+@188 Classes keep information and actions together.
+@189 `new` builds one; `private` keeps its insides safe.
+@190 Use them when they help, not every time.
+@191 Use a class for identity, state and the rules that keep them consistent.
+@192 Prefer `#private` when encapsulation must hold at runtime.
+@193 Otherwise, default to data and functions.
+@194 A class is a blueprint; an instance is the thing built from it.
+@195 A class is a plan. An instance is the thing built from the plan.
+@196 A **class** bundles data with the functions that work on it:⏎⏎⟦F1⟧⏎⏎`private` keeps `value` from being changed from outside, so the class controls its own rules.⏎⏎Be honest about when this helps. A class earns its place when there is **identity and state that must change together** — a game character, an editor session, a connection. For plain data, an object and a few pure functions is usually simpler and easier to test.
+@197 A class is a blueprint for making objects. `new Counter()` builds one from the blueprint.⏎⏎The blueprint can keep secrets: `private` means "only this class may touch it".⏎⏎For plain data, a plain object is simpler. Classes are for things that change over time.
+@198 TypeScript adds access modifiers (`private`, `protected`, `public`), `readonly` fields, parameter properties and `implements` checks to classes. `private` is compile-time only; JavaScript's `#field` is enforced at runtime.⏎⏎Classes are still typed structurally: any object with the same public members is assignable to the class type, unless the class has `private` or `#` members, which makes it effectively nominal.⏎⏎Reach for a class when identity and mutable state must stay consistent together. For data plus transformations, plain objects and pure functions are easier to test and to serialise.
+@199 The same behaviour, two styles.
+@200 The same job, two styles.
+@201 Object + functions
+@202 Simple, testable, no `this`. Great for plain data.
+@203 Simple and easy to test. Great for plain information.
+@204 Class
+@205 Protects its own state. Worth it when there are several rules to keep.
+@206 Looks after its own insides. Worth it when there are rules to keep.
+@207 Build one instance.
+@208 Build one counter from the plan.
+@209 Which keyword creates an instance from a class?
+@210 Which word builds something new from a plan?
+@211 `new` creates an instance from the class blueprint.
+@212 `new` builds a real thing from the class plan.
+@213 `new` creates an object whose prototype is `Counter.prototype` and runs the constructor, here just the field initialiser. Calling a class without `new` throws a `TypeError`.
+@214 Finish the `Counter` class so `increment()` adds one and returns the new value.
+@215 Finish `Counter` so `increment()` adds one and gives back the new number.
+@216 Use `this.value += 1;` before the `return`.
+@217 Write `this.value += 1;` before the `return`.
+@218 Each instance gets its own `value`. That is the difference between a class and a shared object.
+@219 Every counter you build gets its own `value`. That is what a class is for.
+@220 Every instance gets its own `value`, initialised when it is constructed. `private` blocks outside writes at compile time; use `#value` if you need the guarantee at runtime too.
+@221 first increment
+@222 two increments share state
+@223 each instance is separate
+@224 A class is a blueprint; `new` builds an instance.
+@225 `this` refers to the instance the method was called on.
+@226 Prefer plain data and functions unless state and rules belong together.
+@227 A class is a plan; `new` builds a thing from it.
+@228 `this` means "the thing this belongs to".
+@229 Plain information and functions are often enough.
+@230 `new` builds an instance; field initialisers run for each one.
+@231 `private` is compile-time; `#private` is enforced at runtime.
+@232 Classes with private members behave nominally.
+@233 Go further: finish `Wallet`: a private `#coins` field, `add(n)` and a `coins` getter. Adding a negative amount throws.
+@234 A challenge: finish the `Wallet` class. Nobody outside may touch the coins directly!
+@235 Declare `#coins = 0;`, change it in `add` with `this.#coins += amount`, and return it from the getter.
+@236 Write `#coins = 0;` at the top. `add` adds to `this.#coins`, and the getter gives it back.
+@237 A `#` field is truly private: code outside the class cannot read or change it, so every change goes through `add`, which checks it.
+@238 The `#` makes the coins secret. The only way in is `add`, and `add` checks the amount.
+@239 `#private` fields are enforced at runtime (unlike TypeScript’s `private`, which is erased). A getter exposes a read-only view, so the invariant lives in one method.
+@240 adds up
+@241 refuses negatives
+@242 starts empty

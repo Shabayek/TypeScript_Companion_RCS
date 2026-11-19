@@ -1,0 +1,250 @@
+@1 Small returning functions beat big printing ones.
+@2 Guard the zero case before dividing.
+@3 A tested function is a finished function.
+@4 Small machines that give back answers are better than one giant one.
+@5 Check for zero before you divide.
+@6 A checked machine is a finished machine.
+@7 Functional core, imperative shell.
+@8 Types do not exclude `NaN`; guard arithmetic edge cases.
+@9 Test the core; keep the shell thin.
+@10 Plan the pieces before writing them.
+@11 Plan the pieces before you build them.
+@12 A quiz game needs three small truths:⏎⏎- A correct answer adds points.⏎- A wrong answer adds nothing.⏎- At the end, a percentage tells you how you did.⏎⏎Two tiny functions can carry all of that, and each one is easy to test because it returns a value instead of printing it or touching a screen.⏎⏎This is the shape of most real work: small functions with clear contracts, assembled into something bigger. At the end you play the quiz, and your functions keep the score.
+@13 Time to build a quiz game — well, the brain of it. Two small machines: one that gives points, one that works out your score.⏎⏎Short functions are easier to fix than big ones. Start small. At the end, you get to play the quiz — and your machines keep the score!
+@14 The domain logic is two pure functions: a state transition (`scoreAnswer`) and a projection (`percent`). Neither prints nor touches a screen, so each is unit-testable on its own, and the checks you run are exactly those unit tests.⏎⏎This is "functional core, imperative shell": keep decisions in pure functions and push input and output to a thin outer layer. The game step at the end of this lesson is that shell, and it calls your functions.
+@15 First: `scoreAnswer` adds 10 points for a correct answer, and 0 otherwise.
+@16 First: `scoreAnswer` adds 10 points for a right answer, and nothing for a wrong one.
+@17 A ternary is enough: add 10 when `isCorrect` is true.
+@18 Use `? :`: if `isCorrect`, give back `current + 10`, otherwise just `current`.
+@19 correct from zero
+@20 wrong keeps the score
+@21 two correct answers
+@22 Next: `percent` turns correct answers into a whole percentage.
+@23 Next: `percent` turns right answers into a whole-number percentage.
+@24 Divide `correct` by `total`, multiply by 100, then `Math.round`. Handle `total === 0` first.
+@25 Divide `correct` by `total`, times 100, then `Math.round`. But first: if `total` is 0, give back 0.
+@26 The `total === 0` guard is not defensive noise: dividing by zero gives `NaN`, and a percentage of `NaN` is a bug that reaches the screen.
+@27 Checking for 0 first really matters: dividing by zero gives `NaN` ("not a number"), and nobody wants to see "NaN%" on the screen.
+@28 Without the guard, `0 / 0` is `NaN`, and `Math.round(NaN)` is `NaN`, which still type-checks as `number`. Types do not rule out `NaN` or `Infinity`; guards do.
+@29 three of four
+@30 none right
+@31 rounds to a whole number
+@32 no questions yet
+@33 Play it: your `scoreAnswer` and `percent` keep the score.
+@34 Play your game! Your own machines keep the score.
+@35 Run it end to end: a quiz whose scoring is your `scoreAnswer` and `percent`.
+@36 Which keyword makes a name that cannot be given a new value?
+@37 Which word makes a box you can never put a new value in?
+@38 What does `typeof 42` give back?
+@39 What does `typeof 42` say?
+@40 Which type fits `["tea", "bus"]`?
+@41 Which label fits the list `["tea", "bus"]`?
+@42 What is `7 % 3`?
+@43 What is left over in `7 % 3`?
+@44 What you just built.
+@45 What you built.
+@46 `scoreAnswer` adds points without printing anything.
+@47 `percent` rounds and guards the empty case.
+@48 Functions that return values are easy to test — and you just tested them.
+@49 `scoreAnswer` adds points and gives back the new score.
+@50 `percent` rounds, and copes with a quiz with no questions.
+@51 Machines that give back answers are easy to check — and you just checked them.
+@52 `scoreAnswer` is a pure state transition.
+@53 `percent` guards division by zero: `NaN` is still a `number`.
+@54 Pure functions make unit tests trivial, and the game just calls them.
+@55 Model the data as a list of small objects.
+@56 `reduce` turns a list into one number.
+@57 Build new functions on top of tested ones.
+@58 Store the money as a list of small bags.
+@59 Build new machines on top of ones that already work.
+@60 Data model first, functions second.
+@61 Store money as integer minor units in real code.
+@62 Derived state is computed, never duplicated.
+@63 Money is a list of small facts.
+@64 A budget is just a list of expenses, and each expense is a labelled amount:⏎⏎⟦F1⟧⏎⏎Two questions matter: how much has gone, and how much is left. Both are pure functions of the list, which means you can test them without a screen, a database, or a bank.⏎⏎In real money code you would store whole cents and format at the edges. The structure here is the same. At the end you use the tracker, and every total comes from your code.
+@65 A tracker is a list of things you bought, and a running total.⏎⏎You already have the tools: an array of objects, and one function that adds up a chosen property. At the end, you get to use your tracker for real!
+@66 Model the domain as data first: `Expense` is a record type and the ledger is `Expense[]`. Totals are derived with a fold (`reduce`), so no running total can drift out of step with the list.⏎⏎Floating-point amounts are fine for a demo, but real money code stores integer minor units (cents) and formats at the edges, since `0.1 + 0.2` is not `0.3`. The tracker at the end re-runs your functions on every change.
+@67 Write `totalSpent` so it adds up every `amount`.
+@68 Make `totalSpent` add up every `amount`.
+@69 `reduce` with a starting value of 0, adding `expense.amount` each time.
+@70 Use `reduce`, starting at 0, and add `expense.amount` each time.
+@71 two expenses
+@72 no expenses
+@73 decimals are fine
+@74 Write `remaining` — the budget minus everything spent.
+@75 Make `remaining`: the budget take away everything spent.
+@76 Call `totalSpent(expenses)` and subtract it from `budget`.
+@77 Use `totalSpent(expenses)` and take it away from `budget`.
+@78 Reusing the function you already tested means this one is almost free to trust, and a fix in one place fixes both.
+@79 Using the machine you already checked means this one is easy to trust — and if you fix one, you fix both.
+@80 `remaining` is defined in terms of `totalSpent`, so there is one source of truth for the sum. Composing small pure functions keeps each unit small and each test focused.
+@81 ten left minus three
+@82 overspending goes negative
+@83 nothing spent
+@84 Use it: add what you buy, and your functions keep the totals.
+@85 Try your tracker! Add things you buy and watch your machines add them up.
+@86 Use it: every change re-runs your `totalSpent` and `remaining`.
+@87 A list of objects is a real data model.
+@88 `reduce` answers "how much altogether?"
+@89 Composing tested functions is faster than testing one big one.
+@90 A list of bags is a real way to store information.
+@91 Building on checked machines is quicker than checking one huge one.
+@92 Derive totals from the data instead of storing them.
+@93 Always give `reduce` an initial value: `reduce((sum, x) => …, 0)`.
+@94 Compose small pure functions.
+@95 Split "choose" from "compose".
+@96 `%` wraps an index into range.
+@97 You have finished the course — build something small and real next.
+@98 Keep "choose" and "join" apart.
+@99 `%` wraps a number round a list.
+@100 You finished the course — now build something small of your own!
+@101 Split choosing from composing.
+@102 A deterministic core is a testable core.
+@103 Ship something small and real next, then iterate.
+@104 Random-looking output, without randomness.
+@105 Stories that look random — but are not.
+@106 A generator picks pieces and joins them into a sentence. Picking looks random, but it can be made **deterministic**: the same index always produces the same story.⏎⏎That is a deliberate choice. Deterministic functions are testable; truly random ones are not. When you eventually add a random index, the choosing stays in one small place and the joining stays testable.⏎⏎This is the last project in the course. You have every tool it needs: arrays, indexes, template literals, and functions that return values. At the end you spin it and read what your code writes.
+@107 A story machine picks a hero, a place, and a problem, then puts them in a sentence.⏎⏎You are nearly at the end of the course. This one uses everything you have learned. At the end, you get to spin it and read the stories your code writes!
+@108 Separate *choosing* from *composing*. `pick` is total over any non-negative integer index (modulo maps every one into range), and `buildStory` is a pure formatter. Randomness enters only at the edge, where the spinner supplies the numbers.⏎⏎That split is what makes the generator testable: deterministic inputs give deterministic output. For reproducible "random" output, inject a seeded PRNG instead of calling `Math.random()` inside your logic.
+@109 Write `pick` so it always returns a word from the list, even if the index is too big.
+@110 Make `pick` always give back a word from the list, even if the number is too big.
+@111 `index % words.length` keeps the index inside the list. Check for an empty list first.
+@112 `index % words.length` keeps the number inside the list. If the list is empty, give back empty words first.
+@113 Modulo is what makes the wrap-around work: any index lands on a real item, and the function never returns `undefined`.
+@114 `%` makes big numbers wrap around, like going round a circle. Any number lands on a real word.
+@115 `index % words.length` maps any non-negative integer into `0 … length - 1`. `%` keeps the sign, so a negative index would still miss; `((i % n) + n) % n` covers that case. Under `noUncheckedIndexedAccess`, the read would also need a fallback.
+@116 first word
+@117 wraps around
+@118 empty list
+@119 Write `buildStory` so it returns `Once, Ada went to Lagos to solve the missing kite.`
+@120 Make `buildStory` give back `Once, Ada went to Lagos to solve the missing kite.`
+@121 Backticks, with each parameter in its own `${...}`, and the punctuation exactly as in the example.
+@122 Use backticks, put each value in its own `${...}` hole, and copy the commas and the full stop exactly.
+@123 full sentence
+@124 another combination
+@125 Spin it: random numbers go in, your `pick` and `buildStory` make the story.
+@126 Spin the story machine! Your own `pick` and `buildStory` write every story.
+@127 Spin it: random indexes through your `pick`, composed by your `buildStory`.
+@128 Picking and joining are separate, testable steps.
+@129 Modulo keeps an index inside a list.
+@130 Deterministic output makes generation testable.
+@131 Choosing words and joining them are two separate steps you can check.
+@132 `%` keeps a number inside a list.
+@133 The same input always gives the same story, so it can be checked.
+@134 Randomness at the edges; deterministic logic inside.
+@135 `%` maps non-negative indices into range.
+@136 Inject a seeded PRNG for reproducible output.
+@137 Describe a position on a grid as `{ x, y }`.
+@138 Move it with a `switch` over a union of directions.
+@139 Check walls and edges before moving.
+@140 Say where the robot is with `x` and `y`.
+@141 Teach the robot to take one step.
+@142 Stop it walking into walls.
+@143 Model the world with simple data: rows of text, `{ x, y }` positions.
+@144 Keep movement and checks in small, tested functions.
+@145 The game just calls them in a loop.
+@146 A maze is just rows of text.
+@147 Small machines, tested one at a time, make a whole game.
+@148 You programmed a robot!
+@149 Pure domain functions, imperative shell.
+@150 String-literal unions model commands.
+@151 Treat out-of-bounds explicitly.
+@152 A maze is a grid of rows.
+@153 Robo is in a maze and wants the star!
+@154 The maze is an array of strings, one per row. `#` is a wall, `.` is floor, `R` is the robot and `*` is the star:⏎⏎⟦F1⟧⏎⏎A position is an object: `x` counts columns from the left, `y` counts rows from the top, both from `0`. The robot above is at `{ x: 1, y: 1 }`.⏎⏎You will write two functions: `step`, which works out where one move leads, and `isOpen`, which says whether that square can be stood on. Then you play: you give the robot its moves, and your functions decide what happens.
+@155 The maze is a list of rows. `#` is a wall, `.` is floor, `R` is Robo and `*` is the star.⏎⏎To say where Robo is, we use two numbers: `x` (how far from the left) and `y` (how far from the top). Both start at 0!⏎⏎You will teach Robo two things: how to take one step, and how to check for walls. Then you tell Robo which way to go, and watch it move.
+@156 The world is a `string[]` grid addressed as `maze[y][x]`. Movement is a pure function `step(position, move): Position` over a string-literal union `Move`, and collision detection is a pure predicate `isOpen(maze, position)` that also treats out-of-bounds as blocked.⏎⏎Keeping both pure makes them trivially testable, and the game loop (the driver) is the only stateful part: it folds the player’s moves over the start position and renders a frame per move.⏎⏎Note `maze[y]?.[x]`: without `noUncheckedIndexedAccess`, the index reads are typed `string` even when out of range, so the optional chain is doing real work at runtime.
+@157 Write `step`: it returns the position one square away in the given direction. `"up"` makes `y` one smaller.
+@158 Teach Robo to take one step. Going `"up"` makes `y` one smaller, `"right"` makes `x` one bigger.
+@159 Use `switch (move)` with four cases. Each returns a new object, for example `{ x: position.x + 1, y: position.y }` for `"right"`.
+@160 Use `switch (move)`. For `"right"`, give back `{ x: position.x + 1, y: position.y }`. Do the same for the other three.
+@161 Returning a new object (instead of changing `position`) keeps each move easy to test. Because every case returns, TypeScript knows the function always gives back a `Position`.
+@162 Each step makes a brand-new position. The old one stays as it was, which makes mistakes easier to find.
+@163 The switch is exhaustive over `Move`, so control flow analysis accepts the missing final `return`; add a new direction to the union and TypeScript reports the gap (TS2366).
+@164 right
+@165 up
+@166 left
+@167 down
+@168 Write `isOpen`: `true` when the square is inside the maze and not a wall (`#`).
+@169 Teach Robo to look before stepping: `isOpen` is `true` when the square is inside the maze and not a wall.
+@170 `maze[position.y]?.[position.x]` is the character at that square, or `undefined` when it is outside the maze. Open means: not `undefined`, and not `"#"`.
+@171 Read the square with `maze[position.y]?.[position.x]`. If you get `undefined`, Robo would walk off the map. If you get `"#"`, it is a wall.
+@172 The `?.` makes a missing row give `undefined` instead of crashing, and a missing column gives `undefined` too. So one check covers every edge.
+@173 `?.` means "only look if the row exists". So walking off any edge just gives `undefined`, and Robo stays put.
+@174 Out-of-range reads yield `undefined` at runtime even though the static type is `string`; `?.` guards the row lookup, and the explicit `!== undefined` covers both axes. Enable `noUncheckedIndexedAccess` and the types would say so too.
+@175 floor is open
+@176 a wall is not
+@177 off the right edge
+@178 above the top
+@179 the star is open
+@180 Play: give the robot its moves, then run it. Your `step` and `isOpen` decide where it goes.
+@181 Play! Press the arrows to plan Robo’s moves, then run it. Your code moves Robo.
+@182 Run it: the driver folds your moves through `step` and `isOpen` and renders a frame per move.
+@183 The short version.
+@184 What you learned.
+@185 A grid position is `{ x, y }`, counted from the top left.
+@186 A `switch` over a union of moves returns the next position.
+@187 Check the square (and the edges) before moving.
+@188 `x` is how far across, `y` is how far down.
+@189 Robo takes one step with your `step` machine.
+@190 Looking before stepping keeps Robo out of walls.
+@191 Pure movement and collision functions make the game loop trivial.
+@192 Exhaustive switches over unions need no default.
+@193 Out-of-range index reads are `undefined` at runtime.
+@194 Model a pet as an object with numbers from 0 to 100.
+@195 Update it with `switch` and spread, without changing the old one.
+@196 Work out its mood from its numbers.
+@197 Keep a pet’s hunger, energy and fun in an object.
+@198 Feed it, play with it and let it rest, with your code.
+@199 Tell how your pet feels.
+@200 Simulations are state plus actions.
+@201 Each action returns a new state.
+@202 Small functions, one job each.
+@203 You built a pet that lives in your code!
+@204 Copies keep old versions safe.
+@205 Check things in order to decide a mood.
+@206 Model transitions as a total function over an action union.
+@207 Immutable updates give history for free.
+@208 Compute derived state on demand.
+@209 A pet is a bundle of numbers.
+@210 Your pet needs looking after!
+@211 Our pet is an object with three numbers, each from 0 to 100:⏎⏎⟦F1⟧⏎⏎Each thing you do (feed, play, rest, wait) turns the old pet into a **new** pet, made with spread: `{ ...pet, hunger: pet.hunger - 30 }`. The old object is never changed.⏎⏎That pattern, `(state, action) => newState`, is how many real apps handle changes. You will meet it again as a *reducer*.
+@212 Your pet has three numbers: how hungry it is, how much energy it has, and how much fun it is having. Each goes from 0 to 100.⏎⏎When you feed it, your code makes a new pet with less hunger. When it plays, it has more fun but gets tired.⏎⏎`{ ...pet, hunger: 10 }` means "a copy of the pet, but with hunger 10".
+@213 The simulation is a state machine over a record type. `care(state, action)` is a total function over the `Action` union (exhaustive `switch`), and every branch returns a fresh object via spread, so previous states stay valid: easy undo, history and time travel.⏎⏎A shared `clamp` keeps invariants (0–100) in one place. `mood` is a derived value computed from state, never stored, so it can never go stale.
+@214 Write `care`: `"feed"` lowers hunger by 30; `"play"` adds 25 fun, uses 15 energy and adds 10 hunger; `"rest"` adds 40 energy and 5 hunger; `"wait"` adds 10 hunger, uses 5 energy and loses 10 fun. Keep every number between 0 and 100 with `clamp`.
+@215 Make `care` look after the pet. Feeding: hunger down 30. Playing: fun up 25, energy down 15, hunger up 10. Resting: energy up 40, hunger up 5. Waiting: hunger up 10, energy down 5, fun down 10. Use `clamp` so numbers stay between 0 and 100.
+@216 `switch (action)` with four cases. For `"feed"`: `return { ...pet, hunger: clamp(pet.hunger - 30) };`. Wrap every new number in `clamp(...)`.
+@217 Use `switch (action)`. For `"feed"`, give back `{ ...pet, hunger: clamp(pet.hunger - 30) }`. Do the other three the same way, and always use `clamp`.
+@218 Spread copies the pet and then replaces only the numbers that change. `clamp` keeps the 0–100 rule in one place instead of four.
+@219 `...pet` copies everything, then you change just what you need. `clamp` stops numbers going below 0 or above 100.
+@220 Each branch constructs a new record; untouched fields are structurally shared. Centralising the invariant in `clamp` keeps every transition correct by construction.
+@221 feed
+@222 play
+@223 rest
+@224 wait
+@225 never below 0
+@226 never above 100
+@227 the old pet is unchanged
+@228 Write `mood`: `"hungry"` when hunger is 70 or more, else `"sleepy"` when energy is 25 or less, else `"bored"` when fun is 30 or less, else `"happy"`.
+@229 Make `mood` tell how the pet feels: hungry (hunger 70 or more), else sleepy (energy 25 or less), else bored (fun 30 or less), else happy.
+@230 Guard clauses in order: `if (pet.hunger >= 70) return "hungry";`, then energy, then fun, then `"happy"`.
+@231 Check in order, and give back the first answer that fits: hungry first, then sleepy, then bored, otherwise happy.
+@232 The order of the checks is the priority: a hungry pet is "hungry" even if it is also tired.
+@233 The first check that fits wins. Hungry beats sleepy, sleepy beats bored.
+@234 Early returns encode the precedence directly. Returning the `Mood` union (not `string`) lets callers switch on it exhaustively.
+@235 hungry wins
+@236 sleepy
+@237 bored
+@238 happy
+@239 Play: look after your pet. Every button runs your `care` and `mood`.
+@240 Play with your pet! Every button uses your own `care` and `mood` code.
+@241 Drive the simulation: each action is folded through your `care`, and the screen shows `mood`.
+@242 State can be a plain object; actions can be a union of strings.
+@243 `care(pet, action)` returns a new pet made with spread.
+@244 Derived values like `mood` are computed, not stored.
+@245 Your pet is an object full of numbers.
+@246 Every action makes a new pet; the old one never changes.
+@247 The mood is worked out from the numbers.
+@248 `(state, action) => state` is a reducer.
+@249 Keep invariants in one helper (`clamp`).
+@250 Derive, do not duplicate, state.

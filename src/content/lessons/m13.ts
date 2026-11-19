@@ -1,0 +1,763 @@
+import { L, LL, c, md } from '../authoring';
+import type { Lesson } from '../schema';
+
+export const M13_LESSONS: readonly Lesson[] = [
+  {
+    id: 'm13-l01-reduce-properly',
+    moduleId: 'm13',
+    order: 1,
+    title: {
+      story: 'Sorting things into piles',
+      explorer: 'reduce, properly typed',
+      pro: 'Folding into objects with typed accumulators',
+    },
+    estMinutes: 7,
+    difficulty: 2,
+    concepts: ['reduce', 'record-type', 'generic'],
+    objectives: LL(
+      ['Fold a list into an object or a map with `reduce`.', 'Type the accumulator through the starting value.', 'Know when a plain loop reads better.'],
+      ['Sort a list into piles with `reduce`.', 'Tell TypeScript what the piles look like.', 'Know when a loop is simpler.'],
+    ),
+    steps: [
+      {
+        id: 'read',
+        kind: 'read',
+        prompt: L('`reduce` can build any shape, not just a number.', '`reduce` can build piles, not just totals.'),
+        body: L(
+          md(
+            'The accumulator can be anything: here, an object of lists. TypeScript infers its type from the **starting value**, so give that value a type:',
+            '```ts\nconst words = ["cat", "cow", "dog"];\nconst byLetter = words.reduce<Record<string, string[]>>((groups, word) => {\n  const letter = word.slice(0, 1);\n  (groups[letter] ??= []).push(word);\n  return groups;\n}, {});\n// { c: ["cat", "cow"], d: ["dog"] }\n```',
+            'Without the type argument, `{}` would be typed as an empty object with no keys, and indexing it would be an error.',
+          ),
+          md(
+            '`reduce` goes through a list and builds something as it goes. It can build a total, but also piles: all the words starting with "c" in one pile, "d" in another.',
+            'Tell TypeScript what the piles look like, or it will think the starting `{}` must stay empty forever.',
+          ),
+          md(
+            '`reduce<U>(fn: (acc: U, item: T) => U, initial: U): U`: the type parameter is inferred from `initial`, so `{}` infers `{}` and `[]` infers `never[]`. Supply `U` explicitly or annotate the initial value (`{} as Record<K, V>`).',
+            'Mutating the accumulator you created is fine (it is local); returning a fresh object each step is O(n²) with spread. ES2024 `Object.groupBy`/`Map.groupBy` cover grouping directly on newer engines. Prefer `for…of` when the reduction has branches and early exits.',
+          ),
+        ),
+      },
+      {
+        id: 'predict',
+        kind: 'predict',
+        prompt: L('What prints?', 'What will it show?'),
+        hint: L('The first starts from 10. The second has no starting value, so it starts with the first item.', 'The first starts at 10. The second starts with "a".'),
+        code: c('console.log([1, 2, 3].reduce((sum, n) => sum + n, 10));', 'console.log(["a", "b", "c"].reduce((text, letter) => text + letter));'),
+        answer: c('16', 'abc'),
+        explain: L(
+          '`10 + 1 + 2 + 3` is 16. Without a starting value, `reduce` begins with the first element, which throws on an empty array.',
+          '10 plus 1, 2 and 3 is 16. The letters are glued together into "abc".',
+          'Omitting `initial` uses `xs[0]` as the seed and starts at index 1, typed as the element type; it throws `TypeError` on `[]`.',
+        ),
+      },
+      {
+        id: 'group',
+        kind: 'write',
+        prompt: L('Write `groupByLength`: words grouped by their length.', 'Make `groupByLength` put words into piles by how many letters they have.'),
+        starter: c('function groupByLength(words: string[]): Record<number, string[]> {', '  return {};', '}'),
+        solution: c(
+          'function groupByLength(words: string[]): Record<number, string[]> {',
+          '  return words.reduce<Record<number, string[]>>((groups, word) => {',
+          '    (groups[word.length] ??= []).push(word);',
+          '    return groups;',
+          '  }, {});',
+          '}',
+        ),
+        tests: [
+          { name: 'groups', call: 'groupByLength(["cat", "horse", "dog"])', expect: '{"3":["cat","dog"],"5":["horse"]}' },
+          { name: 'empty', call: 'groupByLength([])', expect: '{}' },
+        ],
+        hint: L(
+          '`words.reduce<Record<number, string[]>>((groups, word) => { … }, {})`; inside, `(groups[word.length] ??= []).push(word)`.',
+          'Start with `{}` and tell `reduce` it is a `Record<number, string[]>`. For each word, add it to the pile for its length.',
+        ),
+        explain: L(
+          '`??=` creates the list the first time a length appears. Object keys are always strings, which is why the output shows `"3"`.',
+          '`??=` makes a new pile the first time, then adds to it. (Keys always become text, so 3 shows as "3".)',
+          'Numeric keys are stored as strings at runtime; `Record<number, V>` types them as numbers for indexing convenience. `??=` is ES2021, so it runs on Classic engines.',
+        ),
+      },
+      {
+        id: 'totals',
+        kind: 'fix',
+        prompt: L('`totals` does not compile: the accumulator starts as `{}`. Fix its type.', 'TypeScript thinks the starting `{}` must stay empty. Tell it what it will hold.'),
+        hint: L('Give `reduce` a type argument, `reduce<Record<string, number>>(…)`.', 'Add `<Record<string, number>>` right after `reduce`.'),
+        starter: c(
+          'type Order = { customer: string; amount: number };',
+          '',
+          'function totals(orders: Order[]): Record<string, number> {',
+          '  return orders.reduce((acc, order) => {',
+          '    acc[order.customer] = (acc[order.customer] ?? 0) + order.amount;',
+          '    return acc;',
+          '  }, {});',
+          '}',
+        ),
+        solution: c(
+          'type Order = { customer: string; amount: number };',
+          '',
+          'function totals(orders: Order[]): Record<string, number> {',
+          '  return orders.reduce<Record<string, number>>((acc, order) => {',
+          '    acc[order.customer] = (acc[order.customer] ?? 0) + order.amount;',
+          '    return acc;',
+          '  }, {});',
+          '}',
+        ),
+        tests: [{ name: 'sums per customer', call: 'totals([{ customer: "ada", amount: 5 }, { customer: "bo", amount: 2 }, { customer: "ada", amount: 1 }])', expect: '{"ada":6,"bo":2}' }],
+        explain: L(
+          'The type argument tells TypeScript the accumulator is a dictionary of numbers, so indexing it is allowed.',
+          'Now TypeScript knows the piles are numbers by name.',
+          'Without `U`, inference fixes the accumulator to `{}`, which has no index signature (TS7053).',
+        ),
+      },
+      {
+        id: 'recap',
+        kind: 'recap',
+        prompt: L('The short version.', 'What you learned.'),
+        points: LL(
+          ['`reduce` can build objects, maps and lists.', 'Type the accumulator with a type argument or a typed start value.', 'A loop is fine when it reads better.'],
+          ['`reduce` can make piles.', 'Tell TypeScript what the piles look like.', 'Loops are fine too.'],
+          ['`U` is inferred from `initial`: annotate `{}` and `[]`.', 'Local accumulator mutation is fine.', '`Object.groupBy` on ES2024 engines.'],
+        ),
+      },
+    ],
+    recap: LL(
+      ['Fold lists into any shape.', 'Always give the starting value a type.', 'Prefer clarity over cleverness.'],
+      ['Build piles with `reduce`.', 'Describe the piles.', 'Keep it simple.'],
+      ['Typed folds.', 'Avoid O(n²) spreads in reducers.', 'Use groupBy where available.'],
+    ),
+  },
+
+  {
+    id: 'm13-l02-immutable-updates',
+    moduleId: 'm13',
+    order: 2,
+    title: {
+      story: 'Change by making a new copy',
+      explorer: 'Immutable updates',
+      pro: 'Immutable updates of nested data',
+    },
+    estMinutes: 7,
+    difficulty: 2,
+    concepts: ['immutability', 'spread', 'map', 'filter'],
+    objectives: LL(
+      ['Update one item in a list without changing the list.', 'Update a nested property by copying each level.', 'Spot code that mutates by accident.'],
+      ['Change one thing in a list by making a new list.', 'Change something deep inside by copying each layer.', 'Spot sneaky changes.'],
+    ),
+    steps: [
+      {
+        id: 'read',
+        kind: 'read',
+        prompt: L('New data instead of changed data.', 'Make a new copy instead of changing the old one.'),
+        body: L(
+          md(
+            'Many apps keep state immutable: each change makes a new object and leaves the old one alone. Three array moves cover most of it:',
+            '```ts\nconst added = [...todos, newTodo];                                   // add\nconst removed = todos.filter((todo) => todo.id !== id);              // remove\nconst toggled = todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo)); // update one\n```',
+            'Nested objects need a copy at every level you go through:',
+            '```ts\nconst moved = { ...user, address: { ...user.address, city: "Lyon" } };\n```',
+          ),
+          md(
+            'Instead of rubbing out and writing over, we make a fresh copy with the change. The old one stays exactly as it was.',
+            'To change something deep inside, copy each layer on the way down, like opening boxes inside boxes.',
+          ),
+          md(
+            'Structural sharing: untouched items and subtrees are reused by reference, so updates are cheap and `===` comparisons detect change (the basis of React’s re-render checks and memoisation).',
+            '`readonly` types catch accidental mutation at compile time; `map` for updates, `filter` for removals and spread for additions are the idioms. For deep updates at scale, a helper such as Immer keeps the code readable.',
+          ),
+        ),
+      },
+      {
+        id: 'toggle',
+        kind: 'write',
+        prompt: L('Write `toggleTodo`: a new list where the todo with that id has `done` flipped.', 'Make `toggleTodo` give back a new list with that todo ticked or unticked.'),
+        starter: c(
+          'type Todo = { id: number; text: string; done: boolean };',
+          '',
+          'function toggleTodo(todos: readonly Todo[], id: number): Todo[] {',
+          '  return [...todos];',
+          '}',
+        ),
+        solution: c(
+          'type Todo = { id: number; text: string; done: boolean };',
+          '',
+          'function toggleTodo(todos: readonly Todo[], id: number): Todo[] {',
+          '  return todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo));',
+          '}',
+        ),
+        tests: [
+          { name: 'flips the one', call: 'toggleTodo([{ id: 1, text: "a", done: false }, { id: 2, text: "b", done: false }], 2)', expect: '[{"id":1,"text":"a","done":false},{"id":2,"text":"b","done":true}]' },
+          {
+            name: 'the old list and todo are unchanged',
+            call: '(() => { const todo = { id: 1, text: "a", done: false }; const list = [todo]; toggleTodo(list, 1); return [list.length, todo.done]; })()',
+            expect: '[1,false]',
+          },
+        ],
+        hint: L('`map` over the list; for the matching id return `{ ...todo, done: !todo.done }`, otherwise the same todo.', 'Go through with `map`. When the id matches, make a copy with `done` flipped; otherwise keep the todo as it is.'),
+        explain: L(
+          'Only the changed todo is a new object; the others are reused, which is cheap and makes it easy to see what changed.',
+          'Only the changed one is new. The rest are the same as before.',
+          'Structural sharing: `map` allocates a new array, the updated element is a fresh object, unchanged elements keep their identity.',
+        ),
+      },
+      {
+        id: 'move',
+        kind: 'write',
+        prompt: L('Write `moveTo`: the user with a new city, copying each level.', 'Make `moveTo` give back the user living in a new city, by copying each layer.'),
+        starter: c(
+          'type User = { name: string; address: { street: string; city: string } };',
+          '',
+          'function moveTo(user: User, city: string): User {',
+          '  user.address.city = city;',
+          '  return user;',
+          '}',
+        ),
+        solution: c(
+          'type User = { name: string; address: { street: string; city: string } };',
+          '',
+          'function moveTo(user: User, city: string): User {',
+          '  return { ...user, address: { ...user.address, city } };',
+          '}',
+        ),
+        tests: [
+          { name: 'moves', call: 'moveTo({ name: "Ada", address: { street: "1 Main St", city: "Paris" } }, "Lyon").address', expect: '{"street":"1 Main St","city":"Lyon"}' },
+          {
+            name: 'the old user still lives in Paris',
+            call: '(() => { const ada = { name: "Ada", address: { street: "1 Main St", city: "Paris" } }; moveTo(ada, "Lyon"); return ada.address.city; })()',
+            expect: 'Paris',
+          },
+        ],
+        hint: L('`{ ...user, address: { ...user.address, city } }`: copy the user and the address.', 'Copy the user, and inside it copy the address with the new city.'),
+        explain: L(
+          'A single `{ ...user }` would still share the old `address` object, so changing it would change the original too. Each level you go through needs its own copy.',
+          'Copying only the outside box would still share the inside box. Copy every box you open.',
+          'Spread is shallow; nested updates must rebuild every object on the path to the change.',
+        ),
+      },
+      {
+        id: 'spot',
+        kind: 'check',
+        prompt: L('Which of these changes the original `scores` array?', 'Which one changes the original list?'),
+        hint: L('Which method changes the array it is called on?', 'One of these tools changes the list itself.'),
+        explain: L(
+          '`sort` sorts in place and returns the same array. The others build new arrays.',
+          '`sort` changes the list itself. The others make new lists.',
+          '`sort`, `reverse`, `splice`, `push`, `pop`, `shift`, `unshift`, `fill` and `copyWithin` mutate; `map`, `filter`, `slice`, `concat` and spread do not.',
+        ),
+        choices: [
+          { id: 'sort', text: L('`const best = scores.sort((a, b) => b - a);`'), correct: true },
+          { id: 'map', text: L('`const doubled = scores.map((s) => s * 2);`'), correct: false, feedback: L('`map` returns a new array.', '`map` makes a new list.') },
+          { id: 'spread', text: L('`const more = [...scores, 100];`'), correct: false, feedback: L('Spread builds a new array.', 'That makes a new list.') },
+        ],
+      },
+      {
+        id: 'recap',
+        kind: 'recap',
+        prompt: L('The short version.', 'What you learned.'),
+        points: LL(
+          ['Add with spread, remove with `filter`, update with `map`.', 'Copy every level on the way to a nested change.', 'Know which methods mutate.'],
+          ['Make new copies instead of changing things.', 'Copy every layer you open.', 'Watch out for `sort`.'],
+          ['Structural sharing keeps updates cheap.', 'Spread is shallow.', '`readonly` types catch accidental mutation.'],
+        ),
+      },
+    ],
+    recap: LL(
+      ['Immutable updates make change visible.', 'Copy along the path to the change.', 'Let `readonly` catch slips.'],
+      ['New copies keep old versions safe.', 'Copy each layer.', 'Locks help spot mistakes.'],
+      ['Identity changes signal updates.', 'Shallow spread, deep paths.', 'Consider Immer for complex state.'],
+    ),
+  },
+
+  {
+    id: 'm13-l03-iterators-generators',
+    moduleId: 'm13',
+    order: 3,
+    title: {
+      story: 'Machines that hand out one thing at a time',
+      explorer: 'Iterators and generators',
+      pro: 'Iteration protocols and generator functions',
+    },
+    estMinutes: 8,
+    difficulty: 3,
+    concepts: ['generator', 'iterable', 'loop'],
+    objectives: LL(
+      ['Loop over anything iterable with `for…of`.', 'Write a generator with `function*` and `yield`.', 'Use a generator that never ends, safely.'],
+      ['Loop over lists, words and more.', 'Make a machine that hands things out one at a time.', 'Take just a few from an endless machine.'],
+    ),
+    steps: [
+      {
+        id: 'read',
+        kind: 'read',
+        prompt: L('One value at a time, on demand.', 'A machine that gives you one thing each time you ask.'),
+        body: L(
+          md(
+            '`for…of` works on any **iterable**: arrays, strings, Maps, Sets. A **generator** is an easy way to make your own:',
+            '```ts\nfunction* countdown(from: number): Generator<number> {\n  for (let i = from; i > 0; i--) {\n    yield i;\n  }\n}\n\nfor (const n of countdown(3)) console.log(n); // 3, 2, 1\nconst all = [...countdown(3)];                 // [3, 2, 1]\n```',
+            'Each `yield` hands out one value and pauses the function until the next value is asked for. Nothing is computed ahead of time, so a generator can even be endless.',
+          ),
+          md(
+            'A generator is like a sweet dispenser: press the button, one sweet comes out. It waits until you press again.',
+            '`function*` makes the machine, and `yield` hands out one thing and then waits.',
+          ),
+          md(
+            'Iterables implement `[Symbol.iterator]()` returning an iterator (`next(): { value, done }`). Generator functions return `Generator<Y, R, N>` objects that are both; they are lazy, resumable, and support `return`/`throw`.',
+            'Laziness composes: `take(filter(naturals(), isPrime), 10)` computes only what is consumed. Spreading or `Array.from` forces evaluation, so never spread an infinite generator. TypeScript types `for…of` over `Iterable<T>` as `T`; async generators (`async function*`) pair with `for await`.',
+          ),
+        ),
+      },
+      {
+        id: 'predict',
+        kind: 'predict',
+        prompt: L('What prints?', 'What will it show?'),
+        hint: L('The generator yields each letter twice. `console.log` of an array prints it as a list.', 'Each letter comes out twice, and they are collected into a list.'),
+        code: c(
+          'function* twice(letters: string): Generator<string> {',
+          '  for (const letter of letters) {',
+          '    yield letter;',
+          '    yield letter;',
+          '  }',
+          '}',
+          'console.log([...twice("ab")]);',
+        ),
+        answer: '["a","a","b","b"]',
+        explain: L(
+          'Strings are iterable, so `for…of` visits each letter; each one is yielded twice, and spread collects them.',
+          'Each letter comes out two times: a, a, b, b.',
+          'Strings iterate by code point; the spread drains the generator into an array.',
+        ),
+      },
+      {
+        id: 'range',
+        kind: 'write',
+        prompt: L('Write the generator `range(start, end, step = 1)`: numbers from `start` up to, but not including, `end`.', 'Make `range`, a machine that hands out numbers from `start` up to (not including) `end`.'),
+        starter: c('function* range(start: number, end: number, step = 1): Generator<number> {', '  // yield each number', '}'),
+        solution: c('function* range(start: number, end: number, step = 1): Generator<number> {', '  for (let n = start; n < end; n += step) {', '    yield n;', '  }', '}'),
+        tests: [
+          { name: '0 to 5', call: '[...range(0, 5)]', expect: '[0,1,2,3,4]' },
+          { name: 'in threes', call: '[...range(0, 10, 3)]', expect: '[0,3,6,9]' },
+          { name: 'nothing', call: '[...range(5, 5)]', expect: '[]' },
+        ],
+        hint: L('A `for` loop from `start` while `n < end`, adding `step`, with `yield n` inside.', 'Count from `start` while below `end`, jumping by `step`, and `yield` each number.'),
+        explain: L('Nothing is built in advance: the numbers are made one by one as the spread asks for them.', 'The machine makes each number only when asked.', 'A lazy sequence; `[...range()]` materialises it.'),
+      },
+      {
+        id: 'take',
+        kind: 'write',
+        prompt: L('Write `take`: the first `count` items of any iterable, even an endless one.', 'Make `take` grab just the first few things from any machine, even one that never stops.'),
+        starter: c('function take<T>(items: Iterable<T>, count: number): T[] {', '  return [...items].slice(0, count);', '}'),
+        solution: c(
+          'function take<T>(items: Iterable<T>, count: number): T[] {',
+          '  const result: T[] = [];',
+          '  if (count <= 0) return result;',
+          '  for (const item of items) {',
+          '    result.push(item);',
+          '    if (result.length >= count) break;',
+          '  }',
+          '  return result;',
+          '}',
+        ),
+        tests: [
+          { name: 'from an array', call: 'take([1, 2, 3, 4], 2)', expect: '[1,2]' },
+          { name: 'from an endless generator', call: 'take((function* () { let n = 0; while (true) yield n++; })(), 3)', expect: '[0,1,2]' },
+          { name: 'zero', call: 'take([1, 2], 0)', expect: '[]' },
+        ],
+        hint: L('Loop with `for…of`, push each item, and `break` once you have `count` of them. Never spread an endless generator.', 'Use `for…of`, keep each item, and stop with `break` when you have enough.'),
+        explain: L(
+          'The starter’s `[...items]` tries to read everything first, which never finishes for an endless generator. `break` stops asking.',
+          'The starter tried to empty the whole machine first, but this machine never empties! Stopping early fixes it.',
+          '`break` in `for…of` calls the iterator’s `return()`, closing the generator. Spreading an infinite iterable hangs until the time limit.',
+        ),
+      },
+      {
+        id: 'recap',
+        kind: 'recap',
+        prompt: L('The short version.', 'What you learned.'),
+        points: LL(
+          ['`for…of` works on any iterable.', 'Generators (`function*`, `yield`) make values one at a time.', 'Stop early with `break`; never spread an endless one.'],
+          ['You can loop over many things.', 'Generators hand things out one at a time.', 'Take only what you need from endless ones.'],
+          ['Iteration protocol: `[Symbol.iterator]` and `next()`.', 'Generators are lazy and closable.', 'Type with `Iterable<T>` and `Generator<T>`.'],
+        ),
+      },
+    ],
+    recap: LL(
+      ['Iterate anything iterable.', 'Generate values lazily.', 'Consume carefully.'],
+      ['Loop over anything.', 'Make your own dispensers.', 'Only take what you need.'],
+      ['Lazy sequences compose.', 'Laziness ends where you materialise.', 'Async generators for streams.'],
+    ),
+  },
+
+  {
+    id: 'm13-l04-promise-combinators',
+    moduleId: 'm13',
+    order: 4,
+    title: {
+      story: 'Waiting for many things at once',
+      explorer: 'Promise.all, allSettled, race and any',
+      pro: 'Promise combinators and concurrency',
+    },
+    estMinutes: 8,
+    difficulty: 3,
+    concepts: ['promise', 'async-await', 'generic'],
+    objectives: LL(
+      ['Wait for several promises at once with `Promise.all`.', 'Keep every result, success or failure, with `allSettled`.', 'Take the first to finish with `race`, or the first to succeed with `any`.'],
+      ['Wait for lots of things at the same time.', 'Find out which worked and which failed.', 'Take whichever finishes first.'],
+    ),
+    steps: [
+      {
+        id: 'read',
+        kind: 'read',
+        prompt: L('Start everything, then wait once.', 'Start all the jobs, then wait for them together.'),
+        body: L(
+          md(
+            '`await` one after another waits for each in turn. Start them together and wait once:',
+            '```ts\nconst [user, orders] = await Promise.all([loadUser(1), loadOrders(1)]); // typed as a tuple\nconst results = await Promise.allSettled([a(), b()]); // [{ status: "fulfilled", value } | { status: "rejected", reason }]\nconst fastest = await Promise.race([slow(), fast()]);  // first to settle (even a failure)\nconst firstOk = await Promise.any([mirror1(), mirror2()]); // first to succeed\n```',
+            '`all` fails as soon as one fails. `allSettled` never fails: it reports each outcome.',
+          ),
+          md(
+            'If you have three things to wait for, do not wait for one, then the next, then the next. Start all three and wait for them together!',
+            '`all` gives you every answer (or stops at the first problem). `allSettled` tells you, for each one, whether it worked.',
+          ),
+          md(
+            '`Promise.all` preserves tuple types and rejects fast; the other promises keep running (there is no cancellation; pass an `AbortSignal` for that). `allSettled` returns `PromiseSettledResult<T>[]`, a discriminated union on `status`. `race` settles with the first settlement; `any` (ES2021) rejects with an `AggregateError` only if all reject.',
+            'For large fan-outs, limit concurrency (a small pool) rather than `all` over thousands of requests.',
+          ),
+        ),
+      },
+      {
+        id: 'predict',
+        kind: 'predict',
+        prompt: L('What prints?', 'What will it show?'),
+        hint: L('`all` keeps the order you passed, not the order they finish. `race` gives the first to finish.', '`all` keeps your order. `race` gives whichever is quickest.'),
+        code: c(
+          'const wait = (ms: number, value: string) =>',
+          '  new Promise<string>((resolve) => setTimeout(() => resolve(value), ms));',
+          '',
+          'const both = await Promise.all([wait(30, "slow"), wait(10, "fast")]);',
+          'console.log(both);',
+          'const winner = await Promise.race([wait(30, "slow"), wait(10, "fast")]);',
+          'console.log(winner);',
+        ),
+        answer: c('["slow","fast"]', 'fast'),
+        explain: L(
+          '`all` returns results in the order of the array you gave it, however they finish. `race` resolves with whichever settles first.',
+          '`all` gives the answers in your order. `race` gives the winner.',
+          '`Promise.all` maps results by index; `race` adopts the first settled promise’s state.',
+        ),
+      },
+      {
+        id: 'load',
+        kind: 'write',
+        prompt: L('Write `loadAll`: load every id at once and return the results in order.', 'Make `loadAll` load everything at the same time and give back all the answers in order.'),
+        starter: c(
+          'async function loadAll(ids: number[], load: (id: number) => Promise<string>): Promise<string[]> {',
+          '  const results: string[] = [];',
+          '  for (const id of ids) results.push(await load(id));',
+          '  return results;',
+          '}',
+        ),
+        solution: c(
+          'async function loadAll(ids: number[], load: (id: number) => Promise<string>): Promise<string[]> {',
+          '  return Promise.all(ids.map((id) => load(id)));',
+          '}',
+        ),
+        tests: [
+          { name: 'in order', call: 'loadAll([1, 2, 3], async (id) => "user" + id)', expect: '["user1","user2","user3"]' },
+          {
+            name: 'at the same time',
+            call: '(async () => { const started = []; await loadAll([1, 2], (id) => { started.push(id); return new Promise((resolve) => setTimeout(() => resolve("x"), 20)); }); return started; })()',
+            expect: '[1,2]',
+          },
+          {
+            name: 'all start before any finishes',
+            call: '(async () => { let running = 0; let most = 0; await loadAll([1, 2, 3], async () => { running++; most = Math.max(most, running); await new Promise((resolve) => setTimeout(resolve, 10)); running--; return "x"; }); return most; })()',
+            expect: '3',
+          },
+        ],
+        hint: L('`Promise.all(ids.map((id) => load(id)))` starts every load, then waits for all.', 'Start every load with `map`, then wait for them together with `Promise.all`.'),
+        explain: L(
+          'The starter waited for each load before starting the next. Starting them together takes as long as the slowest, not the sum.',
+          'Before, each job waited for the one before. Now they all run together.',
+          'Sequential `await` in a loop serialises independent work; `Promise.all` over the mapped promises runs them concurrently.',
+        ),
+      },
+      {
+        id: 'settled',
+        kind: 'write',
+        prompt: L('Write `summary`: how many promises succeeded and how many failed, using `Promise.allSettled`.', 'Make `summary` count how many jobs worked and how many failed.'),
+        starter: c('async function summary(tasks: Promise<unknown>[]): Promise<{ ok: number; failed: number }> {', '  return { ok: 0, failed: 0 };', '}'),
+        solution: c(
+          'async function summary(tasks: Promise<unknown>[]): Promise<{ ok: number; failed: number }> {',
+          '  const results = await Promise.allSettled(tasks);',
+          '  const ok = results.filter((result) => result.status === "fulfilled").length;',
+          '  return { ok, failed: results.length - ok };',
+          '}',
+        ),
+        tests: [
+          {
+            name: 'mixed',
+            call: '(() => { const failing = Promise.reject(new Error("x")); failing.catch(() => undefined); return summary([Promise.resolve(1), failing, Promise.resolve(2)]); })()',
+            expect: '{"ok":2,"failed":1}',
+          },
+          { name: 'none', call: 'summary([])', expect: '{"ok":0,"failed":0}' },
+        ],
+        hint: L('`await Promise.allSettled(tasks)`, then count the results whose `status` is `"fulfilled"`.', 'Wait with `Promise.allSettled`, then count the ones whose `status` is `"fulfilled"`.'),
+        explain: L('`allSettled` never rejects, so one failure cannot hide the other results.', 'Every job reports back, even the failed ones.', 'Each entry is a `PromiseSettledResult`, narrowed by `status`.'),
+      },
+      {
+        id: 'recap',
+        kind: 'recap',
+        prompt: L('The short version.', 'What you learned.'),
+        points: LL(
+          ['`Promise.all`: every result in order, or the first failure.', '`allSettled`: every outcome, never fails.', '`race`: first to settle; `any`: first to succeed.'],
+          ['Start all the jobs, then wait together.', '`allSettled` reports on every job.', '`race` and `any` take the quickest.'],
+          ['Concurrency via combinators; no built-in cancellation.', '`allSettled` results are a tagged union.', 'Bound fan-out for large inputs.'],
+        ),
+      },
+    ],
+    recap: LL(
+      ['Independent work should run together.', 'Pick the combinator by how failures should behave.', 'Results keep their order.'],
+      ['Do jobs at the same time.', 'Choose what happens when one fails.', 'Answers come back in order.'],
+      ['Concurrency, not parallelism.', 'Failure semantics drive the choice.', 'Use `AbortSignal` to cancel.'],
+    ),
+  },
+
+  {
+    id: 'm13-l05-async-errors',
+    moduleId: 'm13',
+    order: 5,
+    title: {
+      story: 'Try again when things fail',
+      explorer: 'Async errors and retries',
+      pro: 'Error handling and retries in async code',
+    },
+    estMinutes: 8,
+    difficulty: 3,
+    concepts: ['async-await', 'try-catch', 'error', 'unknown'],
+    objectives: LL(
+      ['Catch errors from `await` with `try`/`catch`.', 'Treat caught errors as `unknown` and narrow them.', 'Retry a failing task a few times.'],
+      ['Catch problems from waiting jobs.', 'Check what kind of problem it is.', 'Try again when something fails.'],
+    ),
+    steps: [
+      {
+        id: 'read',
+        kind: 'read',
+        prompt: L('`await` turns rejections into throws.', 'When a waiting job fails, you can catch it.'),
+        body: L(
+          md(
+            'Inside an `async` function, a rejected promise makes `await` throw, so ordinary `try`/`catch` works:',
+            '```ts\nasync function loadName(id: number): Promise<string> {\n  try {\n    const user = await fetchUser(id);\n    return user.name;\n  } catch (error) {\n    // error is unknown: anything can be thrown\n    const message = error instanceof Error ? error.message : String(error);\n    return `unknown (${message})`;\n  } finally {\n    console.log("done");\n  }\n}\n```',
+            'Some failures are temporary (a flaky network). A **retry** tries again a few times before giving up.',
+          ),
+          md(
+            'When a job you are waiting for fails, `await` throws the problem. `try`/`catch` catches it, just like before.',
+            'Sometimes trying again works, like knocking again when nobody answered.',
+          ),
+          md(
+            'With `useUnknownInCatchVariables` (part of `strict`), catch variables are `unknown`; narrow with `instanceof Error`. Unawaited promises escape `try` entirely; always `await` or `return` them, or attach `.catch`.',
+            'Production retries use exponential backoff with jitter, retry only idempotent operations and transient errors (timeouts, 429/503), and cap total time. `finally` runs on both paths and is where cleanup belongs.',
+          ),
+        ),
+      },
+      {
+        id: 'predict',
+        kind: 'predict',
+        prompt: L('What prints, and in what order?', 'What will it show, in order?'),
+        hint: L('The rejection is thrown at `await`, so "after" never prints; `finally` always runs.', 'The job fails at `await`, so "after" is skipped. `finally` always happens.'),
+        code: c(
+          'async function main(): Promise<void> {',
+          '  try {',
+          '    await Promise.reject(new Error("boom"));',
+          '    console.log("after");',
+          '  } catch (error) {',
+          '    console.log(error instanceof Error ? error.message : "?");',
+          '  } finally {',
+          '    console.log("cleanup");',
+          '  }',
+          '}',
+          'await main();',
+        ),
+        answer: c('boom', 'cleanup'),
+        explain: L('`await` throws the rejection, `catch` handles it, and `finally` runs last either way.', 'The problem is caught, then the tidy-up happens.', 'Rejections surface as throws at the `await`; `finally` executes after `catch`.'),
+      },
+      {
+        id: 'retry',
+        kind: 'write',
+        prompt: L(
+          'Write `retry`: call `task` up to `attempts` times; return the first success, or throw the last error.',
+          'Make `retry`: try the job up to `attempts` times. Give back the first success, or throw the last problem.',
+        ),
+        starter: c('async function retry<T>(task: () => Promise<T>, attempts: number): Promise<T> {', '  return task();', '}'),
+        solution: c(
+          'async function retry<T>(task: () => Promise<T>, attempts: number): Promise<T> {',
+          '  let lastError: unknown;',
+          '  for (let attempt = 1; attempt <= attempts; attempt++) {',
+          '    try {',
+          '      return await task();',
+          '    } catch (error) {',
+          '      lastError = error;',
+          '    }',
+          '  }',
+          '  throw lastError;',
+          '}',
+        ),
+        tests: [
+          {
+            name: 'succeeds on the third try',
+            call: '(() => { let calls = 0; return retry(async () => { calls++; if (calls < 3) throw new Error("flaky"); return "ok after " + calls; }, 5); })()',
+            expect: 'ok after 3',
+          },
+          { name: 'gives up', call: 'retry(async () => { throw new Error("down"); }, 2).catch((error) => error.message)', expect: 'down' },
+          {
+            name: 'stops trying after success',
+            call: '(async () => { let calls = 0; await retry(async () => { calls++; return 1; }, 4); return calls; })()',
+            expect: '1',
+          },
+        ],
+        hint: L(
+          'Loop `attempts` times; inside, `try { return await task(); } catch (error) { lastError = error; }`. After the loop, `throw lastError`.',
+          'Try in a loop. If it works, give it back straight away. If not, remember the problem. After the loop, throw the last problem.',
+        ),
+        explain: L(
+          '`return await` matters inside `try`: without `await`, a rejection would escape the `catch` and skip the retries.',
+          'The `await` makes sure the problem is caught, so the next try can happen.',
+          '`return await` keeps the rejection inside the `try` frame; `return task()` would return the promise and bypass `catch`. Real retries add backoff delays between attempts.',
+        ),
+      },
+      {
+        id: 'recap',
+        kind: 'recap',
+        prompt: L('The short version.', 'What you learned.'),
+        points: LL(
+          ['`await` throws rejections, so `try`/`catch` works.', 'Caught errors are `unknown`: narrow them.', 'Retry temporary failures, then give up.'],
+          ['Catch problems from waiting jobs.', 'Check what kind of problem it is.', 'Try again a few times.'],
+          ['`return await` inside `try`.', 'Narrow `unknown` errors.', 'Backoff, jitter, idempotency.'],
+        ),
+      },
+    ],
+    recap: LL(
+      ['Handle async errors where you await.', 'Never assume an error’s type.', 'Retry with limits.'],
+      ['Catch problems from jobs.', 'Look before you trust a problem.', 'Knock again, but not forever.'],
+      ['Async control flow mirrors sync.', 'Unhandled rejections are bugs.', 'Resilience patterns need limits.'],
+    ),
+  },
+
+  {
+    id: 'm13-l06-parsing-unknown',
+    moduleId: 'm13',
+    order: 6,
+    title: {
+      story: 'Checking parcels from outside',
+      explorer: 'Checking unknown data safely',
+      pro: 'Validating untrusted data at the boundary',
+    },
+    estMinutes: 8,
+    difficulty: 3,
+    concepts: ['unknown', 'type-predicate', 'narrowing', 'any'],
+    objectives: LL(
+      ['Treat data from outside (like `JSON.parse`) as `unknown`.', 'Check its shape step by step.', 'Return a typed value only once the checks pass.'],
+      ['Treat parcels from outside as mystery boxes.', 'Check every part before trusting it.', 'Only then give it a proper label.'],
+    ),
+    steps: [
+      {
+        id: 'read',
+        kind: 'read',
+        prompt: L('Data from outside is `unknown` until checked.', 'Parcels from outside could contain anything.'),
+        body: L(
+          md(
+            '`JSON.parse` returns `any`, which switches checking off. Say `unknown` instead, then prove the shape:',
+            '```ts\ntype User = { name: string; age: number };\n\nfunction isRecord(value: unknown): value is Record<string, unknown> {\n  return typeof value === "object" && value !== null && !Array.isArray(value);\n}\n\nfunction toUser(value: unknown): User | null {\n  if (!isRecord(value)) return null;\n  if (typeof value.name !== "string" || typeof value.age !== "number") return null;\n  return { name: value.name, age: value.age };\n}\n```',
+            'After the checks, TypeScript knows `value.name` is a string and `value.age` a number, without a single cast.',
+          ),
+          md(
+            'A parcel from outside (the internet, a file) could hold anything. TypeScript cannot see inside.',
+            'So we call it `unknown` and check each part: is it an object? Is the name a word? Is the age a number? Only then do we trust it.',
+          ),
+          md(
+            'Types describe what the program believes; validation makes it true at the trust boundary (network, storage, user input, `postMessage`). Parse, do not validate: convert `unknown` into a precise type once, at the edge, and keep the rest of the code typed.',
+            'Hand-written guards scale poorly; schema libraries (zod, valibot, ArkType) derive both the runtime check and the static type from one definition. You will build a tiny one in Module 19.',
+          ),
+        ),
+      },
+      {
+        id: 'parse',
+        kind: 'write',
+        prompt: L(
+          'Write `parseUser`: parse the JSON and return a `User` only if `name` is a string and `age` a number; otherwise `null`, including for invalid JSON.',
+          'Make `parseUser`: open the parcel (JSON), check the name is a word and the age a number, and give back a User, or `null` if anything is wrong.',
+        ),
+        starter: c(
+          'type User = { name: string; age: number };',
+          '',
+          'function parseUser(json: string): User | null {',
+          '  return JSON.parse(json);',
+          '}',
+        ),
+        solution: c(
+          'type User = { name: string; age: number };',
+          '',
+          'function isRecord(value: unknown): value is Record<string, unknown> {',
+          '  return typeof value === "object" && value !== null && !Array.isArray(value);',
+          '}',
+          '',
+          'function parseUser(json: string): User | null {',
+          '  let data: unknown;',
+          '  try {',
+          '    data = JSON.parse(json);',
+          '  } catch {',
+          '    return null;',
+          '  }',
+          '  if (!isRecord(data)) return null;',
+          '  if (typeof data.name !== "string" || typeof data.age !== "number") return null;',
+          '  return { name: data.name, age: data.age };',
+          '}',
+        ),
+        tests: [
+          { name: 'a real user', call: 'parseUser(\'{"name":"Ada","age":36}\')', expect: '{"name":"Ada","age":36}' },
+          { name: 'age as text', call: 'parseUser(\'{"name":"Ada","age":"36"}\')', expect: 'null' },
+          { name: 'not an object', call: 'parseUser("[1,2]")', expect: 'null' },
+          { name: 'not JSON at all', call: 'parseUser("hello")', expect: 'null' },
+          { name: 'extra fields are dropped', call: 'parseUser(\'{"name":"Bo","age":9,"admin":true}\')', expect: '{"name":"Bo","age":9}' },
+        ],
+        hint: L(
+          'Parse inside `try`/`catch` into an `unknown` variable. Check it is a non-null, non-array object, then check each field with `typeof`, and build a fresh `User`.',
+          'Open the parcel carefully with `try`. Check it is an object, check each part with `typeof`, then build a new User from the checked parts.',
+        ),
+        explain: L(
+          'The starter returned whatever `JSON.parse` produced, typed as a `User`: a lie the compiler could not catch, because `JSON.parse` returns `any`.',
+          'Before, any parcel was trusted. Now each part is checked.',
+          'Returning `any` satisfied the checker while admitting invalid data; narrowing from `unknown` builds a value whose type is earned. Copying fields also strips unexpected properties.',
+        ),
+      },
+      {
+        id: 'why',
+        kind: 'check',
+        prompt: L('Why type the parsed value as `unknown` rather than `any`?', 'Why say "mystery box" instead of "anything goes"?'),
+        hint: L('Which one makes TypeScript insist on checks before use?', 'Which one makes you look inside first?'),
+        explain: L(
+          '`unknown` refuses every operation until you narrow it, so forgetting a check is a compile error. `any` would allow `data.nmae.length` and crash at runtime.',
+          'A mystery box must be checked before use. "Anything goes" lets mistakes through.',
+          '`any` disables checking and is contagious; `unknown` is the top type requiring narrowing (or an assertion) before use.',
+        ),
+        choices: [
+          { id: 'unknown', text: L('`unknown` forces a check before use'), correct: true },
+          { id: 'faster', text: L('`unknown` makes the program faster'), correct: false, feedback: L('Types are erased; there is no runtime difference.', 'Types disappear when the code runs, so no.') },
+        ],
+      },
+      {
+        id: 'recap',
+        kind: 'recap',
+        prompt: L('The short version.', 'What you learned.'),
+        points: LL(
+          ['Outside data is `unknown`, not `any`.', 'Check the shape step by step, then build the typed value.', 'Do it once, at the edge of the program.'],
+          ['Parcels from outside are mystery boxes.', 'Check every part.', 'Then give them a proper label.'],
+          ['Parse, do not validate.', 'Guards or schemas at trust boundaries.', 'Strip unknown properties.'],
+        ),
+      },
+    ],
+    recap: LL(
+      ['Never trust outside data’s type.', 'Narrow `unknown` with checks.', 'Keep validation at the boundary.'],
+      ['Check parcels from outside.', 'Mystery boxes need looking into.', 'Then the rest of your code is safe.'],
+      ['Runtime validation makes static types true.', 'Schema libraries scale it.', 'One conversion at the edge.'],
+    ),
+  },
+];

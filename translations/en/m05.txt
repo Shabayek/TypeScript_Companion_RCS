@@ -1,0 +1,269 @@
+@1 Name shapes, do not repeat them.
+@2 `type` for unions, `interface` for extensible objects.
+@3 Consistency beats cleverness.
+@4 Give shapes a name instead of writing them again and again.
+@5 `type` for "this or that", `interface` for bag shapes.
+@6 Pick one way and stick to it.
+@7 `type` for unions, tuples and computed types.
+@8 `interface` where declaration merging or `extends` helps.
+@9 Name a shared shape once and reference it everywhere.
+@10 Two ways to name the shape of an object.
+@11 Two ways to give a shape a name.
+@12 `interface` and `type` both name a shape:⏎⏎⟦F1⟧⏎⏎The practical rule: **`type` when you need a union**, `interface` for object shapes that other files will extend. Pick one per project and stay consistent — mixing them for no reason costs readers a decision every time.⏎⏎Once a shape has a name, you use it like any other type. That is the real win: `User` appears in five signatures, and it changes in one place.
+@13 A shape can have a name. Instead of repeating "a thing with a name and an age", you call it `User`.⏎⏎`interface` and `type` both do this job. Use `type` when the thing can be one of several options, like `"open" | "closed"`.
+@14 `interface` declarations are open: two declarations with the same name merge, which is how libraries add to global types. `type` aliases are closed and can name anything: unions, tuples, mapped and conditional types.⏎⏎For object shapes the two are largely interchangeable, and both are structural. `interface ... extends` reports conflicting members clearly, while an intersection (`A & B`) can quietly produce `never` properties. Choose a convention and let a lint rule enforce it (`@typescript-eslint/consistent-type-definitions`).⏎⏎`readonly` and `?` work the same way in both.
+@15 Same shape, two keywords.
+@16 The same shape, two words.
+@17 interface
+@18 Good for object shapes that other code will extend.
+@19 Good for shapes that other code will add to later.
+@20 type
+@21 Same shape, and it can also be a union when needed.
+@22 The same shape — and it can also mean "this or that".
+@23 Which one can describe a union?
+@24 Which one can say "this or that"?
+@25 A union (`A | B`) is not an object shape. Which keyword can name things that are not objects?
+@26 One of them only describes bags with labels. The other can name anything.
+@27 Only `type` can name a union, because a union is not an object shape.
+@28 Only `type` can say "this or that", because "this or that" is not the shape of a bag.
+@29 A union is not an object type, so only a `type` alias can name it. Interfaces describe object (and function or constructor) shapes only.
+@30 `interface`
+@31 Interfaces describe object shapes. They cannot be a union.
+@32 `interface` describes the shape of a bag. It cannot say "this or that".
+@33 `type`
+@34 Name this union.
+@35 Give this "this or that" a name.
+@36 The right side is a union, not an object in braces. Which keyword allows that?
+@37 It is "this or that", not a bag shape. Which word can name it?
+@38 A union needs `type`. `interface` expects an object body in braces.
+@39 "Open or closed" needs `type`. `interface` wants a bag shape in `{ }`.
+@40 `type` introduces an alias for any type expression. `Status` is a union of string literal types, so `"open"` and `"closed"` are the only values it accepts.
+@41 Write `labelFor` so it returns the name, plus the age in brackets when there is one.
+@42 Make `labelFor` give back the name, and the age in brackets if there is one.
+@43 Check `person.age === undefined` rather than `if (person.age)`, because 0 is a real age.
+@44 Check `person.age === undefined`, not just `if (person.age)`, because 0 is a real age.
+@45 Comparing with `undefined` keeps `0` working. A truthiness check would silently drop it — a classic bug.
+@46 Checking for `undefined` keeps an age of 0 working. `if (person.age)` would treat 0 as "no age" — a sneaky mistake.
+@47 `age === undefined` narrows precisely, where a truthiness check would treat `0` as missing. With `exactOptionalPropertyTypes`, TypeScript even tells an absent `age` apart from `age: undefined`.
+@48 with age
+@49 without age
+@50 age zero is real
+@51 `rex` does not match the `Pet` shape. Rex is 3 years old: fix the object so TypeScript and the check are both happy.
+@52 Rex is missing something the Pet label asks for. Rex is 3. Add it!
+@53 Read the interface: which property does `rex` not have yet?
+@54 The Pet label lists a name and an age. Rex only has a name.
+@55 Add `age: 3` inside the object.
+@56 Write `age: 3` next to the name.
+@57 An interface is a promise about a shape. TypeScript checked the promise, found the missing `age`, and said so before `describePet` could print "Rex is undefined".
+@58 The label said every pet has an age. The checker looked, found none, and told you before anything went wrong.
+@59 TS2741 (`Property 'age' is missing`) is structural typing at work: the literal lacks a required member of `Pet`, and the mismatch is reported at the assignment rather than wherever `age` is first read.
+@60 describes Rex
+@61 The short version.
+@62 What you learned.
+@63 `interface` and `type` both name shapes.
+@64 `type` is required for unions.
+@65 Name a shape once; use the name everywhere.
+@66 `interface` and `type` both give a shape a name.
+@67 Only `type` can say "this or that".
+@68 Name a shape once, then use the name everywhere.
+@69 Interfaces merge and extend; type aliases can name any type.
+@70 Both are structural for object shapes.
+@71 Pick one convention and enforce it with a lint rule.
+@72 Go further: make `Employee` extend `Person`, adding a `team: string`.
+@73 A challenge: make the `Employee` shape grow out of the `Person` shape, with a `team` added.
+@74 `interface Employee extends Person { team: string }`.
+@75 Write `interface Employee extends Person` and add `team: string` inside.
+@76 `extends` copies every member of `Person` into `Employee`. An `Employee` can be used anywhere a `Person` is expected.
+@77 An Employee has everything a Person has, plus a team. So every Employee is also a Person.
+@78 Interface extension creates a subtype; conflicting members are reported at the declaration, which is the main ergonomic advantage over intersections.
+@79 has a team
+@80 an employee is a person
+@81 team is required
+@82 `string | number` means either.
+@83 Check first, then use the specific member.
+@84 Literal unions make typos impossible.
+@85 `string | number` means a word or a number.
+@86 Look first, then use it.
+@87 A list of allowed words stops spelling mistakes.
+@88 A union says "one of"; narrowing proves which.
+@89 Discriminated union + `switch` + `never` = exhaustive handling.
+@90 Type assertions are unchecked promises: keep them rare.
+@91 A union says "one of these".
+@92 "This or that": a box that can hold one kind or another.
+@93 A **union** allows more than one type: `string | number`. A **literal type** narrows to exact values: `"small" | "medium" | "large"`.⏎⏎Inside a union you may only use what all members share. To use something specific, **narrow** first:⏎⏎⟦F1⟧⏎⏎This is not ceremony. At runtime the value really might be either one, and the check is what makes the code correct.
+@94 A union means "it could be this, or that". Like a box that holds a pencil or a pen.⏎⏎You have to look inside before you use it. That look is called **narrowing**.⏎⏎A literal type is a short list of allowed words: `"small" | "medium"`. Nothing else fits.
+@95 A union `A | B` admits a value of either type, and until you narrow, only the members every constituent shares are available. TypeScript narrows along control flow: `typeof`, `instanceof`, `in`, equality with literals, truthiness, and user-defined type predicates.⏎⏎Discriminated unions, object types that share a literal `kind` field, are the idiomatic way to model variants:⏎⏎⟦F1⟧⏎⏎A `switch` on `shape.kind` narrows each branch to one member. Prefer narrowing to `as` assertions, which the compiler does not verify.
+@96 What prints?
+@97 What will it show?
+@98 `typeof value === "string"` is true for "hello" and false for 4. Follow each call into its branch.
+@99 For "hello", the box holds a word. For 4, it holds a number. Which path does each take?
+@100 The `typeof` check splits the function in two. Text takes the first branch; a number takes the second and becomes 5.
+@101 The `typeof` check looks inside the box. Words take the first path; a number takes the second and becomes 5.
+@102 `typeof value === "string"` narrows `value` to `string` inside the first branch; after that branch returns, control-flow analysis narrows it to `number` for the rest of the function.
+@103 Which function is safe for `string | number`?
+@104 Which machine is safe for a word *or* a number?
+@105 Which version checks the type before calling a string-only method?
+@106 Numbers cannot be made into capital letters. Which machine checks first?
+@107 Only the version that checks with `typeof` can call `.toUpperCase()` safely. The other would crash when given a number.
+@108 Only the one that looks first with `typeof` can safely use `.toUpperCase()`. The other would break when given a number.
+@109 Calling `.toUpperCase()` on `string | number` is TS2339 (`Property 'toUpperCase' does not exist on type 'string | number'`), because `number` has no such method. Only the narrowed version type-checks.
+@110 `function f(v: string | number) { return v.toUpperCase(); }`
+@111 Numbers do not have `toUpperCase`. This compiles only if you cast, and crashes at runtime.
+@112 Numbers cannot do `toUpperCase`. This one would break when it gets a number.
+@113 `function f(v: string | number) { return typeof v === "string" ? v.toUpperCase() : String(v); }`
+@114 The `boolean` case has already returned. What type does TypeScript give `rest`?
+@115 The yes-or-no case has already left the machine. What could `rest` still be?
+@116 Start from `string | number | boolean` and remove what the `if` has already dealt with.
+@117 The box could hold a word, a number or a yes/no. Which one has already gone?
+@118 Two types are left, joined with `|`.
+@119 Two kinds are left. Join them with `|`.
+@120 After the `boolean` branch returns, TypeScript knows `value` can only be a `string` or a `number`. Narrowing removes the cases you have already handled.
+@121 The yes/no case left early, so only a word or a number can still be in the box. TypeScript keeps track of that for you.
+@122 Control-flow analysis: the early `return` removes `boolean` from the union for the rest of the function, so `rest` is `string | number`. The order inside a union does not matter.
+@123 Write `formatId` so a string or a number both come back with a leading `#`.
+@124 Make `formatId` give back a `#` in front, for a word or a number.
+@125 Template literals convert both types into text, so no branching is needed here.
+@126 Backticks turn words and numbers into text, so you do not need to check which one it is.
+@127 Where every member of the union supports the same operation, you do not need to narrow. `String()` and template literals accept both.
+@128 When both kinds can do the same thing, you do not need to look inside first. Backticks work for words and numbers.
+@129 A template literal accepts any type, so both constituents work without narrowing. Narrow only when you need a member that not every constituent has.
+@130 number
+@131 string
+@132 A union allows several types; a literal type allows exact values.
+@133 Narrow with `typeof`, `in`, or an equality check before using type-specific methods.
+@134 Prefer narrowing to casting.
+@135 A "this or that" type allows several kinds; `"small" | "medium"` allows only those exact words.
+@136 Look inside with `typeof` before using something only one kind can do.
+@137 Looking first is better than pretending.
+@138 Only shared members are available on a union.
+@139 Narrow with `typeof`, `in`, `instanceof`, literal equality or a type predicate.
+@140 Model variants as discriminated unions; avoid `as`.
+@141 Go further: write `area` for a discriminated union of shapes, using `shape.kind`.
+@142 A challenge: make `area` work for circles and squares, by checking `shape.kind`.
+@143 `switch (shape.kind)`: inside `case "circle"`, TypeScript knows `shape.radius` exists.
+@144 Check `shape.kind`. Inside the circle case, TypeScript lets you use `shape.radius`.
+@145 Checking the shared `kind` field narrows `shape` to one member of the union, so its own properties become available.
+@146 Looking at `kind` tells TypeScript which shape it is, so it knows which numbers the shape has.
+@147 A discriminated (tagged) union narrows on the literal discriminant; with every case returning, the switch is exhaustive and needs no default.
+@148 square
+@149 circle, rounded
+@150 Optional values must be handled.
+@151 `??` is safer than `||` for real values like 0.
+@152 Say `unknown`, then narrow.
+@153 Things that might be missing must be handled.
+@154 `??` is safer than `||` when 0 is a real answer.
+@155 Say `unknown`, then look inside.
+@156 Model absence explicitly and handle it with `?.` and `??`.
+@157 Validate external data, starting from `unknown`.
+@158 `any` is contagious; `unknown` is honest.
+@159 Missing values are normal. Plan for them.
+@160 Sometimes a box is empty. Plan for it.
+@161 An **optional** property may not exist: `age?: number`. Reading it gives `number | undefined`, so you must handle that case.⏎⏎`readonly` stops reassignment and documents intent: `readonly id: string`.⏎⏎And the important one: **`unknown`** versus **`any`**.⏎⏎- `any` switches checking off. Everything after it is unchecked.⏎- `unknown` says "I do not know yet", and forces you to check before use.⏎⏎When data comes from outside your program — a file, a form, a network — it is genuinely unknown. Say so, then narrow.
+@162 Some boxes might be empty. An optional value is a box with a `?`, and you have to check inside before using it.⏎⏎`unknown` is a mystery box: you must look inside before using what is in it.⏎⏎`any` is a box that says "do not bother looking". That is how mistakes hide.
+@163 `age?: number` means the property may be absent, so under `strictNullChecks` reading it yields `number | undefined`. Handle that with `?.`, `??` or an explicit check.⏎⏎`readonly` exists only at compile time; nothing is frozen at runtime. For arrays, `ReadonlyArray<T>` removes the mutating methods from the type.⏎⏎`any` switches checking off, and it spreads: anything derived from it is `any` too. `unknown` is the type-safe top type: you must narrow it (with `typeof`, `Array.isArray` or a schema validator) before using it. Type external input, such as `JSON.parse`, `fetch` or `localStorage`, as `unknown` and validate it at the boundary.
+@164 Which is safer for data you did not create?
+@165 Which is safer for things you did not make yourself?
+@166 One of them makes you check the value before using it. The other skips all checking.
+@167 One makes you look inside the mystery box first. Which one?
+@168 `unknown` forces a check before use. `any` lets you call anything on it, including things that will crash.
+@169 `unknown` is a mystery box: you must check it before you use it. `any` lets you do anything, even things that will break.
+@170 `unknown` accepts any value but allows no operation until it is narrowed; `any` allows every operation and disables checking downstream. Use `unknown` at trust boundaries.
+@171 `any`
+@172 `any` turns off checking, so a wrong call compiles and fails later.
+@173 `any` switches off the checking, so a mistake only shows up later.
+@174 `unknown`
+@175 `readName` crashes when the name is missing. Guard the empty case.
+@176 `readName` breaks when there is no name. Handle the empty case.
+@177 Use `??` to supply a fallback, then uppercase the result.
+@178 Use `??` to give a spare value, then make it capital letters.
+@179 `??` only falls back for `null` and `undefined`. Unlike `||`, it keeps `0` and `""` as real values.
+@180 `??` uses the spare value only when the box is empty (`null` or `undefined`). It keeps 0 and empty words as real values.
+@181 `??` substitutes only for `null` or `undefined`; `||` would also replace `""`. `user.name?.toUpperCase() ?? "ANON"` is an equivalent spelling.
+@182 a real name
+@183 a missing name
+@184 Write `describeUser`. Return the nickname when it exists, otherwise the name. Never return an empty string.
+@185 Make `describeUser`: give back the nickname if there is one, otherwise the name. Never give back empty words.
+@186 A ternary: use `user.nickname` when it is truthy, otherwise `user.name`.
+@187 Use `? :`: pick `user.nickname` if it has letters, otherwise `user.name`.
+@188 Here truthiness is the right check, because an empty nickname is not useful. For numbers, prefer `=== undefined`.
+@189 Here "has letters" is the right check, because an empty nickname is no use. For numbers, check for `undefined` instead.
+@190 Truthiness is intended here: an empty nickname should fall back. For numeric optionals, compare with `undefined`, because `0` is valid data.
+@191 prefers nickname
+@192 falls back to name
+@193 empty nickname falls back
+@194 `?` makes a property optional, and its type includes `undefined`.
+@195 `readonly` prevents reassignment.
+@196 `unknown` forces a check; `any` hides problems.
+@197 `?` means the thing might be missing.
+@198 `readonly` means it can never be changed.
+@199 `unknown` makes you check; `any` hides problems.
+@200 `?` adds `undefined` to the property type.
+@201 `readonly` is compile-time only.
+@202 `unknown` at the boundaries, then narrow; never `any`.
+@203 With `noUncheckedIndexedAccess` on, `names[0]` might be `undefined`. Make `initial` return `"?"` for an empty list.
+@204 With this stricter setting, TypeScript knows the list might be empty. Give back `"?"` when there is no first name.
+@205 Store `names[0]` in a variable, check it against `undefined`, and return early.
+@206 Put `names[0]` in a box first. If the box is empty (`undefined`), give back `"?"`.
+@207 Without the flag, TypeScript types `names[0]` as `string`, and an empty list crashes at run time. The flag makes the type honest (`string | undefined`), so the check is required.
+@208 Normally TypeScript trusts that `names[0]` is there. The stricter setting says "it might be missing", so you check, and the empty list no longer breaks.
+@209 `noUncheckedIndexedAccess` adds `undefined` to every index read (`T[number]` and index signatures). It is off in `strict`, but catches a whole class of out-of-range bugs; the narrowing it forces is one `if`.
+@210 first name
+@211 empty list
+@212 Generics keep the type you put in.
+@213 `<T>` goes before the parameter list.
+@214 Use them to remove duplication, not to look clever.
+@215 Generic machines keep the kind you put in.
+@216 `<T>` goes before the brackets.
+@217 Use them to avoid copies, not to look clever.
+@218 Generics relate input types to output types.
+@219 Constrain with `extends` instead of widening to `any`.
+@220 Let inference do the instantiating.
+@221 A generic keeps whatever type it was given.
+@222 A generic machine works for any kind of thing, and remembers which kind.
+@223 Without generics you either duplicate a function or lose its type:⏎⏎⟦F1⟧⏎⏎`T` is a placeholder for whatever type the caller uses. Give it strings and `T` is `string`; give it numbers and `T` is `number`. The type travels through instead of becoming `any`.⏎⏎That is the whole idea. You do not need the theory to use it well — name it after what it holds, and let the caller supply it.
+@224 A generic is a tool that keeps the kind of thing you gave it.⏎⏎Give it a list of words and it gives back a word. Give it a list of numbers and it gives back a number. It never muddles them.
+@225 A type parameter is inferred from the arguments at each call: `firstOf(["a"])` instantiates `T` as `string`. Write it out (`firstOf<number>([])`) only when there is nothing to infer from.⏎⏎Constrain a parameter with `extends` to require what the body needs: `function longest<T extends { length: number }>(a: T, b: T): T`. The constraint lets the body use `.length` while still returning the caller's exact type.⏎⏎A useful test: a type parameter that appears only once in a signature is probably unnecessary; use the concrete type or `unknown` instead.
+@226 Two nearly identical functions.
+@227 Two machines that are almost the same.
+@228 Duplicated
+@229 Same body twice, and a third copy next week.
+@230 The same machine written twice — and a third copy next week.
+@231 Generic
+@232 One body, and the return type follows the input.
+@233 One machine, and what comes out has the same kind as what went in.
+@234 Name the type parameter.
+@235 Name the "any kind" placeholder.
+@236 The placeholder must match the name used in `T[]` and `T | undefined`.
+@237 Look at the rest of the line: which letter is used as the kind?
+@238 `T` is the conventional name, and it must match the `T[]` and `T` used in the body. `any` would erase the type.
+@239 `T` is the usual name, and it must match the `T[]` and `T` in the machine. `any` would forget the kind.
+@240 Declaring `T` in `<…>` is what makes the other `T`s refer to a type parameter instead of an unknown name. Using `any` instead would break the link between what goes in and what comes out.
+@241 Write `firstItem` as a generic that returns the first item, or `undefined`.
+@242 Make `firstItem` a generic machine that gives back the first thing, or `undefined`.
+@243 Return `items[0]`. The generic type makes it come back as the same kind as the list.
+@244 Give back `items[0]`. The `<T>` makes it come back as the same kind as the list.
+@245 numbers
+@246 strings
+@247 empty
+@248 `<T>` is a placeholder type filled in by the caller.
+@249 Generics preserve type information instead of erasing it.
+@250 Reach for one when you are duplicating a function per type.
+@251 `<T>` is a placeholder for "whatever kind you give it".
+@252 A generic remembers the kind instead of forgetting it.
+@253 Use one when you would otherwise copy a machine for each kind.
+@254 Type parameters are inferred at each call.
+@255 `extends` constrains what `T` must support.
+@256 A type parameter used only once is a smell.
+@257 A type challenge: finish `Box<T>` so every type check below passes.
+@258 A puzzle for the type checker: fix the `Box` label so all the checks below are happy.
+@259 The box should hold a value of the type it was given, not `unknown`.
+@260 Whatever kind goes in, the box should remember it. Which letter stands for that kind?
+@261 Use the type parameter: `value: T;`
+@262 Write `value: T;` inside the box.
+@263 `value: T` ties what the box holds to the type it was made with. `unknown` accepted anything, so a box of numbers happily held text.
+@264 With `T` inside, a box of numbers only holds numbers. `unknown` let anything in, even words.
+@265 A type test is compile-time only: `Expect<Equal<A, B>>` fails to compile unless `A` and `B` are identical, and a line marked `@ts-expect-error` must not compile. Type-level libraries are tested exactly like this.
+@266 a box of numbers holds a number
+@267 box("hi") is a box of strings
+@268 a box of numbers refuses text
+@269 a box is never empty

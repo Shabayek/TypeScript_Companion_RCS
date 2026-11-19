@@ -1,0 +1,250 @@
+@1 De petites fonctions qui renvoient valent mieux que de grosses qui affichent.
+@2 Traiter le cas zéro avant de diviser.
+@3 Une fonction testée est une fonction terminée.
+@4 De petites machines qui rendent des réponses valent mieux qu’une machine géante.
+@5 Vérifie le zéro avant de diviser.
+@6 Une machine vérifiée est une machine terminée.
+@7 Cœur fonctionnel, coquille impérative.
+@8 Les types n’excluent pas `NaN` ; protéger les cas limites de l’arithmétique.
+@9 Tester le cœur ; garder la coquille mince.
+@10 Planifier les morceaux avant de les écrire.
+@11 Planifie les morceaux avant de les construire.
+@12 Un jeu de quiz a besoin de trois petites vérités :⏎⏎- Une bonne réponse ajoute des points.⏎- Une mauvaise réponse n’ajoute rien.⏎- À la fin, un pourcentage te dit comment tu t’en es sorti.⏎⏎Deux toutes petites fonctions suffisent pour tout ça, et chacune est facile à tester parce qu’elle renvoie une valeur au lieu de l’afficher ou de toucher à un écran.⏎⏎C’est la forme de la plupart des vrais travaux : de petites fonctions avec des contrats clairs, assemblées en quelque chose de plus grand. À la fin, tu joues au quiz, et tes fonctions comptent les points.
+@13 C’est l’heure de construire un jeu de quiz, enfin, son cerveau. Deux petites machines : une qui donne des points, une qui calcule ton score.⏎⏎Les fonctions courtes sont plus faciles à réparer que les grosses. Commence petit. À la fin, tu joues au quiz, et tes machines comptent les points !
+@14 La logique du domaine tient en deux fonctions pures : une transition d’état (`scoreAnswer`) et une projection (`percent`). Aucune n’affiche ni ne touche un écran, donc chacune se teste unitairement toute seule, et les vérifications que tu lances sont exactement ces tests unitaires.⏎⏎C’est le principe « cœur fonctionnel, coquille impérative » : garde les décisions dans des fonctions pures et repousse les entrées et sorties dans une fine couche extérieure. L’étape de jeu à la fin de cette leçon est cette coquille, et elle appelle tes fonctions.
+@15 D’abord : `scoreAnswer` ajoute 10 points pour une bonne réponse, et 0 sinon.
+@16 D’abord : `scoreAnswer` ajoute 10 points pour une bonne réponse, et rien pour une mauvaise.
+@17 Un ternaire suffit : ajoute 10 quand `isCorrect` est vrai.
+@18 Utilise `? :` : si `isCorrect`, rends `current + 10`, sinon juste `current`.
+@19 bonne réponse en partant de zéro
+@20 une mauvaise réponse garde le score
+@21 deux bonnes réponses
+@22 Ensuite : `percent` transforme les bonnes réponses en pourcentage entier.
+@23 Ensuite : `percent` transforme les bonnes réponses en pourcentage sans virgule.
+@24 Divise `correct` par `total`, multiplie par 100, puis `Math.round`. Traite d’abord `total === 0`.
+@25 Divise `correct` par `total`, fois 100, puis `Math.round`. Mais d’abord : si `total` vaut 0, rends 0.
+@26 La garde `total === 0` n’est pas du bruit défensif : diviser par zéro donne `NaN`, et un pourcentage `NaN` est un bug qui finit à l’écran.
+@27 Vérifier 0 d’abord, c’est vraiment important : diviser par zéro donne `NaN` (« not a number », « pas un nombre »), et personne ne veut voir « NaN% » à l’écran.
+@28 Sans la garde, `0 / 0` vaut `NaN`, et `Math.round(NaN)` vaut `NaN`, qui passe quand même la vérification de types en tant que `number`. Les types n’excluent ni `NaN` ni `Infinity` ; les gardes, si.
+@29 trois sur quatre
+@30 aucune juste
+@31 arrondit à un nombre entier
+@32 pas encore de questions
+@33 Joue : tes `scoreAnswer` et `percent` comptent les points.
+@34 Joue à ton jeu ! Tes propres machines comptent les points.
+@35 Lance-le de bout en bout : un quiz dont le calcul du score, c’est ton `scoreAnswer` et ton `percent`.
+@36 Quel mot-clé crée un nom qui ne peut pas recevoir de nouvelle valeur ?
+@37 Quel mot crée une boîte dans laquelle tu ne peux jamais mettre une nouvelle valeur ?
+@38 Que renvoie `typeof 42` ?
+@39 Que dit `typeof 42` ?
+@40 Quel type convient à `["tea", "bus"]` ?
+@41 Quelle étiquette convient à la liste `["tea", "bus"]` ?
+@42 Combien vaut `7 % 3` ?
+@43 Que reste-t-il dans `7 % 3` ?
+@44 Ce que tu viens de construire.
+@45 Ce que tu as construit.
+@46 `scoreAnswer` ajoute des points sans rien afficher.
+@47 `percent` arrondit et traite le cas vide.
+@48 Les fonctions qui renvoient des valeurs sont faciles à tester, et tu viens de les tester.
+@49 `scoreAnswer` ajoute des points et rend le nouveau score.
+@50 `percent` arrondit, et s’en sort avec un quiz sans questions.
+@51 Les machines qui rendent des réponses sont faciles à vérifier, et tu viens de les vérifier.
+@52 `scoreAnswer` est une transition d’état pure.
+@53 `percent` protège la division par zéro : `NaN` reste un `number`.
+@54 Les fonctions pures rendent les tests unitaires triviaux, et le jeu ne fait que les appeler.
+@55 Modéliser les données comme une liste de petits objets.
+@56 `reduce` transforme une liste en un seul nombre.
+@57 Construire de nouvelles fonctions sur des fonctions testées.
+@58 Ranger l’argent dans une liste de petits sacs.
+@59 Construire de nouvelles machines sur des machines qui marchent déjà.
+@60 Le modèle de données d’abord, les fonctions ensuite.
+@61 Dans du vrai code, stocker l’argent en unités entières (centimes).
+@62 L’état dérivé se calcule, il ne se duplique jamais.
+@63 L’argent, c’est une liste de petits faits.
+@64 Un budget, c’est juste une liste de dépenses, et chaque dépense est un montant avec une étiquette :⏎⏎⟦F1⟧⏎⏎Deux questions comptent : combien est parti, et combien il reste. Les deux sont des fonctions pures de la liste, donc tu peux les tester sans écran, sans base de données et sans banque.⏎⏎Dans du vrai code qui manipule de l’argent, tu stockerais des centimes entiers et formaterais aux bords. La structure ici est la même. À la fin, tu utilises le suivi, et chaque total vient de ton code.
+@65 Un suivi, c’est une liste de choses que tu as achetées, et un total en cours.⏎⏎Tu as déjà les outils : un tableau d’objets, et une fonction qui additionne une propriété choisie. À la fin, tu pourras utiliser ton suivi pour de vrai !
+@66 Modélise d’abord le domaine sous forme de données : `Expense` est un type enregistrement et le registre est un `Expense[]`. Les totaux sont dérivés par accumulation (`reduce`), donc aucun total en cours ne peut se désynchroniser de la liste.⏎⏎Des montants à virgule flottante conviennent pour une démo, mais du vrai code financier stocke des unités entières (des centimes) et formate aux bords, puisque `0.1 + 0.2` ne vaut pas `0.3`. Le suivi à la fin relance tes fonctions à chaque changement.
+@67 Écris `totalSpent` pour qu’elle additionne chaque `amount`.
+@68 Fais en sorte que `totalSpent` additionne chaque `amount`.
+@69 `reduce` avec une valeur de départ de 0, en ajoutant `expense.amount` à chaque fois.
+@70 Utilise `reduce`, en commençant à 0, et ajoute `expense.amount` à chaque fois.
+@71 deux dépenses
+@72 aucune dépense
+@73 les décimaux marchent
+@74 Écris `remaining` : le budget moins tout ce qui a été dépensé.
+@75 Fais `remaining` : le budget moins tout ce qui a été dépensé.
+@76 Appelle `totalSpent(expenses)` et soustrais-le de `budget`.
+@77 Utilise `totalSpent(expenses)` et enlève-le de `budget`.
+@78 Réutiliser la fonction que tu as déjà testée veut dire qu’on peut faire confiance à celle-ci presque gratuitement, et qu’une correction à un endroit corrige les deux.
+@79 Utiliser la machine que tu as déjà vérifiée veut dire qu’on peut facilement faire confiance à celle-ci, et si tu en répares une, tu répares les deux.
+@80 `remaining` est définie à partir de `totalSpent`, donc il n’y a qu’une seule source de vérité pour la somme. Composer de petites fonctions pures garde chaque unité petite et chaque test ciblé.
+@81 dix restant moins trois
+@82 dépenser trop donne un négatif
+@83 rien de dépensé
+@84 Utilise-le : ajoute ce que tu achètes, et tes fonctions tiennent les totaux.
+@85 Essaie ton suivi ! Ajoute ce que tu achètes et regarde tes machines faire l’addition.
+@86 Utilise-le : chaque changement relance tes `totalSpent` et `remaining`.
+@87 Une liste d’objets est un vrai modèle de données.
+@88 `reduce` répond à « combien en tout ? »
+@89 Composer des fonctions testées est plus rapide que d’en tester une grosse.
+@90 Une liste de sacs est une vraie façon de ranger des informations.
+@91 Construire sur des machines vérifiées est plus rapide que d’en vérifier une énorme.
+@92 Dériver les totaux des données au lieu de les stocker.
+@93 Donne toujours une valeur initiale à `reduce` : `reduce((sum, x) => …, 0)`.
+@94 Composer de petites fonctions pures.
+@95 Séparer « choisir » et « composer ».
+@96 `%` ramène un indice dans les limites.
+@97 Tu as fini le cours : construis ensuite quelque chose de petit et de réel.
+@98 Garder « choisir » et « joindre » séparés.
+@99 `%` fait tourner un nombre autour d’une liste.
+@100 Tu as fini le cours : maintenant, construis quelque chose de petit, à toi !
+@101 Séparer le choix de la composition.
+@102 Un cœur déterministe est un cœur testable.
+@103 Livrer ensuite quelque chose de petit et de réel, puis itérer.
+@104 Une sortie qui a l’air aléatoire, sans hasard.
+@105 Des histoires qui ont l’air aléatoires, mais qui ne le sont pas.
+@106 Un générateur choisit des morceaux et les assemble en une phrase. Le choix a l’air aléatoire, mais il peut être rendu **déterministe** : le même indice produit toujours la même histoire.⏎⏎C’est un choix délibéré. Les fonctions déterministes sont testables ; les fonctions vraiment aléatoires, non. Quand tu ajouteras un jour un indice aléatoire, le choix restera à un seul petit endroit et l’assemblage restera testable.⏎⏎C’est le dernier projet du cours. Tu as tous les outils nécessaires : tableaux, indices, littéraux de gabarit et fonctions qui renvoient des valeurs. À la fin, tu fais tourner la machine et tu lis ce que ton code écrit.
+@107 Une machine à histoires choisit un héros, un lieu et un problème, puis les met dans une phrase.⏎⏎Tu es presque à la fin du cours. Celle-ci utilise tout ce que tu as appris. À la fin, tu pourras la faire tourner et lire les histoires que ton code écrit !
+@108 Sépare le *choix* de la *composition*. `pick` est définie pour tout indice entier non négatif (le modulo ramène chacun dans les limites), et `buildStory` est un formateur pur. Le hasard n’entre qu’au bord, là où la roue fournit les nombres.⏎⏎C’est cette séparation qui rend le générateur testable : des entrées déterministes donnent une sortie déterministe. Pour une sortie « aléatoire » reproductible, injecte un générateur pseudo-aléatoire avec graine au lieu d’appeler `Math.random()` dans ta logique.
+@109 Écris `pick` pour qu’elle renvoie toujours un mot de la liste, même si l’indice est trop grand.
+@110 Fais en sorte que `pick` rende toujours un mot de la liste, même si le nombre est trop grand.
+@111 `index % words.length` garde l’indice dans la liste. Vérifie d’abord le cas de la liste vide.
+@112 `index % words.length` garde le nombre dans la liste. Si la liste est vide, rends d’abord des mots vides.
+@113 C’est le modulo qui permet de faire le tour : n’importe quel indice tombe sur un vrai élément, et la fonction ne renvoie jamais `undefined`.
+@114 `%` fait revenir les grands nombres au début, comme quand on fait le tour d’un cercle. N’importe quel nombre tombe sur un vrai mot.
+@115 `index % words.length` ramène tout entier non négatif dans `0 … length - 1`. `%` garde le signe, donc un indice négatif tomberait encore à côté ; `((i % n) + n) % n` couvre ce cas. Sous `noUncheckedIndexedAccess`, la lecture aurait aussi besoin d’une valeur de secours.
+@116 premier mot
+@117 fait le tour
+@118 liste vide
+@119 Écris `buildStory` pour qu’elle renvoie `Once, Ada went to Lagos to solve the missing kite.`
+@120 Fais en sorte que `buildStory` rende `Once, Ada went to Lagos to solve the missing kite.`
+@121 Des accents graves, avec chaque paramètre dans son propre `${...}`, et la ponctuation exactement comme dans l’exemple.
+@122 Utilise des accents graves, mets chaque valeur dans son propre trou `${...}`, et recopie exactement les virgules et le point final.
+@123 phrase complète
+@124 une autre combinaison
+@125 Fais-la tourner : des nombres aléatoires entrent, tes `pick` et `buildStory` fabriquent l’histoire.
+@126 Fais tourner la machine à histoires ! Tes propres `pick` et `buildStory` écrivent chaque histoire.
+@127 Fais-la tourner : des indices aléatoires passent par ton `pick`, et ton `buildStory` compose le tout.
+@128 Choisir et assembler sont deux étapes séparées et testables.
+@129 Le modulo garde un indice dans une liste.
+@130 Une sortie déterministe rend la génération testable.
+@131 Choisir les mots et les assembler sont deux étapes séparées que tu peux vérifier.
+@132 `%` garde un nombre dans une liste.
+@133 La même entrée donne toujours la même histoire, donc on peut la vérifier.
+@134 Le hasard aux bords ; une logique déterministe à l’intérieur.
+@135 `%` ramène les indices non négatifs dans les limites.
+@136 Injecter un générateur pseudo-aléatoire avec graine pour une sortie reproductible.
+@137 Décrire une position sur une grille avec `{ x, y }`.
+@138 La déplacer avec un `switch` sur une union de directions.
+@139 Vérifier les murs et les bords avant de bouger.
+@140 Dire où est le robot avec `x` et `y`.
+@141 Apprendre au robot à faire un pas.
+@142 L’empêcher de foncer dans les murs.
+@143 Modéliser le monde avec des données simples : des lignes de texte, des positions `{ x, y }`.
+@144 Garder le déplacement et les vérifications dans de petites fonctions testées.
+@145 Le jeu ne fait que les appeler dans une boucle.
+@146 Un labyrinthe, c’est juste des lignes de texte.
+@147 De petites machines, testées une à une, font un jeu entier.
+@148 Tu as programmé un robot !
+@149 Des fonctions de domaine pures, une coquille impérative.
+@150 Les unions de littéraux de chaîne modélisent les commandes.
+@151 Traiter explicitement le hors limites.
+@152 Un labyrinthe est une grille de lignes.
+@153 Robo est dans un labyrinthe et veut l’étoile !
+@154 Le labyrinthe est un tableau de chaînes, une par ligne. `#` est un mur, `.` est le sol, `R` est le robot et `*` est l’étoile :⏎⏎⟦F1⟧⏎⏎Une position est un objet : `x` compte les colonnes depuis la gauche, `y` compte les lignes depuis le haut, les deux à partir de `0`. Le robot ci-dessus est en `{ x: 1, y: 1 }`.⏎⏎Tu vas écrire deux fonctions : `step`, qui calcule où mène un déplacement, et `isOpen`, qui dit si on peut se tenir sur cette case. Ensuite, tu joues : tu donnes ses déplacements au robot, et tes fonctions décident de ce qui se passe.
+@155 Le labyrinthe est une liste de lignes. `#` est un mur, `.` est le sol, `R` est Robo et `*` est l’étoile.⏎⏎Pour dire où est Robo, on utilise deux nombres : `x` (à quelle distance de la gauche) et `y` (à quelle distance du haut). Les deux commencent à 0 !⏎⏎Tu vas apprendre deux choses à Robo : faire un pas, et repérer les murs. Ensuite, tu dis à Robo où aller, et tu le regardes bouger.
+@156 Le monde est une grille `string[]` adressée par `maze[y][x]`. Le déplacement est une fonction pure `step(position, move): Position` sur une union de littéraux de chaîne `Move`, et la détection de collision est un prédicat pur `isOpen(maze, position)` qui traite aussi le hors limites comme bloqué.⏎⏎Garder les deux pures les rend trivialement testables, et la boucle de jeu (le pilote) est la seule partie avec état : elle accumule les déplacements du joueur à partir de la position de départ et affiche une image par déplacement.⏎⏎Remarque `maze[y]?.[x]` : sans `noUncheckedIndexedAccess`, les lectures par indice sont typées `string` même hors limites, donc le chaînage optionnel fait un vrai travail à l’exécution.
+@157 Écris `step` : elle renvoie la position située à une case dans la direction donnée. `"up"` rend `y` plus petit de un.
+@158 Apprends à Robo à faire un pas. Aller vers `"up"` rend `y` plus petit de un, `"right"` rend `x` plus grand de un.
+@159 Utilise `switch (move)` avec quatre cas. Chacun renvoie un nouvel objet, par exemple `{ x: position.x + 1, y: position.y }` pour `"right"`.
+@160 Utilise `switch (move)`. Pour `"right"`, rends `{ x: position.x + 1, y: position.y }`. Fais pareil pour les trois autres.
+@161 Renvoyer un nouvel objet (au lieu de modifier `position`) garde chaque déplacement facile à tester. Comme chaque cas fait un return, TypeScript sait que la fonction rend toujours une `Position`.
+@162 Chaque pas crée une toute nouvelle position. L’ancienne reste comme elle était, ce qui rend les erreurs plus faciles à trouver.
+@163 Le switch est exhaustif sur `Move`, donc l’analyse du flot de contrôle accepte l’absence de `return` final ; ajoute une nouvelle direction à l’union et TypeScript signale le trou (TS2366).
+@164 droite
+@165 haut
+@166 gauche
+@167 bas
+@168 Écris `isOpen` : `true` quand la case est dans le labyrinthe et n’est pas un mur (`#`).
+@169 Apprends à Robo à regarder avant de faire un pas : `isOpen` vaut `true` quand la case est dans le labyrinthe et n’est pas un mur.
+@170 `maze[position.y]?.[position.x]` est le caractère de cette case, ou `undefined` quand elle est hors du labyrinthe. Ouverte veut dire : pas `undefined`, et pas `"#"`.
+@171 Lis la case avec `maze[position.y]?.[position.x]`. Si tu obtiens `undefined`, Robo sortirait de la carte. Si tu obtiens `"#"`, c’est un mur.
+@172 Le `?.` fait qu’une ligne absente donne `undefined` au lieu de planter, et une colonne absente donne aussi `undefined`. Une seule vérification couvre donc tous les bords.
+@173 `?.` veut dire « ne regarde que si la ligne existe ». Donc sortir par n’importe quel bord donne juste `undefined`, et Robo reste sur place.
+@174 Les lectures hors limites donnent `undefined` à l’exécution même si le type statique est `string` ; `?.` protège la lecture de la ligne, et le `!== undefined` explicite couvre les deux axes. Active `noUncheckedIndexedAccess` et les types le diraient aussi.
+@175 le sol est ouvert
+@176 un mur ne l’est pas
+@177 au-delà du bord droit
+@178 au-dessus du haut
+@179 l’étoile est ouverte
+@180 Joue : donne ses déplacements au robot, puis lance-le. Tes `step` et `isOpen` décident où il va.
+@181 Joue ! Appuie sur les flèches pour prévoir les déplacements de Robo, puis lance-le. C’est ton code qui fait bouger Robo.
+@182 Lance-le : le pilote fait passer tes déplacements par `step` et `isOpen` et affiche une image par déplacement.
+@183 La version courte.
+@184 Ce que tu as appris.
+@185 Une position sur une grille est `{ x, y }`, comptée depuis le coin en haut à gauche.
+@186 Un `switch` sur une union de déplacements renvoie la position suivante.
+@187 Vérifie la case (et les bords) avant de bouger.
+@188 `x`, c’est la distance vers la droite ; `y`, la distance vers le bas.
+@189 Robo fait un pas avec ta machine `step`.
+@190 Regarder avant d’avancer garde Robo loin des murs.
+@191 Des fonctions pures de déplacement et de collision rendent la boucle de jeu triviale.
+@192 Les switch exhaustifs sur des unions n’ont pas besoin de default.
+@193 Les lectures par indice hors limites valent `undefined` à l’exécution.
+@194 Modéliser un animal comme un objet avec des nombres de 0 à 100.
+@195 Le mettre à jour avec `switch` et la décomposition, sans modifier l’ancien.
+@196 Déduire son humeur de ses nombres.
+@197 Garder la faim, l’énergie et l’amusement d’un animal dans un objet.
+@198 Le nourrir, jouer avec lui et le laisser se reposer, avec ton code.
+@199 Dire comment se sent ton animal.
+@200 Les simulations, c’est de l’état plus des actions.
+@201 Chaque action renvoie un nouvel état.
+@202 De petites fonctions, un seul travail chacune.
+@203 Tu as construit un animal qui vit dans ton code !
+@204 Les copies protègent les anciennes versions.
+@205 Vérifier les choses dans l’ordre pour décider d’une humeur.
+@206 Modéliser les transitions comme une fonction totale sur une union d’actions.
+@207 Les mises à jour immuables donnent l’historique gratuitement.
+@208 Calculer l’état dérivé à la demande.
+@209 Un animal, c’est un paquet de nombres.
+@210 Ton animal a besoin qu’on s’occupe de lui !
+@211 Notre animal est un objet avec trois nombres, chacun de 0 à 100 :⏎⏎⟦F1⟧⏎⏎Chaque chose que tu fais (nourrir, jouer, se reposer, attendre) transforme l’ancien animal en un **nouvel** animal, fabriqué avec la décomposition : `{ ...pet, hunger: pet.hunger - 30 }`. L’ancien objet n’est jamais modifié.⏎⏎Ce motif, `(state, action) => newState`, c’est la façon dont beaucoup de vraies apps gèrent les changements. Tu le retrouveras sous le nom de *reducer*.
+@212 Ton animal a trois nombres : sa faim, son énergie, et combien il s’amuse. Chacun va de 0 à 100.⏎⏎Quand tu le nourris, ton code fabrique un nouvel animal avec moins faim. Quand il joue, il s’amuse plus mais se fatigue.⏎⏎`{ ...pet, hunger: 10 }` veut dire « une copie de l’animal, mais avec une faim de 10 ».
+@213 La simulation est une machine à états sur un type enregistrement. `care(state, action)` est une fonction totale sur l’union `Action` (`switch` exhaustif), et chaque branche renvoie un objet neuf via la décomposition, donc les états précédents restent valides : annulation, historique et voyage dans le temps faciles.⏎⏎Un `clamp` partagé garde les invariants (0–100) à un seul endroit. `mood` est une valeur dérivée calculée à partir de l’état, jamais stockée, donc elle ne peut jamais être périmée.
+@214 Écris `care` : `"feed"` baisse la faim de 30 ; `"play"` ajoute 25 d’amusement, consomme 15 d’énergie et ajoute 10 de faim ; `"rest"` ajoute 40 d’énergie et 5 de faim ; `"wait"` ajoute 10 de faim, consomme 5 d’énergie et fait perdre 10 d’amusement. Garde chaque nombre entre 0 et 100 avec `clamp`.
+@215 Fais en sorte que `care` s’occupe de l’animal. Nourrir : faim moins 30. Jouer : amusement plus 25, énergie moins 15, faim plus 10. Se reposer : énergie plus 40, faim plus 5. Attendre : faim plus 10, énergie moins 5, amusement moins 10. Utilise `clamp` pour que les nombres restent entre 0 et 100.
+@216 `switch (action)` avec quatre cas. Pour `"feed"` : `return { ...pet, hunger: clamp(pet.hunger - 30) };`. Entoure chaque nouveau nombre de `clamp(...)`.
+@217 Utilise `switch (action)`. Pour `"feed"`, rends `{ ...pet, hunger: clamp(pet.hunger - 30) }`. Fais les trois autres de la même façon, et utilise toujours `clamp`.
+@218 La décomposition copie l’animal puis remplace seulement les nombres qui changent. `clamp` garde la règle 0–100 à un seul endroit au lieu de quatre.
+@219 `...pet` copie tout, puis tu changes juste ce qu’il faut. `clamp` empêche les nombres de passer sous 0 ou au-dessus de 100.
+@220 Chaque branche construit un nouvel enregistrement ; les champs non touchés sont partagés structurellement. Centraliser l’invariant dans `clamp` garde chaque transition correcte par construction.
+@221 nourrir
+@222 jouer
+@223 se reposer
+@224 attendre
+@225 jamais sous 0
+@226 jamais au-dessus de 100
+@227 l’ancien animal n’a pas changé
+@228 Écris `mood` : `"hungry"` quand la faim vaut 70 ou plus, sinon `"sleepy"` quand l’énergie vaut 25 ou moins, sinon `"bored"` quand l’amusement vaut 30 ou moins, sinon `"happy"`.
+@229 Fais en sorte que `mood` dise comment se sent l’animal : hungry (faim de 70 ou plus), sinon sleepy (énergie de 25 ou moins), sinon bored (amusement de 30 ou moins), sinon happy.
+@230 Des clauses de garde dans l’ordre : `if (pet.hunger >= 70) return "hungry";`, puis l’énergie, puis l’amusement, puis `"happy"`.
+@231 Vérifie dans l’ordre, et rends la première réponse qui convient : hungry d’abord, puis sleepy, puis bored, sinon happy.
+@232 L’ordre des vérifications, c’est la priorité : un animal qui a faim est "hungry" même s’il est aussi fatigué.
+@233 La première vérification qui convient gagne. Hungry passe avant sleepy, sleepy passe avant bored.
+@234 Les retours anticipés encodent directement la priorité. Renvoyer l’union `Mood` (et pas `string`) permet aux appelants de faire un switch exhaustif dessus.
+@235 hungry gagne
+@236 sleepy
+@237 bored
+@238 happy
+@239 Joue : occupe-toi de ton animal. Chaque bouton exécute tes `care` et `mood`.
+@240 Joue avec ton animal ! Chaque bouton utilise ton propre code `care` et `mood`.
+@241 Pilote la simulation : chaque action passe par ton `care`, et l’écran affiche `mood`.
+@242 L’état peut être un simple objet ; les actions peuvent être une union de chaînes.
+@243 `care(pet, action)` renvoie un nouvel animal fabriqué avec la décomposition.
+@244 Les valeurs dérivées comme `mood` se calculent, elles ne se stockent pas.
+@245 Ton animal est un objet plein de nombres.
+@246 Chaque action fabrique un nouvel animal ; l’ancien ne change jamais.
+@247 L’humeur se calcule à partir des nombres.
+@248 `(state, action) => state`, c’est un reducer.
+@249 Garder les invariants dans une seule fonction utilitaire (`clamp`).
+@250 Dériver l’état, ne pas le dupliquer.

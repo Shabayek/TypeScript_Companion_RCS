@@ -1,0 +1,288 @@
+@1 Model different kinds of thing as one union with a shared tag field.
+@2 Narrow by checking the tag.
+@3 Pick a good tag: a literal type present in every member.
+@4 Give every kind of thing a name tag.
+@5 Read the tag to know what you have.
+@6 Choose a good name tag.
+@7 Model variants as a union with a tag.
+@8 Narrow by the tag before using member properties.
+@9 Let TypeScript stop invalid access.
+@10 Name tags keep different things apart.
+@11 Read the tag first.
+@12 TypeScript helps you use the right parts.
+@13 Tagged unions for events, responses and state.
+@14 Literal discriminants partition the union.
+@15 Optional-property bags allow invalid states.
+@16 One union, many shapes, one tag.
+@17 Lots of different things, each wearing a name tag.
+@18 A **discriminated union** is a union of object types that share one property with a literal type, the *tag*:⏎⏎⟦F1⟧⏎⏎Inside each `case`, TypeScript knows exactly which member it has, so only that member’s properties are available.
+@19 Imagine a box of different toys, each with a name tag: "car", "ball", "kite". The tag tells you what kind of toy it is.⏎⏎When your code reads the tag, TypeScript knows which toy it is, and which parts it has: a car has wheels, a kite has a string.
+@20 Narrowing by a discriminant works with `switch`, `if`/`===`, and destructured tags (since TS 4.6 for `const` destructuring). The discriminant must be a literal (or unit) type present in every member; `undefined`/`null` also work as discriminants.⏎⏎This is the idiomatic TypeScript encoding of algebraic data types: events, API responses, Redux actions, AST nodes. Prefer it to optional properties (`{ x?: number; key?: string }`), which allow meaningless combinations.
+@21 What prints?
+@22 What will it show?
+@23 Follow each event into its `case` by its `type`.
+@24 Read each name tag, then find the matching case.
+@25 The `kind` tag picks the branch, and in each branch the shape’s own properties are available.
+@26 The tag said "rect", so the rect line ran. Then "circle".
+@27 Each case narrows `shape` to one member; every path returns, so no final `return` is needed.
+@28 Write `describe`: `"click at 3,4"`, `"key Enter"` or `"scroll 120"`, depending on the event.
+@29 Make `describe` say what happened: "click at 3,4", "key Enter" or "scroll 120".
+@30 `switch (event.type)` with one `case` per kind; each returns a template literal.
+@31 Check `event.type`. In each case, use that event’s own parts in the sentence.
+@32 Try `event.key` inside the `"click"` case: TypeScript refuses, because a click has no key. The tag keeps you honest.
+@33 In the click case, TypeScript only lets you use `x` and `y`, because clicks have no key.
+@34 Accessing a property of another member inside a case is TS2339; the discriminant makes invalid access unrepresentable.
+@35 click
+@36 key
+@37 scroll
+@38 Which property makes a good tag for a discriminated union?
+@39 Which makes a good name tag?
+@40 Every member needs it, and each member needs its own exact value.
+@41 Everyone must wear one, and each kind needs its own word.
+@42 A tag must be in every member, with a different literal value in each. A `string` property cannot tell the members apart.
+@43 Every kind needs a tag with its own exact word, like `"circle"` or `"square"`.
+@44 Discriminants must be literal/unit types so that equality checks partition the union; a widened `string` provides no narrowing.
+@45 `kind: "circle"` in one member and `kind: "square"` in the other
+@46 `kind: string` in every member
+@47 Every member would have the same type for `kind`, so checking it tells TypeScript nothing.
+@48 If every tag just says "some word", the tag cannot tell them apart.
+@49 `radius?: number` in one member only
+@50 An optional property is not a tag: it can be missing on any member.
+@51 Something that might be missing is not a good tag.
+@52 The short version.
+@53 What you learned.
+@54 A discriminated union shares a literal tag field.
+@55 Checking the tag narrows to one member.
+@56 Each member keeps only its own properties.
+@57 Every kind of thing wears a name tag.
+@58 Reading the tag tells TypeScript what it is.
+@59 Each kind has only its own parts.
+@60 Tagged unions model sum types.
+@61 Narrow with `switch`, `===`, or destructured tags.
+@62 Prefer them to bags of optional properties.
+@63 See what type is left when every case is handled: `never`.
+@64 Write `assertNever` to turn a forgotten case into a type error.
+@65 Fix code when a union grows.
+@66 See what is left when everyone is handled: nothing.
+@67 Make TypeScript shout when someone is forgotten.
+@68 Fix the code when a new kind arrives.
+@69 Make exhaustiveness checkable, not hoped for.
+@70 Let the compiler find every switch to update.
+@71 Throw on the impossible at runtime.
+@72 Never forget anyone again.
+@73 TypeScript finds every place to fix.
+@74 Keep the whistle for surprises.
+@75 Exhaustiveness is a refactoring tool.
+@76 `never` encodes "unreachable".
+@77 Defence in depth at runtime.
+@78 When every case is handled, nothing is left: `never`.
+@79 When everyone has been handled, nobody is left over.
+@80 As each case is handled, TypeScript narrows away that member. After the last one, the value has type **`never`**: no possible value is left.⏎⏎Use that to make forgotten cases a type error:⏎⏎⟦F1⟧⏎⏎Add `{ kind: "triangle" … }` to `Shape` and the `default` no longer type-checks: `shape` is a triangle, not `never`. The compiler finds every switch to update.
+@81 When you check every kind, one by one, at the end nobody is left. TypeScript calls that `never`.⏎⏎`assertNever` is a guard at the end of the line. If a new kind of thing joins later and you forget it, TypeScript shouts: "you forgot someone!"
+@82 `never` is the bottom type: assignable to everything, with nothing assignable to it. Control-flow analysis narrows the discriminated union to `never` once all members are handled, so `assertNever(x)` type-checks only for exhaustive code. The runtime throw guards against values that bypass the types (bad JSON, older clients).⏎⏎Alternatives: annotate the return type and rely on TS2366 (“function lacks ending return statement”), or `const _exhaustive: never = x;`. `satisfies never` also works as an expression-level check.
+@83 Both colours are handled before the last line. What type does `leftover` get?
+@84 Both colours have been handled already. What is left for `leftover`?
+@85 After `"red"` and `"green"` are ruled out, what could `light` still be?
+@86 If it is not red and not green, what can it be?
+@87 Every member has been handled, so nothing is left: `never`. That line can never run.
+@88 Nobody is left, so the type is `never`: "this can never happen".
+@89 Control-flow narrowing eliminates each literal; the residual type is `never`, and the line is unreachable.
+@90 `Shape` gained a triangle, and `assertNever` caught it. Handle the triangle (area = base × height ÷ 2).
+@91 A triangle joined the shapes, and TypeScript noticed it was forgotten. Add it! (Area = base × height ÷ 2.)
+@92 Add `case "triangle": return (shape.base * shape.height) / 2;` before `default`.
+@93 Add a case for `"triangle"` that gives back `base * height / 2`.
+@94 The type error pointed at the exact `switch` that needed updating. In a big program, that is every place a new case matters.
+@95 TypeScript showed exactly where the triangle was forgotten. In big programs that saves hours.
+@96 Exhaustiveness checking turns "add a union member" into a compiler-guided refactor: every non-exhaustive switch becomes TS2345 at the `assertNever` call.
+@97 triangle
+@98 square
+@99 circle
+@100 Why does `assertNever` still throw at runtime, if TypeScript already checks it?
+@101 If TypeScript already checks everyone, why does `assertNever` still blow a whistle when the code runs?
+@102 Can a value reach your code without passing through TypeScript’s checks?
+@103 Can something sneak in from outside, where TypeScript never looked?
+@104 Data from outside (a server, a file, an old saved state) is not checked by TypeScript. The throw makes such a surprise loud instead of silently wrong.
+@105 Things from outside (like the internet) are never checked by TypeScript. The whistle catches them.
+@106 Types are erased and external data is unverified; the runtime branch converts a type-system breach into a clear error instead of undefined behaviour.
+@107 Values from outside the program can still reach it
+@108 A function returning `never` must throw or TypeScript complains
+@109 True, but that is a rule about the signature, not the reason it is useful.
+@110 That is a rule, but not the reason it helps.
+@111 When every case is handled, the remaining type is `never`.
+@112 `assertNever(value)` in `default` makes a forgotten case a type error.
+@113 It also throws if a surprise value arrives at runtime.
+@114 When everyone is handled, `never` is left.
+@115 `assertNever` shouts if someone is forgotten.
+@116 It also catches surprises from outside.
+@117 `never` is the bottom type; exhaustive narrowing ends there.
+@118 Use `assertNever` or `satisfies never`.
+@119 Keep the runtime throw for unvalidated input.
+@120 Read and write enums.
+@121 Know enums exist at runtime, while unions disappear.
+@122 Prefer a literal union (or an `as const` object) in new code.
+@123 Understand enums when you meet them.
+@124 Know that enums stay when the code runs.
+@125 Usually choose a list of words instead.
+@126 Recognise enums; prefer unions in new code.
+@127 Need the values at runtime? Use an `as const` list.
+@128 Keep one source of truth.
+@129 You can read enums now.
+@130 A list of words usually does the job better.
+@131 Write the choices once.
+@132 Enums have emit and semantics of their own.
+@133 Unions are erasable and structural.
+@134 Tooling trends favour erasable syntax.
+@135 Two ways to name a fixed set of values.
+@136 Two ways to make a fixed list of choices.
+@137 An **enum** names a set of values, and exists at runtime as an object:⏎⏎⟦F1⟧⏎⏎A **literal union** does the same job with no runtime code at all:⏎⏎⟦F2⟧⏎⏎Most modern TypeScript prefers unions: they are plain strings, read well in logs and JSON, and disappear after compiling.
+@138 An enum is a numbered list of names: `Up` is 0, `Down` is 1. It stays in your program when it runs.⏎⏎A list of words, like `"red" | "green"`, does the same job but disappears when the code runs, because the words are already clear.
+@139 Numeric enums emit a bidirectional map (`Direction[0] === "Up"`) and are unsound in older versions (any number was assignable before TS 5.0). String enums are nominal: `"red"` is not assignable to `Colour.Red`, which is sometimes wanted, often surprising. `const enum` inlines values but breaks with `isolatedModules` transpilers (esbuild, Babel) across files.⏎⏎An `as const` object plus `(typeof X)[keyof typeof X]` gives named constants, runtime iteration and a structural union type, with no enum-specific semantics. Node’s type stripping and `erasableSyntaxOnly` (TS 5.8) also reject enums, a growing reason to avoid them.
+@140 A numeric enum. What prints?
+@141 What will this enum show?
+@142 Members count from 0, and a numeric enum can be read both ways: name to number and number to name.
+@143 Low is 0, Medium is 1, High is 2. And you can look up a number to get its name.
+@144 `Level.Medium` is `1`, and numeric enums also map back: `Level[2]` is `"High"`. That reverse map is real code in your output.
+@145 Medium is number 1, and number 2 is called "High".
+@146 Numeric enums compile to an object with both forward and reverse entries; string enums only map forward.
+@147 Which one leaves no code at all in the JavaScript output?
+@148 Which one disappears completely when the code runs?
+@149 Which is only a type?
+@150 Which one is only a label for TypeScript?
+@151 A literal union is only a type, so it is erased. An enum compiles to an object.
+@152 The list of words is only a label, so it vanishes. The enum stays as a real thing.
+@153 Type aliases are fully erased; `enum` declarations emit (and `declare const enum` inlines), which matters for bundle size and erasable-syntax tooling.
+@154 `type Colour = "red" | "green";`
+@155 `enum Colour { Red = "red", Green = "green" }`
+@156 An enum becomes a real object in the JavaScript.
+@157 Enums stay in the program as real objects.
+@158 Write `nextLevel`: it cycles `"low"` → `"medium"` → `"high"` → `"low"`, using the `LEVELS` list.
+@159 Make `nextLevel` go round: low, medium, high, then back to low. Use the `LEVELS` list.
+@160 Find the position with `LEVELS.indexOf(level)`, add one, and wrap with `% LEVELS.length`.
+@161 Find where `level` is in the list, go one further, and use `%` to go back to the start.
+@162 The list gives you what an enum would (the values, in order, at runtime) and the union type comes from it for free.
+@163 The list knows the order, so going round is easy.
+@164 The `as const` tuple doubles as ordered runtime data and the source of the union type; `% length` wraps. The `?? "low"` satisfies the checker for out-of-range reads.
+@165 low to medium
+@166 medium to high
+@167 high wraps to low
+@168 Enums name values and exist at runtime.
+@169 Literal unions are erased and read as plain values.
+@170 An `as const` list or object gives you runtime values and a union type.
+@171 Enums are numbered lists that stay when the code runs.
+@172 Lists of words vanish, and read clearly.
+@173 Usually choose the list of words.
+@174 Numeric enums have reverse maps and historical unsoundness.
+@175 String enums are nominal.
+@176 Prefer `as const` objects and unions; avoid `const enum` across files.
+@177 Return success or failure as a value: `Result<T, E>`.
+@178 Handle both cases, checked by TypeScript.
+@179 Choose between throwing and returning a result.
+@180 Send back a parcel that says whether it worked.
+@181 Open the parcel safely.
+@182 Know when to stop everything and when to send a parcel.
+@183 Make failure visible in the type.
+@184 Let the checker force the `ok` check.
+@185 Keep exceptions for the exceptional.
+@186 Parcels make problems visible.
+@187 Always read the label.
+@188 Stop everything only for real bugs.
+@189 `Result` for recoverable errors.
+@190 Exceptions for invariants.
+@191 Keep error types precise.
+@192 Failure as a value you must open.
+@193 A parcel that says "it worked" or "it failed".
+@194 A thrown error is invisible in a function’s type: nothing tells the caller `parse` can fail. A **`Result`** makes failure part of the return type:⏎⏎⟦F1⟧⏎⏎TypeScript will not let you touch `result.value` until you have checked `result.ok`.
+@195 Imagine a machine that sends you a parcel. The label says either "worked" (and there is a value inside) or "failed" (and there is a note saying why).⏎⏎You have to read the label before you open the parcel. TypeScript makes sure you do.
+@196 `Result<T, E>` is a discriminated union on a boolean literal (`ok: true | false`). It puts expected, recoverable failures (validation, parsing, not-found) into the type, so callers handle them by construction; exceptions remain for bugs and truly exceptional conditions.⏎⏎Keep `E` structured in real code (a union of error kinds rather than a string) so callers can switch on it. Helpers like `map`, `andThen` and `unwrapOr` compose results; libraries such as `neverthrow` and Effect build on this.
+@197 Write `parsePort`: a whole number from 1 to 65535 is `{ ok: true, value }`; anything else is `{ ok: false, error: "Not a port: <text>" }`.
+@198 Make `parsePort`: if the text is a whole number from 1 to 65535, send back a "worked" parcel with the number. Otherwise send a "failed" parcel with "Not a port: …".
+@199 Convert with `Number(text)`, check `Number.isInteger` and the range (and that the text is not empty), then return one of the two object shapes.
+@200 Turn the text into a number. If it is not a whole number from 1 to 65535, send the "failed" parcel. Otherwise send "worked" with the number.
+@201 Callers now see in the type that parsing can fail, and must check `ok` before using `value`.
+@202 Anyone using `parsePort` has to read the label first. No surprises.
+@203 The return type documents the failure mode; property order in the literals matches the test’s JSON, which is incidental but stable.
+@204 a port
+@205 too big
+@206 not a number
+@207 empty
+@208 Write `unwrapOr`: the value if the result is ok, otherwise the fallback.
+@209 Make `unwrapOr`: open the parcel if it worked, or use the spare value if it failed.
+@210 `result.ok ? result.value : fallback` — the check narrows `result`.
+@211 If the label says ok, give back `result.value`; otherwise the spare.
+@212 Checking `result.ok` narrows the union, which is what makes `result.value` available.
+@213 Reading the label first is what lets you open the parcel.
+@214 Narrowing on the boolean discriminant gives access to `value`; `unwrapOr` is the simplest combinator of the family.
+@215 ok
+@216 failed
+@217 Which failure should be a `Result` rather than an exception?
+@218 Which problem should come back as a parcel, not stop everything?
+@219 Is the failure an expected, everyday outcome that the caller should handle?
+@220 Is it something that happens often and is normal, like a typo?
+@221 A user typing an invalid port is expected and recoverable: return a `Result`. A bug, like a missing required configuration file at start-up, can throw.
+@222 People make typos all the time, so that should be a parcel. A real bug can stop everything.
+@223 Return expected domain failures as values; throw for programmer errors and unrecoverable conditions where unwinding is the right behaviour.
+@224 The user typed an invalid port number
+@225 The code called a function with `undefined` because of a bug
+@226 A bug is not something callers should handle case by case. Let it throw and fix it.
+@227 A bug should be fixed, not handled every time.
+@228 `Result<T, E>` is a union: `{ ok: true; value }` or `{ ok: false; error }`.
+@229 Check `ok` before using `value`.
+@230 Results for expected failures, exceptions for bugs.
+@231 A parcel says "worked" or "failed".
+@232 Read the label before opening.
+@233 Parcels for normal problems, whistles for bugs.
+@234 Errors-as-values make failure modes explicit.
+@235 Structured `E` types enable exhaustive handling.
+@236 Combinators compose results.
+@237 Model the states of a process as a union, so impossible states cannot be written.
+@238 Move between states with a `transition(state, event)` function.
+@239 Ignore events that make no sense in a state.
+@240 Describe every situation your program can be in.
+@241 Move from one to the next, like a traffic light.
+@242 Ignore buttons pressed at the wrong time.
+@243 Model states, not flags.
+@244 Change state in one place.
+@245 Make nonsense unrepresentable.
+@246 Like a traffic light: one colour at a time.
+@247 One machine for changes.
+@248 No nonsense allowed.
+@249 FSMs with discriminated unions.
+@250 Pure transition functions.
+@251 Per-state data, enforced by types.
+@252 Make impossible states impossible to write.
+@253 A program can only be in one situation at a time.
+@254 A loading screen is often written as `{ loading: boolean; data?: string; error?: string }`. That allows nonsense like loading *and* failed, with data. A union of states allows only real situations:⏎⏎⟦F1⟧⏎⏎Changes happen through one function, `transition(state, event)`, which decides the next state. An event that makes no sense (a "resolve" while idle) simply leaves the state as it is.
+@255 A traffic light can be red, amber or green, but never two at once. Your program can work the same way.⏎⏎We list every situation: waiting, loading, done, or failed. And one machine decides what comes next when something happens.
+@256 A finite state machine = a union of states (each carrying only the data valid in it) + a union of events + a total transition function. Making illegal states unrepresentable removes whole classes of UI bugs (spinners that never stop, stale errors).⏎⏎Implement transitions as a switch on `state.status` with nested checks on `event.type`, returning `state` unchanged for ignored events. For larger machines, a table or a library (XState) adds hierarchy and guards; the type modelling stays the same.
+@257 Write `transition`: `start` moves idle to loading; while loading, `resolve` moves to success and `reject` to error; `reset` always goes back to idle; anything else changes nothing.
+@258 Make `transition`: start → loading; while loading, resolve → success and reject → error; reset → idle from anywhere; any other event leaves things as they are.
+@259 Handle `reset` first. Then `idle` + `start`. Then, inside `if (state.status === "loading")`, handle `resolve` and `reject`. Finally `return state`.
+@260 First check for reset. Then idle + start. Then, only while loading, resolve and reject. Everything else: give back the same state.
+@261 Each return builds a state that carries exactly its own data: a success always has `data`, an error always has a `message`.
+@262 Every situation has just what it needs: "done" has data, "failed" has a message.
+@263 Narrowing on both discriminants gives access to `event.data` only where it exists; the fallthrough `return state` makes ignored events explicit.
+@264 idle + start
+@265 loading + resolve
+@266 loading + reject
+@267 reset from anywhere
+@268 resolve while idle is ignored
+@269 Why is the union better than `{ loading: boolean; data?: string; error?: string }`?
+@270 Why is the list of situations better than one shape with lots of maybe-parts?
+@271 Count the combinations the second shape allows. How many make sense?
+@272 Can the second shape say "loading" and "failed" at the same time?
+@273 The object with optional fields allows combinations that can never happen (loading with an error and data). The union allows only the four real states.
+@274 The one-big-shape way lets nonsense happen, like loading and failed at once. The list makes nonsense impossible.
+@275 Product types of optionals admit 2×2×2 states, of which most are invalid; the sum type admits exactly the valid ones, and narrowing gives per-state data access.
+@276 It cannot represent impossible combinations
+@277 It is shorter to write
+@278 It is actually longer. The benefit is what it rules out.
+@279 It is longer! What matters is the nonsense it stops.
+@280 List the states as a union; each carries only its own data.
+@281 One `transition(state, event)` function moves between them.
+@282 Events that do not fit leave the state unchanged.
+@283 A program is in one situation at a time.
+@284 One machine decides what happens next.
+@285 Buttons pressed at the wrong time are ignored.
+@286 Sum types make illegal states unrepresentable.
+@287 Transitions are a total function.
+@288 Scale up with tables or statechart libraries.

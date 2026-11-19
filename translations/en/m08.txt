@@ -1,0 +1,244 @@
+@1 Write a function’s type: `(value: number) => string`.
+@2 Let TypeScript type a callback’s parameters from where it is used.
+@3 Know what a `void` callback may return.
+@4 Describe what a machine takes and gives back.
+@5 Let TypeScript fill in the labels for you.
+@6 Know what `void` means for a machine you hand over.
+@7 Name function types with a `type` alias.
+@8 Let contextual typing do the work for callbacks.
+@9 Functions can return functions.
+@10 Machines have types too.
+@11 Let TypeScript fill in the labels.
+@12 A machine can build machines.
+@13 Model behaviour with function types.
+@14 Prefer contextual typing to repeated annotations.
+@15 Closures capture configuration.
+@16 A function has a type, like any value.
+@17 A machine has a shape too: what goes in, what comes out.
+@18 Functions are values, so they have types. A **function type** lists the parameters and the return type:⏎⏎⟦F1⟧⏎⏎Notice `(value) => …` has no annotation: TypeScript already knows `value` is a `number`, because the function is going into a `Formatter` slot. That is **contextual typing**, and it is why callbacks rarely need annotations.
+@19 A machine’s type says what goes in and what comes out: `(value: number) => string` means "a number goes in, words come out".⏎⏎When you give a machine to another machine, TypeScript already knows what goes in, so you do not have to write the labels again.
+@20 A function type expression `(a: A, b: B) => R` is structural: parameter names are documentation, and a function with *fewer* parameters is assignable (extra arguments are ignored at runtime). Parameters are checked bivariantly for methods but contravariantly for function-typed properties under `strictFunctionTypes`.⏎⏎Contextual typing flows the expected type into arrow parameters, so annotate at the boundary (the `Formatter` alias or the parameter) and let callbacks infer. A `void` return type in a *callback* position means "the return value is ignored", so `(n) => arr.push(n)` is accepted where `(n: number) => void` is expected.⏎⏎For call signatures with properties, use an object type: `{ (value: number): string; label: string }`.
+@21 What type does TypeScript give `labels`?
+@22 What is the type of `labels`?
+@23 `map` collects whatever the function returns. What does a `Formatter` return?
+@24 Each number goes through `shout`. What kind of thing comes out each time?
+@25 Each number goes through a `Formatter`, which returns a `string`, so the result is a `string[]`.
+@26 Numbers go in and words come out, so you get a list of words: `string[]`.
+@27 `map<U>` infers `U` from the callback’s return type, here `string` from the `Formatter` alias.
+@28 Which of these can be passed where `(value: number) => void` is expected? Pick all that fit.
+@29 Which machines fit a slot that says `(value: number) => void`? Pick all that fit.
+@30 A callback may use fewer parameters than offered, and a `void` callback’s return value is ignored.
+@31 A machine can ignore things it is given, and whatever it gives back is thrown away.
+@32 Both one-parameter functions fit: the return value of a `void` callback is ignored. A function that *needs* two parameters does not fit, because only one will be given.
+@33 Machines with one input fit, even if they give something back (it is ignored). The one that needs two inputs will not get them.
+@34 Assignability of function types: fewer parameters is fine, more required parameters is not; and any return type is assignable to a `void` return in this position.
+@35 `(n) => console.log(n)`
+@36 `(n) => n * 2`
+@37 `(a: number, b: number) => a + b`
+@38 It requires two parameters, but callers will only pass one.
+@39 It needs two inputs, but it would only get one.
+@40 Write `makeGreeter`: it takes a greeting and returns a function that greets a name, so `makeGreeter("Hi")("Ada")` is `"Hi, Ada!"`.
+@41 Make `makeGreeter`, a machine that builds greeting machines: `makeGreeter("Hi")("Ada")` gives `"Hi, Ada!"`.
+@42 Return an arrow function that uses both `greeting` and `name` in a template literal.
+@43 Give back a little arrow machine that puts `greeting` and `name` together with backticks.
+@44 The return type `Greeter` types `name` for you, and the inner function remembers `greeting` (a closure).
+@45 Because the slot says `Greeter`, TypeScript already knows `name` is text. And the little machine remembers the greeting.
+@46 The declared return type contextually types the returned arrow; the closure captures `greeting`. Returning functions is how you build configurable behaviour without classes.
+@47 hi
+@48 hello
+@49 reusable
+@50 `log` does not fit the `Listener` type. Fix its parameter.
+@51 The `log` machine has the wrong plug. Fix its input label.
+@52 A `Listener` receives a `string`. What does `log` say it receives?
+@53 The slot says a word goes in. What does `log` say goes in?
+@54 Removing the wrong annotation lets contextual typing give `message` the right type, `string`. Writing `(message: string)` works too.
+@55 Once the wrong label is gone, TypeScript fills in the right one by itself.
+@56 A parameter annotation that contradicts the context is an error (a `string` cannot be passed to a `number` parameter). Dropping it lets the context supply `string`.
+@57 notifies one listener
+@58 The short version.
+@59 What you learned.
+@60 A function type is `(params) => returnType`.
+@61 Callbacks get their parameter types from the context.
+@62 A `void` callback’s return value is ignored.
+@63 A machine’s type says what goes in and what comes out.
+@64 TypeScript fills in labels for machines you hand over.
+@65 Machines can return machines.
+@66 Function types are structural; fewer parameters are assignable.
+@67 Annotate at boundaries, infer inside.
+@68 `void` in callback position ignores returns.
+@69 Write overload signatures when the return type depends on the argument type.
+@70 Know callers see only the overloads.
+@71 Prefer a union or a generic when that is enough.
+@72 Give a machine two ways to be used.
+@73 Know which way TypeScript picks.
+@74 Keep it simple when one way is enough.
+@75 Overloads connect input types to output types.
+@76 Write them above one implementation.
+@77 Do not use them when a union will do.
+@78 One machine can have several ways to be used.
+@79 Each way says what comes out.
+@80 Keep it simple when you can.
+@81 Overloads model correlated parameter/return types.
+@82 Keep the body honest: it is not checked per overload.
+@83 Prefer generics for "same type in, same type out".
+@84 Overloads: several signatures, one body.
+@85 One machine, several ways to use it.
+@86 Sometimes what a function returns depends on what you give it. **Overloads** list each way of calling it, followed by one implementation:⏎⏎⟦F1⟧⏎⏎Callers only see the first two lines. The third signature belongs to the body and must be compatible with all of them.
+@87 Some machines give different things back depending on what you put in. Put in one word, get one number. Put in a list of words, get a list of numbers.⏎⏎Overloads are a list of "ways to use this machine". TypeScript picks the first way that fits.
+@88 Overload resolution tries the signatures top to bottom and picks the first match, so order from most to least specific. The implementation signature is not callable from outside; it must be assignable from each overload, and TypeScript does not check that each overload’s return type matches what the body returns for that input, so keep the body honest.⏎⏎Reach for overloads only when the return type depends on the argument *type* in a way a union cannot express. If the relationship is "same type in, same type out", a generic is simpler; if it is "any of these, same result", a union parameter is enough.
+@89 Which overload does `many` use? What type does it get?
+@90 Which way of using `parse` is chosen for `many`? What type does it get?
+@91 The argument is an array of strings. Which signature accepts that?
+@92 A list of words goes in. Which way of using `parse` takes a list?
+@93 The second overload matches a `string[]`, so `many` is `number[]`, not the vague `number | number[]` of the body.
+@94 A list went in, so the second way is used, and a list of numbers comes out.
+@95 The call resolves against the overload list, never the implementation signature, so callers get the precise `number[]`.
+@96 Add overloads to `double` so a string gives a `string` and a number gives a `number`.
+@97 Teach `double` two ways: a word in gives a word out, a number in gives a number out.
+@98 Add two signatures above the implementation: `function double(value: string): string;` and `function double(value: number): number;`.
+@99 Write two extra lines above the machine: one for words and one for numbers, each ending with `;`.
+@100 The implementation stays as it is; the two overload lines go directly above it.
+@101 Keep the machine as it is. Just add the two lines above it.
+@102 With overloads, each caller gets the exact type for what they passed. Without them, every caller had to narrow `string | number` again.
+@103 Now TypeScript knows: words in, words out; numbers in, numbers out.
+@104 This is the canonical overload use case: a return type correlated with the argument type. A generic `T extends string | number` would not work here, because `value * 2` is not a `T`.
+@105 text gives text
+@106 a number gives a number
+@107 anything else is refused
+@108 doubles text
+@109 doubles a number
+@110 `len(value: string | unknown[]): number` returns a number either way. Do you need overloads?
+@111 `len` always gives back a number, whatever goes in. Does it need two ways?
+@112 Overloads earn their keep when the *return type* changes with the input.
+@113 Does the answer change kind depending on what goes in?
+@114 No: the return type is always `number`, so a union parameter says everything. Overloads would just be more to read.
+@115 No. It always gives a number, so one simple way is enough.
+@116 A union parameter suffices when the output does not depend on which member was passed. Overloads also degrade when callers hold a union (`len(x)` with `x: string | unknown[]` would match neither overload).
+@117 No, a union parameter is enough
+@118 Yes, one overload per input type
+@119 The return type never changes, so overloads add nothing but lines.
+@120 The answer is always a number, so extra ways add nothing.
+@121 Overloads list the ways to call a function, then one implementation.
+@122 Callers see only the overloads, tried in order.
+@123 Use them only when the return type depends on the input type.
+@124 Overloads are ways to use one machine.
+@125 TypeScript picks the first way that fits.
+@126 If the answer is always the same kind, you do not need them.
+@127 Order overloads from specific to general.
+@128 The implementation signature is invisible to callers.
+@129 Prefer unions or generics when they express the relationship.
+@130 Write a function whose result narrows a type: `value is string`.
+@131 Use it in `if` and in `filter`.
+@132 Know that TypeScript trusts a predicate, right or wrong.
+@133 Make your own "is it a …?" checker.
+@134 Use it to sort things out.
+@135 Know that TypeScript believes what your checker says.
+@136 Type predicates teach TypeScript your own checks.
+@137 They narrow in conditions and in `filter`.
+@138 They are trusted, not verified.
+@139 Make your own "is it a …?" checkers.
+@140 They help sort lists.
+@141 Make sure they tell the truth.
+@142 Guards: `(x: A) => x is B`.
+@143 Inferred predicates for simple bodies.
+@144 Test guards; they are assertions.
+@145 Your own checks can narrow types.
+@146 You can teach TypeScript a new way to look inside the box.
+@147 `typeof` and `in` narrow types. So can your own function, if its return type is a **type predicate**:⏎⏎⟦F1⟧⏎⏎When `isFish(pet)` is true, TypeScript knows `pet` is a `Fish`; otherwise it is a `Bird`. A plain `boolean` return type would not teach it anything.
+@148 Sometimes you want your own "is it a fish?" checker. If the checker says `pet is Fish`, TypeScript believes it.⏎⏎After the check says yes, TypeScript knows it is a fish and lets you use `swim`. If it says no, it must be the bird.
+@149 A user-defined type guard `(x: A) => x is B` (where `B` is assignable to `A`) narrows the argument in the true branch and, for unions, to the remaining members in the false branch. `Array.prototype.filter` has an overload taking a predicate, so `xs.filter(isFish)` is `Fish[]`.⏎⏎Since TS 5.5, predicates are also *inferred* for simple function bodies without a return annotation, e.g. `(x) => x !== undefined`. Writing one explicitly documents intent.⏎⏎The body is not verified: a predicate is an unchecked assertion with a boolean interface. Keep guards small and test them.
+@150 What type does `names` have after filtering with the predicate?
+@151 After the checker sorts them, what type is `names`?
+@152 `isDefined` promises `value is T`. `filter` uses that promise to change the element type.
+@153 The checker throws away the empty ones, and it tells TypeScript so.
+@154 `filter` has a special version for type predicates: the result keeps only the `T` part, so `undefined` is gone from the type too.
+@155 The checker removed the empty ones, and told TypeScript. So the list is just words now.
+@156 `filter<S extends T>(pred: (value: T) => value is S): S[]` narrows the element type; a plain `boolean` callback would leave `(string | undefined)[]`.
+@157 Change `isFish` so it narrows: its return type must be a type predicate.
+@158 Make `isFish` teach TypeScript: change what it says it gives back.
+@159 Replace `boolean` with `pet is Fish`.
+@160 Instead of `boolean`, write `pet is Fish`.
+@161 Same body, same runtime behaviour; only the return type changed. Now TypeScript learns from every call.
+@162 The checker works exactly the same. But now TypeScript listens to it.
+@163 The predicate connects the boolean result to a narrowing of `pet`; the runtime code is identical, which is also why nothing checks the body agrees with the claim.
+@164 narrows in an if
+@165 the else branch is a Bird
+@166 filter keeps only fish
+@167 a fish
+@168 a bird
+@169 `function isString(x: unknown): x is string { return true; }` What happens?
+@170 What if a checker always says yes, even for numbers?
+@171 Does TypeScript check that the body matches the promise?
+@172 Does TypeScript double-check your checker?
+@173 It compiles. TypeScript trusts a type predicate, so a wrong one makes wrong code type-check, and it fails at runtime instead. Keep predicates simple and tested.
+@174 TypeScript believes your checker, even when it is wrong! So a lying checker causes problems later.
+@175 Type predicates are unchecked assertions. Prefer inferred predicates or small, tested guards; for untrusted data, validate structurally (schema libraries do this).
+@176 It compiles, and TypeScript believes it
+@177 TypeScript reports that the body does not check anything
+@178 Nothing compares the body with the promise. That is the risk.
+@179 TypeScript does not check the inside of your checker.
+@180 `value is Type` as a return type makes a function narrow.
+@181 It works in `if` and in `filter`.
+@182 TypeScript trusts the predicate, so keep it correct.
+@183 Your own checker can teach TypeScript.
+@184 It works with `if` and with `filter`.
+@185 TypeScript believes your checker, so make it right.
+@186 User-defined guards narrow both branches for unions.
+@187 `filter` has a predicate overload.
+@188 Predicates are unchecked; prefer inferred ones (TS 5.5+).
+@189 Write a function that throws when a check fails.
+@190 Give it an `asserts` return type so TypeScript narrows after the call.
+@191 Choose between a predicate and an assertion.
+@192 Make a checker that stops everything if something is wrong.
+@193 After it, TypeScript knows the check passed.
+@194 Pick the right kind of checker.
+@195 Assertion functions turn runtime checks into type knowledge.
+@196 They return nothing and throw on failure.
+@197 Use them for things that must be true.
+@198 Whistle-blower checkers stop bad values.
+@199 After them, TypeScript trusts the value.
+@200 Assertions: validation at boundaries, preconditions, test helpers.
+@201 They compose with predicates.
+@202 Mind TS2775 for arrow functions.
+@203 Check, or throw: then TypeScript knows.
+@204 A checker that stops the program when something is wrong.
+@205 A type predicate returns `true` or `false`. An **assertion function** returns nothing: it throws when the check fails. Its return type tells TypeScript what is true *after* the call:⏎⏎⟦F1⟧⏎⏎A shorter form, `asserts condition`, says "if this returns, the condition was true".
+@206 Some checkers do not answer yes or no. They just stop everything if something is wrong, like a referee blowing a whistle.⏎⏎If the program gets past the checker, the check must have passed. TypeScript knows that, so after the line it treats the value as the right type.
+@207 `asserts x is T` narrows `x` for the rest of the scope after the call; `asserts cond` narrows by the truthiness of the argument expression. The function must return `void` (or throw), and the call target must be declared with an explicit type (a function declaration, or a `const` with an annotated type), or TypeScript reports TS2775.⏎⏎Use predicates when both branches matter (`if (isX(v)) … else …`) and assertions for invariants that should stop execution (parsing, test helpers, internal preconditions). Node’s `assert` module and testing libraries use exactly these signatures.
+@208 What prints?
+@209 What will it show?
+@210 `1 + 1 === 3` is false, so `assert` throws before `"fine"` is printed.
+@211 1 + 1 is not 3, so the checker stops everything before "fine".
+@212 The assertion fails, so it throws and the next line never runs. `catch` prints the message.
+@213 The checker blew the whistle, so "fine" never happened. The catch part prints the message instead.
+@214 An assertion is just a function that may throw; the `asserts` signature only affects control-flow analysis after a successful return.
+@215 Write `assertIsNumber`: it throws a `TypeError` saying `Expected a number, got <type>` unless the value is a number, and TypeScript narrows after the call.
+@216 Make `assertIsNumber`: if the value is not a number, throw a `TypeError` ("Expected a number, got …"). After it, TypeScript must know it is a number.
+@217 Return type: `asserts value is number`. Body: `if (typeof value !== "number") throw new TypeError(...)`.
+@218 Say `asserts value is number` as the return type, and throw a `TypeError` when `typeof value` is not `"number"`.
+@219 The `asserts` return type is the contract: if the function returns at all, `value` is a number. The throw is what makes it true.
+@220 Getting past the checker means the value really is a number. The throw makes sure of that.
+@221 The narrowing applies to the argument expression in the caller’s scope after the call. Throwing `TypeError` (rather than a bare `Error`) lets callers distinguish validation failures.
+@222 narrows after the call
+@223 accepts a number
+@224 rejects text
+@225 You need to handle both cases: draw a circle, or draw a square. Predicate or assertion?
+@226 You want to do one thing for circles and another for squares. Which checker?
+@227 An assertion throws in the "no" case. Do you want to stop, or to do something else?
+@228 Do you want the program to stop, or to do the other thing?
+@229 A predicate: `if (isCircle(shape)) … else …` keeps both branches. An assertion is for "this must be true, or stop".
+@230 The yes/no checker, so you can do one thing or the other. The whistle-blower would stop everything.
+@231 Predicates branch; assertions enforce invariants. Using an assertion for ordinary branching turns expected cases into exceptions.
+@232 A type predicate (`shape is Circle`)
+@233 An assertion function (`asserts shape is Circle`)
+@234 An assertion throws for squares, but squares are a normal case here.
+@235 That would stop the program for every square!
+@236 An assertion function throws when a check fails.
+@237 `asserts value is T` narrows after the call.
+@238 Predicates branch; assertions stop.
+@239 Some checkers stop everything if something is wrong.
+@240 After them, TypeScript knows the check passed.
+@241 Use yes/no checkers when both answers are normal.
+@242 `asserts x is T` and `asserts cond` narrow subsequent code.
+@243 Call targets need explicit types (TS2775).
+@244 Use assertions for invariants, not control flow.

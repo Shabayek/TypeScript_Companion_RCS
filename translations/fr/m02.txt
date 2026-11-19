@@ -1,0 +1,227 @@
+@1 Les comparaisons répondent vrai ou faux.
+@2 Utiliser `===` et `!==`.
+@3 Attention à la limite : `>=` ou `>`.
+@4 Comparer répond oui ou non.
+@5 Attention au bord : `>=` ou `>` ?
+@6 Utiliser `===` et `!==` ; réserver `== null` aux tests « null ou undefined ».
+@7 Les objets se comparent par référence ; comparer leur contenu explicitement.
+@8 Tester la valeur limite de chaque comparaison.
+@9 Les comparaisons produisent `true` ou `false`.
+@10 Demander « est-ce plus grand ? » renvoie oui ou non : `true` ou `false`.
+@11 Six symboles répondent à des questions :⏎⏎- `===` veut dire exactement égal⏎- `!==` veut dire différent⏎- `<` et `>` veulent dire plus petit et plus grand⏎- `<=` et `>=` incluent la limite⏎⏎Utilise `===`, pas `==`. Le `=` simple affecte une valeur ; le double `==` convertit les types avant de comparer, donc `0 == ""` vaut `true`. Ce n’est presque jamais ce que tu voulais dire.
+@12 Une question a une réponse : `true` ou `false`. Les symboles de comparaison posent des questions.⏎⏎`===` demande « est-ce exactement pareil ? » `>` demande « celui de gauche est-il plus grand ? »⏎⏎Attention avec `=`. Un seul signe égal **range une valeur**. Deux (`==`), c’est une comparaison bâclée. Trois (`===`), c’est la comparaison soigneuse.
+@13 `===` et `!==` comparent sans coercition de type. `==` suit l’algorithme d’égalité laxiste, donc `0 == ""`, `null == undefined` et `"1" == 1` valent tous `true`. Son seul usage idiomatique est `x == null`, qui correspond à la fois à `null` et à `undefined`.⏎⏎Les objets et les tableaux se comparent par référence : `[1] === [1]` vaut `false`, alors compare leur contenu ou un identifiant. `NaN` n’est égal à rien, pas même à lui-même ; utilise `Number.isNaN`.⏎⏎TypeScript signale les comparaisons qui ne peuvent jamais être vraies, comme un `number` contre une `string` (TS2367), ce qui attrape la plupart des bugs de coercition avant l’exécution.
+@14 Attention : une des comparaisons est laxiste.
+@15 Attention : une de ces vérifications est bâclée.
+@16 `===` compare la valeur *et* le type. `==` convertit la chaîne en nombre avant de comparer.
+@17 `===` est strict : un nombre et un mot ne sont jamais pareils. `==` est bâclé : il transforme d’abord `"3"` en `3`.
+@18 `===` vérifie aussi le type, et un nombre n’est pas une chaîne. `==` convertit `"3"` en `3` et se dit d’accord : c’est pour ça qu’on l’évite. TypeScript prévient même pour les deux lignes : un nombre et une chaîne ne peuvent jamais être égaux, donc les comparer est presque toujours une erreur.
+@19 `===` vérifie aussi le genre de valeur, et un nombre n’est pas un mot, donc il dit false. `==` transforme d’abord `"3"` en `3` puis dit true : c’est pour ça qu’on utilise `===`. TypeScript te prévient même : un nombre et un mot ne peuvent jamais être pareils.
+@20 `===` compare type et valeur, donc un nombre n’est jamais égal à une chaîne. `==` convertit d’abord `"3"` en `3`. TypeScript signale les deux lignes avec TS2367 (les types n’ont rien en commun) : c’est ainsi qu’il élimine toute cette catégorie de bugs.
+@21 Quelle comparaison vaut `true` ?
+@22 Laquelle vaut `true` ?
+@23 Vérifie chacune avec soin : `>=` inclut les valeurs égales, `>` non, et `===` compare aussi le type.
+@24 `>=` veut dire « plus grand ou pareil ». `>` veut dire seulement « plus grand ».
+@25 `5 >= 5` est vrai parce que `>=` inclut l’égalité.
+@26 `5 >= 5` veut dire « 5 est plus grand que 5 ou pareil ». C’est pareil, donc c’est vrai.
+@27 `>=` est inclusif, donc `5 >= 5` vaut `true`. `"5" === 5` vaut `false` car rien n’est converti, et `4 > 4` vaut `false` par définition.
+@28 `"5" === 5`
+@29 Types différents, donc `===` dit false.
+@30 Un mot et un nombre sont de genres différents, donc `===` dit false.
+@31 `5 >= 5`
+@32 `4 > 4`
+@33 `>` est strict. `4` n’est pas plus grand que `4`.
+@34 `>` veut dire « plus grand que ». 4 n’est pas plus grand que 4.
+@35 Autoriser exactement 18 ans et plus.
+@36 Laisser entrer les personnes de 18 ans ou plus.
+@37 Une personne de 18 ans doit pouvoir entrer, donc la limite est incluse. Quel opérateur l’inclut ?
+@38 18 doit compter aussi. Choisis le signe qui veut dire « plus grand ou pareil ».
+@39 `>` refuserait une personne de 18 ans. `>=` inclut 18. `=` affecterait au lieu de comparer.
+@40 `>` dirait non à quelqu’un qui a exactement 18 ans. `>=` dit oui à 18 aussi. Un `=` tout seul range une valeur dans une boîte au lieu de comparer.
+@41 `>=` rend la limite inclusive. Les erreurs d’une unité aux limites font partie des bugs de logique les plus courants, alors teste exprès la valeur limite exacte (ici 18).
+@42 La version courte.
+@43 Ce que tu as appris.
+@44 Les comparaisons renvoient des booléens.
+@45 `===` vérifie la valeur et le type ; `==` convertit d’abord.
+@46 `>=` inclut la limite, `>` non.
+@47 Comparer renvoie `true` ou `false`.
+@48 `===` vérifie la valeur et le genre ; `==` est bâclé.
+@49 `>=` inclut le nombre lui-même, `>` non.
+@50 Les opérateurs d’égalité et de comparaison renvoient un `boolean`.
+@51 `===` ne convertit jamais ; `==` si (ne garder que l’idiome `x == null`).
+@52 Les objets se comparent par référence ; `NaN` n’est égal à rien.
+@53 Pour aller plus loin : quel type a `isAdult` ?
+@54 Un défi : quel type a `isAdult` ?
+@55 Une comparaison répond toujours oui ou non.
+@56 Une comparaison répond toujours oui ou non. C’est quel type, ça ?
+@57 Toute comparaison produit un `boolean`. TypeScript ne calcule pas que `17 >= 18` vaut `false` au niveau des types.
+@58 Les comparaisons donnent toujours `true` ou `false` : c’est le type `boolean`.
+@59 Les opérateurs de comparaison sont typés `boolean` ; TypeScript ne fait pas d’évaluation constante, même quand les deux opérandes sont des types littéraux.
+@60 L’ordre des branches fait partie de la logique.
+@61 Seule la première branche vraie s’exécute.
+@62 Sortir tôt pour éviter l’imbrication profonde.
+@63 L’ordre des vérifications compte.
+@64 Seul le premier chemin vrai est pris.
+@65 Sortir tôt garde le code simple.
+@66 L’ordre des branches fait le sens.
+@67 Préférer les retours anticipés à l’imbrication.
+@68 Activer `noImplicitReturns` pour attraper les chemins manquants.
+@69 Seule la première branche qui correspond s’exécute.
+@70 Seul le premier chemin qui correspond est pris.
+@71 Un `if` pose une question. Si la réponse est vraie, son bloc s’exécute. Sinon, le `else if` suivant a son tour, et `else` attrape tout ce qui reste.⏎⏎⟦F1⟧⏎⏎Les branches sont vérifiées **dans l’ordre** et seule la première vraie s’exécute. Cet ordre, c’est la logique.
+@72 Le code peut choisir un chemin, comme un sentier dans la forêt.⏎⏎⟦F1⟧⏎⏎Vérifie la première question. Si elle est vraie, prends ce chemin et ignore le reste.
+@73 Une chaîne `if` / `else if` teste ses conditions de haut en bas et exécute le premier bloc dont la condition est « truthy » ; les autres sont sautés. Ordonne les conditions de la plus spécifique à la moins spécifique, sinon une condition large masquera une condition étroite.⏎⏎Un `return` anticipé (une clause de garde) supprime l’imbrication : une fois qu’une branche a fait son return, le code en dessous peut supposer que sa condition était fausse. TypeScript affine les types avec exactement ce raisonnement (module 5).⏎⏎Avec `noImplicitReturns`, le compilateur signale aussi une fonction dont certains chemins renvoient une valeur et d’autres arrivent au bout sans rien renvoyer.
+@74 Quelle branche s’exécute ?
+@75 Quel chemin le code va-t-il prendre ?
+@76 Vérifie les conditions depuis le haut. La première qui est vraie gagne, et le reste est sauté.
+@77 Commence en haut. Est-ce que 72 vaut au moins 90 ? Non. Au moins 60 ?
+@78 72 ne suffit pas pour l’or, mais dépasse 60. La deuxième branche s’exécute et le reste est sauté.
+@79 72 ne suffit pas pour l’or, mais c’est plus que 60. Donc le chemin de l’argent s’exécute, et les autres sont sautés.
+@80 Les conditions sont testées dans l’ordre : `72 >= 90` est faux, `72 >= 60` est vrai, donc `silver` est affiché et le bloc `else` n’est jamais évalué.
+@81 Remets la fonction dans un ordre qui marche.
+@82 Remets les lignes dans le bon ordre.
+@83 L’en-tête de la fonction vient en premier et son accolade fermante en dernier. Le bloc `if` se trouve à l’intérieur, avant le return final.
+@84 Commence par la ligne qui dit `function`. Termine par le dernier `}`.
+@85 La fonction s’ouvre, la condition s’exécute, et le `return` anticipé sort quand elle est vraie. Sans correspondance, la dernière ligne renvoie `"fail"`.
+@86 La fonction commence, la vérification vient ensuite, et `return "pass"` sort tôt. Si la vérification échoue, la dernière ligne renvoie `"fail"`.
+@87 Le `return` anticipé sort dès que la condition est vraie ; le `return` final est le cas par défaut. Chaque chemin renvoie une `string`, comme l’exige l’annotation de retour.
+@88 Écris `describeTemperature` : en dessous de 10, c’est `cold` ; en dessous de 25, `mild` ; sinon, `hot`.
+@89 Fais `describeTemperature` : sous 10, c’est `cold` ; sous 25, c’est `mild` ; le reste, c’est `hot`.
+@90 Vérifie d’abord le cas le plus froid et renvoie tout de suite. La dernière ligne n’a pas besoin de condition.
+@91 Vérifie d’abord le plus froid et renvoie le mot tout de suite. La dernière ligne n’a pas besoin de vérification.
+@92 4 degrés donne cold
+@93 10 degrés donne mild
+@94 18 degrés donne mild
+@95 30 degrés donne hot
+@96 Les branches sont vérifiées dans l’ordre ; seule la première vraie s’exécute.
+@97 `else` attrape tout ce qui reste.
+@98 Un `return` anticipé garde le reste de la fonction à plat.
+@99 Les vérifications se font dans l’ordre ; seule la première vraie s’exécute.
+@100 `else` attrape tout ce qui reste.
+@101 `return` peut faire sortir tôt d’une fonction.
+@102 Les conditions sont testées dans l’ordre ; la première « truthy » gagne.
+@103 Ordonne-les de la plus spécifique à la moins spécifique.
+@104 Les clauses de garde aplatissent le code et alimentent l’affinage de TypeScript.
+@105 Pour aller plus loin : écris `grade` : `"A"` pour 90 et plus, `"B"` pour 75 et plus, `"C"` pour 50 et plus, sinon `"F"`.
+@106 Un défi : fais en sorte que `grade` donne une lettre : A (90+), B (75+), C (50+), sinon F.
+@107 Vérifie en partant de la tranche la plus haute, et renvoie dès qu’une tranche convient.
+@108 Commence par la meilleure note et descends. Renvoie la première lettre qui convient.
+@109 Vérifier de haut en bas permet à chaque `if` de n’avoir besoin que d’une comparaison. Le type de retour liste les quatre lettres possibles, donc une faute de frappe comme `"E"` serait une erreur.
+@110 Aller de haut en bas garde chaque vérification simple. Et le type des lettres empêche les fautes de frappe.
+@111 Des clauses de garde ordonnées évitent les conditions d’intervalle comme `score >= 75 && score < 90`. Le type de retour en union de littéraux documente et impose l’ensemble des résultats possibles.
+@112 note maximale
+@113 exactement 75
+@114 une réussite
+@115 pas encore
+@116 « Falsy » : `false`, `0`, `""`, `null`, `undefined`, `NaN`.
+@117 `"0"` est « truthy » parce qu’il n’est pas vide.
+@118 Utiliser un ternaire quand les deux réponses sont courtes.
+@119 Ceux-ci comptent comme non : `false`, `0`, `""`, `null`, `undefined`, `NaN`.
+@120 `"0"` compte comme oui, parce qu’il n’est pas vide.
+@121 Utiliser `? :` quand les deux réponses sont courtes.
+@122 Connaître les huit valeurs « falsy ».
+@123 Vérifier explicitement quand `0` ou `""` sont des données valides.
+@124 Les ternaires pour les valeurs, `if` pour le flot de contrôle.
+@125 Certaines valeurs comptent comme fausses même si elles ne valent pas `false`.
+@126 Certaines valeurs comptent comme « non », même si elles ne sont pas `false`.
+@127 Les conditions n’ont pas besoin d’un vrai booléen. Elles acceptent n’importe quelle valeur, puis décident :⏎⏎**« Falsy » (compte comme faux) :** `false`, `0`, `""`, `null`, `undefined`, `NaN`.⏎⏎**Tout le reste est « truthy » (compte comme vrai)**, y compris `"0"`, `"false"` et `[]`.⏎⏎Pour un choix rapide entre deux options, le **ternaire** te donne une valeur au lieu d’une branche : `const label = count === 1 ? "item" : "items";`
+@128 Dans un `if`, certaines valeurs font comme « non » : le texte vide, zéro, et rien du tout.⏎⏎Tout le reste fait comme « oui », même le texte `"0"`, ce qui surprend presque tout le monde.⏎⏎Le ternaire est un minuscule if/else qui te rend une valeur : `count === 1 ? "item" : "items"`.
+@129 Une condition convertit sa valeur avec ToBoolean. Les valeurs « falsy » sont `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined` et `NaN` ; tout le reste, y compris `"0"`, `[]` et `{}`, est « truthy ».⏎⏎Un test de « truthiness » traite pareil « absent » et « vide ou zéro » : `if (count)` saute un `0` pourtant légitime. Quand seuls `null` ou `undefined` doivent compter comme absents, utilise `!= null`, `=== undefined` ou `??` (module 5).⏎⏎L’opérateur conditionnel `a ? b : c` est une expression, donc il se compose ; mais les ternaires imbriqués deviennent vite illisibles.
+@130 Lesquelles de ces valeurs sont « falsy » ?
+@131 Lesquelles de ces valeurs comptent comme « non » ?
+@132 Les valeurs « falsy » sont `false`, `0`, `""`, `null`, `undefined` et `NaN`. Un texte non vide n’est jamais « falsy ».
+@133 Zéro et les mots vides comptent comme non. N’importe quel mot avec des lettres compte comme oui.
+@134 `0` et `""` sont « falsy ». `"0"` et `"false"` sont des textes non vides, donc ils sont « truthy ».
+@135 `0` et `""` (les mots vides) comptent comme non. `"0"` et `"false"` contiennent des lettres, donc ils comptent comme oui.
+@136 `0` et `""` sont « falsy » ; `"0"` et `"false"` sont des chaînes non vides, donc « truthy ». ToBoolean ne regarde jamais ce que dit une chaîne.
+@137 `0`
+@138 `""`
+@139 `"0"`
+@140 C’est un texte avec un caractère dedans. Un texte non vide est « truthy ».
+@141 C’est un mot avec une lettre dedans. Les mots qui ne sont pas vides comptent comme oui.
+@142 `"false"`
+@143 Le mot "false" reste une chaîne non vide, donc il compte comme vrai.
+@144 Le mot "false" a quand même des lettres, donc il compte comme oui.
+@145 Zéro est « falsy ». Qu’est-ce qui s’affiche ?
+@146 Zéro compte comme non. Qu’est-ce que ça va montrer ?
+@147 `a ? b : c` donne `b` quand `a` est « truthy » et `c` quand il est « falsy ». Est-ce que `0` est « truthy » ?
+@148 La question `? :` choisit la première réponse pour oui, la deuxième pour non. Est-ce que 0 compte comme oui ?
+@149 `0` est « falsy », donc le ternaire choisit la valeur après les deux-points.
+@150 `0` compte comme non, donc la question `? :` choisit la réponse après les deux-points.
+@151 `0` est « falsy », donc l’expression conditionnelle évalue son troisième opérande. Si `0` est une donnée valide dans ton domaine, teste plutôt explicitement `n !== 0` ou `n === undefined`.
+@152 Écris `pluralise` : `1` reste au singulier, tout le reste prend un `s`.
+@153 Fais `pluralise` : `1` reste tel quel, tout le reste prend un `s`.
+@154 Compare `count` avec 1, puis choisis entre `word` et `word + "s"`.
+@155 Demande « count vaut-il 1 ? » avec `? :`, et choisis entre `word` et `word + "s"`.
+@156 un chat
+@157 trois chats
+@158 zéro chat
+@159 `0`, `""`, `null`, `undefined`, `NaN` et `false` sont « falsy ».
+@160 Un texte non vide est toujours « truthy », même `"false"`.
+@161 Un ternaire produit une valeur ; un `if` produit une branche.
+@162 `0`, `""`, `null`, `undefined`, `NaN` et `false` comptent comme non.
+@163 Les mots avec des lettres comptent toujours comme oui, même `"false"`.
+@164 La question `? :` choisit une réponse parmi deux.
+@165 « Falsy » : `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined`, `NaN`.
+@166 La « truthiness » traite zéro et vide comme absents.
+@167 `?:` est une expression ; garde-la à un seul niveau.
+@168 Pour aller plus loin : `||` ou `??`. Qu’est-ce qui s’affiche ?
+@169 Un défi : `||` et `??` se ressemblent. Qu’est-ce que ça va montrer ?
+@170 `||` se rabat sur la valeur de secours pour *n’importe quelle* valeur « falsy », y compris `0`. `??` ne se rabat que pour `null` et `undefined`.
+@171 `||` abandonne aussi devant 0. `??` n’abandonne que quand il n’y a vraiment rien (null ou undefined).
+@172 Un volume enregistré à `0` est une vraie valeur, mais `||` le traite comme absent. `??` le garde.
+@173 Volume 0 veut dire « silencieux », et c’est un vrai choix ! `||` le jette, `??` le garde.
+@174 `??` teste le « nullish » (`null | undefined`) plutôt que le « falsy » : c’est donc le bon opérateur de valeur par défaut pour les nombres, les chaînes vides et `false`.
+@175 Utiliser `switch` pour des listes fixes d’options.
+@176 `default` n’est pas facultatif dans du vrai code.
+@177 Sortir tôt au lieu d’imbriquer sur trois niveaux.
+@178 Utiliser `switch` pour une courte liste d’options.
+@179 Toujours ajouter un `default`.
+@180 Sortir tôt au lieu d’imbriquer profondément.
+@181 Préférer `switch` à de longues échelles de `else if` sur une même valeur.
+@182 Rendre les switch sur des unions exhaustifs avec `never`.
+@183 Les clauses de garde gardent le chemin principal sans indentation.
+@184 `switch` sert pour plusieurs options fixes.
+@185 `switch` sert à choisir entre quelques options fixes.
+@186 Quand tu choisis entre une poignée de valeurs connues, `switch` se lit mieux qu’une échelle de `else if`.⏎⏎⟦F1⟧⏎⏎Chaque `case` est comparé avec `===`. `default` attrape tout ce qui ne correspond pas. Comme chaque branche fait un return, aucun `break` n’est nécessaire.
+@187 `switch`, c’est une rangée de portes. Chaque `case` est une porte avec un nom dessus. `default` est la porte pour tous les autres.⏎⏎Si tu fais `return` tout de suite, tu n’as jamais besoin de penser à `break`.
+@188 `switch` compare avec l’égalité stricte (`===`). Un cas continue dans le suivant s’il ne fait pas `return`, `break` ou `throw` ; active `noFallthroughCasesInSwitch` pour qu’un passage accidentel au cas suivant soit une erreur de compilation.⏎⏎Sur une union de types littéraux, chaque `case` affine la valeur, et un `default` qui l’affecte à `never` rend le switch *exhaustif* : ajoute un membre à l’union et chaque switch qui l’oublie cesse de compiler.⏎⏎⟦F1⟧
+@189 La même logique, deux formes.
+@190 La même idée, deux formes.
+@191 if imbriqués
+@192 Chaque condition repousse le travail principal plus à droite.
+@193 Chaque vérification pousse le travail principal plus à droite.
+@194 Clauses de garde
+@195 Les cas particuliers sortent tôt ; le chemin principal reste à plat.
+@196 Les cas particuliers sortent tôt, alors le chemin principal reste droit.
+@197 Attrape toutes les valeurs qui ne sont pas red.
+@198 Attrape toutes les couleurs qui ne sont pas red.
+@199 Un `switch` a une branche spéciale pour « aucun des cas ». Comment s’appelle-t-elle ?
+@200 Il y a une porte pour « tout le reste ». Quel est son nom ?
+@201 `default` est la branche pour toute valeur qui n’a correspondu à aucun `case`.
+@202 `default` est la porte pour toute valeur qu’aucun `case` n’a reconnue.
+@203 `default` s’exécute quand aucun `case` ne correspond selon `===`. Il n’est pas obligé d’être à la fin, mais c’est là que les lecteurs l’attendent.
+@204 Écris `sizeCode` avec un `switch` : small → `S`, medium → `M`, large → `L`, tout le reste → `?`.
+@205 Fais `sizeCode` avec un `switch` : small → `S`, medium → `M`, large → `L`, tout le reste → `?`.
+@206 Commence par `switch (size) {`, puis un `case` par valeur, et un `default` à la fin.
+@207 Commence par `switch (size) {`, puis un `case` pour chaque taille, et `default` à la fin.
+@208 small
+@209 medium
+@210 large
+@211 taille inconnue
+@212 `switch` sert pour un ensemble d’options connues.
+@213 `default` gère tout ce qui ne correspond pas.
+@214 Les clauses de garde gardent le chemin principal lisible.
+@215 `switch` choisit entre quelques options connues.
+@216 `default` attrape tout le reste.
+@217 Sortir tôt garde le chemin principal facile à lire.
+@218 `switch` utilise `===` ; les cas continuent dans le suivant sans `return` ni `break`.
+@219 `noFallthroughCasesInSwitch` transforme un passage accidentel au cas suivant en erreur.
+@220 Une vérification `never` dans `default` rend exhaustif un switch sur une union.
+@221 Pour aller plus loin : avec `noFallthroughCasesInSwitch` activé, TypeScript attrape le bug dans `price`. Corrige-le.
+@222 Un défi : un réglage plus strict repère un bug dans `price`. Corrige-le !
+@223 Le cas `"small"` continue tout droit dans `"large"`. Termine-le avec `return` ou `break`.
+@224 Le cas small oublie de s’arrêter, alors il continue dans le cas large. Ajoute un `return`.
+@225 Sans `break`, un `case` continue dans le suivant, donc une petite boisson coûtait 3. L’option transforme ce bug classique en erreur.
+@226 Sans `break`, le cas small a aussi exécuté le cas large. Le réglage plus strict fait que TypeScript le signale.
+@227 `noFallthroughCasesInSwitch` signale TS7029 pour les cas non vides qui continuent dans le suivant. Un passage volontaire reste possible avec des cas vides empilés.

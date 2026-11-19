@@ -1,0 +1,226 @@
+@1 Les fonctions donnent un nom à un travail.
+@2 Des paramètres en entrée, `return` en sortie.
+@3 Pas de `return` veut dire `undefined`.
+@4 Les fonctions sont des machines avec un nom.
+@5 Des choses entrent ; `return` fait sortir la réponse.
+@6 Pas de `return` veut dire que la réponse est `undefined`.
+@7 Une signature est un contrat : types des paramètres en entrée, type de retour en sortie.
+@8 Les déclarations sont remontées (hoisting) ; les fonctions en `const` ne le sont pas.
+@9 Les fonctions pures sont le code le plus facile à tester.
+@10 Une fonction est une recette nommée avec un seul résultat.
+@11 Une fonction est une petite machine avec un nom. Tu mets quelque chose dedans, tu récupères quelque chose.
+@12 Une **fonction** prend des entrées, fait un travail et rend une valeur :⏎⏎⟦F1⟧⏎⏎Le nom entre parenthèses est un **paramètre**. La valeur que tu passes est un **argument**. Le `: number` après les parenthèses est le type de retour.⏎⏎Une fonction sans `return` rend `undefined`. C’est permis, et ce n’est en général pas ce qu’on voulait.
+@13 Une fonction est une petite machine. Tu mets quelque chose dedans, elle fait un travail, et elle te rend quelque chose.⏎⏎⟦F1⟧⏎⏎Tu construis la machine une fois. Ensuite, tu peux t’en servir autant de fois que tu veux.
+@14 Annote toujours les paramètres (une déclaration ne donne rien à partir de quoi les inférer) et les types de retour de tout ce qui est exporté. Sous `strict` (`noImplicitAny`), un paramètre non annoté est une erreur au lieu d’un `any` silencieux.⏎⏎Une fonction sans `return` renvoie `undefined`, typé `void`. Les déclarations de fonctions sont remontées, donc on peut les appeler au-dessus de la ligne qui les définit ; les fonctions fléchées en `const`, non.⏎⏎L’arité est vérifiée : trop peu ou trop d’arguments est une erreur de compilation, alors que JavaScript tout seul passe discrètement `undefined` pour ceux qui manquent.
+@15 Qu’est-ce qui s’affiche ?
+@16 Qu’est-ce que ça va montrer ?
+@17 Exécute le corps de `double` une fois par appel, avec `n` égal à la valeur entre parenthèses.
+@18 La machine double ce que tu lui donnes. Le double de 4 ? Le double de 0 ?
+@19 Chaque appel exécute le même corps avec un argument différent. Quatre devient huit ; zéro reste zéro.
+@20 À chaque fois, la machine fait le même travail avec un nouveau nombre. 4 devient 8, et 0 reste 0.
+@21 Chaque appel a son propre `n` ; rien ne persiste d’un appel à l’autre. Une fonction pure comme `double` associe toujours la même sortie à la même entrée, et c’est ce qui la rend si facile à tester.
+@22 Rends la valeur.
+@23 Rends la réponse.
+@24 Quel mot-clé renvoie une valeur hors d’une fonction ?
+@25 Quel mot rend la réponse ?
+@26 `return` est ce qui renvoie une valeur à celui qui a appelé la fonction.
+@27 `return` rend la réponse à celui qui a utilisé la machine.
+@28 `return` termine l’appel et produit la valeur. Avec un type de retour déclaré `number`, l’oublier est une erreur de compilation (TS2355 : la fonction doit renvoyer une valeur).
+@29 Écris `add` pour qu’elle renvoie la somme de deux nombres.
+@30 Fais en sorte que `add` rende les deux nombres additionnés.
+@31 Renvoie `a + b`.
+@32 Rends `a + b` avec `return`.
+@33 add(2, 3)
+@34 add(-1, 1)
+@35 add(1.5, 2.5)
+@36 La version courte.
+@37 Ce que tu as appris.
+@38 Une fonction est une recette réutilisable avec un nom.
+@39 Les paramètres sont les emplacements ; les arguments sont les valeurs que tu passes.
+@40 `return` rend une valeur.
+@41 Une fonction est une machine avec un nom que tu peux utiliser encore et encore.
+@42 Ce qui entre est nommé entre les parenthèses.
+@43 `return` rend la réponse.
+@44 Annote les paramètres ; annote les types de retour des fonctions exportées.
+@45 Pas de `return` veut dire `undefined` (typé `void`).
+@46 Le nombre d’arguments est vérifié à la compilation.
+@47 Pour aller plus loin : quel est le type de la fonction `double` ?
+@48 Un défi : de quel type est la machine `double` ?
+@49 Un type de fonction ressemble à `(parameter: Type) => ReturnType`.
+@50 Les types de machines ressemblent à `(input: Type) => OutputType`.
+@51 Le type de retour `number` est inféré d’après `n * 2`. Dans un type de fonction, les noms des paramètres ne sont que des étiquettes.
+@52 TypeScript en déduit que doubler un nombre donne un nombre.
+@53 Les types de retour sont inférés d’après les expressions de `return` ; dans les types de fonctions, les noms des paramètres n’influent pas sur l’affectabilité, seuls les positions et les types comptent.
+@54 Les fonctions fléchées sont juste des fonctions plus courtes.
+@55 Avec des accolades, il faut `return` ; sans accolades, le retour est automatique.
+@56 Écris le type de retour : c’est un contrat.
+@57 Avec `{ }`, il faut `return` ; sans, la réponse revient toute seule.
+@58 Écris l’étiquette de la réponse : c’est une promesse.
+@59 Utiliser les fonctions fléchées pour les callbacks et les petites fonctions utilitaires.
+@60 Écrire `() => ({ … })` pour renvoyer un littéral d’objet.
+@61 Déclarer les types de retour des fonctions publiques.
+@62 `=>`, c’est la même idée en moins de mots.
+@63 `=>` fabrique le même genre de machine, avec moins de mots.
+@64 Une **fonction fléchée** est une façon plus courte d’écrire la même chose :⏎⏎⟦F1⟧⏎⏎Sans accolades, l’expression après `=>` est renvoyée automatiquement. Ajoute des accolades et tu dois écrire `return` toi-même.⏎⏎Écris exprès le type de retour. C’est un petit contrat qui attrape les erreurs dans la fonction avant qu’elles n’atteignent l’appelant.
+@65 Les flèches sont une façon rapide d’écrire une machine : `const double = (n) => n * 2;`.⏎⏎S’il n’y a pas d’accolades, la réponse revient automatiquement. Pas besoin de `return`.
+@66 Les fonctions fléchées diffèrent des déclarations par plus que l’écriture : elles n’ont ni `this`, ni `arguments`, ni `prototype` propres, et ne peuvent pas être appelées avec `new`. Ce `this` lexical explique pourquoi elles sont le choix par défaut pour les callbacks.⏎⏎Un corps concis (`=> expr`) renvoie l’expression. Pour renvoyer un littéral d’objet, entoure-le de parenthèses, `() => ({ ok: true })` ; sinon, les accolades sont lues comme un bloc.⏎⏎Un type de retour explicite empêche l’inférence d’élargir un résultat accidentel (disons, `number | undefined`) et signale l’erreur dans la fonction qui l’a commise, pas chez ses appelants.
+@67 La même fonction, deux formes.
+@68 Une machine, deux façons de l’écrire.
+@69 Déclaration
+@70 Claire, et facile à lire dans une pile d’appels.
+@71 Claire, avec son nom au début.
+@72 Flèche
+@73 Plus courte. Courante quand on passe une fonction à une autre fonction.
+@74 Plus courte. Pratique quand tu donnes une machine à une autre machine.
+@75 Quelle fonction fléchée renvoie vraiment une valeur ?
+@76 Quelle machine fléchée rend vraiment une réponse ?
+@77 Une fonction fléchée avec des accolades a besoin d’un `return` explicite ; sans accolades, elle renvoie l’expression.
+@78 Regarde les `{ }`. Avec elles, il faut le mot `return`.
+@79 Sans accolades, l’expression est renvoyée. `{ n * 2 }` est un bloc, donc il renvoie `undefined`.
+@80 Sans `{ }`, la réponse revient toute seule. Avec `{ }`, tu dois écrire `return`, sinon la réponse est `undefined`.
+@81 `=> { n * 2 }` est un corps en bloc dont l’instruction-expression est jetée, donc la fonction renvoie `undefined` (typé `void`). `->` n’est pas du tout de la syntaxe JavaScript.
+@82 `const f = (n: number) => n * 2;`
+@83 `const f = (n: number) => { n * 2 };`
+@84 Les accolades font un bloc. Un bloc sans `return` donne `undefined`.
+@85 Les `{ }` font un bloc. Sans `return` à l’intérieur, il rend `undefined`.
+@86 `const f = (n: number) -> n * 2;`
+@87 Les fonctions fléchées utilisent `=>`, avec un signe égal.
+@88 Les flèches s’écrivent `=>`, avec un signe égal.
+@89 Écris `square` comme une fonction fléchée avec un type de retour.
+@90 Fais `square` comme une machine fléchée avec une étiquette de réponse.
+@91 Enlève les accolades et mets `n * n` juste après `=>`.
+@92 Enlève les `{ }` et écris `n * n` juste après `=>`.
+@93 square(4)
+@94 square(0)
+@95 square(-3)
+@96 `=>` est la forme courte d’une fonction.
+@97 Pas d’accolades veut dire que l’expression est renvoyée.
+@98 Annote le type de retour ; il attrape de vrais bugs.
+@99 `=>` est la façon courte de fabriquer une fonction.
+@100 Sans `{ }`, la réponse revient toute seule.
+@101 Une étiquette pour la réponse aide à attraper les erreurs.
+@102 Les fonctions fléchées ont un `this` lexical et pas d’`arguments`.
+@103 Un corps concis renvoie son expression ; entoure un littéral d’objet de `()`.
+@104 Un type de retour explicite garde les erreurs là où elles commencent.
+@105 Pour aller plus loin : écris `twice` : elle prend une fonction et renvoie une nouvelle fonction qui l’appelle deux fois.
+@106 Un défi : fabrique `twice`, une machine qui fabrique une machine qui tourne deux fois !
+@107 Renvoie une fonction fléchée : `(n) => fn(fn(n))`.
+@108 Rends une nouvelle machine fléchée qui redonne la réponse de `fn` à `fn`.
+@109 `twice` renvoie une fonction, donc son type de retour est un type de fonction. Le `n` intérieur est typé d’après ce type de retour.
+@110 `twice` construit une nouvelle machine et te la rend. Trop fort !
+@111 Une fonction d’ordre supérieur qui renvoie une fermeture ; le paramètre de la flèche renvoyée est typé par le contexte, d’après le type de retour déclaré.
+@112 ajouter un, deux fois
+@113 doubler, deux fois
+@114 Les valeurs par défaut sont de simples valeurs : `name = "friend"`.
+@115 `?` veut dire que l’appelant peut l’omettre.
+@116 Les paramètres du reste sont juste des tableaux.
+@117 Les valeurs de secours sont de simples valeurs : `name = "friend"`.
+@118 `?` veut dire qu’on peut l’oublier.
+@119 `...numbers` est juste une liste.
+@120 Les valeurs par défaut ne couvrent pas `null` ; le normaliser explicitement.
+@121 Les paramètres facultatifs viennent après les obligatoires.
+@122 Les paramètres du reste peuvent être typés comme des tuples.
+@123 Les paramètres peuvent avoir une valeur de secours, ou accepter plein de valeurs.
+@124 Une machine peut avoir une valeur de secours, ou prendre autant de choses que tu veux.
+@125 Trois petits outils rendent les fonctions plus accommodantes :⏎⏎- Une **valeur par défaut** prend le relais quand l’argument vaut `undefined` : `function greet(name = "friend")`.⏎- Un paramètre **facultatif** est marqué d’un `?` : `shout?: boolean`. Son type devient `boolean | undefined`.⏎- Le **reste** rassemble les arguments restants dans un tableau : `(...numbers: number[])`.⏎⏎Les valeurs par défaut attrapent `undefined`, pas `null`. Cette distinction compte quand les données viennent d’ailleurs.
+@126 Les fonctions peuvent avoir des valeurs de secours. Si personne ne donne de nom, on dit "friend".⏎⏎Un paramètre avec un `?` a le droit de manquer.⏎⏎`...numbers` ramasse toutes les valeurs en plus dans une seule liste.
+@127 Une valeur par défaut s’applique quand l’argument vaut `undefined`, passé explicitement ou omis, mais pas quand il vaut `null`. Les valeurs par défaut sont évaluées au moment de l’appel, donc `(list = [])` crée un nouveau tableau à chaque appel (contrairement à Python).⏎⏎Un paramètre facultatif `x?: T` est de type `T | undefined` dans le corps ; un paramètre avec valeur par défaut est facultatif pour les appelants mais simplement `T` à l’intérieur. Les paramètres facultatifs doivent venir après les obligatoires.⏎⏎Les paramètres du reste sont de vrais tableaux (`...nums: number[]`) et doivent venir en dernier. Un type tuple, `...args: [string, number]`, les type position par position.
+@128 Qu’est-ce qui s’affiche quand aucun nom n’est donné ?
+@129 Qu’est-ce que ça va montrer quand aucun nom n’est donné ?
+@130 Une valeur par défaut n’est utilisée que quand l’argument manque. Vérifie chaque appel.
+@131 La première fois, aucun nom n’est donné. La deuxième fois, on donne "Ada".
+@132 La valeur par défaut n’apparaît que quand l’argument manque ou vaut `undefined`.
+@133 La valeur de secours n’est utilisée que quand on ne donne rien.
+@134 Omettre l’argument passe `undefined`, ce qui déclenche la valeur par défaut ; `greet(undefined)` se comporte pareil. `greet(null)`, non, et de toute façon TypeScript refuse `null` pour un paramètre `string`.
+@135 Donne à `name` une valeur de secours raisonnable.
+@136 Donne à `name` une valeur de secours.
+@137 La valeur par défaut doit être une chaîne, donc il lui faut des guillemets.
+@138 La valeur de secours est un mot. Les mots ont besoin de guillemets.
+@139 La valeur par défaut est une valeur, donc il lui faut des guillemets : `"friend"`. Sans eux, ce serait une variable appelée friend.
+@140 La valeur de secours est un mot, donc il lui faut des guillemets : `"friend"`. Sans guillemets, ce serait le nom d’une boîte.
+@141 Une valeur par défaut est une expression évaluée au moment de l’appel, ici un littéral de chaîne. Elle permet aussi à TypeScript d’inférer le type du paramètre, donc l’annotation `: string` est facultative.
+@142 Écris `sumAll` pour qu’elle additionne n’importe quel nombre d’arguments. `sumAll()` doit valoir 0.
+@143 Fais en sorte que `sumAll` additionne autant de nombres qu’on veut. `sumAll()` sans rien doit donner 0.
+@144 `numbers` est déjà un tableau. Additionne ses éléments avec `reduce`, en partant de 0.
+@145 `numbers` est déjà une liste. Additionne-les avec `reduce`, en partant de 0.
+@146 aucun nombre
+@147 trois nombres
+@148 un seul nombre
+@149 Les valeurs par défaut remplacent `undefined`.
+@150 `?` marque un paramètre qui peut manquer.
+@151 `...rest` rassemble les arguments en plus dans un tableau.
+@152 Une valeur de secours est utilisée quand on ne donne rien.
+@153 `?` veut dire « tu peux l’oublier ».
+@154 `...` rassemble toutes les choses en plus dans une liste.
+@155 Les valeurs par défaut ne s’appliquent qu’à `undefined`, et sont évaluées à chaque appel.
+@156 `x?: T` est de type `T | undefined` dans le corps.
+@157 Les paramètres du reste sont des tableaux et doivent venir en dernier.
+@158 Pour aller plus loin : écris `listOf(...items)` pour que `listOf("tea", "cake", "jam")` donne `"tea, cake and jam"`.
+@159 Un défi : fais en sorte que `listOf` transforme n’importe quel nombre de mots en "tea, cake and jam".
+@160 Tous sauf le dernier : `items.slice(0, -1).join(", ")` ; puis `" and "` et le dernier élément. Traite d’abord le cas de 0 ou 1 élément.
+@161 Colle tous les mots sauf le dernier avec des virgules, puis ajoute " and " et le dernier mot. Pour 0 ou 1 mot, colle-les simplement.
+@162 Un paramètre du reste rassemble n’importe quel nombre d’arguments dans un tableau, donc les outils habituels des tableaux marchent dessus.
+@163 `...items` attrape tous les mots dans une seule liste.
+@164 Les paramètres du reste sont typés comme des tableaux (`string[]`). Pour une vraie interface, `Intl.ListFormat` produit ce résultat dans toutes les langues.
+@165 trois
+@166 deux
+@167 un
+@168 aucun
+@169 Les fonctions sont des valeurs.
+@170 `map` et `filter` prennent des callbacks.
+@171 Passer un comportement en paramètre est souvent plus propre que de faire des branches à l’intérieur.
+@172 Les fonctions sont des valeurs, comme les nombres et les mots.
+@173 `map` et `filter` prennent une petite machine.
+@174 Donner une machine est souvent plus simple que plein de `if`.
+@175 Passer un comportement comme valeur plutôt qu’un drapeau.
+@176 Laisser le typage contextuel annoter les callbacks en ligne.
+@177 Donner un nom à un callback dès qu’il porte une vraie logique.
+@178 Une fonction peut être passée à une autre fonction.
+@179 Tu peux donner une machine à une autre machine.
+@180 Les fonctions sont des valeurs. Tu peux en mettre une dans une variable, la passer en argument ou la renvoyer.⏎⏎Un **callback** est une fonction que tu confies à une autre fonction pour qu’elle l’appelle plus tard :⏎⏎⟦F1⟧⏎⏎Une fonction qui prend ou renvoie une autre fonction est une **fonction d’ordre supérieur**. `map`, `filter` et `find` sont toutes comme ça, et c’est grâce à elles que les listes n’ont plus besoin de boucles écrites à la main.
+@181 Tu peux donner une machine à une autre machine. « Tiens, utilise cette règle sur chaque élément. »⏎⏎Cette petite règle s’appelle un **callback**.
+@182 Les fonctions sont des valeurs de première classe avec des types structurels : `(value: number) => number` décrit toute fonction ayant cette signature. Les paramètres des callbacks sont typés par le contexte, c’est pourquoi `items.map(item => item.name)` n’a besoin d’aucune annotation.⏎⏎Sous `strictFunctionTypes`, les paramètres des types de fonctions sont vérifiés de façon contravariante : un callback qui n’accepte qu’un `Dog` ne peut pas être passé là où n’importe quel `Animal` peut lui être donné.⏎⏎Passer une méthode comme callback la détache de son objet (`list.map(obj.method)` perd `this`) ; entoure-la d’une fonction fléchée ou lie-la avec bind.
+@183 La même règle, nommée ou en ligne.
+@184 La même règle, avec un nom ou sans.
+@185 Callback nommé
+@186 Plus facile à réutiliser et à tester à part.
+@187 Facile à réutiliser, et à tester à part.
+@188 Flèche en ligne
+@189 Se lit bien quand la règle est courte et utilisée une seule fois.
+@190 Facile à lire quand la règle est courte et utilisée une seule fois.
+@191 Dans `prices.map(p => p * 2)`, quel est le callback ?
+@192 Dans `prices.map(p => p * 2)`, quelle partie est la petite machine que tu donnes ?
+@193 Un callback est une fonction passée en argument. Quelle partie entre les parenthèses est une fonction ?
+@194 Regarde entre les parenthèses de `map(...)`. Quelle partie est une machine avec `=>` ?
+@195 Le callback est la fonction fléchée. `map` l’appelle une fois par élément.
+@196 La machine fléchée est celle qu’on donne. `map` l’utilise une fois pour chaque prix.
+@197 `map` est la fonction d’ordre supérieur ; `p => p * 2` est le callback qu’elle invoque pour chaque élément avec `(value, index, array)`. Seul le premier paramètre est utilisé ici ; les arguments en plus sont ignorés.
+@198 `map`
+@199 `map` est la fonction d’ordre supérieur qui fait l’appel.
+@200 `map` est la grosse machine qui utilise la petite.
+@201 `p => p * 2`
+@202 `prices`
+@203 C’est le tableau sur lequel on travaille.
+@204 C’est la liste sur laquelle on travaille.
+@205 Écris `applyTwice` pour qu’elle appelle deux fois la fonction donnée, en transmettant le résultat.
+@206 Fais en sorte que `applyTwice` utilise la machine deux fois, en passant la réponse d’une fois à l’autre.
+@207 Appelle `fn` sur `start`, puis appelle à nouveau `fn` sur le résultat.
+@208 Utilise `fn` sur `start`, puis utilise à nouveau `fn` sur cette réponse.
+@209 Les fonctions peuvent être rangées et passées comme n’importe quelle valeur.
+@210 Un callback est une fonction confiée à une autre fonction.
+@211 Les fonctions d’ordre supérieur prennent ou renvoient des fonctions.
+@212 Les fonctions peuvent être rangées dans des boîtes et passées de main en main.
+@213 Une machine que tu donnes à une autre machine s’appelle un callback.
+@214 Certaines machines prennent d’autres machines en entrée.
+@215 Les types de fonctions sont structurels : `(x: A) => B`.
+@216 Les callbacks en ligne reçoivent leurs types de paramètres du contexte.
+@217 Les méthodes perdent `this` quand on les passe seules ; les envelopper ou les lier.
+@218 Pour aller plus loin : écris `makeCounter`. Chaque compteur qu’elle fabrique se souvient de son propre compte.
+@219 Un défi : fabrique `makeCounter`, une machine qui construit des compteurs qui se souviennent de leur nombre.
+@220 Garde `let count = 0` à l’intérieur de `makeCounter`, et renvoie une fonction qui ajoute un et le renvoie.
+@221 Mets un `let count = 0` à l’intérieur, et rends une petite machine qui ajoute un et dit le nombre.
+@222 La fonction renvoyée garde l’accès à `count` après la fin de `makeCounter`. C’est une *fermeture* (closure), et chaque appel en crée une nouvelle.
+@223 La petite machine se souvient de son propre `count`, même plus tard. Chaque compteur a le sien.
+@224 Les fermetures capturent des liaisons, pas des valeurs ; chaque appel de `makeCounter` crée un nouvel environnement, et c’est ainsi que les modules gardaient un état privé avant que les classes n’aient `#private`.
+@225 compte vers le haut
+@226 les compteurs sont séparés

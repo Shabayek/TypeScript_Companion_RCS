@@ -1,0 +1,207 @@
+@1 Un programme est une liste ordonnée d’instructions.
+@2 L’ordre compte plus qu’on ne le croit.
+@3 `console.log` est la façon dont un programme te montre quelque chose.
+@4 Un programme est une liste d’étapes pour une machine.
+@5 L’ordre des étapes compte.
+@6 `console.log` affiche des mots à l’écran.
+@7 L’exécution est séquentielle et littérale.
+@8 L’ordre fait le sens : inverse deux instructions et tu as un autre programme.
+@9 `console.log` est l’effet de bord observable le plus simple.
+@10 Un programme est une liste d’instructions, dans l’ordre.
+@11 Un programme est une liste d’étapes, comme une recette pour un robot.
+@12 Un programme est une liste ordonnée d’instructions, sans aucune étape implicite.
+@13 Quand tu demandes quelque chose à un ordinateur, il lui faut chaque étape en toutes lettres. Un **programme** est cette liste d’étapes.⏎⏎Les gens savent très bien combler les trous. Demande à quelqu’un de « faire du thé » : il trouvera une tasse, fera bouillir l’eau et s’arrêtera quand ce sera prêt. Un ordinateur, non. Il fait exactement ce qui est écrit, erreurs comprises.⏎⏎Le programme ci-dessous contient une seule instruction. Elle dit : affiche ces mots à l’écran.
+@14 Un programme est une liste d’étapes, comme une recette pour un robot. Un robot n’a aucune idée de ce que veut dire « faire du thé ». Il faut lui dire chaque étape, une par une.⏎⏎Le programme ci-dessous a une seule étape. Elle dit : affiche ces mots.
+@15 Un programme est une suite ordonnée d’instructions, sans étape implicite. L’ambiguïté est un bug.⏎⏎Le programme ci-dessous contient une seule instruction : écrire ces caractères sur la sortie standard.
+@16 La grande idée
+@17 L’ordre compte. Inverse deux étapes et le programme fait autre chose, ou se casse.
+@18 L’ordre compte. Si tu inverses deux étapes, le robot fait autre chose, ou il reste bloqué.
+@19 Les mêmes étapes, écrites de deux façons.
+@20 Deux façons d’écrire les mêmes étapes.
+@21 Une recette et un programme sont cousins. Les deux sont des listes. Un seul est écrit pour quelque chose qui ne devine jamais.
+@22 Une recette et un programme sont un peu cousins. Les deux sont des listes d’étapes. Mais un programme est fait pour un robot, et les robots ne devinent jamais.
+@23 Pour une personne
+@24 Une personne complète les petits détails sans qu’on le lui dise.
+@25 Une personne connaît les petites choses sans qu’on les lui dise.
+@26 Pour un ordinateur
+@27 Chaque étape est nommée. Rien n’est laissé au hasard.
+@28 Chaque étape a un nom. Rien n’est oublié.
+@29 Lequel de ces éléments est un programme ?
+@30 Lequel est un programme ?
+@31 Cherche celui qui est écrit comme une instruction qu’un ordinateur peut suivre, exactement telle quelle.
+@32 Lequel un robot pourrait-il suivre tout de suite, sans rien deviner ?
+@33 Un programme, ce sont des instructions. Une photo, ce sont des données, et « arroser les plantes » est une tâche que quelqu’un doit encore écrire sous forme d’étapes.
+@34 Un programme est une liste d’étapes. Une photo, c’est juste une image. « Arroser les plantes », c’est un travail : quelqu’un doit encore le transformer en étapes.
+@35 Un programme, ce sont des instructions exécutables ; les deux autres sont des données et une tâche non spécifiée. `console.log("hi")` est un programme complet : une instruction avec un effet de bord observable, une ligne écrite dans la console.
+@36 Arroser les plantes
+@37 C’est un objectif, pas encore un programme. Quelqu’un doit encore le transformer en étapes.
+@38 Presque ! Mais qui les arrose, combien, et quand ? Le robot a besoin des étapes.
+@39 `console.log("hi");`
+@40 Une photo de chien
+@41 Une photo, ce sont des données. C’est quelque chose qu’un programme pourrait regarder, pas des instructions.
+@42 Une photo est une image, pas des étapes. Un programme peut regarder une photo, mais ce n’est pas un programme.
+@43 Qu’est-ce que ceci affiche ?
+@44 Qu’est-ce que le robot va montrer ?
+@45 L’ordinateur exécute les lignes de haut en bas, une à la fois. Chaque `console.log` affiche une ligne.
+@46 Le robot lit depuis le haut. Chaque `console.log` montre une ligne.
+@47 Les instructions s’exécutent de haut en bas. La première ligne affiche `one`, puis la deuxième affiche `two`, chacune sur sa propre ligne.
+@48 Le robot lit depuis le haut. D’abord `one`, puis `two`.
+@49 Les instructions s’exécutent séquentiellement, et chaque appel à `console.log` écrit une ligne (il ajoute le saut de ligne pour toi). Rien n’est réordonné à ce niveau ; cela ne commence qu’avec le code asynchrone, au module 6.
+@50 La version courte.
+@51 Ce que tu as appris.
+@52 Un programme est une liste d’instructions, exécutées dans l’ordre.
+@53 Les ordinateurs font exactement ce qui est écrit, erreurs comprises.
+@54 `console.log(...)` affiche quelque chose à l’écran.
+@55 Les robots ne devinent jamais. Tu écris chaque étape.
+@56 `console.log(...)` affiche des mots à l’écran.
+@57 Un programme est une suite ordonnée d’instructions, exécutées de haut en bas.
+@58 La machine n’infère rien : une étape manquante ou fausse est un bug, pas un trou qu’elle comble.
+@59 `console.log` écrit une ligne dans la console : ton premier outil de débogage.
+@60 TypeScript, c’est JavaScript avec des étiquettes de type.
+@61 Le vérificateur lit les étiquettes avant que tu exécutes quoi que ce soit.
+@62 Les étiquettes sont retirées à l’exécution : elles servent aux humains et aux outils.
+@63 TypeScript = JavaScript + étiquettes.
+@64 Le vérificateur regarde d’abord les étiquettes.
+@65 Il trouve les mélanges avant qu’ils ne causent des ennuis.
+@66 TypeScript = JavaScript + types.
+@67 Les types sont vérifiés, puis effacés.
+@68 Tu dois quand même valider les données que tu n’as pas créées.
+@69 TypeScript, c’est JavaScript avec des étiquettes.
+@70 TypeScript, c’est JavaScript avec des étiquettes à nom.
+@71 TypeScript, c’est JavaScript plus une couche de types statiques.
+@72 JavaScript fonctionne. Alors pourquoi TypeScript existe-t-il ?⏎⏎Parce qu’une étiquette évite une dispute plus tard. En TypeScript, tu écris quel genre de chose est une valeur (du texte, un nombre, vrai/faux) et un **vérificateur** lit ces étiquettes avant que le programme s’exécute.⏎⏎Le vérificateur, c’est tout l’intérêt. Il trouve les contradictions pendant que tu tapes, au lieu de 2 h du matin quand quelqu’un clique sur le mauvais bouton.
+@73 JavaScript fonctionne déjà. Alors pourquoi ajouter des étiquettes ?⏎⏎Imagine qu’il faille ouvrir chaque boîte de ta chambre pour savoir ce qu’il y a dedans. Pénible, non ?⏎⏎TypeScript met une étiquette sur chaque boîte : « celle-ci contient des nombres ». Maintenant, tu peux trouver l’erreur avant d’ouvrir quoi que ce soit.
+@74 TypeScript est un sur-ensemble de JavaScript avec une couche de types effaçable. Les types sont vérifiés à la compilation puis retirés : ce qui s’exécute, c’est du JavaScript ordinaire.⏎⏎Cela a deux conséquences à bien intégrer. Les types ne coûtent rien à l’exécution, et ils ne peuvent pas te protéger de mauvaises données arrivant par le réseau. Ils protègent les frontières que tu contrôles.
+@75 Le même code, avec et sans étiquettes.
+@76 Le même code, avec étiquettes et sans.
+@77 JavaScript
+@78 Ça s’exécute. Ça produit discrètement `"8" * 1.2`, qui est un nombre, pas un plantage.
+@79 Ça s’exécute, mais ça mélange discrètement du texte et des nombres.
+@80 TypeScript
+@81 L’étiquette dit « nombres seulement », donc l’erreur est repérée immédiatement.
+@82 L’étiquette dit « nombres seulement », donc le mélange est repéré tout de suite.
+@83 Qu’est-ce que TypeScript ajoute à JavaScript ?
+@84 Qu’est-ce que TypeScript ajoute ?
+@85 Pense au mot « type » : qu’est-ce qu’un vérificateur pourrait regarder avant que quoi que ce soit s’exécute ?
+@86 TypeScript ajoute des étiquettes. Qu’est-ce que des étiquettes pourraient t’aider à vérifier ?
+@87 TypeScript ajoute des types : des étiquettes qu’un vérificateur contrôle avant que le programme s’exécute. Les étiquettes disparaissent à l’exécution.
+@88 TypeScript ajoute des étiquettes, appelées types. Un vérificateur les lit avant que le programme tourne, et trouve les mélanges tôt.
+@89 TypeScript ajoute un système de types statique. Le compilateur (ici esbuild, ailleurs `tsc`) retire les annotations : aucun coût à l’exécution, et aucune vérification à l’exécution non plus. Les types sont une preuve à la compilation, pas un garde-fou.
+@90 Il rend les programmes plus rapides
+@91 Pas vraiment. Les types sont retirés avant l’exécution, donc ils ne peuvent pas rendre le programme plus rapide.
+@92 Pas celle-ci. Les étiquettes sont enlevées avant que le programme tourne, donc elles ne peuvent pas le rendre plus rapide.
+@93 Il vérifie les genres de valeurs avant que le programme s’exécute
+@94 Il fait marcher JavaScript dans les navigateurs
+@95 JavaScript marche déjà dans les navigateurs. TypeScript est compilé vers JavaScript.
+@96 JavaScript marche déjà dans les navigateurs. TypeScript se transforme en JavaScript.
+@97 Étiquette la valeur comme un nombre.
+@98 Donne à la boîte l’étiquette « number ».
+@99 `36` n’a pas de guillemets, donc ce n’est pas du texte. Quelle étiquette convient à une valeur comme celle-là ?
+@100 36 est un nombre, pas des mots. Choisis l’étiquette des nombres.
+@101 `36` est un nombre, donc l’étiquette est `number`. L’étiquette se place après le nom, avant le `=`.
+@102 La boîte contient 36. L’étiquette dit **number**. Alors on écrit `number`.
+@103 La syntaxe d’annotation est `name: Type`, après la liaison. Sur une `const`, elle est redondante (`const age = 36` infère le type littéral `36`), mais c’est exactement la syntaxe que tu écriras sur les paramètres, où rien ne peut être inféré.
+@104 Ceci s’exécute et affiche 36, et la vérification est d’accord, mais TypeScript dit que l’étiquette et la valeur ne correspondent pas. Corrige la valeur pour que TypeScript soit content aussi.
+@105 Ça marche et ça affiche 36. Mais le vérificateur n’est pas content : l’étiquette dit number, et la boîte contient du texte. Corrige ça !
+@106 Regarde le côté droit du `=`. Est-ce que `"36"` y est un nombre, ou du texte ?
+@107 Les nombres n’ont pas de guillemets. Le texte a des guillemets.
+@108 Enlève les guillemets : `36` est un nombre, `"36"` est du texte.
+@109 Enlève les guillemets autour de 36.
+@110 La sortie avait l’air identique, mais `"36"` est du texte. TypeScript a repéré le mélange avant qu’il ne pose problème : un jour, quelqu’un écrit `age + 1` et obtient `"361"`.
+@111 Ça a affiché 36 les deux fois, mais l’un des deux 36 était du texte ! Le vérificateur l’a repéré avant que ça pose problème.
+@112 À l’exécution, `"36"` et `36` s’affichent de la même façon, donc une vérification basée sur la sortie ne peut pas les distinguer ; le vérificateur de types, si. TS2322 (`Type 'string' is not assignable to type 'number'`) est l’erreur que tu verras le plus souvent, et ici elle signale le bug avant que `age + 1` ne concatène discrètement en `"361"`.
+@113 age contient 36
+@114 TypeScript, c’est JavaScript plus des étiquettes de type.
+@115 Un vérificateur lit les étiquettes avant que le programme s’exécute.
+@116 Les étiquettes disparaissent quand le code s’exécute, donc elles ne coûtent rien.
+@117 Les étiquettes s’en vont quand le programme tourne.
+@118 TypeScript est un sur-ensemble typé de JavaScript : du JavaScript valide est (presque toujours) du TypeScript valide.
+@119 La vérification a lieu à la compilation ; le code produit est du JavaScript ordinaire, types effacés.
+@120 L’effacement signifie zéro coût à l’exécution, et zéro protection à l’exécution pour les données venues de l’extérieur.
+@121 Les chaînes sont du texte entre guillemets.
+@122 `console.log` montre ce que tu lui donnes.
+@123 Un guillemet non fermé arrête tout le programme.
+@124 Dans le code, les mots vont entre guillemets.
+@125 Un guillemet manquant arrête tout le programme.
+@126 Choisis un style de guillemets et laisse un formateur l’imposer.
+@127 Une erreur de syntaxe arrête la compilation : rien ne s’exécute.
+@128 `.length` compte des unités de code, pas des caractères visibles.
+@129 Le texte va entre guillemets.
+@130 Les mots vont entre guillemets.
+@131 Pour afficher des mots, entoure-les de guillemets et donne-les à `console.log`.⏎⏎`console.log` est une bouche. Tout ce que tu mets entre ses parenthèses, elle le dit à voix haute.⏎⏎Les guillemets ne sont pas de la décoration. C’est ainsi que tu dis à l’ordinateur : « ceci est du texte, pas un nom ».
+@132 Une **chaîne** (en anglais, *string*), c’est du texte. Chaque chaîne porte une paire de guillemets comme un manteau : `"hello"`.⏎⏎`console.log` est une bouche. Tout ce que tu mets entre ses parenthèses, elle le dit à voix haute.
+@133 Les littéraux de chaîne peuvent utiliser des guillemets doubles, des guillemets simples ou des accents graves. Ils produisent le même type `string` ; les accents graves ajoutent l’interpolation et les sauts de ligne (module 1).⏎⏎`console.log` accepte autant d’arguments que tu veux et les affiche séparés par des espaces. Dans cette app, sa sortie est capturée depuis un worker isolé et affichée sous l’éditeur.⏎⏎Un littéral de chaîne non terminé est une erreur de *syntaxe* : l’analyseur échoue, donc rien ne s’exécute, pas même les lignes d’avant. Une erreur d’exécution, c’est différent : les lignes précédentes ont déjà été exécutées.
+@134 Change les mots et exécute.
+@135 Change les mots, puis appuie sur Exécuter.
+@136 Deux lignes, l’une après l’autre. Qu’est-ce qui s’affiche ?
+@137 Deux lignes. Qu’est-ce qu’elles vont montrer ?
+@138 `+` joint deux morceaux de texte en un seul. `.length` compte les caractères.
+@139 La première ligne joint deux bouts de texte. La deuxième compte les lettres de "otter".
+@140 `+` joint du texte. `.length` compte les caractères d’une chaîne, et "otter" en a cinq.
+@141 `+` colle du texte ensemble. `.length` compte les lettres : o-t-t-e-r, ça fait cinq.
+@142 `+` avec un opérande chaîne concatène. `.length` compte les unités de code UTF-16, pas les caractères : c’est identique pour du texte simple, mais `"👍".length` vaut 2.
+@143 Il manque un guillemet. Corrige-le pour que le programme s’exécute.
+@144 Il manque un guillemet. Trouve-le et corrige-le !
+@145 Compte les guillemets sur la première ligne. Il devrait y en avoir deux.
+@146 Chaque guillemet a besoin d’un partenaire. Tant qu’ils ne vont pas par deux, l’ordinateur attend toujours la fin du texte, donc rien ne s’exécute.
+@147 Les guillemets vont par paires. Tant que le deuxième n’est pas là, l’ordinateur attend la fin des mots, donc rien ne tourne.
+@148 L’analyseur signale un littéral de chaîne non terminé (TS1002) et le fichier ne compile jamais, donc aucune instruction ne s’exécute. Les erreurs de syntaxe, c’est tout ou rien ; les erreurs d’exécution, non.
+@149 greeting contient le bon texte
+@150 Le texte vit entre guillemets.
+@151 `console.log(...)` affiche une valeur.
+@152 `+` joint du texte ; `.length` compte les caractères.
+@153 Les mots vivent entre guillemets.
+@154 `+` colle les mots ensemble ; `.length` compte les lettres.
+@155 Littéraux de chaîne : `"…"`, `'…'` ou accents graves, tous de type `string`.
+@156 `console.log(a, b)` affiche ses arguments séparés par une espace.
+@157 `+` concatène quand l’un des opérandes est une chaîne ; `.length` compte les unités de code UTF-16.
+@158 Les erreurs sont des informations, pas des jugements.
+@159 Vérifie quoi, où, et ce que tu voulais.
+@160 La ligne au-dessus de l’erreur est souvent la vraie coupable.
+@161 Les erreurs sont des indices, pas des gronderies.
+@162 Lis ce qui n’a pas marché, et où.
+@163 Souvent, la vraie erreur est sur la ligne juste avant.
+@164 Les erreurs sont des données précises ; lis-les au pied de la lettre.
+@165 Distingue les échecs de syntaxe, de type et d’exécution : chacun demande une correction différente.
+@166 Quand la ligne signalée a l’air correcte, vérifie celle d’avant.
+@167 Une erreur est un panneau indicateur, pas un reproche.
+@168 Une erreur est un panneau indicateur, pas une gronderie.
+@169 Une erreur est une donnée sur une hypothèse qui a échoué.
+@170 Chaque programmeur voit des erreurs toute la journée. Ce n’est pas le signe que tu es nul. C’est l’ordinateur qui te dit où il s’est embrouillé.⏎⏎Lis trois choses, dans cet ordre :⏎⏎- **Ce qui** s’est passé, d’après lui.⏎- **Où** se trouve la ligne, d’après lui.⏎- **Ce que** tu attendais à la place.⏎⏎Ça suffit en général pour trouver. Sinon, la ligne au-dessus de la ligne signalée est le prochain endroit où regarder.
+@171 Tout le monde voit des erreurs. Vraiment tout le monde. Les personnes dont c’est le métier d’écrire du code en voient des dizaines de fois par jour.⏎⏎Une erreur, c’est l’ordinateur qui dit : « Je suis bloqué ici. » C’est utile, pas méchant.⏎⏎Lis-la en trois étapes : ce qui s’est passé, quelle ligne, et ce que tu voulais qu’il se passe.
+@172 Un diagnostic a une forme stable : un code (`TS2304`), un message et un emplacement. Le code se recherche facilement et le message est en général précis, alors lis-le au pied de la lettre avant de deviner.⏎⏎Corrige d’abord la première erreur. Les suivantes en sont souvent des conséquences (une accolade manquante peut provoquer une cascade), et corriger la première fait souvent disparaître le reste.⏎⏎Distingue trois catégories : les erreurs de **syntaxe** (l’analyseur a abandonné), les erreurs de **type** (du code bien formé qui contredit ses propres types) et les erreurs d’**exécution** (ça a compilé, puis une opération a échoué). Cette app étiquette chacune différemment.
+@173 La même erreur, deux fois.
+@174 La même erreur, de deux façons.
+@175 Ce que tu vois
+@176 Ce que ça veut dire
+@177 Le message contient déjà la réponse. Il faut juste le traduire.
+@178 Le message contient déjà la réponse. Il faut juste le lire lentement.
+@179 L’erreur dit `Cannot find name "total"`. Qu’est-ce que ça veut dire ?
+@180 L’erreur dit `Cannot find name "total"`. Qu’est-ce que ça veut dire ?
+@181 « Cannot find » (« impossible de trouver ») est la partie importante : que cherche-t-il, et pourquoi cela pourrait-il manquer ?
+@182 L’ordinateur dit qu’il ne trouve pas quelque chose. Que cherche-t-il ?
+@183 Le compilateur est tombé sur un nom qu’il ne connaît pas. Soit il est mal orthographié, soit il est déclaré quelque part que cette ligne ne voit pas.
+@184 L’ordinateur a trouvé un nom qu’il ne connaît pas. Peut-être qu’il est mal écrit, ou qu’il n’a jamais été créé.
+@185 TS2304 signifie que la résolution de nom a échoué : aucune liaison de ce nom n’est dans la portée à cet endroit. Les causes habituelles sont une faute de frappe, un import manquant, ou un `let`/`const` déclaré dans un bloc intérieur.
+@186 La valeur de `total` n’a pas le bon type
+@187 Ce serait un autre message : « not assignable to type ».
+@188 Ce serait un autre message, qui parlerait du mauvais genre de valeur.
+@189 Aucun `total` n’est déclaré à un endroit que cette ligne peut voir
+@190 Le programme est trop lent
+@191 La vitesse n’est pas quelque chose que le compilateur vérifie. Il s’agit ici d’un nom.
+@192 L’ordinateur ne se plaint pas de la vitesse ici. Il s’agit d’un nom.
+@193 Qu’est-ce qui s’affiche avant que le programme se termine ?
+@194 Qu’est-ce que ceci va montrer ?
+@195 `.toUpperCase()` renvoie une copie en majuscules. `.length` compte les caractères.
+@196 La première ligne met le nom en grand. La deuxième compte ses lettres.
+@197 `.toUpperCase()` fait une copie du texte qui crie. `.length` compte les caractères : A, d, a, ça fait trois.
+@198 `.toUpperCase()` met les lettres en grand, comme quand on crie. `.length` les compte : A, d, a, ça fait trois.
+@199 Les méthodes de chaîne ne modifient jamais rien : `toUpperCase()` renvoie une nouvelle chaîne et `name` reste inchangé, donc `.length` vaut toujours 3. Les chaînes sont des primitives immuables.
+@200 Les erreurs montrent le chemin : quoi, où, et ce que tu attendais.
+@201 Lis la première ligne du message, puis le numéro de ligne.
+@202 Une erreur « cannot find name » est presque toujours une faute de frappe ou un problème de portée.
+@203 Les erreurs sont des indices : ce qui n’a pas marché, et où.
+@204 « Cannot find name » veut en général dire faute de frappe.
+@205 Un diagnostic = code + message + emplacement ; lis les trois.
+@206 Corrige d’abord la première erreur ; les suivantes sont souvent une cascade.
+@207 TS2304 (`Cannot find name`) concerne la résolution : faute de frappe, import manquant ou portée.

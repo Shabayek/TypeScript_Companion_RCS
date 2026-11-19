@@ -1,0 +1,216 @@
+@1 Écrire des schémas qui vérifient des valeurs à l’exécution.
+@2 Les combiner en un schéma `object`.
+@3 Obtenir le type statique d’un schéma avec `Infer<typeof schema>`.
+@4 Fabriquer des vérificateurs pour les mots et les nombres.
+@5 Les combiner en un vérificateur de formes.
+@6 Laisser TypeScript lire la forme dans ton vérificateur.
+@7 Dériver des types statiques de schémas d’exécution.
+@8 Valider à la frontière, faire confiance ensuite.
+@9 Garder la partie non sûre minuscule.
+@10 Décrire une fois, vérifier et typer.
+@11 Vérifier les données venues de l’extérieur.
+@12 Ton propre mini zod !
+@13 Niveau des types et niveau des valeurs en parfaite synchronisation.
+@14 Conception de combinateurs.
+@15 Des frontières de confiance rendues explicites.
+@16 Une seule définition, deux résultats : une vérification et un type.
+@17 Décrire une forme une seule fois, et obtenir à la fois un vérificateur et un type.
+@18 Des bibliothèques comme zod te permettent d’écrire un schéma une fois et d’obtenir à la fois un analyseur à l’exécution et un type TypeScript :⏎⏎⟦F1⟧⏎⏎Tu vas construire le cœur : `Schema<T>` est un objet avec `parse(value: unknown): T`. Les schémas primitifs vérifient avec `typeof` ; `object` vérifie chaque champ avec son schéma ; `Infer` relit `T` avec `infer`.
+@19 Tu vas construire un vérificateur de formes. Tu décris une forme une seule fois : « un nom qui est un mot, un âge qui est un nombre ».⏎⏎Ton vérificateur regarde de vraies données et dit si elles conviennent. Et TypeScript lit la même description pour apprendre le type. Une description, deux travaux !
+@20 `Schema<T>` est covariant en `T` (il ne fait que produire des `T`), donc `Schema<string>` convient pour `Schema<unknown>`. `object<Shape extends Record<string, Schema<unknown>>>(shape)` renvoie `Schema<{ [K in keyof Shape]: Infer<Shape[K]> }>` : un type mappé sur la forme, qui extrait le type de chaque champ avec un `infer` conditionnel.⏎⏎L’unique forçage dans `object` est la frontière de confiance : la boucle a validé chaque champ, ce que le système de types ne peut pas voir. Les vraies bibliothèques ajoutent des chemins d’erreur, des champs facultatifs, des unions et des transformations sur le même squelette.
+@21 Écris `string()` et `number()` : des schémas dont `parse` renvoie la valeur si elle a le bon type, et lève sinon une `TypeError` ("Expected a string" / "Expected a number").
+@22 Fabrique `string()` et `number()` : des vérificateurs qui rendent la valeur si elle est de la bonne sorte, ou lèvent une `TypeError` sinon.
+@23 Dans `parse`, vérifie `typeof value` ; après la vérification, `value` est affinée, donc tu peux la renvoyer.
+@24 Vérifie `typeof value`. Si c’est faux, lève une erreur. Si c’est juste, rends-la.
+@25 Le code de départ convertissait au lieu de vérifier : `Number("36")` accepte discrètement du texte. Un validateur doit refuser une mauvaise entrée, pas la corriger en silence.
+@26 Le code de départ changeait la valeur au lieu de la vérifier. Un vérificateur doit dire « non » aux mauvaises choses.
+@27 La coercition cache les entrées mal formées ; un refus explicite (ou un schéma `coerce` explicite) garde les contrats de données honnêtes.
+@28 une chaîne passe
+@29 un nombre est refusé
+@30 un nombre passe
+@31 le texte est refusé
+@32 Écris `Infer<S>` et `object(shape)` : il vérifie chaque champ avec son schéma, et son type est construit à partir des types des champs.
+@33 Fabrique `Infer` (il lit le type dans un vérificateur) et `object` (il vérifie chaque champ d’une forme).
+@34 `type Infer<S> = S extends Schema<infer T> ? T : never;` et `object` renvoie `Schema<{ [K in keyof Shape]: Infer<Shape[K]> }>`.
+@35 Utilise le détective pour `Infer`, et une machine à tampons sur les clés de la forme pour le type d’`object`.
+@36 Dans `parse` : refuse ce qui n’est pas un objet, boucle avec `for (const key in shape)`, analyse `record[key]` avec `shape[key]`, rassemble dans `out`, et renvoie `out as …` (un seul forçage).
+@37 Vérifie que c’est un objet, puis vérifie chaque champ avec son propre vérificateur, et rassemble les résultats.
+@38 Le type mappé transforme `{ name: Schema<string>; age: Schema<number> }` en `{ name: string; age: number }` ; la boucle fait la même chose à l’exécution. Une description, deux résultats.
+@39 La machine à tampons et le détective construisent le type ; la boucle vérifie les données. Les deux lisent la même forme.
+@40 Un type mappé de style homomorphe avec `Infer<Shape[K]>` reflète la boucle d’exécution ; les clés inconnues sont retirées, ce qui est le comportement « strip » par défaut de zod.
+@41 Infer d’une primitive
+@42 le type objet
+@43 parse renvoie le type
+@44 seulement des schémas comme champs
+@45 des données valides
+@46 un mauvais champ
+@47 pas un objet
+@48 Essaie : ta bibliothèque qui vérifie de vraies données. Change le JSON et relance.
+@49 Essaie : ton vérificateur au travail. Change les données et regarde ce qui se passe !
+@50 La version courte.
+@51 Ce que tu as appris.
+@52 Un schéma est un objet avec `parse(value: unknown): T`.
+@53 `object` combine des schémas de champs ; un type mappé construit son type de résultat.
+@54 `Infer<typeof schema>` relit le type.
+@55 Tu as construit un vérificateur qui instruit TypeScript.
+@56 Les petits vérificateurs se combinent en vérificateurs de formes.
+@57 Une description, deux travaux.
+@58 Les combinateurs de schémas reflètent les constructeurs de types.
+@59 Un seul forçage contrôlé à la frontière de confiance.
+@60 La conception derrière zod, valibot et compagnie.
+@61 Extraire chaque `:param` d’une chaîne de route au niveau des types.
+@62 Construire un type objet `Params<"/users/:id">`.
+@63 Faire correspondre de vrais chemins à l’exécution, typés par le motif.
+@64 Lire les étiquettes dans une adresse, dans les types.
+@65 Fabriquer la forme de ce que donne une adresse.
+@66 Faire correspondre de vraies adresses.
+@67 Les chaînes peuvent piloter les types.
+@68 La récursion gère n’importe quel nombre de paramètres.
+@69 L’exécution et les types lisent la même source.
+@70 Des adresses avec des trous.
+@71 TypeScript lit les trous.
+@72 Un routeur typé !
+@73 Analyse de littéraux de gabarit.
+@74 Des API typées par des littéraux.
+@75 Un seul forçage à la frontière.
+@76 Les motifs de routes sont des chaînes ; leurs paramètres peuvent être des types.
+@77 Une adresse comme "/users/:id" a un trou à remplir.
+@78 Les routeurs web font correspondre des chemins comme `/users/42/posts/7` à des motifs comme `/users/:id/posts/:postId`. Avec les types littéraux de gabarit et la récursion, TypeScript peut lire les noms des paramètres directement dans le motif :⏎⏎⟦F1⟧⏎⏎Ensuite, `match("/users/:id", path)` peut renvoyer un `Params<"/users/:id">`, donc `params.id` est vérifié et `params.name` est une erreur.
+@79 Un motif d’adresse comme "/users/:id" a un trou appelé `id`. Quand une vraie adresse comme "/users/42" arrive, le trou est rempli avec "42".⏎⏎Le détective lit les trous du motif, un par un, avant même que le code s’exécute. Donc TypeScript sait quels trous existent.
+@80 `ParamNames` détache un segment `:name/` à chaque étape de récursion ; la deuxième branche traite le dernier segment. Chaque étape est en position terminale dans une union, donc la profondeur croît avec le nombre de paramètres, bien en dessous des limites.⏎⏎Les frameworks (types d’Express, React Router, TanStack Router, Hono) s’en servent pour typer `req.params` à partir du littéral de la route. La correspondance à l’exécution n’est qu’un découpage de chaînes ; le type tient la comptabilité.
+@81 Construis `ParamNames<P>` : l’union de chaque nom de `:param` du motif.
+@82 Envoie le détective dans toute l’adresse : trouve le nom de chaque trou.
+@83 Deux branches : un paramètre suivi de `/` et d’autre chose (récursion sur le reste), ou un dernier paramètre.
+@84 Trouve un trou suivi d’autre adresse (et continue de chercher dans le reste), ou un trou tout au bout.
+@85 `P extends `${string}:${infer Name}/${infer Rest}` ? Name | ParamNames<`/${Rest}`> : P extends `${string}:${infer Name}` ? Name : never`.
+@86 La première branche continue avec le reste ; la seconde attrape le dernier trou.
+@87 L’unique motif du code de départ capturait tout ce qui suit les premiers deux-points ("id/posts/:postId"). Couper au niveau de `/` et faire une récursion lit un paramètre à la fois.
+@88 Le premier essai en attrapait trop. S’arrêter au `/` suivant et regarder à nouveau trouve chaque trou.
+@89 L’inférence dans les gabarits est la plus à gauche et la plus courte pour `${string}`, mais le dernier emplacement prend le reste ; la récursion sur la fin gère un nombre arbitraire de paramètres.
+@90 un paramètre
+@91 deux paramètres
+@92 un paramètre au milieu
+@93 aucun
+@94 Écris `match(pattern, path)` : les paramètres sous forme d’objet typé `Params<P>`, ou `null` si le chemin ne correspond pas.
+@95 Fabrique `match` : compare un motif avec une vraie adresse, et rends les trous remplis (ou `null`).
+@96 Coupe les deux au niveau de `/`. Longueurs différentes → `null`. Pour chaque partie : une partie `:name` stocke la partie du chemin ; toute autre partie doit être égale.
+@97 Coupe les deux adresses au niveau des `/`. Compare morceau par morceau : les trous recueillent la vraie valeur, les autres morceaux doivent correspondre exactement.
+@98 La boucle d’exécution et la récursion au niveau des types lisent le même motif, donc `found.id` est vérifié et `found.name` est une erreur.
+@99 La vraie correspondance et le type lisent tous les deux le même motif, donc ils sont toujours d’accord.
+@100 Le `P` générique capture le littéral ; l’unique forçage relie l’enregistrement d’exécution au type calculé.
+@101 paramètres typés
+@102 les paramètres inconnus sont des erreurs
+@103 correspond
+@104 mauvaise longueur
+@105 mauvaise partie fixe
+@106 pas de paramètres
+@107 Les types littéraux de gabarit récursifs analysent les motifs de routes.
+@108 `Params<P>` associe les noms de paramètres à des chaînes.
+@109 La correspondance à l’exécution est typée par le littéral du motif.
+@110 Le détective lit les trous dans l’adresse.
+@111 TypeScript sait quels trous existent.
+@112 Ta fonction de correspondance les remplit.
+@113 Analyse au niveau des types avec la récursion.
+@114 Des API pilotées par des littéraux.
+@115 Comment les routeurs modernes typent les paramètres.
+@116 Inférer les états et les événements d’une machine à partir d’un objet de configuration.
+@117 Refuser les états cibles inconnus avec `NoInfer`.
+@118 Faire tourner la machine : `send(event)` renvoie le nouvel état.
+@119 Décrire une machine, et laisser TypeScript apprendre ses états.
+@120 Attraper les fautes d’orthographe dans la description.
+@121 Appuyer sur des boutons et regarder la machine avancer.
+@122 Laisser la configuration piloter les types.
+@123 Protéger les références avec `NoInfer`.
+@124 Garder la logique d’exécution minuscule.
+@125 Décris, et le moteur construit.
+@126 Les erreurs sont attrapées tôt.
+@127 Tu as construit une fabrique de machines !
+@128 Des DSL pilotés par l’inférence.
+@129 Validation de la configuration à la compilation.
+@130 Une petite exécution, des types forts.
+@131 Un moteur générique, n’importe quelle machine.
+@132 Une machine qui construit d’autres machines.
+@133 Les machines à états du module 10 étaient écrites à la main. Un **moteur** prend une description et construit la machine :⏎⏎⟦F1⟧⏎⏎TypeScript infère les états (`"closed" | "opened" | "locked"`) à partir des clés et les événements à partir des clés intérieures. Avec `NoInfer`, une faute de frappe comme `"opned"` en cible est une erreur au lieu d’un nouvel état.
+@134 Tu écris une description : quelles situations existent, et quel bouton mène où. Le moteur la transforme en machine qui marche.⏎⏎TypeScript lit aussi la description, donc il connaît chaque situation et chaque bouton, et il attrape les fautes d’orthographe.
+@135 `createMachine<S extends string, E extends string>(config: { initial: NoInfer<S>; states: Record<S, Partial<Record<E, NoInfer<S>>>> })` : `S` n’est inféré qu’à partir des clés de `states`, `E` à partir de l’union des clés intérieures, et `NoInfer` transforme toute autre référence à un état en vérification.⏎⏎Les événements inconnus sont des erreurs de compilation ; les événements non valides dans l’état courant sont ignorés à l’exécution (une non-opération légale et typée), conformément à la sémantique des statecharts.
+@136 Écris `createMachine` : il infère les états et les événements, refuse les cibles inconnues, et `send(event)` passe à l’état cible (ou reste sur place).
+@137 Construis le moteur : `createMachine` apprend les situations et les boutons ; `send` fait avancer la machine (ou la laisse où elle est).
+@138 Paramètres de type `S` et `E` ; type de configuration `{ initial: NoInfer<S>; states: Record<S, Partial<Record<E, NoInfer<S>>>> }`.
+@139 Utilise deux sortes, `S` (les situations) et `E` (les boutons), et entoure de `NoInfer` les endroits qui mentionnent une situation.
+@140 Garde `let current: S = config.initial;`. Dans `send`, lis `config.states[current][event]` ; s’il est défini, vas-y ; renvoie `current`.
+@141 Retiens la situation actuelle. Dans `send`, cherche où mène le bouton ; s’il mène quelque part, vas-y.
+@142 Toute la sûreté vient des types : le code d’exécution tient en quelques lignes. Les états et les événements sont appris à partir de la description, donc il n’y a rien à garder synchronisé.
+@143 Le moteur est petit, mais TypeScript connaît maintenant chaque situation et chaque bouton.
+@144 Les sites d’inférence ne sont que les clés de `states` (pour `S`) et les clés intérieures (pour `E`) ; `NoInfer` transforme toutes les autres références en vérifications. `Partial<Record<E, …>>` permet des sous-ensembles d’événements par état.
+@145 les états et les événements sont inférés
+@146 une faute de frappe dans une cible
+@147 une faute de frappe dans l’état initial
+@148 événements inconnus
+@149 avance sur les événements
+@150 ignore les événements qui ne s’appliquent pas
+@151 Essaie : un feu tricolore construit par ton moteur. Ajoute un état et regarde TypeScript l’apprendre.
+@152 Essaie : un feu tricolore construit par ton moteur. Ajoute une nouvelle couleur !
+@153 Un moteur générique infère les états et les événements à partir d’une description.
+@154 `NoInfer` transforme les références en plus en vérifications.
+@155 Les événements inconnus sont des erreurs de compilation ; ceux qui ne s’appliquent pas sont ignorés.
+@156 Un seul moteur construit n’importe quelle machine.
+@157 TypeScript apprend les situations et les boutons.
+@158 Les fautes d’orthographe sont attrapées.
+@159 Choisir délibérément les sites d’inférence.
+@160 Les objets de configuration typés comme DSL.
+@161 Des API à la XState en miniature.
+@162 Analyser des commandes typées à partir de texte, vers une union discriminée.
+@163 Modéliser un monde de pièces avec un `Record`.
+@164 Jouer l’aventure que fait tourner ton code.
+@165 Transformer des mots tapés en commandes.
+@166 Construire un petit monde de pièces.
+@167 Jouer ta propre aventure !
+@168 Le texte devient des commandes typées.
+@169 Les mondes sont des données.
+@170 Les jeux sont des boucles sur de petites fonctions.
+@171 Tape une commande, et ton code raconte l’histoire.
+@172 Les pièces et les portes ne sont que des données.
+@173 Tu peux ajouter d’autres pièces !
+@174 Les analyseurs produisent des unions.
+@175 Des données plutôt que du code pour le contenu.
+@176 La coquille reste mince.
+@177 Du texte en entrée, des commandes en sortie, un monde entre les deux.
+@178 Tu tapes ce que tu veux faire, et ton code raconte l’histoire.
+@179 Une aventure textuelle a trois parties : un **analyseur** qui transforme un texte comme `go north` en commande, un **monde** de pièces avec des sorties et des objets, et une boucle qui applique chaque commande.⏎⏎⟦F1⟧⏎⏎Tu écris l’analyseur et le déplacement ; le pilote du jeu fait tourner le reste.
+@180 Dans une aventure textuelle, tu tapes ce que tu veux faire : "go north", "take key". Ton code comprend les mots et te fait te déplacer dans un petit monde. (Les commandes se tapent en anglais, comme dans les vieux jeux d’aventure.)⏎⏎D’abord, tu lui apprends à comprendre les commandes. Ensuite, tu construis les pièces et les portes entre elles.
+@181 Analyser vers une union discriminée à la frontière veut dire que la boucle de jeu fait un switch exhaustif sur un ensemble fermé de commandes ; une entrée invalide donne `null` (ou un `Result` avec un message). Le monde est une donnée (`Record<RoomId, Room>`), donc ajouter des pièces ne touche jamais la logique.⏎⏎Un prédicat de type (`isDirection`) affine l’argument en texte libre vers l’union `Direction` sans forçage.
+@182 Écris `parse` : `go <direction>`, `take <item>`, `look` et `inventory` (ou `i`) deviennent des commandes ; tout le reste donne `null`. Ignore la casse et les espaces en trop.
+@183 Fais en sorte que `parse` comprenne "go north", "take key", "look" et "inventory" (ou "i"). Tout le reste donne `null`.
+@184 Enlève les espaces aux bouts, passe en minuscules et découpe sur les blancs (`/\s+/`). Le premier mot est le verbe ; le reste, joint par des espaces, est l’objet. Utilise un prédicat de type pour vérifier la direction.
+@185 Range le texte, mets-le en petites lettres et découpe-le en mots. Le premier mot dit quoi faire ; le reste, c’est sur quoi le faire.
+@186 Le prédicat `isDirection` transforme un mot libre en `Direction`, donc `{ kind: "go", direction: object }` passe la vérification sans forçage.
+@187 Le vérificateur s’assure que seules de vraies directions deviennent des commandes "go".
+@188 L’analyse renvoie l’union fermée `Command` ; la boucle de jeu peut ensuite faire un switch exhaustif. `split(/\s+/)` après `trim()` fusionne les suites de blancs.
+@189 go
+@190 casse et espaces
+@191 look
+@192 inventaire en abrégé
+@193 une mauvaise direction
+@194 n’importe quoi
+@195 Écris `go` : l’id de la pièce dans cette direction depuis `roomId`, ou `null` s’il n’y a pas de sortie de ce côté.
+@196 Fabrique `go` : depuis cette pièce, quelle pièce se trouve dans cette direction ? `null` s’il n’y a pas de porte.
+@197 `WORLD[roomId]?.exits[direction] ?? null`.
+@198 Trouve la pièce, regarde ses sorties dans cette direction, et rends `null` s’il n’y a rien.
+@199 Les pièces sont des données : ajouter une pièce ou une porte ne change jamais `go`.
+@200 Le monde n’est qu’une liste de pièces. Ajoute des pièces, et ton code marche toujours.
+@201 Modélisation du monde pilotée par les données ; `?.` et `??` gèrent à la fois les pièces inconnues et les sorties manquantes.
+@202 vers le nord depuis le hall
+@203 pas de porte de ce côté
+@204 une pièce inconnue
+@205 Joue ton aventure. Tes `parse` et `go` exécutent chaque commande.
+@206 Joue ton aventure ! Tape des commandes, ou touche les suggestions.
+@207 Lance-la : chaque commande passe par tes `parse` et `go`.
+@208 Analyser le texte vers une union discriminée, à la frontière.
+@209 Garder le monde comme donnée dans un `Record`.
+@210 La boucle de jeu fait un switch sur les commandes.
+@211 Ton code comprend les commandes tapées.
+@212 Le monde est une liste de pièces et de portes.
+@213 Tu as écrit un jeu d’aventure !
+@214 Analyser à la frontière vers des types fermés.
+@215 Des mondes pilotés par les données.
+@216 Traitement exhaustif des commandes.

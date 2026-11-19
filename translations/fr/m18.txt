@@ -1,0 +1,276 @@
+@1 Savoir ce qu’active `strict`, et quelles options utiles il laisse de côté.
+@2 Corriger du code sous `exactOptionalPropertyTypes`, `noImplicitReturns` et `noImplicitOverride`.
+@3 Décider quelles options un projet devrait utiliser.
+@4 Savoir ce que sont les réglages stricts.
+@5 Corriger le code quand des règles plus strictes sont activées.
+@6 Choisir les règles de tes propres projets.
+@7 Choisir délibérément les options du compilateur.
+@8 Les options en plus attrapent de vrais bugs.
+@9 Migrer une option à la fois.
+@10 Des règles plus strictes trouvent plus d’erreurs.
+@11 Les activer une par une.
+@12 Ton code devient plus sûr.
+@13 Une politique d’options fait partie de la conception d’une base de code.
+@14 `@tsconfig/strictest` comme point de départ.
+@15 Échelonner les migrations.
+@16 `strict` est le début, pas la fin.
+@17 TypeScript a des règles en plus que tu peux activer.
+@18 `"strict": true` active toute une famille de vérifications : `strictNullChecks`, `noImplicitAny`, `strictFunctionTypes`, `strictBindCallApply`, `strictPropertyInitialization`, `useUnknownInCatchVariables` et d’autres. Plusieurs options précieuses n’en font **pas** partie :⏎⏎- `noUncheckedIndexedAccess` : les lectures par indice peuvent valoir `undefined`.⏎- `exactOptionalPropertyTypes` : `x?: T` veut dire « peut manquer », pas « peut valoir `undefined` ».⏎- `noImplicitReturns` : chaque chemin doit renvoyer une valeur.⏎- `noImplicitOverride` : redéfinir une méthode exige `override`.⏎- `noPropertyAccessFromIndexSignature` : les clés dynamiques exigent les crochets.⏎⏎Dans chaque exercice ci-dessous, une option est activée. Corrige le code qu’elle attrape.
+@19 TypeScript a un interrupteur « strict » qui active plein de vérifications soigneuses. Mais il existe encore d’autres règles soigneuses que tu peux ajouter.⏎⏎Chaque exercice ci-dessous active une règle en plus. Corrige ce qu’elle trouve !
+@20 Adopter une option dans une base de code existante : l’activer, compter les erreurs, corriger mécaniquement quand c’est possible (par exemple ajouter `override`), et utiliser `@ts-expect-error` avec parcimonie pour échelonner le reste. `exactOptionalPropertyTypes` et `noUncheckedIndexedAccess` sont les plus perturbantes et les plus précieuses pour le code riche en données ; les bibliothèques doivent rester compatibles avec les consommateurs qui les activent.⏎⏎`@tsconfig/strictest` regroupe un ensemble recommandé. Les options sont propres à chaque projet ; dans ce cours, chaque étape peut les activer individuellement.
+@21 Avec `exactOptionalPropertyTypes`, tu ne peux pas mettre `theme` à `undefined`. Fais en sorte que `reset` supprime plutôt la propriété.
+@22 Avec cette règle, une étiquette « peut-être » ne peut pas valoir `undefined`. Fais en sorte que `reset` enlève complètement `theme`.
+@23 Retire-la par déstructuration : `const { theme, ...rest } = settings; return rest;`.
+@24 Sors `theme` avec `const { theme, ...rest } = settings;` et rends `rest`.
+@25 Une propriété mise à `undefined` existe toujours (`"theme" in settings` est vrai), ce qui peut écraser des valeurs par défaut lors de la fusion d’objets. L’option fait de « absent » et « undefined » des types différents.
+@26 Une étiquette qui contient `undefined` est toujours là ! L’enlever, c’est ce que veut vraiment dire « absent ».
+@27 Sous l’option, `theme?: T` exclut un `undefined` explicite sauf si on écrit `theme?: T | undefined` ; ça compte pour les décompositions, les tests `in` et `Object.keys`.
+@28 theme a disparu
+@29 le reste reste
+@30 Avec `noImplicitReturns`, chaque chemin doit renvoyer une valeur. Renvoie `"keep going"` quand le score vaut 50 ou moins.
+@31 Avec cette règle, chaque chemin doit rendre quelque chose. Rends "keep going" pour les petits scores.
+@32 Ajoute un `return "keep going";` final.
+@33 Ajoute `return "keep going";` à la fin.
+@34 Le type de retour permettait `undefined`, donc arriver au bout sans rien renvoyer était accepté en silence. L’option te demande de dire ce qui se passe à cet endroit.
+@35 Avant, le chemin des petits scores ne rendait rien, par accident. Maintenant, c’est voulu.
+@36 TS7030 signale les chemins qui se terminent sans `return` quand d’autres renvoient une valeur.
+@37 excellent
+@38 petits scores
+@39 Avec `noImplicitOverride`, remplacer une méthode du parent exige le mot-clé `override`. Ajoute-le.
+@40 Avec cette règle, tu dois dire `override` quand tu remplaces une méthode du parent.
+@41 Écris `override describe(): string`.
+@42 Mets `override` devant `describe` dans `Child`.
+@43 `override` documente l’intention, et si la méthode de base est renommée, TypeScript signale que plus rien n’est redéfini.
+@44 Maintenant, si la méthode du parent change de nom, TypeScript le remarquera.
+@45 Avec l’option, `override` est obligatoire (TS4114) et un `override` d’un membre inexistant est une erreur (TS4113), ce qui attrape les cassures silencieuses lors des refactorisations.
+@46 enfant
+@47 La version courte.
+@48 Ce que tu as appris.
+@49 `strict` est une famille de vérifications, mais pas toutes.
+@50 `exactOptionalPropertyTypes`, `noImplicitReturns` et `noImplicitOverride` attrapent de vrais bugs.
+@51 Activer les options une à la fois dans du code existant.
+@52 « strict » active plein de règles.
+@53 Les règles en plus attrapent encore plus d’erreurs.
+@54 Les ajouter une à la fois.
+@55 Connaître la famille strict et ce qu’elle omet.
+@56 Adopter progressivement les options perturbantes.
+@57 Les bibliothèques doivent marcher avec les options de leurs consommateurs.
+@58 Décrire du code qui existe sans types TypeScript, avec `declare`.
+@59 Savoir ce qu’on met dans un fichier `.d.ts`.
+@60 Écrire une déclaration pour une variable globale.
+@61 Décrire du code qui n’a pas d’étiquettes.
+@62 Savoir ce qu’est un fichier « seulement des étiquettes ».
+@63 Écrire les étiquettes d’une chose globale.
+@64 Typer ce que tu ne vois pas avec `declare`.
+@65 Garder les déclarations exactes : on leur fait confiance.
+@66 Préférer les types maintenus quand ils existent.
+@67 Des étiquettes pour les choses cachées.
+@68 Les étiquettes doivent être justes.
+@69 Utiliser des étiquettes toutes faites quand c’est possible.
+@70 Les déclarations sont une surface d’API.
+@71 Faire confiance, mais tester.
+@72 Connaître `@types` et l’augmentation.
+@73 Des types pour du code que TypeScript ne voit pas.
+@74 Des étiquettes pour les choses que TypeScript ne voit pas.
+@75 Parfois, du code existe, mais pas en TypeScript : une balise script sur la page, une bibliothèque JavaScript. `declare` dit à TypeScript « ceci existe ; voici son type », sans rien créer :⏎⏎⟦F1⟧⏎⏎Un **fichier `.d.ts`** ne contient que des déclarations : aucune valeur, aucun code qui s’exécute. Les bibliothèques les livrent à côté de leur JavaScript (`index.js` + `index.d.ts`), et DefinitelyTyped en fournit pour celles qui n’en ont pas (`npm install -D @types/lodash`).
+@76 Parfois, une fonction utilitaire vient d’ailleurs, comme un outil que la page web a déjà. TypeScript ne le voit pas, alors il se plaint.⏎⏎`declare`, c’est comme écrire une étiquette pour lui : « il y a une chose qui s’appelle `track`, et voici comment on s’en sert ». L’étiquette ne fabrique aucun code ; elle décrit seulement.
+@77 Les déclarations ambiantes (`declare const/function/class/namespace/module`, et `declare global { … }` dans les modules) introduisent des types sans produire de code. Les fichiers `.d.ts` sont produits avec `declaration: true` (ou `isolatedDeclarations` pour une production rapide en parallèle) et consommés via `types`/`typesVersions` dans `package.json`.⏎⏎L’augmentation de module (`declare module "lib" { interface Options { … } }`) étend les types d’une bibliothèque tierce ; elle ne marche que dans un module qui importe ou exporte quelque chose. Garde les déclarations écrites à la main minimales et testées par des tests de types.
+@78 La page fournit un objet global `analytics`. Déclare-le : `track(event: string, data?: Record<string, string>): void`.
+@79 La page web a déjà un outil `analytics`. Écris son étiquette avec `declare`, pour que TypeScript sache comment s’en servir.
+@80 `declare const analytics: { track(event: string, data?: Record<string, string>): void };`
+@81 Écris `declare const analytics: { track(…): void };` avec les bonnes entrées.
+@82 Rien n’a été créé : `declare` a seulement dit à TypeScript ce que fournit la page, donc les appels sont maintenant vérifiés.
+@83 L’étiquette ne fabrique aucun nouveau code. Elle permet juste à TypeScript de vérifier comment tu utilises `analytics`.
+@84 Un `declare const` ambiant ne produit pas de code ; on fait confiance au type, alors garde-le exact (et teste-le, comme ici).
+@85 un événement tout seul
+@86 un nom d’événement doit être du texte
+@87 les valeurs des données doivent être du texte
+@88 Que peut contenir un fichier `.d.ts` ?
+@89 Qu’est-ce qu’on met dans un fichier qui ne contient que des étiquettes ?
+@90 Est-ce que quelque chose s’y exécute ?
+@91 Est-ce qu’une partie s’exécute ?
+@92 Seulement des types et des déclarations : interfaces, alias de type, instructions `declare`. Aucune valeur et aucun code qui s’exécute.
+@93 Seulement des étiquettes. Rien ne s’y exécute.
+@94 Les fichiers de déclaration ne contiennent que des types ; les corps d’implémentation et les initialiseurs sont des erreurs (TS1183, TS1039).
+@95 Seulement des types et des déclarations
+@96 Des fonctions avec leur code, pour qu’elles s’exécutent plus vite
+@97 Rien ne s’exécute dans un fichier `.d.ts` ; le JavaScript se trouve ailleurs.
+@98 Aucun code ne s’exécute depuis ce fichier.
+@99 `declare` décrit quelque chose qui existe sans le créer.
+@100 Les fichiers `.d.ts` ne contiennent que des déclarations.
+@101 Les bibliothèques les livrent, ou DefinitelyTyped les fournit.
+@102 `declare` écrit une étiquette pour quelque chose qui existe.
+@103 Les fichiers d’étiquettes ne s’exécutent jamais.
+@104 Beaucoup de bibliothèques viennent avec des fichiers d’étiquettes.
+@105 Déclarations ambiantes, augmentation, `declare global`.
+@106 Produire avec `declaration`/`isolatedDeclarations`.
+@107 Tester les déclarations écrites à la main.
+@108 Utiliser `import type` pour les imports qui ne sont que des types.
+@109 Distinguer les modules ES de CommonJS.
+@110 Savoir ce que font `moduleResolution` et `verbatimModuleSyntax`.
+@111 N’emprunter que des étiquettes à un autre fichier.
+@112 Connaître les deux façons dont les fichiers partagent du code.
+@113 Savoir comment TypeScript trouve les fichiers.
+@114 Marquer les imports de types seuls.
+@115 Préférer les modules ES.
+@116 Faire correspondre la résolution à la façon dont le code s’exécute.
+@117 Les imports d’étiquettes seules disparaissent.
+@118 Utiliser la façon moderne.
+@119 Dire à TypeScript comment les fichiers sont trouvés.
+@120 Une syntaxe de modules explicite pour les outils fichier par fichier.
+@121 La résolution reflète l’environnement d’exécution.
+@122 L’interopérabilité demande du soin.
+@123 Des imports qui disparaissent, et des imports qui chargent.
+@124 Certains imports apportent du code ; d’autres n’apportent que des étiquettes.
+@125 ⟦F1⟧⏎⏎Il existe deux systèmes de modules : les **modules ES** (`import`/`export`, le standard) et **CommonJS** (`require`/`module.exports`, l’ancien système de Node). Les projets modernes utilisent les modules ES.⏎⏎TypeScript doit aussi trouver les fichiers : `moduleResolution: "bundler"` pour les projets construits par Vite ou esbuild, `"nodenext"` pour le code exécuté directement par Node.
+@126 Les fichiers partagent du code avec `import` et `export`. Certains imports apportent du vrai code ; d’autres n’apportent que des étiquettes (des types), et ceux-là disparaissent quand le code s’exécute.⏎⏎`import type` dit « seulement des étiquettes, s’il te plaît », donc il ne charge jamais l’autre fichier.
+@127 Avec `verbatimModuleSyntax` (recommandé, TS 5.0), les imports et exports sont produits exactement tels qu’écrits sauf s’ils sont marqués `type`, donc les transpileurs fichier par fichier (esbuild, SWC, Babel, le retrait des types de Node) se comportent comme `tsc` ; il remplace `isolatedModules`, `importsNotUsedAsValues` et `preserveValueImports`.⏎⏎`moduleResolution: "nodenext"` impose les règles de Node (extensions `.js` explicites dans les imports relatifs, `exports` de `package.json`, `type: "module"`) ; `"bundler"` assouplit les extensions mais respecte `exports`. L’interopérabilité CommonJS/ESM (`esModuleInterop`, imports par défaut de CJS) est une source fréquente d’erreurs qui n’apparaissent qu’à l’exécution.
+@128 Le même module, deux systèmes.
+@129 Deux façons de partager entre fichiers.
+@130 Modules ES
+@131 Le standard : statique, analysable, marche dans les navigateurs et dans Node.
+@132 La façon moderne, utilisée partout aujourd’hui.
+@133 CommonJS
+@134 L’ancien système de Node : dynamique, encore courant dans les paquets existants.
+@135 L’ancienne façon, qu’on trouve encore dans beaucoup de vieux projets.
+@136 Avec `verbatimModuleSyntax`, quel import est retiré du JavaScript ?
+@137 Quel import disparaît quand le code s’exécute ?
+@138 Lequel est marqué comme types seulement ?
+@139 Lequel dit qu’il n’apporte que des étiquettes ?
+@140 `import type` est toujours effacé. Un `import` simple est gardé tel qu’écrit, même si tu n’en utilises que des types.
+@141 Celui avec `import type` disparaît. Les autres restent.
+@142 Sous `verbatimModuleSyntax`, seuls les imports marqués `type` sont supprimés ; importer des types sans le marquer est une erreur (TS1484), pour que l’intention soit explicite.
+@143 `import type { User } from "./user";`
+@144 `import { loadUser } from "./api";`
+@145 Celui-là importe une valeur, qui est gardée.
+@146 Celui-là apporte du vrai code, donc il reste.
+@147 Ton code s’exécute directement dans Node en modules ES. Quel `moduleResolution` ?
+@148 Ton code s’exécute directement dans Node. Comment TypeScript doit-il trouver les fichiers ?
+@149 Quel réglage suit les propres règles de Node, extensions de fichiers comprises ?
+@150 Lequel copie exactement les règles de Node ?
+@151 `"nodenext"` vérifie les imports comme Node les exécutera, y compris les extensions `.js` dans les chemins relatifs.
+@152 "nodenext" copie les règles de Node, donc ce que TypeScript accepte marche vraiment dans Node.
+@153 `nodenext` modélise la double résolution ESM/CJS de Node ; `bundler` est pour le code qu’un bundler transforme.
+@154 `"nodenext"`
+@155 `"bundler"`
+@156 Celui-là est pour le code construit par un bundler, qui est plus tolérant que Node.
+@157 Celui-là est pour le code qu’un outil de construction regroupe d’abord.
+@158 `import type` n’importe que des types et est toujours effacé.
+@159 Les modules ES sont le standard ; CommonJS est l’ancien système de Node.
+@160 `moduleResolution` décide comment les imports trouvent les fichiers.
+@161 Certains imports n’apportent que des étiquettes.
+@162 Deux façons de partager du code : la nouvelle et l’ancienne.
+@163 TypeScript doit savoir comment les fichiers sont trouvés.
+@164 Utiliser `verbatimModuleSyntax`.
+@165 `nodenext` pour Node, `bundler` pour les apps regroupées.
+@166 Attention à l’interopérabilité CJS/ESM.
+@167 Écrire de petits validateurs comme des prédicats de type.
+@168 Les combiner avec des fonctions d’ordre supérieur comme `arrayOf`.
+@169 Obtenir gratuitement le type vérifié à partir du validateur.
+@170 Fabriquer de petits vérificateurs.
+@171 Les combiner en plus grands vérificateurs.
+@172 Laisser TypeScript apprendre d’eux.
+@173 Construire la validation à partir de petits morceaux typés.
+@174 Composer au lieu de répéter.
+@175 Les types suivent les vérifications.
+@176 Emboîter les vérificateurs.
+@177 Vérifier une fois, faire confiance ensuite.
+@178 TypeScript apprend à mesure que tu vérifies.
+@179 Validation composable à l’exécution.
+@180 Les prédicats préservent l’affinage.
+@181 Les schémas généralisent ça.
+@182 De petites vérifications qui s’emboîtent.
+@183 Des vérificateurs qui s’emboîtent comme des briques.
+@184 Un **validateur** est un prédicat de type sur `unknown`. Les petits se combinent en plus grands :⏎⏎⟦F1⟧⏎⏎Chaque combinaison vérifie à l’exécution *et* dit à TypeScript le type obtenu.
+@185 Un vérificateur répond à « est-ce la bonne sorte ? » et instruit TypeScript en même temps.⏎⏎Les petits vérificateurs s’emboîtent : un vérificateur « liste de nombres » est fabriqué à partir d’un vérificateur « nombre ».
+@186 Les validateurs sous forme de prédicats se composent via des fonctions d’ordre supérieur (`arrayOf`, `optional`, `union`, `object`) ; le type statique découle des combinateurs, donc vérifications à l’exécution et types ne peuvent pas diverger. C’est l’idée centrale des bibliothèques de schémas ; le module 19 construit le côté `Infer<typeof schema>`.⏎⏎Préfère renvoyer des valeurs analysées (ou un `Result`) plutôt que des booléens quand il te faut des messages d’erreur ou des transformations.
+@187 Écris `arrayOf` : il transforme un validateur de `T` en validateur de `T[]`.
+@188 Fabrique `arrayOf` : il transforme un « vérificateur de nombre » en « vérificateur de liste de nombres ».
+@189 Renvoie `(value): value is T[] => Array.isArray(value) && value.every(item)`.
+@190 Rends un nouveau vérificateur : est-ce une liste, et chaque élément passe-t-il `item` ?
+@191 La fonction renvoyée est elle-même un validateur, donc elle affine, et peut être composée à nouveau (`arrayOf(arrayOf(isNumber))`).
+@192 Le nouveau vérificateur instruit aussi TypeScript, et peut lui-même être emboîté dans un autre.
+@193 Les prédicats d’ordre supérieur préservent l’affinage à travers la composition.
+@194 affine en number[]
+@195 s’imbrique
+@196 les nombres passent
+@197 une chaîne échoue
+@198 pas un tableau
+@199 Écris `optional` : un validateur qui accepte aussi `undefined`.
+@200 Fabrique `optional` : un vérificateur qui dit aussi oui à `undefined`.
+@201 `value === undefined || item(value)`.
+@202 Dis oui si c’est `undefined`, sinon demande à `item`.
+@203 `null` n’est pas `undefined` : un champ facultatif peut manquer, mais pas valoir `null`, sauf si tu le dis.
+@204 Absent, ça va ; `null`, c’est autre chose.
+@205 Distinguer absent et null ; modéliser `nullable` séparément.
+@206 undefined passe
+@207 une chaîne passe
+@208 null échoue
+@209 Un validateur est un prédicat de type sur `unknown`.
+@210 Les fonctions d’ordre supérieur combinent les validateurs.
+@211 Le type vient du validateur, donc ils ne peuvent pas être en désaccord.
+@212 Les vérificateurs répondent et instruisent en même temps.
+@213 Les petits vérificateurs s’emboîtent dans les grands.
+@214 TypeScript apprend de chacun d’eux.
+@215 Des prédicats composables.
+@216 Une seule source pour les types d’exécution et les types statiques.
+@217 La base des bibliothèques de schémas.
+@218 Savoir à quoi renoncent `any`, `as`, `!` et `@ts-expect-error`.
+@219 Remplacer un `!` risqué par une vraie vérification.
+@220 Migrer du JavaScript vers TypeScript pas à pas.
+@221 Connaître les sorties de secours et ce qu’elles coûtent.
+@222 Remplacer un raccourci risqué par une vraie vérification.
+@223 Passer du vieux code à TypeScript petit à petit.
+@224 Les portes de sortie ont un coût.
+@225 Préférer l’affinage et la validation.
+@226 Laisser des suppressions qui expirent.
+@227 Utiliser rarement les sorties de secours.
+@228 Vérifier au lieu de faire confiance.
+@229 Garder des notes honnêtes.
+@230 Le discernement plutôt que le dogme.
+@231 Mesurer et réduire `any`.
+@232 La migration est un processus.
+@233 Chaque porte de sortie désactive une partie de la vérification.
+@234 Les sorties de secours sont utiles, mais elles désactivent des vérifications de sécurité.
+@235 - `any` : désactive la vérification pour une valeur, et pour tout ce qu’elle touche.⏎- `value as Type` : « fais-moi confiance, c’est de ce type » (aucune vérification à l’exécution).⏎- `value!` : « fais-moi confiance, ce n’est ni `null` ni `undefined` ».⏎- `// @ts-expect-error` : « la ligne suivante a une erreur, exprès » ; se plaint quand l’erreur disparaît.⏎- `// @ts-ignore` : fait taire la ligne suivante pour toujours, même une fois l’erreur corrigée : à éviter.⏎⏎Quand tu fais passer du JavaScript en TypeScript, ces outils t’aident à démarrer, avec `allowJs`, `checkJs` et des types JSDoc, puis tu resserres fichier par fichier.
+@236 Les portes de sortie sont comme des sorties de secours : parfois il en faut une, mais une alarme devrait sonner.⏎⏎`!` veut dire « fais-moi confiance, c’est là ». Si tu te trompes, le programme casse quand il s’exécute.
+@237 Les assertions ne sont pas vérifiées ; les doubles assertions (`as unknown as T`) contournent même la vérification de recouvrement. Préfère l’affinage, la validation et des types précis ; cantonne les assertions inévitables à de petites fonctions utilitaires testées. `@ts-expect-error` se nettoie tout seul, `@ts-ignore` non ; contrôle les deux avec le linter (`@typescript-eslint/ban-ts-comment` avec descriptions).⏎⏎Migration : active `allowJs` + `checkJs` pour une vérification typée par JSDoc, renomme les fichiers progressivement, commence en mode non strict et active les options par dossier (références de projets) ou par ligne avec un budget de `@ts-expect-error`.
+@238 Un double `as` compile. Qu’est-ce qui s’affiche ?
+@239 On a menti à TypeScript. Qu’est-ce que ça va montrer ?
+@240 `as` ne change rien à l’exécution : `count` est toujours la chaîne `"5"`.
+@241 L’étiquette dit number, mais dans la boîte, c’est toujours le mot "5".
+@242 TypeScript a cru que c’était un nombre ; à l’exécution, `"5" + 1` colle du texte. Les assertions ne convertissent jamais les valeurs.
+@243 La boîte contenait vraiment un mot, donc 1 a été collé : "51".
+@244 Les assertions sont effacées ; `+` avec un opérande chaîne concatène.
+@245 `firstLongWord` plante quand aucun mot n’est assez long. Enlève le `!` et renvoie `""` dans ce cas.
+@246 `firstLongWord` casse quand aucun mot n’est long. Enlève le `!` et rends `""` à la place.
+@247 Range le résultat de `find`, vérifie s’il vaut `undefined`, puis mets-le en majuscules.
+@248 Garde ce que rend `find`. Si c’est `undefined`, rends `""`.
+@249 `find` peut renvoyer `undefined`, et `!` le cachait à TypeScript. Une vraie vérification s’en occupe.
+@250 Le `!` cachait un vrai problème. Vérifier rend le tout sûr.
+@251 Les assertions non nulles font taire TS2532/18048 sans aucune protection à l’exécution.
+@252 en trouve un
+@253 aucun assez long
+@254 Un test passe exprès un mauvais type. Quel commentaire devrait marquer cette ligne ?
+@255 Un test enfreint les règles exprès. Quelle note devrait aller au-dessus de cette ligne ?
+@256 Lequel se plaint si l’erreur disparaît plus tard ?
+@257 Quelle note remarque quand elle n’est plus nécessaire ?
+@258 `@ts-expect-error` : il documente l’erreur voulue, et signale quand la ligne cesse d’être une erreur, donc il ne devient jamais périmé.
+@259 `@ts-expect-error` te dit quand il n’est plus nécessaire.
+@260 TS2578 sur un `@ts-expect-error` inutilisé garde les suppressions honnêtes ; les défis de types de ce cours utilisent exactement ça.
+@261 `// @ts-expect-error`
+@262 `// @ts-ignore`
+@263 Il fait taire la ligne pour toujours, même une fois l’erreur disparue.
+@264 Il cache la ligne pour toujours, même quand ce n’est plus nécessaire.
+@265 Forcer l’argument avec `as any`
+@266 Ça cache l’erreur sans dire qu’elle est voulue, et ça propage `any`.
+@267 Ça cache le problème et propage le « tout est permis ».
+@268 `any`, `as` et `!` désactivent des vérifications ; les utiliser rarement et délibérément.
+@269 Remplacer `!` par une vraie vérification quand c’est possible.
+@270 Préférer `@ts-expect-error` à `@ts-ignore`.
+@271 Les sorties de secours désactivent des vérifications de sécurité.
+@272 Une vraie vérification vaut mieux que « fais-moi confiance ».
+@273 Utiliser la note qui te dit quand elle n’est plus nécessaire.
+@274 Les assertions ne sont pas vérifiées : les contenir.
+@275 Seulement des suppressions qui se nettoient toutes seules.
+@276 Migrer progressivement avec `checkJs`.

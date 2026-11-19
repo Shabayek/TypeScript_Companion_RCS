@@ -1,0 +1,266 @@
+@1 Make every property optional with `Partial<T>`, for updates.
+@2 Make every property required with `Required<T>`.
+@3 Lock an object type with `Readonly<T>`.
+@4 Turn every label into a "maybe" label.
+@5 Turn every "maybe" into a "must".
+@6 Lock a shape so nothing can change.
+@7 Derive types instead of rewriting them.
+@8 `Partial` for changes, `Readonly` for promises.
+@9 They only affect the top level.
+@10 Shape machines save writing shapes twice.
+@11 Maybe, must, and locked.
+@12 They only change the top labels.
+@13 Utility types compose.
+@14 Shallow by design.
+@15 Pair `Partial` updates with spread.
+@16 Utility types build new types from old ones.
+@17 Machines that change shapes.
+@18 TypeScript ships **utility types** that transform a type you already have:⏎⏎⟦F1⟧⏎⏎`Partial` is perfect for "change some of these fields": the caller passes only what changes.
+@19 TypeScript has machines that change shapes. You give them a shape, and they give you a new one.⏎⏎`Partial` makes every label a "maybe": you only fill in the ones you want to change. `Readonly` locks every label so nothing can be changed.
+@20 These are homomorphic mapped types: `Partial<T> = { [K in keyof T]?: T[K] }`, `Required<T>` removes `?` with `-?`, and `Readonly<T>` adds `readonly`. They are shallow: nested objects keep their own modifiers (a `DeepPartial` needs recursion).⏎⏎For updates, `Partial<T>` pairs with spread; note that without `exactOptionalPropertyTypes`, `{ name: undefined }` is a valid partial and would overwrite a value with `undefined` when spread.
+@21 What is `Changes`? Write it out as an object type.
+@22 Write out the shape of `Changes`.
+@23 Every property of `Settings` stays, but each gets a `?`.
+@24 Same labels, but each one becomes a "maybe" with `?`.
+@25 `Partial` keeps every property and makes it optional. TypeScript shows it as `{ theme?: string | undefined; fontSize?: number | undefined }`, which is the same type.
+@26 Same labels, all "maybe" now.
+@27 The mapped type adds the `?` modifier; under default settings `?: T` and `?: T | undefined` are identical, which is why both spellings are accepted.
+@28 Write `updateUser`: the user with the given changes applied, as a new object.
+@29 Make `updateUser` give back a new user with the changes put in.
+@30 Spread the user first, then the changes: later properties win.
+@31 Copy the user with `...user`, then put the changes on top with `...changes`.
+@32 Spread order matters: properties from `changes` come last, so they win. The original user is untouched.
+@33 The changes go on top, so they win. The old user stays the same.
+@34 Object spread is a shallow merge with right-biased precedence; the return type `User` still holds because `Partial<User>`’s defined properties have `User`’s types.
+@35 changes the name only
+@36 no changes
+@37 Make `freeze` return a `Readonly` version, so reassigning a property of the result is an error.
+@38 Make `freeze` give back a locked version: changing it must be an error.
+@39 Change the return type to `Readonly<Point>`; `Object.freeze` already returns that.
+@40 Say the machine gives back `Readonly<Point>`.
+@41 Now the type matches reality: the object is frozen at runtime, and TypeScript forbids writing to it.
+@42 The object really is locked, and now TypeScript knows it too.
+@43 `Object.freeze` returns `Readonly<T>`; annotating the wider mutable type discarded that information.
+@44 reading is fine
+@45 writing is an error
+@46 keeps the values
+@47 The short version.
+@48 What you learned.
+@49 `Partial<T>` makes every property optional: great for updates.
+@50 `Required<T>` makes them all required.
+@51 `Readonly<T>` forbids reassigning properties.
+@52 `Partial` turns labels into "maybe".
+@53 `Required` turns them into "must".
+@54 `Readonly` locks them.
+@55 Modifier utilities are homomorphic mapped types.
+@56 They are shallow.
+@57 Mind `undefined` in partial updates.
+@58 Keep some properties with `Pick<T, Keys>`.
+@59 Drop some with `Omit<T, Keys>`.
+@60 Derive view types (like a public profile) from one source type.
+@61 Keep only the labels you want.
+@62 Throw away the labels you do not want.
+@63 Make a smaller shape from a big one.
+@64 One source type, many derived views.
+@65 `Pick` to include, `Omit` to exclude.
+@66 Watch for typos in `Omit`.
+@67 Make small shapes from big ones.
+@68 Keep or throw away labels.
+@69 Spell carefully with `Omit`.
+@70 View types via `Pick`/`Omit`.
+@71 Key checking differs.
+@72 Distribute over unions explicitly.
+@73 Smaller shapes from a bigger one.
+@74 Cut a big shape down to size.
+@75 `Pick` keeps the keys you list; `Omit` keeps all the others:⏎⏎⟦F1⟧⏎⏎Derived types stay in sync: add a field to `User` and `PublicUser` gets it automatically, while `password` can never leak into it.
+@76 `Pick` is like choosing stickers to keep: "I want the id and the name".⏎⏎`Omit` is the opposite: "everything except the password".⏎⏎Add a new label to the big shape, and the smaller shapes update by themselves.
+@77 `Pick<T, K extends keyof T>` requires real keys; `Omit<T, K extends keyof any>` does not, so a typo in `Omit` silently omits nothing. A stricter `StrictOmit<T, K extends keyof T> = Omit<T, K>` catches that.⏎⏎`Omit` over a union is not distributive (`Omit<A | B, "x">` keeps only common keys); use `T extends unknown ? Omit<T, K> : never` for a distributive version.
+@78 What are the keys of `PublicUser`?
+@79 Which labels does `PublicUser` have?
+@80 `Omit` keeps every key except `password`.
+@81 Everything except the password.
+@82 `Omit` removed `password`, so three keys are left.
+@83 The password label is gone; three labels are left.
+@84 `keyof Omit<T, K>` is `Exclude<keyof T, K>`.
+@85 Define `Card` as the `name` and `avatar` of a `Profile`, and `PublicProfile` as everything but `phone`, both derived from `Profile`.
+@86 Make `Card` (only name and avatar) and `PublicProfile` (everything but the phone), both cut from `Profile`.
+@87 `type Card = Pick<Profile, "name" | "avatar">;` and `type PublicProfile = Omit<Profile, "phone">;`
+@88 Use `Pick` for the card and `Omit` for the public profile.
+@89 Both are derived, so renaming or adding a field in `Profile` updates them, and the phone number cannot leak into the public view.
+@90 Cut from the big shape, so they always stay in step with it.
+@91 Excess property checks reject the `phone` literal against `PublicProfile`; deriving view types prevents drift between DTOs.
+@92 a card is just name and avatar
+@93 no phone in public
+@94 a phone cannot sneak in
+@95 `Omit<User, "pasword">` (a typo). What happens?
+@96 What if you misspell the label in `Omit`?
+@97 Does `Omit` require its keys to exist on the type?
+@98 Does `Omit` check the spelling?
+@99 Nothing warns you: `Omit` accepts any key, so it omits nothing and `password` stays. `Pick` would have caught it.
+@100 No warning at all! The password stays. `Pick` would notice the mistake, `Omit` does not.
+@101 `Omit`’s `K extends keyof any` allows unknown keys by design; define a strict variant or use `satisfies` on key lists when it matters.
+@102 It compiles, and `password` is still there
+@103 TypeScript reports the unknown key
+@104 That is true for `Pick`, not for `Omit`.
+@105 `Pick` would. `Omit` does not check.
+@106 `Pick<T, K>` keeps the listed keys.
+@107 `Omit<T, K>` drops them.
+@108 Derived types stay in sync with their source.
+@109 `Pick` keeps the labels you choose.
+@110 `Omit` throws away the ones you name.
+@111 Small shapes follow the big one.
+@112 `Pick` checks keys; `Omit` does not.
+@113 `Omit` is not distributive over unions.
+@114 Derive DTOs from domain types.
+@115 Get a function’s return type with `ReturnType<typeof fn>`.
+@116 Get its parameters as a tuple with `Parameters`.
+@117 Unwrap a promise type with `Awaited`.
+@118 Ask a machine what it gives back.
+@119 Ask what it needs.
+@120 Look inside a promise.
+@121 Let functions be the source of truth for their types.
+@122 Combine `Awaited` and `ReturnType` for async code.
+@123 Wrappers stay in sync.
+@124 Read labels instead of copying them.
+@125 Promises can be looked inside.
+@126 Copies never go out of date.
+@127 Derive types from values with `typeof`.
+@128 Unwrap promises with `Awaited`.
+@129 Keep higher-order wrappers precise.
+@130 Types can be read off functions.
+@131 Read the label on a machine.
+@132 Sometimes the function is the source of truth. Read types off it instead of writing them twice:⏎⏎⟦F1⟧⏎⏎`typeof createUser` turns the value (the function) into its type first; the utilities then pick it apart.
+@133 A machine has a label saying what goes in and what comes out. `ReturnType` reads the "comes out" part; `Parameters` reads the "goes in" part.⏎⏎An async machine gives back a promise. `Awaited` looks inside the promise, at what you finally get.
+@134 `ReturnType<F>` and `Parameters<F>` are conditional types using `infer` (you will write them yourself in Module 16). For overloaded functions they use the *last* overload. `Awaited<T>` recursively unwraps thenables, mirroring `await`.⏎⏎Use them when a library does not export the types you need (`Parameters<typeof fetch>[1]`), or to keep wrappers in sync (`(...args: Parameters<typeof f>) => ReturnType<typeof f>`).
+@135 What is `Loaded`?
+@136 What do you finally get from `loadScore`?
+@137 `ReturnType` of an async function is a `Promise<…>`; `Awaited` unwraps it.
+@138 The async machine gives a promise. `Awaited` looks inside.
+@139 `ReturnType` gives `Promise<number>`, and `Awaited` unwraps it to `number`.
+@140 The promise holds a number, so `Awaited` gives `number`.
+@141 Async functions return `Promise<T>`; `Awaited` mirrors `await`’s unwrapping at the type level.
+@142 Type `logged` so it takes exactly the same arguments as `greet` and returns the same type, using `Parameters` and `ReturnType`.
+@143 Make `logged` take the same inputs as `greet` and give back the same thing, by reading `greet`’s label.
+@144 `function logged(...args: Parameters<typeof greet>): ReturnType<typeof greet>`.
+@145 Use `...args: Parameters<typeof greet>` for the inputs and `ReturnType<typeof greet>` for the output.
+@146 Change `greet`’s parameters and `logged` follows automatically. No copy to forget.
+@147 If `greet` changes, `logged` changes with it.
+@148 `Parameters` yields a labelled tuple, so the rest parameter `...args` preserves names and arity; spreading it back into `greet` type-checks without casts.
+@149 same result type
+@150 same arguments
+@151 argument types checked
+@152 still greets
+@153 `ReturnType<typeof fn>` is what `fn` returns.
+@154 `Parameters<typeof fn>` is a tuple of its parameter types.
+@155 `Awaited<T>` unwraps promises.
+@156 `ReturnType` reads what comes out.
+@157 `Parameters` reads what goes in.
+@158 `Awaited` looks inside a promise.
+@159 Function utilities are conditional types with `infer`.
+@160 Overloads: the last signature wins.
+@161 Great for wrappers and untyped library internals.
+@162 Remove members from a union with `Exclude`.
+@163 Keep only matching members with `Extract`.
+@164 Remove `null` and `undefined` with `NonNullable`.
+@165 Take things out of a "this or that".
+@166 Keep only the things that match.
+@167 Throw out the empty ones.
+@168 Filter unions instead of rewriting them.
+@169 Name one member of a tagged union with `Extract`.
+@170 Strip `null` with `NonNullable`.
+@171 Use sieves on "this or that" types.
+@172 Keep your types in step.
+@173 Empty ones can be thrown out.
+@174 Union filtering utilities.
+@175 Distributivity over naked type parameters.
+@176 Preparing for conditional types (M16).
+@177 Filter a union like a list.
+@178 A sieve for types.
+@179 These utilities filter the members of a union:⏎⏎⟦F1⟧
+@180 A union is like a bag of choices. These tools are sieves:⏎⏎`Exclude` takes some choices out. `Extract` keeps only the ones that match. `NonNullable` throws away the empty ones (`null` and `undefined`).
+@181 They are distributive conditional types: `Exclude<T, U> = T extends U ? never : T` is applied to each member of `T`, and `never` members vanish from the result. `Extract` is the complement; `NonNullable<T> = T & {}` (since TS 4.8).⏎⏎`Extract<Union, { type: "click" }>` is the idiomatic way to name one member of a discriminated union without repeating it.
+@182 What is `Live`?
+@183 What is left in `Live`?
+@184 Start with all three and take out `"archived"`.
+@185 Take "archived" out of the bag.
+@186 `Exclude` removes the members assignable to `"archived"`.
+@187 "archived" is gone; the other two stay.
+@188 Each member is tested against `"archived"` and mapped to `never` or itself.
+@189 Name the members: `KeyEvent` is the `"key"` member of `AppEvent`, and `PointerEvents` is every member except it.
+@190 Use sieves: `KeyEvent` keeps only the key event; `PointerEvents` keeps all the others.
+@191 `Extract<AppEvent, { type: "key" }>` and `Exclude<AppEvent, { type: "key" }>`.
+@192 Keep with `Extract`, remove with `Exclude`, both with `{ type: "key" }`.
+@193 Both are derived from `AppEvent`, so adding an event type updates them automatically.
+@194 The sieves work on the bag of events, so they stay up to date.
+@195 Filtering by a partial shape works because each member is tested for assignability to `{ type: "key" }`.
+@196 the key member
+@197 the other two
+@198 What is `Name`?
+@199 What is left in `Name`?
+@200 `NonNullable` removes `null` and `undefined`.
+@201 Throw away the empty ones.
+@202 Only `string` survives once `null` and `undefined` are removed.
+@203 Only the word kind is left.
+@204 `NonNullable<T>` is `T & {}`, which drops `null` and `undefined` from a union.
+@205 `Exclude<U, X>` removes members; `Extract<U, X>` keeps matching ones.
+@206 Both work with partial shapes like `{ type: "key" }`.
+@207 Sieves take things out or keep things in.
+@208 They can match by a label, like `type`.
+@209 `NonNullable` throws out the empty ones.
+@210 Distributive conditional types filter unions.
+@211 `never` members disappear.
+@212 Name union members with `Extract`.
+@213 Build the types of a create/update API from one model.
+@214 Nest utilities: `Partial<Omit<User, "id">>`.
+@215 Read a composed type from the inside out.
+@216 Chain shape machines together.
+@217 Make the shapes for "new" and "change".
+@218 Read a long type from the inside out.
+@219 One source of truth for each model.
+@220 Compose utilities for create, update and views.
+@221 Name composed types well.
+@222 One big shape, many small ones.
+@223 Chain the shape machines.
+@224 Keep names clear.
+@225 Type-level composition scales API design.
+@226 Derived types catch drift at compile time.
+@227 Simplify hovers with helper types.
+@228 Utilities compose.
+@229 Shape machines can be chained.
+@230 A typical API needs several shapes of the same thing. Derive them all from one model:⏎⏎⟦F1⟧⏎⏎Read nested utilities from the inside out: `Partial<Omit<User, "id">>` is "User without id, then everything optional".
+@231 You can chain shape machines: first cut off some labels, then make the rest "maybe".⏎⏎Read them from the inside out, like opening boxes inside boxes.
+@232 Composition keeps one model authoritative and every transport shape derived from it, so a renamed field breaks every affected call site at compile time. When a composed type gets unreadable in hovers, give it a name or flatten it with a helper such as `type Simplify<T> = { [K in keyof T]: T[K] } & {}`.⏎⏎Be deliberate about what the server owns (ids, timestamps) and model it with `Omit`, rather than making everything optional.
+@233 Define `NewTask` (a `Task` without `id` and `done`) and `TaskUpdate` (any of `NewTask`’s fields, all optional).
+@234 Make `NewTask` (a task without `id` and `done`) and `TaskUpdate` (any of those fields, all "maybe").
+@235 `type NewTask = Omit<Task, "id" | "done">;` and `type TaskUpdate = Partial<NewTask>;`
+@236 First cut off `id` and `done` with `Omit`; then make everything "maybe" with `Partial`.
+@237 The server owns `id` and `done`; clients can neither send nor change them. Add a field to `Task` and both shapes follow.
+@238 Only the right labels can be sent. If `Task` grows, the other shapes grow too.
+@239 Excess property checks on the object literals enforce ownership of server-managed fields; the types remain derived from one model.
+@240 a new task has a title and a due date
+@241 no id on a new task
+@242 an update can change just one field
+@243 an update cannot change the id
+@244 Write `applyUpdate`: the task with an update applied.
+@245 Make `applyUpdate` give back the task with the changes put in.
+@246 Spread the task, then the update.
+@247 Copy the task, then put the update on top.
+@248 Because `TaskUpdate` cannot contain `id` or `done`, the spread can never change them.
+@249 The update cannot touch `id` or `done`, so they stay safe.
+@250 The type of `update` guarantees the spread cannot overwrite server-owned fields (modulo explicit `undefined` values without `exactOptionalPropertyTypes`).
+@251 renames
+@252 Read it inside out: what is `Draft`?
+@253 Open the boxes from the inside: what is `Draft`?
+@254 First `Pick` keeps `title` and `due`; then `Partial` makes them optional.
+@255 First keep `title` and `due`; then make them "maybe".
+@256 Inside out: pick two fields, then make both optional.
+@257 Two labels kept, both "maybe".
+@258 Homomorphic mapped types compose; the result is `{ title?: string; due?: string }`.
+@259 Derive every API shape from one model.
+@260 Nest utilities and read them inside out.
+@261 Use `Omit` for fields the server owns.
+@262 Read from the inside out.
+@263 Some labels belong to the server.
+@264 One model, many derived transport types.
+@265 Name or simplify composed types for readability.
+@266 Model ownership explicitly.

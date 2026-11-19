@@ -1,0 +1,214 @@
+@1 Cacher des membres de classe avec `private` ou `#private`.
+@2 Partager des membres avec les sous-classes grâce à `protected`.
+@3 Savoir quelle confidentialité existe à l’exécution.
+@4 Garder secrets certains tiroirs d’une classe.
+@5 En partager certains avec la famille.
+@6 Savoir quels secrets sont réels quand le code s’exécute.
+@7 Exposer le moins possible.
+@8 Utiliser `#` pour une vraie confidentialité.
+@9 Marquer `readonly` ce qui ne doit pas changer.
+@10 Garder les secrets secrets.
+@11 Les vrais verrous utilisent `#`.
+@12 Verrouiller ce qui ne doit pas changer.
+@13 Encapsulation : compilation ou exécution.
+@14 De petites API publiques.
+@15 `readonly` est superficiel.
+@16 Décider qui peut toucher à quoi.
+@17 Certaines parties d’une classe sont secrètes.
+@18 ⟦F1⟧⏎⏎`private` et `protected` sont vérifiés par TypeScript, puis effacés : à l’exécution, la propriété est une propriété ordinaire. Un champ `#` est privé dans JavaScript lui-même : rien en dehors de la classe ne peut l’atteindre, même sans types.
+@19 Une classe peut avoir des tiroirs secrets. `private` veut dire « seule cette classe peut l’ouvrir », et TypeScript le vérifie.⏎⏎Un tiroir `#` est encore plus secret : il reste verrouillé même quand le code s’exécute, sans TypeScript pour surveiller.⏎⏎`readonly` veut dire que tu peux regarder, mais jamais y mettre quelque chose de nouveau.
+@20 Les modificateurs de TypeScript n’existent qu’à la compilation ; les membres `private` sont visibles pour `JSON.stringify`, `Object.keys` et l’accès par crochets avec un forçage. Les champs `#private` d’ECMAScript sont strictement privés (vérifiés par marque, non énumérables, non interceptés par les proxys) et marchent au-delà des frontières de compilation ; on ne peut pas y accéder depuis les sous-classes ni depuis les tests.⏎⏎Utilise `#` pour une vraie encapsulation, `private` quand il te faut une confidentialité propre à TypeScript (simulations dans les tests, hiérarchies de style `protected`). `readonly` s’applique à la liaison, pas à une immuabilité profonde.
+@21 Qu’est-ce qui s’affiche ? Quels champs apparaissent ?
+@22 Quels tiroirs apparaissent quand l’objet est affiché ?
+@23 `private` est effacé, donc `balance` est une propriété ordinaire à l’exécution. Un champ `#` n’est pas du tout une propriété.
+@24 Le secret de TypeScript a disparu quand le code s’exécute. Le secret `#` reste caché.
+@25 Le champ `private` apparaît : il n’était privé que pendant que TypeScript vérifiait le code. Le champ `#pin` reste caché.
+@26 `balance` apparaît, parce que le secret de TypeScript disparaît quand le code s’exécute. `#pin` reste caché.
+@27 `private` est effacé en propriété propre normale ; `#pin` vit dans un emplacement privé invisible à la réflexion.
+@28 Rends `id` en lecture seule et `secret` privé, pour que le mauvais usage ci-dessous devienne une erreur de type.
+@29 Verrouille `id` pour qu’il ne puisse pas changer, et fais de `secret` un tiroir privé.
+@30 Ajoute `readonly` devant `id` et `private` devant `secret`.
+@31 Écris `readonly` devant `id` et `private` devant `secret`.
+@32 Le code extérieur peut encore demander `check(guess)`, mais ne peut plus lire le secret ni changer l’id.
+@33 On peut encore demander « est-ce le secret ? », mais pas jeter un œil ni changer l’id.
+@34 La surface publique se réduit à `id` (en lecture seule) et `check` ; `private` n’existe qu’à la compilation, donc utilise `#secret` là où la confidentialité à l’exécution compte.
+@35 on peut lire l’id
+@36 l’id ne peut pas changer
+@37 le secret est privé
+@38 la vérification marche encore
+@39 vérifie une proposition
+@40 Lequel garde une valeur cachée même pour du simple code JavaScript sans types ?
+@41 Quel tiroir secret reste verrouillé même quand TypeScript ne surveille pas ?
+@42 Lequel fait partie de JavaScript lui-même ?
+@43 Lequel est un verrou JavaScript, et pas un verrou TypeScript ?
+@44 `#field` est imposé par le moteur JavaScript. `private` n’existe que pendant que TypeScript vérifie le code.
+@45 Le tiroir `#` est un vrai verrou. `private` n’est qu’une promesse de TypeScript.
+@46 Les noms privés d’ECMAScript sont une confidentialité stricte ; les modificateurs d’accès de TypeScript sont des annotations effacées.
+@47 `#pin = 1234;`
+@48 `private pin = 1234;`
+@49 `private` disparaît à la compilation ; la propriété est ordinaire à l’exécution.
+@50 Ce secret disparaît quand le code s’exécute.
+@51 La version courte.
+@52 Ce que tu as appris.
+@53 `private`/`protected` sont vérifiés par TypeScript, puis effacés.
+@54 `#field` est privé à l’exécution aussi.
+@55 `readonly` empêche la réaffectation.
+@56 Les classes peuvent avoir des tiroirs secrets.
+@57 Les tiroirs `#` restent verrouillés quand le code s’exécute.
+@58 `readonly` veut dire regarder, pas changer.
+@59 Les modificateurs d’accès agissent à la compilation.
+@60 Le `#private` d’ECMAScript est une confidentialité stricte.
+@61 Garder la surface publique petite.
+@62 Déclarer et affecter des champs d’un coup avec les propriétés de paramètre.
+@63 Calculer et valider avec `get` et `set`.
+@64 Mettre les choses partagées sur la classe avec `static`.
+@65 Écrire des classes plus courtes.
+@66 Fabriquer des valeurs calculées quand tu les demandes.
+@67 Garder une chose pour toute la classe.
+@68 Des classes courtes avec les propriétés de paramètre.
+@69 Des propriétés calculées et validées avec les accesseurs.
+@70 Des membres pour toute la classe avec `static`.
+@71 Les classes peuvent être courtes et malignes.
+@72 Vérifier ce qui entre.
+@73 Partager des choses avec `static`.
+@74 Attention aux contraintes de la syntaxe effaçable.
+@75 Les invariants dans les setters.
+@76 Des constructeurs nommés.
+@77 Des classes plus courtes, des propriétés plus malignes.
+@78 Quelques raccourcis malins pour les classes.
+@79 ⟦F1⟧⏎⏎Les appelants lisent `t.fahrenheit` comme une propriété, mais la valeur est calculée à chaque fois.
+@80 Un *getter* ressemble à une étiquette, mais la classe calcule la réponse à chaque fois que tu la lis, comme un thermomètre qui affiche en Fahrenheit.⏎⏎Un *setter* vérifie ce que tu mets dedans, et peut dire « non ! ».⏎⏎Les choses `static` appartiennent à toute la classe, pas à chaque objet, comme une règle écrite sur le plan.
+@81 Les propriétés de paramètre (`constructor(private x: T)`) déclarent et initialisent des champs ; c’est une syntaxe propre à TypeScript (refusée par `erasableSyntaxOnly` et par le retrait des types de Node), donc certaines bases de code les évitent.⏎⏎Les accesseurs doivent être peu coûteux et sans effet de bord à la lecture ; les setters sont un bon endroit pour les invariants. Les membres `static` vivent sur le constructeur ; les fabriques statiques (`fromFahrenheit`) nomment des constructeurs alternatifs, et les blocs `static` gèrent les initialisations complexes.
+@82 Qu’est-ce qui s’affiche ?
+@83 Qu’est-ce que ça va montrer ?
+@84 `issued` est partagé par toute la classe, et augmente à chaque `new Ticket()`.
+@85 Le compteur appartient à la classe, donc tous les tickets le partagent.
+@86 Un seul compteur pour la classe : trois tickets, et le dernier a eu le numéro 3.
+@87 Trois tickets ont été fabriqués, et le tien est le numéro 3.
+@88 Les champs statiques vivent sur l’objet constructeur et sont partagés par toutes les instances.
+@89 Écris `Temperature` : un getter `fahrenheit`, un getter et un setter `celsius` (qui refuse en dessous de −273.15 avec une `RangeError`), et un `fromFahrenheit` statique.
+@90 Construis `Temperature` : la lire en Fahrenheit, la régler en Celsius (mais jamais plus froid que −273.15), et en fabriquer une à partir de Fahrenheit.
+@91 `get fahrenheit()` renvoie `this.celsiusValue * 1.8 + 32`. Le setter vérifie d’abord `value < -273.15`. La méthode statique fait `new Temperature((f - 32) / 1.8)`.
+@92 Le getter Fahrenheit fait le calcul. Le setter Celsius vérifie d’abord le « trop froid ». Le fabricant statique retransforme le Fahrenheit en Celsius.
+@93 Les appelants utilisent la simple syntaxe des propriétés, et la classe garde le contrôle : les conversions ont lieu à la lecture, les vérifications à l’écriture.
+@94 Ça ressemble à de simples étiquettes, mais la classe fait les calculs et les vérifications.
+@95 Les paires d’accesseurs partagent un nom et un type ; le setter impose l’invariant, donc aucune instance ne peut contenir une température impossible (sauf via le constructeur, qui pourrait aussi valider).
+@96 l’ébullition en Fahrenheit
+@97 depuis Fahrenheit
+@98 régler les Celsius
+@99 refuse l’impossible
+@100 `constructor(private x: T)` déclare et affecte un champ.
+@101 `get`/`set` calculent et valident derrière la syntaxe des propriétés.
+@102 Les membres `static` appartiennent à la classe.
+@103 Les raccourcis rendent les classes plus courtes.
+@104 Les getters calculent ; les setters vérifient.
+@105 Les choses `static` appartiennent au plan.
+@106 Les propriétés de paramètre sont une syntaxe propre à TS.
+@107 Les accesseurs imposent les invariants.
+@108 Les fabriques statiques nomment des constructeurs.
+@109 Vérifier qu’une classe respecte une interface avec `implements`.
+@110 Partager du code et exiger des méthodes avec une classe `abstract`.
+@111 Savoir que les classes abstraites ne peuvent pas être créées directement.
+@112 Faire promettre à une classe d’avoir certaines parties.
+@113 Fabriquer une classe à moitié finie que d’autres termineront.
+@114 Savoir qu’on ne peut pas fabriquer celle qui est à moitié finie.
+@115 Utiliser les interfaces comme contrats.
+@116 Utiliser les classes abstraites pour le comportement partagé.
+@117 Laisser TypeScript vérifier les deux.
+@118 Des promesses et des classes à moitié construites.
+@119 TypeScript les vérifie.
+@120 Finir ce qu’on commence.
+@121 `implements` pour détecter les dérives.
+@122 Les membres abstraits imposent l’achèvement.
+@123 La composition est souvent plus simple.
+@124 Des contrats pour les classes.
+@125 Une classe peut promettre d’avoir certaines parties.
+@126 `implements` vérifie qu’une classe a tout ce que demande une interface :⏎⏎⟦F1⟧⏎⏎Une classe **abstraite** est une classe à moitié construite : elle peut partager du vrai code, et laisser certaines méthodes à écrire par les sous-classes.⏎⏎⟦F2⟧
+@127 `implements` est une promesse : « cette classe a chaque partie que demande l’interface ». TypeScript vérifie la promesse.⏎⏎Une classe abstraite est à moitié construite. Elle dit « chaque animal sait parler, mais chaque sorte d’animal doit dire quel son ». Tu ne peux pas fabriquer un simple « animal », seulement un chat ou un chien.
+@128 `implements` n’est qu’une vérification de conformité à la compilation : il n’apporte pas de types à la classe (les paramètres des méthodes implémentées ne sont pas typés par le contexte). Avec le typage structurel, tout objet de la bonne forme est de toute façon une `Shape` ; `implements` documente l’intention et attrape les dérives au niveau de la classe.⏎⏎Les classes abstraites combinent une base quasi nominale avec des méthodes modèles ; les membres `abstract` doivent être implémentés par les sous-classes concrètes (TS2515), et `new` sur une classe abstraite donne TS2511. Préfère interfaces plus composition, sauf si tu as besoin d’une implémentation partagée.
+@129 Fais en sorte que `Circle` implémente `Shape` : ajoute la méthode `area` manquante (π × r², arrondi).
+@130 Fais en sorte que `Circle` tienne sa promesse d’être une `Shape` : ajoute la machine `area` manquante (π × r², arrondi).
+@131 Ajoute `area(): number { return Math.round(Math.PI * this.radius ** 2); }`.
+@132 Ajoute une méthode `area()` qui rend `Math.round(Math.PI * this.radius ** 2)`.
+@133 L’erreur est apparue au niveau de la classe, en nommant la méthode manquante, plutôt que plus tard, quelque part où un cercle était utilisé comme forme.
+@134 TypeScript a montré directement la classe et dit quelle partie manquait.
+@135 `implements` déplace l’erreur de conformité (TS2420) à l’endroit de la déclaration.
+@136 un cercle est une forme
+@137 aire
+@138 Termine `Dog` pour qu’il étende `Animal` : son `sound()` vaut `"woof"`.
+@139 Termine la classe `Dog` : elle étend `Animal` et dit "woof".
+@140 `sound()` renvoie juste `"woof"` ; `speak()` est hérité.
+@141 Fais en sorte que `sound()` rende "woof". `speak` vient d’`Animal` gratuitement.
+@142 `Animal` a écrit `speak` une seule fois ; chaque sous-classe ne fournit que son son. C’est le motif de la méthode modèle.
+@143 La classe à moitié construite s’occupait de parler ; le chien n’avait qu’à dire quel son.
+@144 La base abstraite appelle un crochet abstrait ; les sous-classes concrètes l’implémentent. TypeScript impose que chaque sous-classe concrète le fasse.
+@145 parle
+@146 Que se passe-t-il avec `new Animal()` ?
+@147 Et si tu essaies de fabriquer un simple `Animal` ?
+@148 Peux-tu construire quelque chose qui n’est qu’à moitié construit ?
+@149 Peux-tu fabriquer une chose à moitié construite ?
+@150 C’est une erreur de type : une classe abstraite ne peut qu’être étendue, pas créée directement.
+@151 TypeScript dit non : tu ne peux fabriquer qu’une sorte terminée, comme un Dog.
+@152 TS2511 : impossible de créer une instance d’une classe abstraite.
+@153 Une erreur de type
+@154 Ça marche et `sound()` renvoie `undefined`
+@155 TypeScript l’arrête avant qu’il puisse s’exécuter.
+@156 TypeScript ne le laisse pas arriver.
+@157 `implements` vérifie une classe par rapport à une interface.
+@158 Les classes `abstract` partagent du code et exigent des méthodes.
+@159 Les classes abstraites ne peuvent pas être créées directement.
+@160 `implements` est une promesse que TypeScript vérifie.
+@161 Les classes à moitié construites sont terminées par d’autres.
+@162 Tu ne peux pas en fabriquer une à moitié construite.
+@163 Vérifications de conformité à la déclaration.
+@164 Méthodes modèles via des crochets abstraits.
+@165 Préférer interfaces plus composition.
+@166 Construire un comportement à partir de petites pièces qu’un objet *possède*.
+@167 Fournir ces pièces de l’extérieur (injection de dépendances).
+@168 Remplacer une pièce par une doublure de test.
+@169 Construire des objets à partir de petites pièces, comme des briques.
+@170 Donner les pièces depuis l’extérieur.
+@171 Mettre une fausse pièce pour les tests.
+@172 Préférer « a un » à « est un ».
+@173 Injecter les dépendances.
+@174 De petites interfaces, des échanges faciles.
+@175 Les briques valent mieux que les arbres généalogiques.
+@176 Les pièces viennent de l’extérieur.
+@177 Échanger des pièces pour tester.
+@178 L’inversion de dépendances en pratique.
+@179 Pas besoin de framework de simulation.
+@180 Seulement des hiérarchies peu profondes.
+@181 « A un » vaut mieux que « est un », la plupart du temps.
+@182 Construire avec des briques plutôt qu’avec des arbres généalogiques.
+@183 Les chaînes d’héritage deviennent rigides : un `LoggingSavingEmailingUserService` est difficile à changer. Donne plutôt à un objet les pièces dont il a besoin :⏎⏎⟦F1⟧⏎⏎Le greeter *a* un logger. N’importe quel objet avec une méthode `log` convient, y compris un faux dans un test, qui se contente de retenir les messages.
+@184 Au lieu de « un greeter est une sorte de logger », on dit « un greeter a un logger », comme un robot construit en briques : des bras, des roues, un haut-parleur.⏎⏎Tu peux échanger une brique : un vrai haut-parleur, ou un faux pour tester.
+@185 La composition avec des interfaces étroites plus l’injection par constructeur découple la politique du mécanisme : `Greeter` dépend de l’abstraction `Logger`, pas de `console`. Le typage structurel rend les doublures de test triviales (de simples littéraux d’objet), sans framework de simulation.⏎⏎L’héritage reste bien pour de vraies hiérarchies « est un » avec des invariants partagés ; préfère-les peu profondes. La composition fonctionnelle (passer des fonctions plutôt que des objets) est la même idée avec moins de cérémonial.
+@186 Écris `createMemoryLogger` : un `Logger` qui stocke les messages, avec `messages()` qui les renvoie. Ensuite, un `Greeter` peut être testé avec.
+@187 Fabrique `createMemoryLogger`, un faux logger qui retient chaque message, pour que tu puisses vérifier ce qu’a dit le greeter.
+@188 Garde un `stored: string[]` dans la fonction ; `log` y ajoute et `messages` en renvoie une copie.
+@189 Garde une liste à l’intérieur. `log` ajoute à la liste ; `messages` en rend une copie.
+@190 Le greeter n’a jamais su qu’il parlait à un faux. Comme il ne dépend que de la forme `Logger`, n’importe quelle pièce qui convient peut être branchée.
+@191 Le greeter n’a pas remarqué le faux logger. C’est la force des briques interchangeables.
+@192 Inversion de dépendances : `Greeter` dépend d’une interface, et un littéral d’objet basé sur une fermeture la satisfait structurellement. Renvoyer une copie garde le tableau interne privé.
+@193 retient ce que le greeter a journalisé
+@194 commence vide
+@195 Un `Robot` doit se déplacer et parler. Quelle conception est plus facile à changer plus tard ?
+@196 Un robot a besoin de roues et d’un haut-parleur. Quelle façon de le construire est plus facile à changer ?
+@197 Laquelle permet d’échanger le haut-parleur sans toucher aux roues ?
+@198 Quelle façon permet d’échanger une pièce sans tout reconstruire ?
+@199 Donner au robot un moteur et un haut-parleur permet d’échanger l’un ou l’autre séparément. Une chaîne de sous-classes les lie ensemble.
+@200 Les briques peuvent être échangées une à une. Un arbre généalogique, non.
+@201 La composition fait varier les comportements indépendamment ; une hiérarchie de classes fige les combinaisons à la conception (l’explosion combinatoire classique).
+@202 `new Robot(mover, speaker)` : le robot a les deux pièces
+@203 `class Robot extends SpeakingMovingMachine`
+@204 Changer sa façon de parler oblige à changer toute la chaîne.
+@205 Pour changer le haut-parleur, il faudrait changer tout l’arbre généalogique.
+@206 Donner aux objets les pièces dont ils ont besoin, via le constructeur.
+@207 Dépendre de petites interfaces, pas de classes concrètes.
+@208 Échanger librement les pièces, par exemple dans les tests.
+@209 Construire avec des briques interchangeables.
+@210 Donner les briques depuis l’extérieur.
+@211 Les fausses briques facilitent les tests.
+@212 Composition plus injection découplent le code.
+@213 Le typage structurel rend les doublures triviales.
+@214 Réserver l’héritage aux vraies relations « est un ».

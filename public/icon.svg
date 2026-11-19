@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="TypeScript Companion icon">
+  <rect width="512" height="512" rx="112" fill="#1f6f6b" />
+  <rect x="64" y="64" width="384" height="384" rx="64" fill="#f6f1e7" />
+  <circle cx="256" cy="230" r="96" fill="#1f6f6b" />
+  <circle cx="226" cy="212" r="13" fill="#f6f1e7" />
+  <circle cx="286" cy="212" r="13" fill="#f6f1e7" />
+  <path d="M214 262c14 18 70 18 84 0" stroke="#f6f1e7" stroke-width="14" stroke-linecap="round" fill="none" />
+  <rect x="150" y="352" width="212" height="52" rx="26" fill="#e0a83c" />
+  <text x="256" y="390" font-family="ui-monospace, monospace" font-size="34" font-weight="700" fill="#3a2a06" text-anchor="middle">TS</text>
+</svg>

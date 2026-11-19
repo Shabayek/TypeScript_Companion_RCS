@@ -1,0 +1,94 @@
+@1 Values and names
+@2 Three everyday types
+@3 You rarely write the type. TypeScript infers it from the value.
+@4 const vs let
+@5 Reach for const first. Change to let only when the value really changes.
+@6 Template literal
+@7 Backticks, not quotes. ${...} inserts a value.
+@8 Choose parts of an object
+@9 String methods
+@10 They return a new string; the original never changes.
+@11 Decisions
+@12 Comparisons
+@13 Use === and !==. The loose == converts types first.
+@14 if / else if / else
+@15 Guard clause
+@16 Ternary
+@17 switch
+@18 Falsy values
+@19 Everything else is truthy — including "false" and "0".
+@20 Collections
+@21 Array basics
+@22 Object basics
+@23 Spread makes a copy
+@24 map / filter / find
+@25 sort, some, every, reduce
+@26 sort changes the array and compares text unless you pass a comparator.
+@27 Map and Set
+@28 Functions
+@29 Declaration
+@30 Arrow function
+@31 Default and optional
+@32 Rest parameters
+@33 Callback
+@34 The arrow function is the callback. map calls it once per item.
+@35 Types
+@36 interface for shapes
+@37 type for unions
+@38 Narrowing
+@39 unknown, not any
+@40 Generic helper
+@41 Programs that grow
+@42 Modules
+@43 try / catch
+@44 async / await
+@45 Class
+@46 Functions with types
+@47 Function type
+@48 Callbacks get their parameter types from the slot they go into.
+@49 Overloads
+@50 Only when the return type depends on the argument type.
+@51 Type predicate
+@52 Assertion function
+@53 Shapes in depth
+@54 Tuple and readonly
+@55 as const
+@56 Record and index signatures
+@57 A missing key reads as undefined; enable noUncheckedIndexedAccess to see it in the type.
+@58 Intersection
+@59 satisfies
+@60 Modelling with unions
+@61 Discriminated union
+@62 Exhaustive check
+@63 Result
+@64 Union instead of enum
+@65 Generics in depth
+@66 Constraint
+@67 keyof and T[K]
+@68 Generic class
+@69 Defaults and const T
+@70 The type toolbox
+@71 Partial, Required, Readonly
+@72 Pick and Omit
+@73 Omit does not check its keys: a typo omits nothing.
+@74 ReturnType, Parameters, Awaited
+@75 Exclude, Extract, NonNullable
+@76 Type-level programming
+@77 Conditional type
+@78 infer
+@79 Distribution (and stopping it)
+@80 Mapped type and modifiers
+@81 Key remapping
+@82 Template literal types
+@83 Advanced patterns
+@84 Recursive type
+@85 Branded type
+@86 Variance annotations
+@87 NoInfer
+@88 Event map
+@89 Strictness and tooling
+@90 Flags beyond strict
+@91 Declarations
+@92 Type-only imports
+@93 With verbatimModuleSyntax, only type-marked imports are removed.
+@94 Escape hatches, carefully

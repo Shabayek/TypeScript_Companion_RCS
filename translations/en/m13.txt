@@ -1,0 +1,318 @@
+@1 Fold a list into an object or a map with `reduce`.
+@2 Type the accumulator through the starting value.
+@3 Know when a plain loop reads better.
+@4 Sort a list into piles with `reduce`.
+@5 Tell TypeScript what the piles look like.
+@6 Know when a loop is simpler.
+@7 Fold lists into any shape.
+@8 Always give the starting value a type.
+@9 Prefer clarity over cleverness.
+@10 Build piles with `reduce`.
+@11 Describe the piles.
+@12 Keep it simple.
+@13 Typed folds.
+@14 Avoid O(n²) spreads in reducers.
+@15 Use groupBy where available.
+@16 `reduce` can build any shape, not just a number.
+@17 `reduce` can build piles, not just totals.
+@18 The accumulator can be anything: here, an object of lists. TypeScript infers its type from the **starting value**, so give that value a type:⏎⏎⟦F1⟧⏎⏎Without the type argument, `{}` would be typed as an empty object with no keys, and indexing it would be an error.
+@19 `reduce` goes through a list and builds something as it goes. It can build a total, but also piles: all the words starting with "c" in one pile, "d" in another.⏎⏎Tell TypeScript what the piles look like, or it will think the starting `{}` must stay empty forever.
+@20 `reduce<U>(fn: (acc: U, item: T) => U, initial: U): U`: the type parameter is inferred from `initial`, so `{}` infers `{}` and `[]` infers `never[]`. Supply `U` explicitly or annotate the initial value (`{} as Record<K, V>`).⏎⏎Mutating the accumulator you created is fine (it is local); returning a fresh object each step is O(n²) with spread. ES2024 `Object.groupBy`/`Map.groupBy` cover grouping directly on newer engines. Prefer `for…of` when the reduction has branches and early exits.
+@21 What prints?
+@22 What will it show?
+@23 The first starts from 10. The second has no starting value, so it starts with the first item.
+@24 The first starts at 10. The second starts with "a".
+@25 `10 + 1 + 2 + 3` is 16. Without a starting value, `reduce` begins with the first element, which throws on an empty array.
+@26 10 plus 1, 2 and 3 is 16. The letters are glued together into "abc".
+@27 Omitting `initial` uses `xs[0]` as the seed and starts at index 1, typed as the element type; it throws `TypeError` on `[]`.
+@28 Write `groupByLength`: words grouped by their length.
+@29 Make `groupByLength` put words into piles by how many letters they have.
+@30 `words.reduce<Record<number, string[]>>((groups, word) => { … }, {})`; inside, `(groups[word.length] ??= []).push(word)`.
+@31 Start with `{}` and tell `reduce` it is a `Record<number, string[]>`. For each word, add it to the pile for its length.
+@32 `??=` creates the list the first time a length appears. Object keys are always strings, which is why the output shows `"3"`.
+@33 `??=` makes a new pile the first time, then adds to it. (Keys always become text, so 3 shows as "3".)
+@34 Numeric keys are stored as strings at runtime; `Record<number, V>` types them as numbers for indexing convenience. `??=` is ES2021, so it runs on Classic engines.
+@35 groups
+@36 empty
+@37 `totals` does not compile: the accumulator starts as `{}`. Fix its type.
+@38 TypeScript thinks the starting `{}` must stay empty. Tell it what it will hold.
+@39 Give `reduce` a type argument, `reduce<Record<string, number>>(…)`.
+@40 Add `<Record<string, number>>` right after `reduce`.
+@41 The type argument tells TypeScript the accumulator is a dictionary of numbers, so indexing it is allowed.
+@42 Now TypeScript knows the piles are numbers by name.
+@43 Without `U`, inference fixes the accumulator to `{}`, which has no index signature (TS7053).
+@44 sums per customer
+@45 The short version.
+@46 What you learned.
+@47 `reduce` can build objects, maps and lists.
+@48 Type the accumulator with a type argument or a typed start value.
+@49 A loop is fine when it reads better.
+@50 `reduce` can make piles.
+@51 Loops are fine too.
+@52 `U` is inferred from `initial`: annotate `{}` and `[]`.
+@53 Local accumulator mutation is fine.
+@54 `Object.groupBy` on ES2024 engines.
+@55 Update one item in a list without changing the list.
+@56 Update a nested property by copying each level.
+@57 Spot code that mutates by accident.
+@58 Change one thing in a list by making a new list.
+@59 Change something deep inside by copying each layer.
+@60 Spot sneaky changes.
+@61 Immutable updates make change visible.
+@62 Copy along the path to the change.
+@63 Let `readonly` catch slips.
+@64 New copies keep old versions safe.
+@65 Copy each layer.
+@66 Locks help spot mistakes.
+@67 Identity changes signal updates.
+@68 Shallow spread, deep paths.
+@69 Consider Immer for complex state.
+@70 New data instead of changed data.
+@71 Make a new copy instead of changing the old one.
+@72 Many apps keep state immutable: each change makes a new object and leaves the old one alone. Three array moves cover most of it:⏎⏎⟦F1⟧⏎⏎Nested objects need a copy at every level you go through:⏎⏎⟦F2⟧
+@73 Instead of rubbing out and writing over, we make a fresh copy with the change. The old one stays exactly as it was.⏎⏎To change something deep inside, copy each layer on the way down, like opening boxes inside boxes.
+@74 Structural sharing: untouched items and subtrees are reused by reference, so updates are cheap and `===` comparisons detect change (the basis of React’s re-render checks and memoisation).⏎⏎`readonly` types catch accidental mutation at compile time; `map` for updates, `filter` for removals and spread for additions are the idioms. For deep updates at scale, a helper such as Immer keeps the code readable.
+@75 Write `toggleTodo`: a new list where the todo with that id has `done` flipped.
+@76 Make `toggleTodo` give back a new list with that todo ticked or unticked.
+@77 `map` over the list; for the matching id return `{ ...todo, done: !todo.done }`, otherwise the same todo.
+@78 Go through with `map`. When the id matches, make a copy with `done` flipped; otherwise keep the todo as it is.
+@79 Only the changed todo is a new object; the others are reused, which is cheap and makes it easy to see what changed.
+@80 Only the changed one is new. The rest are the same as before.
+@81 Structural sharing: `map` allocates a new array, the updated element is a fresh object, unchanged elements keep their identity.
+@82 flips the one
+@83 the old list and todo are unchanged
+@84 Write `moveTo`: the user with a new city, copying each level.
+@85 Make `moveTo` give back the user living in a new city, by copying each layer.
+@86 `{ ...user, address: { ...user.address, city } }`: copy the user and the address.
+@87 Copy the user, and inside it copy the address with the new city.
+@88 A single `{ ...user }` would still share the old `address` object, so changing it would change the original too. Each level you go through needs its own copy.
+@89 Copying only the outside box would still share the inside box. Copy every box you open.
+@90 Spread is shallow; nested updates must rebuild every object on the path to the change.
+@91 moves
+@92 the old user still lives in Paris
+@93 Which of these changes the original `scores` array?
+@94 Which one changes the original list?
+@95 Which method changes the array it is called on?
+@96 One of these tools changes the list itself.
+@97 `sort` sorts in place and returns the same array. The others build new arrays.
+@98 `sort` changes the list itself. The others make new lists.
+@99 `sort`, `reverse`, `splice`, `push`, `pop`, `shift`, `unshift`, `fill` and `copyWithin` mutate; `map`, `filter`, `slice`, `concat` and spread do not.
+@100 `const best = scores.sort((a, b) => b - a);`
+@101 `const doubled = scores.map((s) => s * 2);`
+@102 `map` returns a new array.
+@103 `map` makes a new list.
+@104 `const more = [...scores, 100];`
+@105 Spread builds a new array.
+@106 That makes a new list.
+@107 Add with spread, remove with `filter`, update with `map`.
+@108 Copy every level on the way to a nested change.
+@109 Know which methods mutate.
+@110 Make new copies instead of changing things.
+@111 Copy every layer you open.
+@112 Watch out for `sort`.
+@113 Structural sharing keeps updates cheap.
+@114 Spread is shallow.
+@115 `readonly` types catch accidental mutation.
+@116 Loop over anything iterable with `for…of`.
+@117 Write a generator with `function*` and `yield`.
+@118 Use a generator that never ends, safely.
+@119 Loop over lists, words and more.
+@120 Make a machine that hands things out one at a time.
+@121 Take just a few from an endless machine.
+@122 Iterate anything iterable.
+@123 Generate values lazily.
+@124 Consume carefully.
+@125 Loop over anything.
+@126 Make your own dispensers.
+@127 Only take what you need.
+@128 Lazy sequences compose.
+@129 Laziness ends where you materialise.
+@130 Async generators for streams.
+@131 One value at a time, on demand.
+@132 A machine that gives you one thing each time you ask.
+@133 `for…of` works on any **iterable**: arrays, strings, Maps, Sets. A **generator** is an easy way to make your own:⏎⏎⟦F1⟧⏎⏎Each `yield` hands out one value and pauses the function until the next value is asked for. Nothing is computed ahead of time, so a generator can even be endless.
+@134 A generator is like a sweet dispenser: press the button, one sweet comes out. It waits until you press again.⏎⏎`function*` makes the machine, and `yield` hands out one thing and then waits.
+@135 Iterables implement `[Symbol.iterator]()` returning an iterator (`next(): { value, done }`). Generator functions return `Generator<Y, R, N>` objects that are both; they are lazy, resumable, and support `return`/`throw`.⏎⏎Laziness composes: `take(filter(naturals(), isPrime), 10)` computes only what is consumed. Spreading or `Array.from` forces evaluation, so never spread an infinite generator. TypeScript types `for…of` over `Iterable<T>` as `T`; async generators (`async function*`) pair with `for await`.
+@136 The generator yields each letter twice. `console.log` of an array prints it as a list.
+@137 Each letter comes out twice, and they are collected into a list.
+@138 Strings are iterable, so `for…of` visits each letter; each one is yielded twice, and spread collects them.
+@139 Each letter comes out two times: a, a, b, b.
+@140 Strings iterate by code point; the spread drains the generator into an array.
+@141 Write the generator `range(start, end, step = 1)`: numbers from `start` up to, but not including, `end`.
+@142 Make `range`, a machine that hands out numbers from `start` up to (not including) `end`.
+@143 A `for` loop from `start` while `n < end`, adding `step`, with `yield n` inside.
+@144 Count from `start` while below `end`, jumping by `step`, and `yield` each number.
+@145 Nothing is built in advance: the numbers are made one by one as the spread asks for them.
+@146 The machine makes each number only when asked.
+@147 A lazy sequence; `[...range()]` materialises it.
+@148 0 to 5
+@149 in threes
+@150 nothing
+@151 Write `take`: the first `count` items of any iterable, even an endless one.
+@152 Make `take` grab just the first few things from any machine, even one that never stops.
+@153 Loop with `for…of`, push each item, and `break` once you have `count` of them. Never spread an endless generator.
+@154 Use `for…of`, keep each item, and stop with `break` when you have enough.
+@155 The starter’s `[...items]` tries to read everything first, which never finishes for an endless generator. `break` stops asking.
+@156 The starter tried to empty the whole machine first, but this machine never empties! Stopping early fixes it.
+@157 `break` in `for…of` calls the iterator’s `return()`, closing the generator. Spreading an infinite iterable hangs until the time limit.
+@158 from an array
+@159 from an endless generator
+@160 zero
+@161 `for…of` works on any iterable.
+@162 Generators (`function*`, `yield`) make values one at a time.
+@163 Stop early with `break`; never spread an endless one.
+@164 You can loop over many things.
+@165 Generators hand things out one at a time.
+@166 Take only what you need from endless ones.
+@167 Iteration protocol: `[Symbol.iterator]` and `next()`.
+@168 Generators are lazy and closable.
+@169 Type with `Iterable<T>` and `Generator<T>`.
+@170 Wait for several promises at once with `Promise.all`.
+@171 Keep every result, success or failure, with `allSettled`.
+@172 Take the first to finish with `race`, or the first to succeed with `any`.
+@173 Wait for lots of things at the same time.
+@174 Find out which worked and which failed.
+@175 Take whichever finishes first.
+@176 Independent work should run together.
+@177 Pick the combinator by how failures should behave.
+@178 Results keep their order.
+@179 Do jobs at the same time.
+@180 Choose what happens when one fails.
+@181 Answers come back in order.
+@182 Concurrency, not parallelism.
+@183 Failure semantics drive the choice.
+@184 Use `AbortSignal` to cancel.
+@185 Start everything, then wait once.
+@186 Start all the jobs, then wait for them together.
+@187 `await` one after another waits for each in turn. Start them together and wait once:⏎⏎⟦F1⟧⏎⏎`all` fails as soon as one fails. `allSettled` never fails: it reports each outcome.
+@188 If you have three things to wait for, do not wait for one, then the next, then the next. Start all three and wait for them together!⏎⏎`all` gives you every answer (or stops at the first problem). `allSettled` tells you, for each one, whether it worked.
+@189 `Promise.all` preserves tuple types and rejects fast; the other promises keep running (there is no cancellation; pass an `AbortSignal` for that). `allSettled` returns `PromiseSettledResult<T>[]`, a discriminated union on `status`. `race` settles with the first settlement; `any` (ES2021) rejects with an `AggregateError` only if all reject.⏎⏎For large fan-outs, limit concurrency (a small pool) rather than `all` over thousands of requests.
+@190 `all` keeps the order you passed, not the order they finish. `race` gives the first to finish.
+@191 `all` keeps your order. `race` gives whichever is quickest.
+@192 `all` returns results in the order of the array you gave it, however they finish. `race` resolves with whichever settles first.
+@193 `all` gives the answers in your order. `race` gives the winner.
+@194 `Promise.all` maps results by index; `race` adopts the first settled promise’s state.
+@195 Write `loadAll`: load every id at once and return the results in order.
+@196 Make `loadAll` load everything at the same time and give back all the answers in order.
+@197 `Promise.all(ids.map((id) => load(id)))` starts every load, then waits for all.
+@198 Start every load with `map`, then wait for them together with `Promise.all`.
+@199 The starter waited for each load before starting the next. Starting them together takes as long as the slowest, not the sum.
+@200 Before, each job waited for the one before. Now they all run together.
+@201 Sequential `await` in a loop serialises independent work; `Promise.all` over the mapped promises runs them concurrently.
+@202 in order
+@203 at the same time
+@204 all start before any finishes
+@205 Write `summary`: how many promises succeeded and how many failed, using `Promise.allSettled`.
+@206 Make `summary` count how many jobs worked and how many failed.
+@207 `await Promise.allSettled(tasks)`, then count the results whose `status` is `"fulfilled"`.
+@208 Wait with `Promise.allSettled`, then count the ones whose `status` is `"fulfilled"`.
+@209 `allSettled` never rejects, so one failure cannot hide the other results.
+@210 Every job reports back, even the failed ones.
+@211 Each entry is a `PromiseSettledResult`, narrowed by `status`.
+@212 mixed
+@213 none
+@214 `Promise.all`: every result in order, or the first failure.
+@215 `allSettled`: every outcome, never fails.
+@216 `race`: first to settle; `any`: first to succeed.
+@217 Start all the jobs, then wait together.
+@218 `allSettled` reports on every job.
+@219 `race` and `any` take the quickest.
+@220 Concurrency via combinators; no built-in cancellation.
+@221 `allSettled` results are a tagged union.
+@222 Bound fan-out for large inputs.
+@223 Catch errors from `await` with `try`/`catch`.
+@224 Treat caught errors as `unknown` and narrow them.
+@225 Retry a failing task a few times.
+@226 Catch problems from waiting jobs.
+@227 Check what kind of problem it is.
+@228 Try again when something fails.
+@229 Handle async errors where you await.
+@230 Never assume an error’s type.
+@231 Retry with limits.
+@232 Catch problems from jobs.
+@233 Look before you trust a problem.
+@234 Knock again, but not forever.
+@235 Async control flow mirrors sync.
+@236 Unhandled rejections are bugs.
+@237 Resilience patterns need limits.
+@238 `await` turns rejections into throws.
+@239 When a waiting job fails, you can catch it.
+@240 Inside an `async` function, a rejected promise makes `await` throw, so ordinary `try`/`catch` works:⏎⏎⟦F1⟧⏎⏎Some failures are temporary (a flaky network). A **retry** tries again a few times before giving up.
+@241 When a job you are waiting for fails, `await` throws the problem. `try`/`catch` catches it, just like before.⏎⏎Sometimes trying again works, like knocking again when nobody answered.
+@242 With `useUnknownInCatchVariables` (part of `strict`), catch variables are `unknown`; narrow with `instanceof Error`. Unawaited promises escape `try` entirely; always `await` or `return` them, or attach `.catch`.⏎⏎Production retries use exponential backoff with jitter, retry only idempotent operations and transient errors (timeouts, 429/503), and cap total time. `finally` runs on both paths and is where cleanup belongs.
+@243 What prints, and in what order?
+@244 What will it show, in order?
+@245 The rejection is thrown at `await`, so "after" never prints; `finally` always runs.
+@246 The job fails at `await`, so "after" is skipped. `finally` always happens.
+@247 `await` throws the rejection, `catch` handles it, and `finally` runs last either way.
+@248 The problem is caught, then the tidy-up happens.
+@249 Rejections surface as throws at the `await`; `finally` executes after `catch`.
+@250 Write `retry`: call `task` up to `attempts` times; return the first success, or throw the last error.
+@251 Make `retry`: try the job up to `attempts` times. Give back the first success, or throw the last problem.
+@252 Loop `attempts` times; inside, `try { return await task(); } catch (error) { lastError = error; }`. After the loop, `throw lastError`.
+@253 Try in a loop. If it works, give it back straight away. If not, remember the problem. After the loop, throw the last problem.
+@254 `return await` matters inside `try`: without `await`, a rejection would escape the `catch` and skip the retries.
+@255 The `await` makes sure the problem is caught, so the next try can happen.
+@256 `return await` keeps the rejection inside the `try` frame; `return task()` would return the promise and bypass `catch`. Real retries add backoff delays between attempts.
+@257 succeeds on the third try
+@258 gives up
+@259 stops trying after success
+@260 `await` throws rejections, so `try`/`catch` works.
+@261 Caught errors are `unknown`: narrow them.
+@262 Retry temporary failures, then give up.
+@263 Try again a few times.
+@264 `return await` inside `try`.
+@265 Narrow `unknown` errors.
+@266 Backoff, jitter, idempotency.
+@267 Treat data from outside (like `JSON.parse`) as `unknown`.
+@268 Check its shape step by step.
+@269 Return a typed value only once the checks pass.
+@270 Treat parcels from outside as mystery boxes.
+@271 Check every part before trusting it.
+@272 Only then give it a proper label.
+@273 Never trust outside data’s type.
+@274 Narrow `unknown` with checks.
+@275 Keep validation at the boundary.
+@276 Check parcels from outside.
+@277 Mystery boxes need looking into.
+@278 Then the rest of your code is safe.
+@279 Runtime validation makes static types true.
+@280 Schema libraries scale it.
+@281 One conversion at the edge.
+@282 Data from outside is `unknown` until checked.
+@283 Parcels from outside could contain anything.
+@284 `JSON.parse` returns `any`, which switches checking off. Say `unknown` instead, then prove the shape:⏎⏎⟦F1⟧⏎⏎After the checks, TypeScript knows `value.name` is a string and `value.age` a number, without a single cast.
+@285 A parcel from outside (the internet, a file) could hold anything. TypeScript cannot see inside.⏎⏎So we call it `unknown` and check each part: is it an object? Is the name a word? Is the age a number? Only then do we trust it.
+@286 Types describe what the program believes; validation makes it true at the trust boundary (network, storage, user input, `postMessage`). Parse, do not validate: convert `unknown` into a precise type once, at the edge, and keep the rest of the code typed.⏎⏎Hand-written guards scale poorly; schema libraries (zod, valibot, ArkType) derive both the runtime check and the static type from one definition. You will build a tiny one in Module 19.
+@287 Write `parseUser`: parse the JSON and return a `User` only if `name` is a string and `age` a number; otherwise `null`, including for invalid JSON.
+@288 Make `parseUser`: open the parcel (JSON), check the name is a word and the age a number, and give back a User, or `null` if anything is wrong.
+@289 Parse inside `try`/`catch` into an `unknown` variable. Check it is a non-null, non-array object, then check each field with `typeof`, and build a fresh `User`.
+@290 Open the parcel carefully with `try`. Check it is an object, check each part with `typeof`, then build a new User from the checked parts.
+@291 The starter returned whatever `JSON.parse` produced, typed as a `User`: a lie the compiler could not catch, because `JSON.parse` returns `any`.
+@292 Before, any parcel was trusted. Now each part is checked.
+@293 Returning `any` satisfied the checker while admitting invalid data; narrowing from `unknown` builds a value whose type is earned. Copying fields also strips unexpected properties.
+@294 a real user
+@295 age as text
+@296 not an object
+@297 not JSON at all
+@298 extra fields are dropped
+@299 Why type the parsed value as `unknown` rather than `any`?
+@300 Why say "mystery box" instead of "anything goes"?
+@301 Which one makes TypeScript insist on checks before use?
+@302 Which one makes you look inside first?
+@303 `unknown` refuses every operation until you narrow it, so forgetting a check is a compile error. `any` would allow `data.nmae.length` and crash at runtime.
+@304 A mystery box must be checked before use. "Anything goes" lets mistakes through.
+@305 `any` disables checking and is contagious; `unknown` is the top type requiring narrowing (or an assertion) before use.
+@306 `unknown` forces a check before use
+@307 `unknown` makes the program faster
+@308 Types are erased; there is no runtime difference.
+@309 Types disappear when the code runs, so no.
+@310 Outside data is `unknown`, not `any`.
+@311 Check the shape step by step, then build the typed value.
+@312 Do it once, at the edge of the program.
+@313 Parcels from outside are mystery boxes.
+@314 Check every part.
+@315 Then give them a proper label.
+@316 Parse, do not validate.
+@317 Guards or schemas at trust boundaries.
+@318 Strip unknown properties.

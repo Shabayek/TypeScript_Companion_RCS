@@ -1,0 +1,438 @@
+.wrap {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.prompt {
+  font-size: var(--text-1);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.choiceList {
+  display: grid;
+  gap: var(--s-2);
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.choiceHint {
+  font-size: var(--text--1);
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+.actions {
+  display: flex;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.feedback {
+  font-size: var(--text-0);
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.field {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.fieldLabel {
+  font-size: var(--text--1);
+  font-weight: 700;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---- fill ---- */
+
+.fillCode {
+  background: #12161f;
+  color: #e7ecf5;
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 2.1;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.blank {
+  display: inline-block;
+  min-width: 7.5rem;
+  margin: 0 2px;
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--r-xs);
+  border: 1.5px dashed #5d6b82;
+  background: #1a2130;
+  color: #ffd479;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  vertical-align: baseline;
+}
+
+.blank[data-filled='true'] {
+  border-style: solid;
+  border-color: #82aaff;
+}
+
+.blank[data-state='correct'] {
+  border-color: #7fd3a0;
+  background: #17301f;
+  color: #b7f0c9;
+}
+
+.blank[data-state='wrong'] {
+  border-color: #f0c07a;
+  background: #33260f;
+  color: #ffe0a8;
+}
+
+.bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.token {
+  min-height: 40px;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.token[aria-pressed='true'] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ---- reorder ---- */
+
+.reorderList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-2);
+}
+
+.reorderItem {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  overflow-x: auto;
+}
+
+.reorderItem:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.reorderItem[data-state='correct'] {
+  border-color: var(--success);
+  background: var(--success-soft);
+}
+
+.reorderItem[data-state='wrong'] {
+  border-color: var(--warn);
+  background: var(--warn-soft);
+}
+
+.grip {
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  letter-spacing: -2px;
+}
+
+.lineText {
+  flex: 1;
+  white-space: pre;
+}
+
+.moveBtns {
+  display: flex;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+.moveBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.moveBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ---- code ---- */
+
+.editorFrame {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.codeActions {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.testList {
+  list-style: none;
+  margin: var(--s-2) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  font-size: var(--text--1);
+}
+
+.testItem {
+  display: flex;
+  gap: var(--s-2);
+  align-items: baseline;
+}
+
+.testItem[data-pass='false'] {
+  color: var(--warn);
+}
+
+.predictRow {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.predictInput {
+  flex: 1 1 16rem;
+  min-height: 46px;
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.revealBox {
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4);
+  background: var(--surface-2);
+  font-size: var(--text-0);
+}
+
+.revealBox strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Studio games (play steps). */
+.gameScreen {
+  display: grid;
+  gap: 4px;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-md);
+  background: #12161f;
+  color: #e7ecf5;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.gameScreen :global(.muted) { color: #b7c0d0; }
+
+.gameQuestion {
+  margin: 0;
+  font-size: var(--text-1);
+  font-weight: 700;
+}
+
+.gameChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.gameForm {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+  gap: var(--s-2);
+  align-items: end;
+}
+
+.gameList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-1);
+}
+
+.gameList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+  padding: var(--s-1) var(--s-3);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.gameCode summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.gameCode[open] summary { margin-bottom: var(--s-2); }
+
+/* Predict-the-type: the label sits on its own line above the answer. */
+.typeLabel {
+  flex: 1 1 100%;
+  font-weight: 600;
+}
+
+/* ---- robot maze ---- */
+.mazeGrid {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  max-width: 26rem;
+  padding: 6px;
+  border-radius: var(--r-md);
+  background: var(--surface-3);
+  direction: ltr;
+}
+.mazeCell {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  font-size: clamp(0.9rem, 4vw, 1.4rem);
+  line-height: 1;
+  background: var(--surface);
+  color: var(--ink-muted);
+}
+.mazeCell[data-kind='wall'] { background: var(--ink-soft); }
+.mazeCell[data-kind='star'] { background: var(--warm-soft); }
+.mazeCell[data-kind='robot'] { background: var(--accent-soft); }
+.mazeCell[data-kind='trail'] { background: var(--accent-soft); font-weight: 800; }
+.mazePad {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-2);
+  max-width: 26rem;
+}
+.mazeProgram {
+  list-style: none;
+  margin: 0;
+  padding: var(--s-2);
+  min-height: 2.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  direction: ltr;
+}
+.mazeProgram li {
+  min-width: 2rem;
+  padding: 2px 8px;
+  text-align: center;
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-weight: 800;
+}
+
+/* ---- pet and battle ---- */
+.petCard {
+  display: flex;
+  gap: var(--s-4);
+  align-items: center;
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+.petFace { font-size: 3.5rem; line-height: 1; }
+.petStats { display: grid; gap: var(--s-1); flex: 1; min-width: 0; }
+.petMeter {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, auto) minmax(0, 1fr) 2.5rem;
+  gap: var(--s-2);
+  align-items: center;
+  font-size: var(--text--1);
+}
+.petMeter meter { width: 100%; height: 0.9rem; }
+.petMeter span { text-align: end; font-variant-numeric: tabular-nums; }
+.battleField {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+
+/* ---- to-do and adventure ---- */
+.todoForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-2);
+  align-items: end;
+}
+.todoItem {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.todoItem input { width: 1.3rem; height: 1.3rem; flex: 0 0 auto; }
+.todoItem[data-done='true'] span { text-decoration: line-through; color: var(--ink-muted); }
+.adventureLog {
+  max-height: 18rem;
+  overflow-y: auto;
+  direction: ltr;
+  text-align: left;
+}
+
+.typesDetails summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink-soft);
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+.typesDetails[open] summary { margin-bottom: var(--s-2); }

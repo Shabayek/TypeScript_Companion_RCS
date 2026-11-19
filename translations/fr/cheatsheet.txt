@@ -1,0 +1,94 @@
+@1 Valeurs et noms
+@2 Trois types de tous les jours
+@3 Tu écris rarement le type. TypeScript le déduit de la valeur.
+@4 const ou let
+@5 Prends const d’abord. Passe à let seulement si la valeur change vraiment.
+@6 Littéral de gabarit
+@7 Des accents graves, pas des guillemets. ${...} insère une valeur.
+@8 Prendre des morceaux d’un objet
+@9 Méthodes des chaînes
+@10 Elles renvoient une nouvelle chaîne ; l’originale ne change jamais.
+@11 Décisions
+@12 Comparaisons
+@13 Utilise === et !==. Le == laxiste convertit d’abord les types.
+@14 if / else if / else
+@15 Clause de garde
+@16 Ternaire
+@17 switch
+@18 Valeurs « falsy »
+@19 Tout le reste est « truthy », y compris "false" et "0".
+@20 Collections
+@21 Les bases des tableaux
+@22 Les bases des objets
+@23 La décomposition fait une copie
+@24 map / filter / find
+@25 sort, some, every, reduce
+@26 sort modifie le tableau et compare du texte, sauf si tu passes un comparateur.
+@27 Map et Set
+@28 Fonctions
+@29 Déclaration
+@30 Fonction fléchée
+@31 Par défaut et facultatif
+@32 Paramètres du reste
+@33 Callback
+@34 La fonction fléchée est le callback. map l’appelle une fois par élément.
+@35 Types
+@36 interface pour les formes
+@37 type pour les unions
+@38 Affinage
+@39 unknown, pas any
+@40 Fonction générique
+@41 Des programmes qui grandissent
+@42 Modules
+@43 try / catch
+@44 async / await
+@45 Classe
+@46 Fonctions et types
+@47 Type de fonction
+@48 Les callbacks reçoivent leurs types de paramètres de l’emplacement où ils vont.
+@49 Surcharges
+@50 Seulement quand le type de retour dépend du type de l’argument.
+@51 Prédicat de type
+@52 Fonction d’assertion
+@53 Les formes en profondeur
+@54 Tuple et readonly
+@55 as const
+@56 Record et signatures d’index
+@57 Une clé absente se lit comme undefined ; active noUncheckedIndexedAccess pour le voir dans le type.
+@58 Intersection
+@59 satisfies
+@60 Modéliser avec des unions
+@61 Union discriminée
+@62 Vérification exhaustive
+@63 Result
+@64 Une union plutôt qu’un enum
+@65 Les génériques en profondeur
+@66 Contrainte
+@67 keyof et T[K]
+@68 Classe générique
+@69 Valeurs par défaut et const T
+@70 La boîte à outils des types
+@71 Partial, Required, Readonly
+@72 Pick et Omit
+@73 Omit ne vérifie pas ses clés : une faute de frappe n’omet rien.
+@74 ReturnType, Parameters, Awaited
+@75 Exclude, Extract, NonNullable
+@76 Programmation au niveau des types
+@77 Type conditionnel
+@78 infer
+@79 La distribution (et comment l’arrêter)
+@80 Type mappé et modificateurs
+@81 Remappage des clés
+@82 Types littéraux de gabarit
+@83 Motifs avancés
+@84 Type récursif
+@85 Type marqué
+@86 Annotations de variance
+@87 NoInfer
+@88 Table d’événements
+@89 Rigueur et outillage
+@90 Les options au-delà de strict
+@91 Déclarations
+@92 Imports de types seuls
+@93 Avec verbatimModuleSyntax, seuls les imports marqués type sont retirés.
+@94 Les portes de sortie, avec prudence

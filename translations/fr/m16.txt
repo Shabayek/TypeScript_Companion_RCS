@@ -1,0 +1,329 @@
+@1 Choisir entre deux types avec `T extends U ? X : Y`.
+@2 Enchaîner les conditions pour plusieurs cas.
+@3 Utiliser un type conditionnel dans un défi de types.
+@4 Répartir les types dans des maisons, comme un choixpeau.
+@5 Poser plusieurs questions à la suite.
+@6 Résoudre une énigme de types.
+@7 Les types conditionnels sont le `if` des types.
+@8 Ils agissent pendant la vérification, pas pendant l’exécution.
+@9 La première correspondance gagne.
+@10 Le choixpeau répartit les types.
+@11 Il travaille avant que le code s’exécute.
+@12 Poser de bonnes questions.
+@13 Branchements au niveau des types.
+@14 Résolution différée.
+@15 Préférer les types simples.
+@16 Un ternaire pour les types.
+@17 Le choixpeau : il regarde un type et choisit une maison.
+@18 Un **type conditionnel** choisit un type parmi deux, selon qu’un type rentre ou non dans un autre :⏎⏎⟦F1⟧⏎⏎Ici, lis `extends` comme « rentre dans » : `"hello"` rentre dans `string`, donc c’est la première branche qui est choisie. C’est une question posée pendant la vérification du code, pas pendant son exécution.
+@19 Imagine un choixpeau pour les types. Tu mets un type sous le chapeau, et le chapeau demande : « Es-tu une sorte de texte ? » Si oui, il dit « texte ». Sinon, il pose la question suivante.⏎⏎Le chapeau travaille pendant que TypeScript vérifie ton code, avant que quoi que ce soit s’exécute.
+@20 `T extends U ? X : Y` se résout quand `T` est connu ; pour un `T` générique, il reste différé jusqu’à l’instanciation. C’est l’affectabilité (pas l’égalité) qui décide du choix, donc `never` et `any` se comportent à part : `any` donne l’union des deux branches, et un `never` nu se distribue en `never` (leçons suivantes).⏎⏎Les types conditionnels sont le `if` de la programmation au niveau des types ; avec `infer` et la récursion, ils rendent le système de types Turing-complet, ce qui est puissant et facile à surutiliser : préfère le type le plus simple qui documente l’intention.
+@21 Quelle branche prend `Describe<42>` ?
+@22 Quelle maison le chapeau choisit-il pour `42` ?
+@23 Est-ce que `42` est une `string` ? Sinon, est-ce un `number` ?
+@24 Est-ce que 42 est du texte ? Non. Est-ce un nombre ?
+@25 `42` ne rentre pas dans `string`, mais rentre dans `number`, donc c’est la deuxième branche qui gagne.
+@26 42 n’est pas du texte, mais c’est un nombre, donc le chapeau dit « number ».
+@27 Le littéral `42` est affectable à `number` ; les conditionnels imbriqués sont évalués de haut en bas.
+@28 Écris `IsArray<T>` : `true` si `T` est un tableau, sinon `false`.
+@29 Fabrique un choixpeau `IsArray<T>` qui dit `true` pour les listes et `false` pour tout le reste.
+@30 `type IsArray<T> = T extends unknown[] ? true : false;`
+@31 Demande : est-ce que `T` rentre dans `unknown[]` (une liste de n’importe quoi) ? Oui → `true`, non → `false`.
+@32 `readonly unknown[]` correspond à tous les tableaux et tuples, y compris ceux en lecture seule ; un simple `unknown[]` dirait `false` pour `readonly [1, 2]`.
+@33 Les listes de toute sorte rentrent dans `readonly unknown[]`, même les listes verrouillées. Les autres choses, non.
+@34 Les tableaux modifiables sont affectables aux tableaux readonly, pas l’inverse, donc la forme readonly est le motif de tableau le plus large.
+@35 une liste de nombres
+@36 un tuple en lecture seule
+@37 une chaîne n’en est pas un
+@38 un objet n’en est pas un
+@39 Écris `TypeName<T>` : `"string"`, `"number"`, `"boolean"`, `"function"` ou `"object"`, comme `typeof` à l’exécution.
+@40 Fais en sorte que `TypeName<T>` dise de quelle sorte est un type : "string", "number", "boolean", "function" ou "object".
+@41 Enchaîne les questions : `T extends string ? "string" : T extends number ? "number" : …`. Les fonctions rentrent dans `(...args: never[]) => unknown`.
+@42 Pose une question après l’autre, comme une chaîne de choixpeaux.
+@43 L’ordre compte : la première question à laquelle ça correspond gagne, exactement comme `if … else if`.
+@44 Le chapeau pose les questions dans l’ordre, et s’arrête au premier « oui ».
+@45 Les types de fonctions correspondent à `(...args: never[]) => unknown`, le motif appelable le plus large sous `strictFunctionTypes` (les paramètres sont contravariants, donc `never[]` accepte n’importe quelle liste de paramètres).
+@46 string
+@47 number
+@48 boolean
+@49 function
+@50 object
+@51 La version courte.
+@52 Ce que tu as appris.
+@53 `T extends U ? X : Y` choisit un type.
+@54 « Extends » veut dire « rentre dans ».
+@55 Enchaîner les conditions pour plusieurs cas ; l’ordre compte.
+@56 Un choixpeau pour les types.
+@57 Il demande « est-ce que tu rentres ? » et choisit une maison.
+@58 Les questions sont posées dans l’ordre.
+@59 L’affectabilité décide de la branche.
+@60 Différé pour un `T` générique.
+@61 Garder la logique au niveau des types aussi simple que possible.
+@62 Capturer une partie d’un type avec `infer` dans un type conditionnel.
+@63 Construire ton propre `ReturnType`.
+@64 Déballer tableaux et promesses.
+@65 Envoyer un détective trouver un type caché.
+@66 Trouver ce que rend une machine.
+@67 Trouver ce qu’il y a dans une liste ou une promesse.
+@68 Extraire des types avec des motifs.
+@69 Construire les utilitaires soi-même pour les comprendre.
+@70 Garder des motifs qui ont la forme de l’entrée.
+@71 Les détectives trouvent des types dans des types.
+@72 Des listes, des machines, des promesses.
+@73 Maintenant, tu sais comment marchent les utilitaires.
+@74 `infer` permet la déstructuration au niveau des types.
+@75 La variance influe sur les candidats multiples.
+@76 La base de l’analyse de gabarits.
+@77 `infer` nomme un morceau de type pour pouvoir l’utiliser.
+@78 Le détective trouve un type caché dans un autre type.
+@79 Dans le `extends` d’un type conditionnel, `infer X` dit « ce qu’il y a à cette position, quoi que ce soit, appelle-le `X` » :⏎⏎⟦F1⟧⏎⏎C’est exactement ainsi que fonctionnent les `ReturnType`, `Parameters` et `Awaited` intégrés.
+@80 Un détective des types regarde un type et trouve quelque chose de caché dedans. « C’est une liste… de quoi ? Ah ha ! De chaînes ! »⏎⏎`infer` est le carnet du détective : il y note ce qu’il a trouvé sous un nom, pour que tu puisses t’en servir.
+@81 `infer` déclare une variable de type liée par filtrage de motif sur le type vérifié ; il n’est permis que dans la clause `extends` d’un type conditionnel. Plusieurs candidats pour la même variable produisent une union (en position covariante) ou une intersection (en position contravariante).⏎⏎Depuis TS 4.7, `infer X extends C` contraint le type capturé (par exemple pour extraire un littéral numérique d’un gabarit). Les motifs doivent avoir la forme de l’entrée : des tuples pour l’extraction par position, des types de fonctions pour les signatures, des littéraux de gabarit pour les chaînes.
+@82 Qu’est-ce que `Found` ?
+@83 Qu’a trouvé le détective ?
+@84 `infer Item` capture ce que contient le tableau.
+@85 La liste contient quelque chose. Quoi ?
+@86 `boolean[]` correspond à `(infer Item)[]` avec `Item = boolean`.
+@87 C’est une liste de valeurs oui/non, donc le détective a trouvé `boolean`.
+@88 Le filtrage de motif lie `Item` au type des éléments.
+@89 Construis `MyReturnType<F>` : le type que renvoie une fonction.
+@90 Envoie le détective trouver ce que rend une machine : construis `MyReturnType<F>`.
+@91 `F extends (...args: never[]) => infer R ? R : never`.
+@92 Fais correspondre n’importe quelle machine `(...args: never[]) => infer R`, puis rends `R`.
+@93 Le motif décrit « une fonction, qui renvoie quelque chose » ; `infer R` nomme ce quelque chose.
+@94 Le détective a reconnu « une machine qui rend quelque chose » et a noté ce quelque chose.
+@95 Les paramètres `never[]` font correspondre le motif à n’importe quelle fonction sous la contravariance ; la version intégrée utilise `any` dans le même but.
+@96 un nombre
+@97 avec paramètres
+@98 une vraie fonction
+@99 pas une fonction
+@100 Construis `Unwrap<T>` : la valeur dans une `Promise`, ou dans un tableau ; tout le reste reste tel quel.
+@101 Construis `Unwrap<T>` : regarde dans une promesse ou une liste et trouve ce qu’il y a dedans. Tout le reste ne change pas.
+@102 Deux conditions : `T extends Promise<infer V> ? V : T extends (infer E)[] ? E : T`.
+@103 Demande d’abord « est-ce une promesse de quelque chose ? », puis « est-ce une liste de quelque chose ? », sinon garde `T`.
+@104 Chaque branche est un motif différent avec son propre `infer`.
+@105 Le détective vérifie deux endroits à tour de rôle.
+@106 Des conditionnels enchaînés avec des motifs `infer` différents ; `Awaited`, en plus, est récursif et gère les thenables.
+@107 une promesse
+@108 un tableau
+@109 tout le reste
+@110 `infer X` capture une partie d’un type dans un type conditionnel.
+@111 Le motif doit ressembler à l’entrée : tableaux, fonctions, promesses.
+@112 `ReturnType`, `Parameters` et `Awaited` sont construits ainsi.
+@113 Le détective trouve les types cachés.
+@114 Il reconnaît un motif et note ce qu’il trouve.
+@115 Les utilitaires intégrés utilisent la même astuce.
+@116 Filtrage de motif sur la structure des types.
+@117 Seulement dans les clauses `extends`.
+@118 `infer X extends C` contraint les captures.
+@119 Voir un type conditionnel s’appliquer à chaque membre d’une union.
+@120 Construire `Exclude` et `Extract` soi-même.
+@121 Désactiver la distribution avec `[T]`.
+@122 Voir le chapeau répartir chaque membre d’un groupe séparément.
+@123 Construire ton propre tamis.
+@124 Faire regarder au chapeau tout le groupe d’un coup.
+@125 La distribution s’applique à chaque membre des unions.
+@126 Filtrer les unions avec `never`.
+@127 L’arrêter avec des crochets quand il le faut.
+@128 Les groupes sont répartis un par un.
+@129 Les tamis font disparaître des choses.
+@130 Les crochets gardent les groupes ensemble.
+@131 Savoir quand la distribution s’applique.
+@132 Traiter `never` explicitement.
+@133 Construire les utilitaires à partir des principes de base.
+@134 Les unions sont traitées un membre à la fois.
+@135 Face à un groupe, le chapeau répartit chacun séparément.
+@136 Quand le type vérifié est un paramètre de type nu et que tu passes une union, la condition s’exécute **pour chaque membre**, et les résultats sont réunis à nouveau en une union :⏎⏎⟦F1⟧⏎⏎Un `never` dans une union disparaît : c’est ainsi que `MyExclude` retire des membres. Pour traiter l’union comme un tout, entoure les deux côtés de crochets : `[T] extends [unknown] ? T[] : never` donne `(string | number)[]`.
+@137 Si tu mets tout un groupe sous le choixpeau, il répartit chacun séparément, puis remet les réponses ensemble.⏎⏎Un tamis marche comme ça : chaque membre est soit gardé, soit transformé en `never`, ce qui veut dire « parti ».
+@138 La distribution a lieu quand le type vérifié est un paramètre de type nu instancié avec une union ; `never` se distribue en `never` (une union vide), ce qui surprend : `IsNever<T> = T extends never ? true : false` donne `never` pour `never`. Entourer d’un tuple à un élément (`[T] extends [never]`) désactive la distribution.⏎⏎C’est la distribution qui fait fonctionner `Exclude`, `Extract`, `NonNullable` et `Omit` distributif ; il faut la désactiver quand on raisonne sur l’union comme un tout.
+@139 Qu’est-ce que `Result` ?
+@140 Que sort-il du chapeau ?
+@141 Chaque membre de l’union devient son propre tableau.
+@142 Chaque sorte devient sa propre liste.
+@143 La condition s’est exécutée une fois pour `string` et une fois pour `number`, ce qui donne deux types tableau : une liste de chaînes uniquement, ou une liste de nombres uniquement. Sans distribution, ce serait `(string | number)[]`, une liste qui mélange les deux.
+@144 Chaque sorte est passée seule sous le chapeau, donc tu obtiens un type liste pour chacune.
+@145 La distribution traite chaque constituant. Attention à `boolean` : c’est `true | false`, donc `ToArray<boolean>` vaut `false[] | true[]`.
+@146 Construis toi-même `MyExclude<T, U>` et `MyExtract<T, U>`.
+@147 Construis tes propres tamis : `MyExclude` retire des membres, `MyExtract` ne garde que ceux qui correspondent.
+@148 `MyExclude<T, U> = T extends U ? never : T` ; `MyExtract` inverse les branches.
+@149 Pour chaque membre : s’il rentre dans `U`, jette-le (`never`), sinon garde-le. `MyExtract` fait l’inverse.
+@150 Chaque membre est testé seul ; les résultats `never` disparaissent de l’union.
+@151 Chaque membre est vérifié seul, et ceux qui sont « partis » disparaissent.
+@152 Distribution plus absorption de `never` dans les unions.
+@153 en exclure un
+@154 exclure par sorte
+@155 extraire
+@156 Corrige `IsNever<T>` pour que `IsNever<never>` vaille `true`. (Indice : arrête la distribution.)
+@157 Corrige `IsNever<T>` pour qu’il dise `true` pour `never`. L’astuce : mets `T` entre crochets.
+@158 Entoure les deux côtés : `[T] extends [never] ? true : false`.
+@159 Écris `[T] extends [never]` au lieu de `T extends never`.
+@160 `never` est une union vide, donc distribuer dessus exécute la condition zéro fois et donne `never`, pas `true`. Les crochets font vérifier le tout d’un bloc par TypeScript.
+@161 `never` est un groupe vide, donc le chapeau n’a jamais l’occasion de dire quoi que ce soit ! Les crochets le font regarder le tout.
+@162 La distribution sur l’union vide donne `never` ; l’enveloppe en tuple à un élément rend la vérification non distributive.
+@163 never est never
+@164 une union ne l’est pas
+@165 Un conditionnel sur un `T` nu s’exécute une fois par membre de l’union.
+@166 Les résultats `never` disparaissent : c’est ainsi que marche `Exclude`.
+@167 `[T] extends [U]` arrête la distribution.
+@168 Le chapeau répartit chaque membre séparément.
+@169 Les membres « partis » disparaissent.
+@170 Les crochets lui font regarder tout le groupe.
+@171 Distribution sur les paramètres de type nus.
+@172 `never` se distribue en `never`.
+@173 Les tuples à un élément désactivent la distribution.
+@174 Construire un type en parcourant des clés : `{ [K in keyof T]: … }`.
+@175 Ajouter et retirer `readonly` et `?` avec `+` et `-`.
+@176 Écrire tes propres `Partial`, `Readonly` et `Mutable`.
+@177 Construire une machine à tampons qui tamponne chaque étiquette.
+@178 Ajouter ou retirer les tampons « peut-être » et « verrouillé ».
+@179 Construire tes propres machines à formes.
+@180 Les types mappés transforment chaque propriété.
+@181 Les types utilitaires sont juste des types mappés.
+@182 Les modificateurs sont sous ton contrôle.
+@183 Tamponner chaque étiquette.
+@184 Ajouter ou retirer « peut-être » et « verrouillé ».
+@185 Les types mappés sont le `map` des types.
+@186 Modificateurs et homomorphisme.
+@187 Composer avec les types conditionnels.
+@188 Parcourir les clés, construire une propriété pour chacune.
+@189 Une machine à tampons passe sur chaque étiquette et la tamponne.
+@190 Un **type mappé** boucle sur un ensemble de clés et produit une propriété pour chacune :⏎⏎⟦F1⟧
+@191 Une machine à tampons prend une forme et passe sur chaque étiquette pour la tamponner : « peut-être », « verrouillé », ou « change ça en oui/non ».⏎⏎`[K in keyof T]` veut dire « pour chaque étiquette K de T ». `T[K]` est ce qu’il y avait derrière cette étiquette.
+@192 Les types mappés sur `keyof T` sont homomorphes : ils préservent les modificateurs d’origine (facultatif/readonly) sauf s’ils sont changés avec `+`/`-`, et se distribuent sur un `T` union. Ils transforment aussi les tuples et tableaux élément par élément (`MyReadonly<[1, 2]>` vaut `readonly [1, 2]`).⏎⏎La source des clés peut être n’importe quelle union (`[K in "a" | "b"]`), et c’est ainsi qu’est défini `Record`. Combine avec les clauses `as` (leçon suivante) pour renommer ou filtrer les clés.
+@193 Qu’est-ce que `Checks` ?
+@194 Que fabrique la machine à tampons ?
+@195 Chaque clé reste ; chaque type de valeur devient `boolean`.
+@196 Les mêmes étiquettes, mais chacune contient maintenant oui ou non.
+@197 Le type mappé garde les clés et remplace chaque type de valeur.
+@198 Les mêmes étiquettes, toutes tamponnées `boolean`.
+@199 Transformation homomorphe sur `keyof T` avec un type de valeur constant.
+@200 Construis `MyPartial<T>` et `Mutable<T>` (qui retire `readonly`).
+@201 Construis deux machines à tampons : `MyPartial` tamponne « peut-être », `Mutable` retire le tampon « verrouillé ».
+@202 `{ [K in keyof T]?: T[K] }` et `{ -readonly [K in keyof T]: T[K] }`.
+@203 Utilise `?` après la clé pour « peut-être », et `-readonly` devant pour enlever le verrou.
+@204 `?` et `readonly` sont des modificateurs ; `-` en retire un, et `+` (ou rien) l’ajoute.
+@205 Les tampons peuvent être ajoutés ou retirés.
+@206 Arithmétique des modificateurs sur les types mappés homomorphes.
+@207 partial
+@208 mutable
+@209 on peut écrire dans mutable
+@210 Construis `Nullable<T>` : chaque propriété peut aussi valoir `null`.
+@211 Construis une machine à tampons qui permet à chaque étiquette de contenir aussi `null`.
+@212 `{ [K in keyof T]: T[K] | null }`.
+@213 Garde chaque étiquette, et ajoute `| null` à ce qu’elle contient.
+@214 La transformation homomorphe garde les modificateurs, donc les propriétés facultatives restent facultatives.
+@215 Les étiquettes « peut-être » restent « peut-être ».
+@216 Les modificateurs sont préservés par les transformations sur `keyof T`.
+@217 ajoute null
+@218 garde facultatives les propriétés facultatives
+@219 `{ [K in keyof T]: … }` construit une propriété pour chaque clé.
+@220 `T[K]` est le type de la propriété d’origine.
+@221 `+`/`-` ajoutent ou retirent `readonly` et `?`.
+@222 Les machines à tampons passent sur chaque étiquette.
+@223 `T[K]` est ce qu’il y avait derrière l’étiquette.
+@224 Les types mappés homomorphes préservent les modificateurs.
+@225 Ils transforment aussi les tableaux et les tuples.
+@226 `Record` est un type mappé sur une union de clés.
+@227 Renommer les clés dans un type mappé avec `as`.
+@228 Retirer des clés en les remappant vers `never`.
+@229 Construire `Getters<T>` et `PickByValue<T, V>`.
+@230 Apprendre à la machine à tampons à renommer les étiquettes.
+@231 Lui faire jeter certaines étiquettes.
+@232 Construire un fabricant de getters.
+@233 Renommer et filtrer les clés avec `as`.
+@234 Construire des API comme des getters à partir de types de données.
+@235 Combiner avec les conditionnels.
+@236 Renommer les étiquettes, en jeter certaines.
+@237 Construire des getters à partir de formes.
+@238 Mélanger avec le choixpeau.
+@239 Le remappage des clés permet de générer des API au niveau des types.
+@240 `never` filtre.
+@241 Attention aux modificateurs.
+@242 `as` renomme ou filtre les clés.
+@243 La machine à tampons peut écrire de nouveaux noms sur les étiquettes.
+@244 Une clause `as` après la clé calcule une nouvelle clé :⏎⏎⟦F1⟧⏎⏎Remapper une clé vers `never` la supprime : c’est ainsi qu’on filtre les propriétés selon leur type.
+@245 La machine à tampons peut aussi écrire un nouveau nom sur chaque étiquette : "name" devient "getName".⏎⏎Si elle écrit « never » sur une étiquette, cette étiquette est jetée. C’est ainsi qu’on ne garde que certaines étiquettes.
+@246 Le remappage des clés (TS 4.1) évalue le type `as` pour chaque clé ; le résultat peut être n’importe quel type de clé de propriété, et `never` supprime l’entrée. `string & K` restreint `keyof T` (qui peut inclure des nombres et des symboles) pour les littéraux de gabarit. Les types mappés remappés ne sont plus homomorphes, donc les modificateurs ne sont pas préservés automatiquement.
+@247 Construis `Getters<T>` : pour chaque propriété `x`, une méthode `getX(): T["x"]`.
+@248 Construis un fabricant de getters : pour chaque étiquette `x`, fabrique `getX`, une machine qui rend ce qu’il y a derrière `x`.
+@249 Remappe chaque clé avec `as` et un type littéral de gabarit : `` [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K] ``.
+@250 Utilise `as` avec un gabarit : `` `get${Capitalize<string & K>}` ``.
+@251 La clause `as` construit chaque nouvelle clé à partir de l’ancienne avec un type littéral de gabarit.
+@252 Chaque étiquette reçoit un nouveau nom, fabriqué à partir de l’ancien.
+@253 `Capitalize` est un type intrinsèque de manipulation de chaînes ; `string & K` exclut les clés symboles.
+@254 getters renommés
+@255 les anciens noms ont disparu
+@256 Construis `PickByValue<T, V>` : seulement les propriétés dont le type rentre dans `V`.
+@257 Construis un filtre : ne garde que les étiquettes dont la valeur rentre dans `V`.
+@258 `[K in keyof T as T[K] extends V ? K : never]: T[K]`.
+@259 Garde la clé `K` quand `T[K]` rentre dans `V` ; sinon écris `never` pour la supprimer.
+@260 Remapper une clé vers `never` la supprime, donc la condition décide quelles propriétés survivent.
+@261 Les étiquettes tamponnées « never » sont jetées.
+@262 Filtrage par remappage vers `never`.
+@263 seulement les chaînes
+@264 seulement les fonctions
+@265 `as` dans un type mappé calcule une nouvelle clé.
+@266 Remapper vers `never` supprime la propriété.
+@267 Les types littéraux de gabarit construisent de nouveaux noms.
+@268 La machine à tampons peut renommer les étiquettes.
+@269 « never » jette une étiquette.
+@270 De nouveaux noms peuvent être fabriqués à partir des anciens.
+@271 Remappage des clés (`as`) clé par clé.
+@272 Filtrage par type de valeur.
+@273 Pas homomorphe : les modificateurs ne sont pas conservés.
+@274 Construire des motifs de chaînes avec les types littéraux de gabarit.
+@275 Combiner des unions en toutes les chaînes possibles.
+@276 Extraire des morceaux d’un type chaîne avec `infer`.
+@277 Fabriquer des étiquettes à partir de motifs.
+@278 Mélanger et assortir les mots.
+@279 Lire des morceaux dans une étiquette.
+@280 Modéliser des formats de chaînes comme des types.
+@281 Générer des noms à partir de noms.
+@282 Analyser des types chaîne avec `infer`.
+@283 Des étiquettes à partir de motifs.
+@284 De nouveaux noms à partir d’anciens.
+@285 Lire les étiquettes avec le détective.
+@286 Programmation de types au niveau des chaînes.
+@287 Routes, événements et CSS typés.
+@288 La récursion pour des analyseurs complets.
+@289 Les chaînes peuvent être des types, construits à partir de motifs.
+@290 Une machine à étiquettes pour les types.
+@291 ⟦F1⟧⏎⏎Les unions dans un gabarit se combinent de toutes les façons ; `infer` dans un gabarit relit un morceau.
+@292 Une machine à étiquettes imprime des étiquettes d’après un motif : `${Size}-${Colour}` fabrique tous les mélanges : small-red, small-blue, large-red, large-blue.⏎⏎Et le détective sait lire une étiquette : dans "/users/:id", il trouve "id".
+@293 Les types littéraux de gabarit produisent le produit cartésien des unions interpolées (attention à l’explosion combinatoire ; TypeScript plafonne les unions à 100 000 membres). Les intrinsèques `Uppercase`, `Lowercase`, `Capitalize` et `Uncapitalize` transforment les littéraux.⏎⏎Le filtrage avec `infer` dans les gabarits est gourmand depuis la gauche pour le premier emplacement ; la récursion analyse des chaînes entières (le routeur du module 19 fait exactement ça).
+@294 Qu’est-ce que `Cell` ?
+@295 Quelles étiquettes fabrique la machine à étiquettes ?
+@296 Chaque lettre est combinée avec chaque chiffre.
+@297 Chaque lettre avec chaque nombre.
+@298 Un gabarit avec des unions produit toutes les combinaisons : 2 × 2 = 4 chaînes.
+@299 Chaque lettre avec chaque nombre : quatre étiquettes.
+@300 Produit cartésien des unions interpolées.
+@301 Construis `Handlers<Events>` : pour chaque nom d’événement `e`, une méthode facultative `onE`.
+@302 Construis `Handlers` : pour chaque nom d’événement comme "click", une étiquette « peut-être » `onClick` qui contient une machine.
+@303 Un type mappé sur `Events`, qui renomme chaque clé avec `` as `on${Capitalize<K>}` ``, chacune en `?: () => void`.
+@304 Parcours chaque nom d’événement `K` et renomme-le en `` `on${Capitalize<K>}` ``, comme une machine « peut-être ».
+@305 Les clés sont calculées à partir des noms d’événements, donc ajouter un événement ajoute son emplacement de gestionnaire.
+@306 Les nouveaux événements reçoivent automatiquement de nouvelles étiquettes de gestionnaire.
+@307 Remappage des clés sur une union de littéraux de chaîne avec `Capitalize`.
+@308 les noms des gestionnaires
+@309 tous facultatifs
+@310 seulement les vrais événements
+@311 Construis `ParamName<T>` : à partir de `"/users/:id"`, obtiens `"id"` ; sans `:`, `never`.
+@312 Envoie le détective dans une étiquette : dans "/users/:id", trouve "id".
+@313 `T extends `${string}:${infer Name}` ? Name : never`.
+@314 Fais correspondre « n’importe quoi, puis deux-points, puis le nom », et rends le nom.
+@315 `infer` dans un gabarit lit le morceau après les deux-points. Le module 19 construit tout un type de routeur de cette façon.
+@316 Le détective a trouvé le nom après les deux-points.
+@317 Filtrage de motif sur les littéraux de gabarit ; la récursion gère plusieurs paramètres.
+@318 un paramètre
+@319 un autre
+@320 pas de paramètre
+@321 Les types littéraux de gabarit construisent des motifs de chaînes.
+@322 Les unions à l’intérieur se combinent de toutes les façons.
+@323 `infer` dans un gabarit extrait des morceaux.
+@324 La machine à étiquettes fabrique des étiquettes à partir de motifs.
+@325 Elle mélange chaque mot avec chaque autre.
+@326 Le détective sait lire les étiquettes, lui aussi.
+@327 Produits cartésiens et types chaîne intrinsèques.
+@328 Filtrage de motif sur les chaînes.
+@329 Attention aux limites de taille des unions.

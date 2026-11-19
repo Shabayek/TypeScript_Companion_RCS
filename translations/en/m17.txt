@@ -1,0 +1,330 @@
+@1 Write a type that refers to itself, like `Json`.
+@2 Make every level read-only with a recursive mapped type.
+@3 Know that recursion has limits.
+@4 Make a type that contains itself, like dolls inside dolls.
+@5 Lock every level, all the way down.
+@6 Know that it has to stop somewhere.
+@7 Model nested data with recursive types.
+@8 Apply transformations at every depth.
+@9 Mind the limits.
+@10 Dolls inside dolls.
+@11 Lock all the way down.
+@12 Keep it reasonable.
+@13 Recursive aliases are first-class.
+@14 Deep utilities need care.
+@15 Prefer tail recursion.
+@16 Types can contain themselves.
+@17 Like a doll with a smaller doll inside, and another inside that.
+@18 Some data is nested to any depth. A **recursive type** mentions itself:⏎⏎⟦F1⟧⏎⏎A JSON value is text, a number, true/false, null, a list *of JSON values*, or an object *of JSON values*. `DeepReadonly` applies itself to every nested object.
+@19 Think of Russian dolls: each doll can have another doll inside, and that one another. A JSON value can hold other JSON values inside it, as deep as you like.⏎⏎`DeepReadonly` locks the outside doll, then opens it and locks the one inside, and so on, all the way down.
+@20 Type aliases may be recursive through object types, arrays, tuples and (since 4.1) conditional types. Instantiation depth is limited (about 50 for non-tail-recursive conditionals, 1,000 for tail-recursive ones since 4.5); past that you get TS2589 "Type instantiation is excessively deep".⏎⏎Recursive mapped types handle arrays and tuples homomorphically; functions are objects too, so guard them (`T[K] extends (...args: never[]) => unknown ? T[K] : …`) when it matters.
+@21 Define `Json`: text, numbers, booleans, `null`, and arrays and objects of `Json`.
+@22 Make the `Json` type: words, numbers, yes/no, `null`, and lists and objects full of more `Json`.
+@23 A union that mentions `Json[]` and `{ [key: string]: Json }`.
+@24 List the simple kinds with `|`, then add `Json[]` and `{ [key: string]: Json }`.
+@25 The type describes exactly what `JSON.stringify` keeps: functions, `undefined` and `Date` objects are not JSON.
+@26 Only things that JSON can really hold are allowed.
+@27 A precise `Json` type documents serialisability; `Date` fails because its methods are not `Json`.
+@28 nested data
+@29 no functions
+@30 no undefined
+@31 no dates
+@32 Build `DeepReadonly<T>`: nothing at any depth can be changed.
+@33 Build `DeepReadonly`: lock every doll, all the way down.
+@34 `{ readonly [K in keyof T]: T[K] extends object ? DeepReadonly<T[K]> : T[K] }`.
+@35 Lock each label, and if what is behind it is an object, lock that too (using `DeepReadonly` again).
+@36 `Readonly` only locks the top level; the recursive version reaches every nested object and array.
+@37 The plain lock only locked the outside doll. Now every doll is locked.
+@38 The homomorphic mapped type also maps arrays to readonly arrays, so `push` disappears.
+@39 reading is fine
+@40 the top is locked
+@41 deeper is locked too
+@42 arrays are locked
+@43 What happens if a recursive type goes too deep?
+@44 What if the dolls go on forever?
+@45 TypeScript has to stop somewhere.
+@46 Can TypeScript open dolls forever?
+@47 TypeScript stops and reports "Type instantiation is excessively deep and possibly infinite" (TS2589). Keep recursion shallow or tail-recursive.
+@48 TypeScript gives up and says it is too deep. So it has to stop somewhere.
+@49 Depth limits guard the checker; tail-recursive conditional types get a much higher limit.
+@50 TypeScript reports that the type is too deep
+@51 The editor freezes forever
+@52 There is a limit, precisely so that does not happen.
+@53 TypeScript has a limit, so it does not freeze.
+@54 The short version.
+@55 What you learned.
+@56 A recursive type refers to itself.
+@57 `Json` and `DeepReadonly` are classic examples.
+@58 Recursion depth is limited.
+@59 Types can hold themselves, like dolls.
+@60 You can lock every doll.
+@61 It must stop somewhere.
+@62 Recursion through objects, arrays and conditionals.
+@63 Depth limits and TS2589.
+@64 Guard functions in deep mapped types.
+@65 Tell apart values that are all strings: user ids, order ids, emails.
+@66 Create branded values only through a checking function.
+@67 Know brands exist only in types.
+@68 Put name tags on things that look the same.
+@69 Only hand out name tags after checking.
+@70 Know the tag is only for TypeScript.
+@71 Brand ids and validated values.
+@72 One constructor per brand.
+@73 Compile-time safety, runtime strings.
+@74 Tag things that look alike.
+@75 Check before tagging.
+@76 Tags stop mix-ups.
+@77 Phantom types for domain safety.
+@78 Centralise assertions.
+@79 Zero-cost abstractions.
+@80 Same shape, different meaning.
+@81 Two keys can look the same but open different doors.
+@82 TypeScript is structural: any `string` fits any other `string`. So a user id can be passed where an order id is expected. A **brand** makes them different:⏎⏎⟦F1⟧
+@83 Two keys can look exactly the same, but one opens the front door and the other the shed. TypeScript sees two strings and cannot tell them apart.⏎⏎A brand is a name tag: "this string is an order id". Only a special machine hands out the tag, after checking.
+@84 Branding simulates nominal typing with an intersection of the primitive and a phantom property; no such property exists at runtime, so the only way in is an assertion inside a constructor function, which should validate (a "smart constructor"). `unique symbol` brands avoid clashing brand names across libraries.⏎⏎Use brands for ids, units (`Meters` vs `Feet`), validated strings (`Email`, `NonEmptyString`) and sanitised HTML. They cost nothing at runtime.
+@85 Brand `UserId` and `OrderId` so they cannot be mixed up.
+@86 Put name tags on `UserId` and `OrderId` so they cannot be mixed up.
+@87 `type OrderId = string & { readonly __brand: "OrderId" };` (and the same for `UserId`); `toOrderId` returns `raw as OrderId`.
+@88 Add `& { readonly __brand: "OrderId" }` to each type, and use `as OrderId` inside `toOrderId`.
+@89 The brand only exists in types: at runtime an `OrderId` is a plain string. Mixing ids up is now a compile error.
+@90 The tag is only for TypeScript, but it stops mix-ups before they happen.
+@91 Phantom intersections give nominal behaviour at zero cost; `toOrderId` is the single audited assertion.
+@92 an order id works
+@93 a user id is refused
+@94 a plain string is refused
+@95 still usable as a string
+@96 nothing changes at runtime
+@97 Write `toEmail`: return the text as an `Email` if it has exactly one `@` with text on both sides, otherwise `null`.
+@98 Make `toEmail`: only hand out the Email tag if the text has one `@` with something on each side.
+@99 `split("@")` must give exactly two non-empty parts; then `return text as Email`.
+@100 Split at `@`. You need exactly two pieces, neither empty. Then give back `text as Email`.
+@101 A smart constructor: the only way to get an `Email` is through the check, so every `Email` in the program has passed it.
+@102 Only checked addresses get the Email tag.
+@103 Validation plus a single cast; downstream code can require `Email` instead of re-validating strings.
+@104 a real address
+@105 no @
+@106 two @
+@107 nothing before @
+@108 A brand (`string & { __brand: … }`) makes look-alike values different.
+@109 Create branded values only in a checking function.
+@110 Brands cost nothing at runtime.
+@111 Name tags tell look-alike values apart.
+@112 Only a checking machine hands out tags.
+@113 Tags are only for TypeScript.
+@114 Nominal typing via phantom intersections.
+@115 Smart constructors own the assertion.
+@116 Use for ids, units and validated strings.
+@117 Know when `Box<Dog>` fits where `Box<Animal>` is expected.
+@118 See why function parameters go the other way.
+@119 Annotate type parameters with `in` and `out`.
+@120 Know when a box of dogs counts as a box of animals.
+@121 See why a dog-only vet is not an animal vet.
+@122 Mark which way a box works.
+@123 Reading: covariant. Writing: contravariant. Both: invariant.
+@124 Use `readonly` to make arrays safe.
+@125 Annotate variance on complex generics.
+@126 Take-out boxes and put-in boxes work differently.
+@127 Lock lists to stay safe.
+@128 Understand the deliberate unsoundness.
+@129 Readonly for sound covariance.
+@130 Explicit variance for clarity and speed.
+@131 Things you read from, and things you give to.
+@132 A box you take from, and a box you put into.
+@133 If every `Dog` is an `Animal`, is a `Dog[]` an `Animal[]`? TypeScript says yes (arrays are **covariant**). That is convenient, but not fully safe: through the `Animal[]` name you could push a cat into the list of dogs.⏎⏎Functions go the other way for their parameters (**contravariant**): a function that handles any `Animal` can stand in for one that handles `Dog`s, but not the reverse.⏎⏎⟦F1⟧
+@134 A bag of dogs is a bag of animals, when you only take things out. But if someone puts a cat into it through the "animals" label, the dog bag now has a cat!⏎⏎A vet who treats any animal can treat your dog. A dog-only vet cannot treat every animal. So "takers" work the other way round.
+@135 Variance is how subtyping of `F<T>` follows subtyping of `T`: covariant (outputs), contravariant (inputs), invariant (both), bivariant (either, unsound). TypeScript infers variance structurally; arrays and method parameters are deliberately unsound (covariant/bivariant) for ergonomics, while function-typed properties are checked contravariantly under `strictFunctionTypes`.⏎⏎Explicit `in`/`out` annotations (TS 4.7) document intent, speed up checking of complex types and are verified against the structure (TS2636 if they contradict it).
+@136 TypeScript accepts this. What prints?
+@137 TypeScript says this is fine. What will it show?
+@138 `animals` and `dogs` are the same array. The cat has no `bark`.
+@139 Both names point at the same list, and a cat got in.
+@140 Array covariance let a non-dog into `dogs`. TypeScript trades this hole for convenience; `readonly Animal[]` would have closed it.
+@141 A cat got into the dog list through the "animals" name, and cats cannot bark.
+@142 Mutable arrays are unsoundly covariant; readonly arrays are soundly covariant because they cannot be written.
+@143 Under `strict`, which assignment is an error?
+@144 Which one does TypeScript refuse?
+@145 A handler must cope with everything its slot may pass in.
+@146 Can a dog-only vet treat every animal?
+@147 A `Dog`-only handler cannot stand in for an `Animal` handler: it might be called with a cat. The reverse is fine.
+@148 The dog-only vet cannot be the animal vet. The animal vet can treat dogs, though.
+@149 `strictFunctionTypes` checks function-typed parameters contravariantly.
+@150 `const handleAnimal: (a: Animal) => void = (d: Dog) => d.bark();`
+@151 `const handleDog: (d: Dog) => void = (a: Animal) => console.log(a.name);`
+@152 That one is fine: a handler for any animal can handle dogs.
+@153 That is fine: the animal vet can treat dogs.
+@154 The `in`/`out` annotations are the wrong way round. Fix them.
+@155 The "give" and "take" marks are swapped. Fix them!
+@156 `Producer` only returns `T` (`out`); `Consumer` only receives `T` (`in`).
+@157 The maker gives things out; the taker takes things in.
+@158 `out` for positions you read from, `in` for positions you write to. TypeScript checks the annotation matches how `T` is used.
+@159 Makers give out; takers take in. TypeScript checks you marked them right.
+@160 Variance annotations are verified against structural usage (TS2636) and then used for assignability.
+@161 a dog maker is an animal maker
+@162 an animal taker can take dogs
+@163 not the other way
+@164 Outputs are covariant: `Producer<Dog>` fits `Producer<Animal>`.
+@165 Inputs are contravariant: `Consumer<Animal>` fits `Consumer<Dog>`.
+@166 Mutable arrays are covariant, which is convenient but not fully safe.
+@167 Boxes you take from: dogs count as animals.
+@168 Boxes you put into: it works the other way.
+@169 Editable lists can let the wrong thing in.
+@170 Variance follows data flow.
+@171 `in`/`out` document and enforce it.
+@172 Prefer readonly collections in APIs.
+@173 See a wrong argument widen a type parameter instead of being an error.
+@174 Block inference from one parameter with `NoInfer<T>`.
+@175 Keep exact literals with `const T`.
+@176 See how a wrong guess sneaks in.
+@177 Tell TypeScript not to guess from one input.
+@178 Keep exact words.
+@179 Choose which arguments drive inference.
+@180 Catch mistakes that would widen types.
+@181 Keep literals exact when they matter.
+@182 Guide TypeScript’s guesses.
+@183 Catch wrong choices.
+@184 Remember exact words.
+@185 Inference design is API design.
+@186 Intrinsics: `NoInfer`.
+@187 Const type parameters.
+@188 Decide where TypeScript infers from.
+@189 Tell TypeScript which inputs to guess from.
+@190 TypeScript infers a type parameter from *every* place it appears, so a mistake can widen it instead of being reported:⏎⏎⟦F1⟧⏎⏎`NoInfer<T>` (TypeScript 5.4) means "check this against `T`, but do not use it to work `T` out".
+@191 TypeScript guesses the kind from all the inputs, so a wrong one ("blue") gets added to the guess instead of being caught!⏎⏎`NoInfer` says: "do not guess from this input; only check it".
+@192 `NoInfer<T>` is an intrinsic marker that removes its position from inference candidates while preserving `T` for checking. Typical uses: default values, fallbacks, and "one of these" parameters. Combine with `const T` to infer exact literal unions from the authoritative argument only.
+@193 Make `pick` reject an `initial` that is not one of the `options`.
+@194 Make `pick` refuse a starting choice that is not in the list.
+@195 Change `initial: T` to `initial: NoInfer<T>`.
+@196 Wrap the type of `initial` in `NoInfer< >`.
+@197 `T` is now inferred from `options` only, and `initial` is checked against it, so "blue" is caught.
+@198 Now TypeScript guesses only from the list, and checks the starting choice.
+@199 Inference candidates come solely from `options`; `initial` is checked post-inference.
+@200 a real option
+@201 a wrong option is an error
+@202 picks
+@203 Make `defineRoutes` keep the exact route names, so `go` only accepts those.
+@204 Make `defineRoutes` remember the exact route names.
+@205 Use a `const` type parameter: `function defineRoutes<const T extends readonly string[]>(routes: T): T`.
+@206 Write `<const T extends readonly string[]>`.
+@207 The caller writes a plain array; `const T` makes TypeScript infer `readonly ["home", "about"]`.
+@208 Now the exact names are remembered, without `as const` at every call.
+@209 `const` type parameters apply const-context inference; the `readonly` constraint is needed to admit readonly tuples.
+@210 exact names
+@211 unknown routes refused
+@212 Type parameters are inferred from every place they appear.
+@213 `NoInfer<T>` checks a parameter without inferring from it.
+@214 `const T` keeps exact literals.
+@215 TypeScript guesses from every input.
+@216 `NoInfer` says "just check this one".
+@217 `const` keeps exact words.
+@218 Control inference sites deliberately.
+@219 `NoInfer` for defaults and fallbacks.
+@220 `const T` plus readonly constraints.
+@221 Make a return type depend on an argument with a conditional type.
+@222 Compare it with overloads and plain generics.
+@223 Pick the simplest that works.
+@224 Make what comes out depend on what goes in.
+@225 Compare three ways of doing it.
+@226 Pick the easiest.
+@227 Start with the simplest typing that works.
+@228 Escalate only when needed.
+@229 Keep unchecked casts contained.
+@230 Pick the easiest way.
+@231 Use rules only when needed.
+@232 Keep `as` in one place.
+@233 API typing strategies have trade-offs.
+@234 Know what the checker verifies.
+@235 Contain assertions.
+@236 Three tools for "the output depends on the input".
+@237 Three ways to say what comes out.
+@238 ⟦F1⟧⏎⏎A conditional return type needs a cast inside: TypeScript cannot check the body against a type that depends on an unresolved `K`.
+@239 Sometimes what comes out of a machine depends on what you put in. There are three ways to tell TypeScript.⏎⏎The simplest: "the same kind comes back". Then: a list of cases. Then: a rule, like the sorting hat.
+@240 Prefer, in order: a generic passthrough (fully checked), overloads (checked per call, body unchecked per overload), conditional return types (expressive and composable, but the implementation needs assertions because TypeScript does not narrow type parameters from control flow, although TS 5.8 narrows some return expressions).⏎⏎Conditional return types compose better when callers themselves are generic; overloads give nicer errors and hovers for a small, fixed set of cases.
+@241 Give `parseAs` a conditional return type: `number` for `"number"`, `boolean` for `"boolean"`.
+@242 Make `parseAs` say: "number" gives a number, "boolean" gives a yes/no.
+@243 Return type `K extends "number" ? number : boolean`, and cast the body’s result to it.
+@244 Use the sorting hat as the return type, and `as` the same type on the result.
+@245 Callers get the precise type; the single `as` inside is the price of a return type TypeScript cannot verify on its own.
+@246 Now each way of using it gives the right kind back.
+@247 The assertion is unavoidable for conditional return types over unresolved `K`; keep it in one place.
+@248 a number
+@249 a boolean
+@250 other kinds refused
+@251 parses a number
+@252 parses a boolean
+@253 `identity(value)` returns exactly what it gets. Which tool?
+@254 A machine gives back exactly what it gets. Which way is best?
+@255 Which one needs no cast and no list of cases?
+@256 Which is the simplest?
+@257 A plain generic: `function identity<T>(value: T): T`. Fully checked, nothing to maintain.
+@258 The simple "same kind comes back" generic.
+@259 Generic passthrough expresses the relation exactly with no unchecked code.
+@260 A generic: `<T>(value: T): T`
+@261 A conditional return type
+@262 Possible, but it adds a cast for nothing.
+@263 Too complicated for this.
+@264 One overload per possible type
+@265 There are infinitely many types; a generic covers them all.
+@266 There would be too many!
+@267 Generic passthrough: simplest and fully checked.
+@268 Overloads: a short fixed list of cases.
+@269 Conditional return types: a rule, with a cast inside.
+@270 Same kind back: use a generic.
+@271 A few fixed cases: overloads.
+@272 A rule: the sorting hat.
+@273 Prefer generics, then overloads, then conditionals.
+@274 Confine assertions to one line.
+@275 Composability versus error messages.
+@276 Describe events and their data with an event map type.
+@277 Type `on` and `emit` with `K extends keyof Events`.
+@278 Make wrong event names and wrong data compile errors.
+@279 Write down every message and what it carries.
+@280 Make sure listeners get the right data.
+@281 Catch wrong message names.
+@282 Describe events once, in a map.
+@283 Let generics connect names and payloads.
+@284 The same pattern powers many libraries.
+@285 Write the rules once.
+@286 TypeScript checks every message.
+@287 Real libraries work like this.
+@288 Event maps are a core advanced pattern.
+@289 Tuples for payloads.
+@290 No `any`, even inside.
+@291 An event map ties names to data.
+@292 A message board where every message has rules.
+@293 Untyped emitters (`on(name: string, fn: (...args: any[]) => void)`) accept typos and wrong data. An **event map** type fixes that:⏎⏎⟦F1⟧
+@294 Imagine a message board. Each kind of message has a name ("login") and carries some data (who logged in).⏎⏎The rules list every message name and its data. Then TypeScript stops anyone sending a message with a wrong name or the wrong data.
+@295 The map’s values are tuples, so `...args: Events[K]` types rest parameters with labels and arity. `K extends keyof Events` correlates the name with its payload per call. Internally, a mapped type `{ [K in keyof Events]?: Listener<K>[] }` keeps storage typed without `any`.⏎⏎This is the pattern behind typed DOM event maps (`HTMLElementEventMap`), Node’s typed `EventEmitter`, and most state libraries’ subscribe APIs.
+@296 Type `Emitter` with an event map: `on` and `emit` only accept real event names, with exactly that event’s data.
+@297 Give the message board rules: only real message names, and only the right data for each.
+@298 Make the class generic: `class Emitter<Events extends Record<string, unknown[]>>`, then `on<K extends keyof Events>(name: K, listener: (...args: Events[K]) => void)` and `emit<K extends keyof Events>(name: K, ...args: Events[K])`.
+@299 Add `<Events extends Record<string, unknown[]>>` to the class. Then `on` and `emit` use `K extends keyof Events` and `Events[K]` for the data.
+@300 Store listeners as `{ [K in keyof Events]?: ((...args: Events[K]) => void)[] }`, and push with `(this.#listeners[name] ??= []).push(listener)`.
+@301 Keep the listeners in an object with one list per message name.
+@302 The runtime code barely changed; the types now tie each event name to its data, so typos and wrong payloads fail to compile.
+@303 The board works the same, but now TypeScript enforces the rules.
+@304 Correlating `K` across parameters via `Events[K]`; the mapped storage type keeps the implementation free of `any`.
+@305 listeners get typed data
+@306 wrong data is refused
+@307 unknown events are refused
+@308 the right call compiles
+@309 delivers to every listener, in order
+@310 no listeners is fine
+@311 Why are the event payloads written as tuples, like `[done: number, total: number]`?
+@312 Why is each message’s data written as a list like `[done: number, total: number]`?
+@313 Look at how `emit` and the listener receive the data.
+@314 Look at how the data is handed to the listener.
+@315 A tuple types a rest parameter: `...args: Events[K]` becomes exactly two numbers, with names, so listeners can take `(done, total)`.
+@316 The list says exactly how many pieces of data there are, and what kind each one is.
+@317 Tuple types give rest parameters a precise arity, per-position types and labels (shown in editor hints).
+@318 They type `...args`: how many values, and the type of each
+@319 Tuples are faster than objects at runtime
+@320 The payload is passed as separate arguments; the tuple exists only in the types.
+@321 It is only about types, not speed.
+@322 An event map type lists event names and their data as tuples.
+@323 `K extends keyof Events` ties each call’s name to its data.
+@324 Typos and wrong data become compile errors.
+@325 The rules list every message and its data.
+@326 Listeners always get the right data.
+@327 Wrong names are caught.
+@328 Tuple-valued maps type rest parameters.
+@329 Per-call correlation via generics.
+@330 Mapped storage avoids `any`.

@@ -1,0 +1,253 @@
+@1 Require something of a type parameter with `extends`.
+@2 Keep the caller’s exact type while using what the constraint promises.
+@3 See why a plain parameter type loses information.
+@4 Say "any kind, as long as it has a length".
+@5 Give back exactly the kind that came in.
+@6 See why that matters.
+@7 Constrain type parameters with `extends`.
+@8 Return `T` to preserve the caller’s type.
+@9 Keep constraints minimal.
+@10 Generic machines can have requirements.
+@11 They still remember what went in.
+@12 Do not ask for too much.
+@13 Bounded polymorphism in TypeScript.
+@14 Generic return types preserve information.
+@15 Minimal structural requirements.
+@16 Generics with requirements.
+@17 Any kind of thing, as long as it can do something.
+@18 A bare `<T>` can be anything, so the body cannot use any of its properties. A **constraint** says what `T` must have:⏎⏎⟦F1⟧⏎⏎Why not just `a: { length: number }`? Then the result would be a `{ length: number }` too, and callers would lose the fact that it is a string or an array.
+@19 Sometimes a machine works on any kind of thing, as long as it has a certain part. `longest` works on anything with a length: words, lists…⏎⏎`T extends { length: number }` means "any kind, as long as it has a length". And what comes out is the same kind that went in.
+@20 A constraint bounds the type parameter: inside the body, `T` is assignable to the constraint, so its members are usable; at call sites, arguments must satisfy it, and `T` is inferred as the specific argument type. Without the generic, the return type degrades to the constraint itself.⏎⏎Constraints can reference other parameters (`K extends keyof T`) and can be recursive. Keep them minimal: require only what the body uses.
+@21 Make `longest` generic with a constraint, so it returns the same type it was given.
+@22 Make `longest` give back the same kind of thing it was given, for anything with a length.
+@23 `function longest<T extends { length: number }>(a: T, b: T): T`.
+@24 Add `<T extends { length: number }>` after the name, and use `T` for both inputs and the output.
+@25 The body may use `.length` because of the constraint, and callers get their own type back.
+@26 Inside, you can use `.length`. Outside, whatever went in comes back out.
+@27 `T` is inferred per call and bounded by the constraint; the non-generic version’s return type was the constraint, erasing the caller’s type.
+@28 strings give a string
+@29 arrays give an array
+@30 numbers are refused
+@31 longer word
+@32 longer list
+@33 With the old `a: { length: number }` version, what type did `longest("a", "bc")` return?
+@34 With the old version, what did TypeScript know about the answer?
+@35 Look at the old return type annotation.
+@36 What did the old machine say it gives back?
+@37 Just `{ length: number }`: TypeScript no longer knew it was a string, so `.toUpperCase()` on the result would be an error.
+@38 Only "something with a length". It forgot it was a word!
+@39 Without a type parameter the return type is the declared structural type, so the relationship between input and output is lost.
+@40 `{ length: number }`, and it forgot it was a string
+@41 `string`
+@42 Only a generic can carry the input type through to the output.
+@43 Only a generic machine remembers what went in.
+@44 The short version.
+@45 What you learned.
+@46 `T extends Something` requires `T` to have what `Something` has.
+@47 The body can use those members; callers keep their exact type.
+@48 Require only what the body needs.
+@49 "Any kind, as long as it has…" is a constraint.
+@50 What comes out is the same kind that went in.
+@51 Ask only for what you need.
+@52 Constraints bound inference and enable member access.
+@53 They can reference other parameters.
+@54 Minimal constraints maximise reuse.
+@55 Get the keys of a type as a union with `keyof`.
+@56 Look up a property’s type with `T[K]`.
+@57 Write functions that only accept real keys.
+@58 Get the list of labels of a shape.
+@59 Look up what kind of thing is behind a label.
+@60 Only allow real labels.
+@61 Let types talk about other types’ keys.
+@62 Replace `any` accessors with `K extends keyof T`.
+@63 Typos become errors.
+@64 Shapes know their own labels.
+@65 Only real labels are allowed.
+@66 Spelling mistakes get caught.
+@67 `keyof` + indexed access = key-safe APIs.
+@68 The foundation of mapped and utility types.
+@69 No more stringly-typed property access.
+@70 Types can list keys and look up properties.
+@71 Ask a shape: what are your labels?
+@72 `keyof T` is the union of `T`’s property names; `T[K]` is the type of property `K`:⏎⏎⟦F1⟧⏎⏎`K extends keyof T` ties the key to the object, and `T[K]` gives back the right type for that key.
+@73 `keyof` asks a shape for its list of labels. For a user with an `id` and a `name`, it is `"id" | "name"`.⏎⏎`User["name"]` asks: what kind of thing is behind the `name` label? The answer is `string`.⏎⏎Together they make a machine that only accepts real labels, and knows what comes back.
+@74 `keyof` produces `string | number | symbol` literal unions (index signatures contribute `string | number`). Indexed access `T[K]` distributes over unions of keys (`User["id" | "name"]` is `number | string`) and works with `number` on arrays (`T[number]`).⏎⏎The pattern `<T, K extends keyof T>(obj: T, key: K): T[K]` correlates the key and the result per call. It is the basis of `Pick`, property-path helpers, typed event maps and form libraries.
+@75 What is `Keys`?
+@76 What are the labels of `User`?
+@77 `keyof` gives a union of the property names, as string literal types.
+@78 List the labels, joined with `|`, each in quotes.
+@79 `keyof User` is the union of its three property names. Add a property to `User` and `Keys` grows with it.
+@80 The three labels, joined with `|`. If the shape gets a new label, the list grows by itself.
+@81 A union of string literal types; order is irrelevant for identity, which is why any order is accepted.
+@82 Make `pluck` type-safe: the key must be a real key of the items, and the result is an array of that property’s type.
+@83 Make `pluck` safe: only real labels allowed, and TypeScript knows what kind of list comes back.
+@84 `function pluck<T, K extends keyof T>(items: T[], key: K): T[K][]`.
+@85 Use `<T, K extends keyof T>`, take `items: T[]` and `key: K`, and give back `T[K][]`.
+@86 The body can stay the same: `return items.map((item) => item[key]);`.
+@87 Only the first line changes; the inside stays the same.
+@88 The typo `"nmae"` is now a compile error, and the result type follows the key you pass.
+@89 Now spelling mistakes are caught, and TypeScript knows names are words and ages are numbers.
+@90 `K extends keyof T` rejects invalid keys; `T[K][]` maps the chosen key to its element type. The `any` version compiled every typo.
+@91 names are strings
+@92 ages are numbers
+@93 unknown keys are refused
+@94 plucks names
+@95 `keyof T` is the union of `T`’s keys.
+@96 `T[K]` is the type of property `K`.
+@97 `K extends keyof T` makes key parameters safe.
+@98 `keyof` lists a shape’s labels.
+@99 `T["label"]` looks up what is behind a label.
+@100 Safe machines only take real labels.
+@101 Indexed access distributes over key unions.
+@102 `T[number]` for array elements.
+@103 Correlate key and value types per call.
+@104 Write a generic interface like `Box<T>`.
+@105 Write a generic class, a `Stack<T>`.
+@106 Know what a container’s methods return.
+@107 Make a box that remembers what kind of thing it holds.
+@108 Build a stack of plates in code.
+@109 Know what you get back.
+@110 Generic containers keep their contents’ type.
+@111 Infer type arguments when you can.
+@112 Be honest about emptiness.
+@113 A box knows what is inside.
+@114 A pile knows what kind of plates.
+@115 Empty piles give `undefined`.
+@116 Parametric containers.
+@117 Constructor-driven inference.
+@118 `Map`, `Set` and `Promise` are generic interfaces.
+@119 Interfaces and classes can take type parameters too.
+@120 A container that remembers what kind of thing it holds.
+@121 Type parameters work on interfaces and classes, which is how containers stay precise:⏎⏎⟦F1⟧
+@122 A stack is like a pile of plates: you put plates on top and take them off the top.⏎⏎`Stack<string>` is a pile that only holds words. Try to put a number on it and TypeScript says no.
+@123 Class type parameters are in scope for instance members (not static ones). They are usually inferred from constructor arguments (`new Box(3)` is `Box<number>`) or given explicitly when nothing is passed (`new Stack<string>()`).⏎⏎Expose the minimum: `pop(): T | undefined` is honest about emptiness; a `readonly` view (`ReadonlyArray<T>`) keeps internals safe. Standard containers (`Map<K, V>`, `Set<T>`, `Promise<T>`) are exactly such generic interfaces.
+@124 Make `Stack` generic: `push` takes a `T`, `pop` returns `T | undefined`, and `size` is the number of items.
+@125 Make `Stack` remember what kind of thing it holds: `push` takes that kind, `pop` gives it back (or `undefined`).
+@126 `class Stack<T>`, store `#items: T[]`, and use `T` in `push` and `pop`.
+@127 Add `<T>` after `Stack`, keep a list `#items: T[] = []`, and use `T` in `push` and `pop`.
+@128 `Stack<number>` only accepts numbers and gives numbers back, so callers never need a cast.
+@129 A number pile only takes numbers, and you always know you get numbers back.
+@130 The class type parameter threads through the private storage and both methods; `T | undefined` from `pop` mirrors `Array.prototype.pop`.
+@131 pop gives the item type
+@132 push checks the item
+@133 last in, first out
+@134 size
+@135 empty pop
+@136 What type does `box` get?
+@137 What type is `box`?
+@138 The type parameter is inferred from what is passed to the constructor.
+@139 What goes into the box tells TypeScript what kind of box it is.
+@140 TypeScript infers `T` as `string[]` from the constructor argument, so `box` is a `Box<string[]>`.
+@141 A list of words went in, so it is a box of lists of words.
+@142 Constructor arguments drive class type-parameter inference, just like function calls.
+@143 Interfaces and classes can have type parameters.
+@144 A generic container returns exactly what you put in.
+@145 Type arguments are inferred from constructor arguments, or written out.
+@146 Boxes and piles can remember what kind of thing they hold.
+@147 You always know what you get back.
+@148 TypeScript often works the kind out for you.
+@149 Class generics scope over instance members.
+@150 Honest return types (`T | undefined`).
+@151 The standard library is built this way.
+@152 Use two type parameters when two types vary independently.
+@153 Give a type parameter a default.
+@154 Write `zip`, pairing two lists.
+@155 Handle two different kinds at once.
+@156 Give a kind a default, like a spare.
+@157 Pair up two lists.
+@158 Several type parameters for several varying types.
+@159 Defaults for the common case.
+@160 Every parameter should earn its place.
+@161 Placeholders for each kind.
+@162 Spares for when nobody says.
+@163 Keep it simple.
+@164 Multi-parameter generics.
+@165 Defaults and their resolution.
+@166 Avoid unused or single-use parameters.
+@167 Two things can vary independently.
+@168 Sometimes two different kinds go together.
+@169 Use one type parameter per type that can vary. A pair of two different things needs two:⏎⏎⟦F1⟧⏎⏎A type parameter can have a **default**, used when it is not given and cannot be inferred:⏎⏎⟦F2⟧
+@170 Some machines handle two kinds of thing at once: a name and an age, a word and a number. They need two placeholders, like `<A, B>`.⏎⏎A placeholder can have a spare (a default): `B = A` means "if you do not say, use the same kind as A".
+@171 Each type parameter should appear at least twice in a signature (inputs and outputs) to earn its place. Defaults (`<T = string>`) apply when a type argument is omitted and inference has no candidates; they may reference earlier parameters. Required parameters cannot follow defaulted ones.⏎⏎Partial type-argument inference does not exist: supplying one argument means supplying all non-defaulted ones, which is why libraries sometimes curry (`create<State>()(…)`).
+@172 What is `Point`?
+@173 What type is `Point`?
+@174 `B` was not given, so it takes its default: `A`.
+@175 The second kind was not given, so it uses the spare: the same as the first.
+@176 `B` defaults to `A`, so `Pair<number>` is `[number, number]`.
+@177 The spare kind is "the same as the first", so both are numbers.
+@178 Defaults are resolved at instantiation; `B = A` refers to the earlier parameter.
+@179 Write `zip`: pair up items from two lists, as `[A, B][]`, stopping at the shorter list.
+@180 Make `zip` pair up two lists, like a zip on a coat: `[1, 2]` and `["a", "b"]` give `[[1, "a"], [2, "b"]]`.
+@181 `function zip<A, B>(left: A[], right: B[]): [A, B][]`; loop to the shorter length and push `[left[i], right[i]]`.
+@182 Use `<A, B>`. Go through the shorter list and make a pair from each position.
+@183 Two type parameters keep both element types, so the result is a precise list of pairs.
+@184 TypeScript remembers both kinds, so it knows each pair is a number and a word.
+@185 Independent parameters `A` and `B` each appear in an input and the output. The `as A` is needed only because indexing is typed `A` already (or `A | undefined` with `noUncheckedIndexedAccess`).
+@186 pairs of both types
+@187 pairs up
+@188 stops at the shorter list
+@189 empty
+@190 Use one type parameter per independent type.
+@191 `<B = A>` gives a default.
+@192 Defaults apply when nothing is given or inferred.
+@193 Two kinds need two placeholders.
+@194 A placeholder can have a spare.
+@195 Zips pair up lists.
+@196 Each parameter should relate inputs to outputs.
+@197 Defaults may reference earlier parameters.
+@198 No partial inference: curry if needed.
+@199 Predict what TypeScript infers for a type parameter.
+@200 Write type arguments yourself when nothing can be inferred.
+@201 Keep exact values with a `const` type parameter.
+@202 Guess what TypeScript guesses.
+@203 Tell it the kind when it cannot guess.
+@204 Make it remember exact words.
+@205 Let inference work; help it only when it cannot.
+@206 Literal types survive in `const` contexts.
+@207 `const` type parameters for exact arguments.
+@208 TypeScript is good at guessing.
+@209 Help it when it cannot guess.
+@210 Exact words need `const`.
+@211 Understand widening to predict inference.
+@212 Annotate empty collections.
+@213 Design APIs that infer well.
+@214 TypeScript infers type arguments from what you pass.
+@215 TypeScript guesses the kind from what you give it.
+@216 You rarely write type arguments: TypeScript infers them from the arguments.⏎⏎⟦F1⟧⏎⏎A **`const` type parameter** keeps literal values exactly, like `as const` at the call site:⏎⏎⟦F2⟧
+@217 You do not usually say the kind: TypeScript guesses it from what you give the machine.⏎⏎If there is nothing to guess from (like an empty Map), you tell it: `new Map<string, number>()`.⏎⏎A `const` placeholder makes TypeScript remember the exact words you gave it.
+@218 Inference collects candidates for each type parameter from arguments (and from the contextual return type), then picks a best common type; literal candidates widen unless the declaration context preserves them (a `const` binding, a constraint involving primitives, or a `const` type parameter).⏎⏎Write type arguments explicitly only when inference has no candidates (empty collections, `useState<T[]>([])`) or picks a wider type than you want. TS 5.0 `const T` applies const-assertion inference to array and object literal arguments; TS 5.4 `NoInfer<T>` blocks a position from contributing candidates.
+@219 What type does `n` get?
+@220 What type is `n`?
+@221 `n` is a `const`, and `T` is inferred from the argument `42`.
+@222 `n` can never change, and the machine gives back exactly what it got.
+@223 For a `const`, TypeScript keeps the literal: `T` is `42`. With `let n = identity(42)`, it would widen to `number`.
+@224 Because `n` is a `const`, TypeScript remembers the exact number, 42.
+@225 The literal candidate `42` is kept because the result lands in a `const` declaration; a mutable `let` would widen it.
+@226 Change `keep` so `keep(["a", "b"])` is typed `readonly ["a", "b"]`, not `string[]`.
+@227 Make `keep` remember the exact words it was given.
+@228 Add `const` before the type parameter: `function keep<const T>(value: T): T`.
+@229 Write `<const T>` instead of `<T>`.
+@230 The caller no longer needs to write `as const`: the function asks for exact inference itself.
+@231 Now the machine always remembers the exact words.
+@232 `const` type parameters apply const-context inference to literal arguments (readonly tuples, literal properties). Useful for route tables, option lists and builders.
+@233 keeps the exact list
+@234 keeps exact object values
+@235 When should you write the type argument yourself?
+@236 When do you need to tell TypeScript the kind?
+@237 When is there nothing for TypeScript to infer from?
+@238 When is there nothing to guess from?
+@239 An empty collection gives nothing to infer from, so `new Map()` would be `Map<any, any>`. Write `new Map<string, number>()`.
+@240 An empty Map has nothing inside to guess from, so you say the kinds.
+@241 With no inference candidates, type parameters fall back to their constraint (often `unknown`, or `any` for some library types). Supply them explicitly.
+@242 `const scores = new Map<string, number>();`, an empty collection
+@243 Always, to be safe: `identity<number>(42)`
+@244 That repeats what inference already knows, and it widens `42` to `number`.
+@245 TypeScript already knows. Writing it is just extra.
+@246 Type arguments are inferred from the arguments you pass.
+@247 Write them when there is nothing to infer from.
+@248 `<const T>` keeps exact literal values.
+@249 Tell it when there is nothing to guess from.
+@250 `const` makes it remember exact values.
+@251 Inference collects and widens candidates per context.
+@252 Explicit arguments for empty inputs.
+@253 `const T` and `NoInfer` tune inference.

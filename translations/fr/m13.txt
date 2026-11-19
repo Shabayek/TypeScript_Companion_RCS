@@ -1,0 +1,318 @@
+@1 Accumuler une liste dans un objet ou une map avec `reduce`.
+@2 Typer l’accumulateur via la valeur de départ.
+@3 Savoir quand une simple boucle se lit mieux.
+@4 Trier une liste en tas avec `reduce`.
+@5 Dire à TypeScript à quoi ressemblent les tas.
+@6 Savoir quand une boucle est plus simple.
+@7 Accumuler des listes dans n’importe quelle forme.
+@8 Toujours donner un type à la valeur de départ.
+@9 Préférer la clarté à l’astuce.
+@10 Construire des tas avec `reduce`.
+@11 Décrire les tas.
+@12 Rester simple.
+@13 Des accumulations typées.
+@14 Éviter les décompositions en O(n²) dans les reducers.
+@15 Utiliser groupBy quand il est disponible.
+@16 `reduce` peut construire n’importe quelle forme, pas seulement un nombre.
+@17 `reduce` peut construire des tas, pas seulement des totaux.
+@18 L’accumulateur peut être n’importe quoi : ici, un objet de listes. TypeScript infère son type à partir de la **valeur de départ**, alors donne un type à cette valeur :⏎⏎⟦F1⟧⏎⏎Sans l’argument de type, `{}` serait typé comme un objet vide sans clés, et l’indexer serait une erreur.
+@19 `reduce` parcourt une liste et construit quelque chose au fur et à mesure. Il peut construire un total, mais aussi des tas : tous les mots qui commencent par « c » dans un tas, ceux en « d » dans un autre.⏎⏎Dis à TypeScript à quoi ressemblent les tas, sinon il pensera que le `{}` de départ doit rester vide pour toujours.
+@20 `reduce<U>(fn: (acc: U, item: T) => U, initial: U): U` : le paramètre de type est inféré à partir de `initial`, donc `{}` infère `{}` et `[]` infère `never[]`. Fournis `U` explicitement ou annote la valeur initiale (`{} as Record<K, V>`).⏎⏎Modifier l’accumulateur que tu as créé ne pose pas de problème (il est local) ; renvoyer un objet neuf à chaque étape avec la décomposition est en O(n²). Les `Object.groupBy`/`Map.groupBy` d’ES2024 couvrent directement le regroupement sur les moteurs récents. Préfère `for…of` quand l’accumulation a des branches et des sorties anticipées.
+@21 Qu’est-ce qui s’affiche ?
+@22 Qu’est-ce que ça va montrer ?
+@23 Le premier part de 10. Le second n’a pas de valeur de départ, donc il commence avec le premier élément.
+@24 Le premier commence à 10. Le second commence avec "a".
+@25 `10 + 1 + 2 + 3` vaut 16. Sans valeur de départ, `reduce` commence avec le premier élément, ce qui lève une erreur sur un tableau vide.
+@26 10 plus 1, 2 et 3, ça fait 16. Les lettres sont collées ensemble en "abc".
+@27 Omettre `initial` utilise `xs[0]` comme graine et commence à l’indice 1, typé comme le type des éléments ; cela lève une `TypeError` sur `[]`.
+@28 Écris `groupByLength` : les mots regroupés par longueur.
+@29 Fais en sorte que `groupByLength` mette les mots en tas selon leur nombre de lettres.
+@30 `words.reduce<Record<number, string[]>>((groups, word) => { … }, {})` ; à l’intérieur, `(groups[word.length] ??= []).push(word)`.
+@31 Commence avec `{}` et dis à `reduce` que c’est un `Record<number, string[]>`. Pour chaque mot, ajoute-le au tas de sa longueur.
+@32 `??=` crée la liste la première fois qu’une longueur apparaît. Les clés d’objet sont toujours des chaînes, c’est pourquoi la sortie affiche `"3"`.
+@33 `??=` crée un nouveau tas la première fois, puis y ajoute. (Les clés deviennent toujours du texte, donc 3 s’affiche "3".)
+@34 Les clés numériques sont stockées comme des chaînes à l’exécution ; `Record<number, V>` les type comme des nombres pour faciliter l’indexation. `??=` date d’ES2021, donc il tourne sur les moteurs Classique.
+@35 regroupe
+@36 vide
+@37 `totals` ne compile pas : l’accumulateur part de `{}`. Corrige son type.
+@38 TypeScript pense que le `{}` de départ doit rester vide. Dis-lui ce qu’il va contenir.
+@39 Donne un argument de type à `reduce` : `reduce<Record<string, number>>(…)`.
+@40 Ajoute `<Record<string, number>>` juste après `reduce`.
+@41 L’argument de type dit à TypeScript que l’accumulateur est un dictionnaire de nombres, donc l’indexer est permis.
+@42 Maintenant, TypeScript sait que les tas sont des nombres rangés par nom.
+@43 Sans `U`, l’inférence fige l’accumulateur à `{}`, qui n’a pas de signature d’index (TS7053).
+@44 additionne par client
+@45 La version courte.
+@46 Ce que tu as appris.
+@47 `reduce` peut construire des objets, des maps et des listes.
+@48 Typer l’accumulateur avec un argument de type ou une valeur de départ typée.
+@49 Une boucle, c’est bien quand elle se lit mieux.
+@50 `reduce` peut faire des tas.
+@51 Les boucles aussi, c’est bien.
+@52 `U` est inféré à partir de `initial` : annote `{}` et `[]`.
+@53 Modifier un accumulateur local ne pose pas de problème.
+@54 `Object.groupBy` sur les moteurs ES2024.
+@55 Mettre à jour un élément d’une liste sans modifier la liste.
+@56 Mettre à jour une propriété imbriquée en copiant chaque niveau.
+@57 Repérer le code qui modifie par accident.
+@58 Changer une chose dans une liste en fabriquant une nouvelle liste.
+@59 Changer quelque chose au fond en copiant chaque couche.
+@60 Repérer les changements sournois.
+@61 Les mises à jour immuables rendent les changements visibles.
+@62 Copier le long du chemin jusqu’au changement.
+@63 Laisser `readonly` attraper les faux pas.
+@64 Les nouvelles copies protègent les anciennes versions.
+@65 Copier chaque couche.
+@66 Les verrous aident à repérer les erreurs.
+@67 Les changements d’identité signalent les mises à jour.
+@68 Décomposition superficielle, chemins profonds.
+@69 Envisager Immer pour un état complexe.
+@70 De nouvelles données plutôt que des données modifiées.
+@71 Fabriquer une nouvelle copie au lieu de changer l’ancienne.
+@72 Beaucoup d’apps gardent leur état immuable : chaque changement crée un nouvel objet et laisse l’ancien tranquille. Trois gestes sur les tableaux couvrent l’essentiel :⏎⏎⟦F1⟧⏎⏎Les objets imbriqués ont besoin d’une copie à chaque niveau traversé :⏎⏎⟦F2⟧
+@73 Au lieu d’effacer et de réécrire par-dessus, on fabrique une copie toute neuve avec le changement. L’ancienne reste exactement comme elle était.⏎⏎Pour changer quelque chose au fond, copie chaque couche en descendant, comme quand on ouvre des boîtes dans des boîtes.
+@74 Partage structurel : les éléments et sous-arbres non touchés sont réutilisés par référence, donc les mises à jour coûtent peu et les comparaisons `===` détectent les changements (la base des vérifications de rendu et de la mémoïsation de React).⏎⏎Les types `readonly` attrapent les mutations accidentelles à la compilation ; `map` pour les mises à jour, `filter` pour les suppressions et la décomposition pour les ajouts sont les idiomes. Pour des mises à jour profondes à grande échelle, un outil comme Immer garde le code lisible.
+@75 Écris `toggleTodo` : une nouvelle liste où la tâche qui a cet id a son `done` inversé.
+@76 Fais en sorte que `toggleTodo` rende une nouvelle liste avec cette tâche cochée ou décochée.
+@77 `map` sur la liste ; pour l’id correspondant, renvoie `{ ...todo, done: !todo.done }`, sinon la même tâche.
+@78 Parcours avec `map`. Quand l’id correspond, fais une copie avec `done` inversé ; sinon, garde la tâche telle quelle.
+@79 Seule la tâche modifiée est un nouvel objet ; les autres sont réutilisées, ce qui coûte peu et permet de voir facilement ce qui a changé.
+@80 Seule celle qui a changé est nouvelle. Les autres sont les mêmes qu’avant.
+@81 Partage structurel : `map` alloue un nouveau tableau, l’élément mis à jour est un objet neuf, les éléments inchangés gardent leur identité.
+@82 inverse celle-là
+@83 l’ancienne liste et l’ancienne tâche n’ont pas changé
+@84 Écris `moveTo` : l’utilisateur avec une nouvelle ville, en copiant chaque niveau.
+@85 Fais en sorte que `moveTo` rende l’utilisateur qui habite dans une nouvelle ville, en copiant chaque couche.
+@86 `{ ...user, address: { ...user.address, city } }` : copie l’utilisateur et l’adresse.
+@87 Copie l’utilisateur, et à l’intérieur, copie l’adresse avec la nouvelle ville.
+@88 Un seul `{ ...user }` partagerait encore l’ancien objet `address`, donc le modifier modifierait aussi l’original. Chaque niveau traversé a besoin de sa propre copie.
+@89 Copier seulement la boîte extérieure partagerait encore la boîte intérieure. Copie chaque boîte que tu ouvres.
+@90 La décomposition est superficielle ; les mises à jour imbriquées doivent reconstruire chaque objet sur le chemin du changement.
+@91 déménage
+@92 l’ancien utilisateur habite toujours à Paris
+@93 Laquelle de ces lignes modifie le tableau `scores` d’origine ?
+@94 Laquelle modifie la liste d’origine ?
+@95 Quelle méthode modifie le tableau sur lequel on l’appelle ?
+@96 L’un de ces outils modifie la liste elle-même.
+@97 `sort` trie sur place et renvoie le même tableau. Les autres construisent de nouveaux tableaux.
+@98 `sort` modifie la liste elle-même. Les autres fabriquent de nouvelles listes.
+@99 `sort`, `reverse`, `splice`, `push`, `pop`, `shift`, `unshift`, `fill` et `copyWithin` modifient ; `map`, `filter`, `slice`, `concat` et la décomposition, non.
+@100 `const best = scores.sort((a, b) => b - a);`
+@101 `const doubled = scores.map((s) => s * 2);`
+@102 `map` renvoie un nouveau tableau.
+@103 `map` fabrique une nouvelle liste.
+@104 `const more = [...scores, 100];`
+@105 La décomposition construit un nouveau tableau.
+@106 Ça fabrique une nouvelle liste.
+@107 Ajouter avec la décomposition, retirer avec `filter`, mettre à jour avec `map`.
+@108 Copier chaque niveau jusqu’à un changement imbriqué.
+@109 Savoir quelles méthodes modifient.
+@110 Fabriquer de nouvelles copies au lieu de changer les choses.
+@111 Copier chaque couche que tu ouvres.
+@112 Attention à `sort`.
+@113 Le partage structurel garde les mises à jour peu coûteuses.
+@114 La décomposition est superficielle.
+@115 Les types `readonly` attrapent les mutations accidentelles.
+@116 Parcourir n’importe quel itérable avec `for…of`.
+@117 Écrire un générateur avec `function*` et `yield`.
+@118 Utiliser sans risque un générateur qui ne finit jamais.
+@119 Parcourir des listes, des mots et plus encore.
+@120 Fabriquer une machine qui distribue les choses une à une.
+@121 N’en prendre que quelques-unes d’une machine sans fin.
+@122 Itérer sur tout ce qui est itérable.
+@123 Générer des valeurs paresseusement.
+@124 Consommer avec précaution.
+@125 Parcourir n’importe quoi.
+@126 Fabriquer tes propres distributeurs.
+@127 Ne prendre que ce qu’il te faut.
+@128 Les séquences paresseuses se composent.
+@129 La paresse s’arrête là où on matérialise.
+@130 Les générateurs asynchrones pour les flux.
+@131 Une valeur à la fois, à la demande.
+@132 Une machine qui te donne une chose à chaque fois que tu demandes.
+@133 `for…of` marche sur n’importe quel **itérable** : tableaux, chaînes, Maps, Sets. Un **générateur** est une façon simple de fabriquer le tien :⏎⏎⟦F1⟧⏎⏎Chaque `yield` distribue une valeur et met la fonction en pause jusqu’à ce qu’on demande la suivante. Rien n’est calculé à l’avance, donc un générateur peut même être infini.
+@134 Un générateur, c’est comme un distributeur de bonbons : tu appuies sur le bouton, un bonbon sort. Il attend que tu appuies à nouveau.⏎⏎`function*` fabrique la machine, et `yield` distribue une chose puis attend.
+@135 Les itérables implémentent `[Symbol.iterator]()`, qui renvoie un itérateur (`next(): { value, done }`). Les fonctions génératrices renvoient des objets `Generator<Y, R, N>` qui sont les deux à la fois ; ils sont paresseux, reprenables, et gèrent `return`/`throw`.⏎⏎La paresse se compose : `take(filter(naturals(), isPrime), 10)` ne calcule que ce qui est consommé. Décomposer ou `Array.from` force l’évaluation, donc ne décompose jamais un générateur infini. TypeScript type `for…of` sur un `Iterable<T>` comme `T` ; les générateurs asynchrones (`async function*`) vont avec `for await`.
+@136 Le générateur produit chaque lettre deux fois. `console.log` d’un tableau l’affiche sous forme de liste.
+@137 Chaque lettre sort deux fois, et elles sont rassemblées dans une liste.
+@138 Les chaînes sont itérables, donc `for…of` visite chaque lettre ; chacune est produite deux fois, et la décomposition les rassemble.
+@139 Chaque lettre sort deux fois : a, a, b, b.
+@140 Les chaînes s’itèrent par point de code ; la décomposition vide le générateur dans un tableau.
+@141 Écris le générateur `range(start, end, step = 1)` : les nombres de `start` jusqu’à `end`, sans l’inclure.
+@142 Fabrique `range`, une machine qui distribue les nombres de `start` jusqu’à `end` (sans l’inclure).
+@143 Une boucle `for` depuis `start` tant que `n < end`, en ajoutant `step`, avec `yield n` à l’intérieur.
+@144 Compte depuis `start` tant que tu es sous `end`, en sautant de `step`, et fais `yield` de chaque nombre.
+@145 Rien n’est construit à l’avance : les nombres sont fabriqués un par un à mesure que la décomposition les demande.
+@146 La machine ne fabrique chaque nombre que quand on le lui demande.
+@147 Une séquence paresseuse ; `[...range()]` la matérialise.
+@148 de 0 à 5
+@149 de trois en trois
+@150 rien
+@151 Écris `take` : les `count` premiers éléments de n’importe quel itérable, même infini.
+@152 Fais en sorte que `take` attrape juste les premières choses de n’importe quelle machine, même une qui ne s’arrête jamais.
+@153 Boucle avec `for…of`, ajoute chaque élément, et fais `break` dès que tu en as `count`. Ne décompose jamais un générateur infini.
+@154 Utilise `for…of`, garde chaque élément, et arrête-toi avec `break` quand tu en as assez.
+@155 Le `[...items]` du code de départ essaie de tout lire d’abord, ce qui ne se termine jamais pour un générateur infini. `break` arrête de demander.
+@156 Le code de départ essayait de vider toute la machine d’abord, mais cette machine ne se vide jamais ! S’arrêter tôt règle le problème.
+@157 `break` dans `for…of` appelle le `return()` de l’itérateur, ce qui ferme le générateur. Décomposer un itérable infini bloque jusqu’à la limite de temps.
+@158 depuis un tableau
+@159 depuis un générateur infini
+@160 zéro
+@161 `for…of` marche sur n’importe quel itérable.
+@162 Les générateurs (`function*`, `yield`) fabriquent les valeurs une à une.
+@163 S’arrêter tôt avec `break` ; ne jamais décomposer un générateur infini.
+@164 Tu peux parcourir plein de choses.
+@165 Les générateurs distribuent les choses une à une.
+@166 Ne prendre que ce qu’il te faut des machines sans fin.
+@167 Protocole d’itération : `[Symbol.iterator]` et `next()`.
+@168 Les générateurs sont paresseux et peuvent se fermer.
+@169 Typer avec `Iterable<T>` et `Generator<T>`.
+@170 Attendre plusieurs promesses à la fois avec `Promise.all`.
+@171 Garder chaque résultat, réussite ou échec, avec `allSettled`.
+@172 Prendre la première qui se termine avec `race`, ou la première qui réussit avec `any`.
+@173 Attendre plein de choses en même temps.
+@174 Savoir lesquelles ont marché et lesquelles ont échoué.
+@175 Prendre celle qui finit la première.
+@176 Les travaux indépendants doivent tourner ensemble.
+@177 Choisir le combinateur selon le comportement voulu en cas d’échec.
+@178 Les résultats gardent leur ordre.
+@179 Faire des travaux en même temps.
+@180 Choisir ce qui se passe quand l’un échoue.
+@181 Les réponses reviennent dans l’ordre.
+@182 Concurrence, pas parallélisme.
+@183 La sémantique des échecs guide le choix.
+@184 Utiliser `AbortSignal` pour annuler.
+@185 Tout lancer, puis attendre une seule fois.
+@186 Lancer tous les travaux, puis les attendre ensemble.
+@187 Des `await` l’un après l’autre attendent chaque travail à son tour. Lance-les ensemble et attends une seule fois :⏎⏎⟦F1⟧⏎⏎`all` échoue dès que l’un échoue. `allSettled` n’échoue jamais : il rapporte chaque issue.
+@188 Si tu as trois choses à attendre, n’attends pas l’une, puis la suivante, puis la suivante. Lance les trois et attends-les ensemble !⏎⏎`all` te donne toutes les réponses (ou s’arrête au premier problème). `allSettled` te dit, pour chacune, si elle a marché.
+@189 `Promise.all` préserve les types tuple et rejette vite ; les autres promesses continuent de tourner (il n’y a pas d’annulation ; passe un `AbortSignal` pour ça). `allSettled` renvoie `PromiseSettledResult<T>[]`, une union discriminée sur `status`. `race` se règle sur le premier règlement ; `any` (ES2021) ne rejette avec une `AggregateError` que si toutes rejettent.⏎⏎Pour de grandes distributions, limite la concurrence (un petit pool) plutôt que de faire `all` sur des milliers de requêtes.
+@190 `all` garde l’ordre dans lequel tu les as passées, pas l’ordre dans lequel elles finissent. `race` donne la première à finir.
+@191 `all` garde ton ordre. `race` donne la plus rapide.
+@192 `all` renvoie les résultats dans l’ordre du tableau que tu lui as donné, peu importe comment elles finissent. `race` se résout avec la première qui se règle.
+@193 `all` donne les réponses dans ton ordre. `race` donne la gagnante.
+@194 `Promise.all` associe les résultats par indice ; `race` adopte l’état de la première promesse réglée.
+@195 Écris `loadAll` : charge tous les ids en même temps et renvoie les résultats dans l’ordre.
+@196 Fais en sorte que `loadAll` charge tout en même temps et rende toutes les réponses dans l’ordre.
+@197 `Promise.all(ids.map((id) => load(id)))` lance chaque chargement, puis les attend tous.
+@198 Lance chaque chargement avec `map`, puis attends-les ensemble avec `Promise.all`.
+@199 Le code de départ attendait chaque chargement avant de lancer le suivant. Les lancer ensemble prend autant de temps que le plus lent, pas la somme.
+@200 Avant, chaque travail attendait le précédent. Maintenant, ils tournent tous ensemble.
+@201 Un `await` séquentiel dans une boucle sérialise des travaux indépendants ; `Promise.all` sur les promesses créées d’un coup les fait tourner en concurrence.
+@202 dans l’ordre
+@203 en même temps
+@204 tous commencent avant qu’aucun ne finisse
+@205 Écris `summary` : combien de promesses ont réussi et combien ont échoué, avec `Promise.allSettled`.
+@206 Fais en sorte que `summary` compte combien de travaux ont marché et combien ont échoué.
+@207 `await Promise.allSettled(tasks)`, puis compte les résultats dont le `status` vaut `"fulfilled"`.
+@208 Attends avec `Promise.allSettled`, puis compte ceux dont le `status` vaut `"fulfilled"`.
+@209 `allSettled` ne rejette jamais, donc un échec ne peut pas cacher les autres résultats.
+@210 Chaque travail fait son rapport, même ceux qui ont échoué.
+@211 Chaque entrée est un `PromiseSettledResult`, affiné par `status`.
+@212 mélangés
+@213 aucun
+@214 `Promise.all` : chaque résultat dans l’ordre, ou le premier échec.
+@215 `allSettled` : chaque issue, n’échoue jamais.
+@216 `race` : la première à se régler ; `any` : la première à réussir.
+@217 Lancer tous les travaux, puis attendre ensemble.
+@218 `allSettled` fait un rapport sur chaque travail.
+@219 `race` et `any` prennent le plus rapide.
+@220 La concurrence via les combinateurs ; pas d’annulation intégrée.
+@221 Les résultats d’`allSettled` forment une union étiquetée.
+@222 Borner la distribution pour les grosses entrées.
+@223 Attraper les erreurs venant d’`await` avec `try`/`catch`.
+@224 Traiter les erreurs attrapées comme `unknown` et les affiner.
+@225 Réessayer plusieurs fois une tâche qui échoue.
+@226 Attraper les problèmes des travaux qu’on attend.
+@227 Vérifier de quelle sorte de problème il s’agit.
+@228 Réessayer quand quelque chose échoue.
+@229 Traiter les erreurs asynchrones là où on attend.
+@230 Ne jamais supposer le type d’une erreur.
+@231 Réessayer avec des limites.
+@232 Attraper les problèmes des travaux.
+@233 Regarder avant de faire confiance à un problème.
+@234 Frapper à nouveau, mais pas pour toujours.
+@235 Le flot de contrôle asynchrone reflète le synchrone.
+@236 Les rejets non traités sont des bugs.
+@237 Les motifs de résilience ont besoin de limites.
+@238 `await` transforme les rejets en erreurs levées.
+@239 Quand un travail qu’on attend échoue, tu peux l’attraper.
+@240 Dans une fonction `async`, une promesse rejetée fait lever une erreur à `await`, donc un `try`/`catch` ordinaire marche :⏎⏎⟦F1⟧⏎⏎Certains échecs sont temporaires (un réseau capricieux). Une **nouvelle tentative** réessaie quelques fois avant d’abandonner.
+@241 Quand un travail que tu attends échoue, `await` lève le problème. `try`/`catch` l’attrape, comme avant.⏎⏎Parfois, réessayer marche, comme frapper à nouveau quand personne n’a répondu.
+@242 Avec `useUnknownInCatchVariables` (inclus dans `strict`), les variables de catch sont `unknown` ; affine avec `instanceof Error`. Les promesses non attendues échappent complètement à `try` ; fais toujours `await` ou `return`, ou attache `.catch`.⏎⏎Les nouvelles tentatives en production utilisent un délai exponentiel avec une part d’aléatoire, ne réessaient que les opérations idempotentes et les erreurs passagères (délais dépassés, 429/503), et plafonnent le temps total. `finally` s’exécute dans les deux cas et c’est là que va le nettoyage.
+@243 Qu’est-ce qui s’affiche, et dans quel ordre ?
+@244 Qu’est-ce que ça va montrer, dans l’ordre ?
+@245 Le rejet est levé à `await`, donc "after" ne s’affiche jamais ; `finally` s’exécute toujours.
+@246 Le travail échoue à `await`, donc "after" est sauté. `finally` a toujours lieu.
+@247 `await` lève le rejet, `catch` le traite, et `finally` s’exécute en dernier dans tous les cas.
+@248 Le problème est attrapé, puis le rangement a lieu.
+@249 Les rejets remontent comme des erreurs levées à l’`await` ; `finally` s’exécute après `catch`.
+@250 Écris `retry` : appelle `task` jusqu’à `attempts` fois ; renvoie la première réussite, ou lève la dernière erreur.
+@251 Fais `retry` : essaie le travail jusqu’à `attempts` fois. Rends la première réussite, ou lève le dernier problème.
+@252 Boucle `attempts` fois ; à l’intérieur, `try { return await task(); } catch (error) { lastError = error; }`. Après la boucle, `throw lastError`.
+@253 Essaie dans une boucle. Si ça marche, rends-le tout de suite. Sinon, retiens le problème. Après la boucle, lève le dernier problème.
+@254 `return await` compte dans un `try` : sans `await`, un rejet échapperait au `catch` et sauterait les nouvelles tentatives.
+@255 Le `await` garantit que le problème est attrapé, pour que la tentative suivante puisse avoir lieu.
+@256 `return await` garde le rejet dans le cadre du `try` ; `return task()` renverrait la promesse et contournerait `catch`. Les vraies nouvelles tentatives ajoutent des délais entre les essais.
+@257 réussit au troisième essai
+@258 abandonne
+@259 arrête d’essayer après une réussite
+@260 `await` lève les rejets, donc `try`/`catch` marche.
+@261 Les erreurs attrapées sont `unknown` : affine-les.
+@262 Réessayer les échecs temporaires, puis abandonner.
+@263 Réessayer quelques fois.
+@264 `return await` dans un `try`.
+@265 Affiner les erreurs `unknown`.
+@266 Délai progressif, aléatoire, idempotence.
+@267 Traiter les données venues de l’extérieur (comme `JSON.parse`) comme `unknown`.
+@268 Vérifier leur forme pas à pas.
+@269 Ne renvoyer une valeur typée qu’une fois les vérifications passées.
+@270 Traiter les colis venus de l’extérieur comme des boîtes mystère.
+@271 Vérifier chaque partie avant de faire confiance.
+@272 Seulement ensuite, leur donner une vraie étiquette.
+@273 Ne jamais faire confiance au type des données extérieures.
+@274 Affiner `unknown` avec des vérifications.
+@275 Garder la validation à la frontière.
+@276 Vérifier les colis venus de l’extérieur.
+@277 Les boîtes mystère demandent qu’on regarde dedans.
+@278 Ensuite, le reste de ton code est en sécurité.
+@279 La validation à l’exécution rend les types statiques vrais.
+@280 Les bibliothèques de schémas la font passer à l’échelle.
+@281 Une seule conversion, au bord.
+@282 Les données venues de l’extérieur sont `unknown` tant qu’elles ne sont pas vérifiées.
+@283 Les colis venus de l’extérieur peuvent contenir n’importe quoi.
+@284 `JSON.parse` renvoie `any`, ce qui désactive la vérification. Dis plutôt `unknown`, puis prouve la forme :⏎⏎⟦F1⟧⏎⏎Après les vérifications, TypeScript sait que `value.name` est une chaîne et `value.age` un nombre, sans un seul forçage.
+@285 Un colis venu de l’extérieur (internet, un fichier) peut contenir n’importe quoi. TypeScript ne voit pas dedans.⏎⏎Alors on l’appelle `unknown` et on vérifie chaque partie : est-ce un objet ? Le nom est-il un mot ? L’âge est-il un nombre ? Seulement après, on lui fait confiance.
+@286 Les types décrivent ce que croit le programme ; la validation le rend vrai à la frontière de confiance (réseau, stockage, saisie de l’utilisateur, `postMessage`). Analyse, ne te contente pas de valider : convertis `unknown` en un type précis une seule fois, au bord, et garde le reste du code typé.⏎⏎Les gardes écrites à la main passent mal à l’échelle ; les bibliothèques de schémas (zod, valibot, ArkType) dérivent à la fois la vérification à l’exécution et le type statique d’une seule définition. Tu en construiras une petite au module 19.
+@287 Écris `parseUser` : analyse le JSON et renvoie un `User` seulement si `name` est une chaîne et `age` un nombre ; sinon `null`, y compris pour un JSON invalide.
+@288 Fais `parseUser` : ouvre le colis (le JSON), vérifie que le nom est un mot et l’âge un nombre, et rends un User, ou `null` si quelque chose cloche.
+@289 Analyse dans un `try`/`catch` vers une variable `unknown`. Vérifie que c’est un objet non nul qui n’est pas un tableau, puis vérifie chaque champ avec `typeof`, et construis un `User` neuf.
+@290 Ouvre le colis avec précaution grâce à `try`. Vérifie que c’est un objet, vérifie chaque partie avec `typeof`, puis construis un nouveau User à partir des parties vérifiées.
+@291 Le code de départ renvoyait tout ce que produisait `JSON.parse`, typé comme un `User` : un mensonge que le compilateur ne pouvait pas attraper, parce que `JSON.parse` renvoie `any`.
+@292 Avant, on faisait confiance à n’importe quel colis. Maintenant, chaque partie est vérifiée.
+@293 Renvoyer `any` satisfaisait le vérificateur tout en laissant passer des données invalides ; affiner à partir de `unknown` construit une valeur dont le type est mérité. Copier les champs retire aussi les propriétés inattendues.
+@294 un vrai utilisateur
+@295 l’âge en texte
+@296 pas un objet
+@297 pas du JSON du tout
+@298 les champs en trop sont retirés
+@299 Pourquoi typer la valeur analysée comme `unknown` plutôt que `any` ?
+@300 Pourquoi dire « boîte mystère » plutôt que « tout est permis » ?
+@301 Lequel oblige TypeScript à exiger des vérifications avant l’utilisation ?
+@302 Lequel t’oblige à regarder dedans d’abord ?
+@303 `unknown` refuse toute opération tant que tu ne l’as pas affiné, donc oublier une vérification est une erreur de compilation. `any` permettrait `data.nmae.length` et planterait à l’exécution.
+@304 Une boîte mystère doit être vérifiée avant utilisation. « Tout est permis » laisse passer les erreurs.
+@305 `any` désactive la vérification et se propage ; `unknown` est le type sommet qui exige un affinage (ou une assertion) avant utilisation.
+@306 `unknown` oblige à vérifier avant d’utiliser
+@307 `unknown` rend le programme plus rapide
+@308 Les types sont effacés ; il n’y a aucune différence à l’exécution.
+@309 Les types disparaissent quand le code s’exécute, donc non.
+@310 Les données extérieures sont `unknown`, pas `any`.
+@311 Vérifier la forme pas à pas, puis construire la valeur typée.
+@312 Le faire une seule fois, au bord du programme.
+@313 Les colis venus de l’extérieur sont des boîtes mystère.
+@314 Vérifie chaque partie.
+@315 Ensuite, donne-leur une vraie étiquette.
+@316 Analyser, pas seulement valider.
+@317 Des gardes ou des schémas aux frontières de confiance.
+@318 Retirer les propriétés inconnues.

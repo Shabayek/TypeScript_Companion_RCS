@@ -1,0 +1,420 @@
+@1 Program
+@2 A list of instructions a computer follows in order.
+@3 A program is read top to bottom, one instruction at a time. If an instruction fails, everything after it may not run at all.
+@4 Instruction
+@5 One single thing the computer is told to do.
+@6 Small instructions add up to whole programs. "Show this text", "add these numbers", "remember this name" are all instructions.
+@7 JavaScript
+@8 The language browsers run, and the base TypeScript is built on.
+@9 Every TypeScript file becomes JavaScript before it runs. You never lose JavaScript by learning TypeScript — you describe it more precisely.
+@10 TypeScript
+@11 JavaScript with type labels that are checked before the code runs.
+@12 TypeScript adds a checking step. You write the same JavaScript you would anyway, plus notes about what kind of value each thing holds. The checker reads those notes and points out contradictions early.
+@13 Type
+@14 The kind of value something holds, such as text, a number, or true/false.
+@15 The three everyday types are `string`, `number` and `boolean`. Types are how TypeScript knows that `"hello".toFixed()` cannot work: `toFixed` belongs to numbers, not text.
+@16 String
+@17 Text: any characters inside quotes.
+@18 Strings can be joined with `+`, measured with `.length`, and changed with methods such as `.toUpperCase()`. Strings are not numbers, even when they look like one: `"7"` is text.
+@19 Number
+@20 A numeric value, including decimals and negatives.
+@21 TypeScript has one number type for whole numbers and decimals alike. Money is usually stored in whole cents to avoid rounding surprises.
+@22 Boolean
+@23 Either `true` or `false`.
+@24 Comparisons produce booleans: `age >= 18` is either true or false. Booleans are what `if` statements ask about.
+@25 console
+@26 The place a program writes text you can read.
+@27 `console.log(value)` prints a value. In this app it appears in the output panel under your code. In a browser it also goes to the developer console.
+@28 Variable
+@29 A named place that holds a value.
+@30 You give a value a name so you can use it again. The name should say what the value means, not what it looks like.
+@31 const
+@32 A name whose value will not be swapped for another.
+@33 Use `const` by default. It tells the reader "this name always points at this value". The value inside an object can still change; the name cannot point elsewhere.
+@34 let
+@35 A name whose value will change later.
+@36 Use `let` only when the value really is replaced, such as a count that goes up. If you never reassign it, `const` communicates more.
+@37 Inference
+@38 TypeScript working out a type on its own.
+@39 You rarely need to write a type twice. `const age = 36` already tells TypeScript it is a number. Writing it again adds noise, not safety.
+@40 Type annotation
+@41 A type you write on purpose, after a colon.
+@42 Annotate the edges of your code: function parameters, return values, and exported shapes. Let the middle look after itself.
+@43 Template literal
+@44 Text built with backticks that can drop values inside it.
+@45 Inside backticks, `${...}` inserts a value. Template literals are usually clearer than a chain of `+ " " +` pieces.
+@46 Operator
+@47 A symbol that combines or compares values.
+@48 Arithmetic uses `+ - * / %`. Comparison uses `=== !== < > <= >=`. Mixing operators without brackets is a common source of surprises.
+@49 Comparison
+@50 An expression that answers true or false.
+@51 Prefer `===` and `!==`. The looser `==` converts values before comparing, so `0 == ""` is true, which is almost never what you want.
+@52 Truthiness
+@53 Which values count as true in a condition.
+@54 `false`, `0`, `""`, `null`, `undefined` and `NaN` count as false. Everything else counts as true — including the string `"false"`, which surprises people.
+@55 Ternary
+@56 A one-line if/else that produces a value.
+@57 The shape is `condition ? whenTrue : whenFalse`. Use it when both answers are short. If either side needs explaining, use `if`.
+@58 switch
+@59 A neat way to pick one of several fixed options.
+@60 Each `case` is compared with `===`. A `default` handles everything else. Without a `return` or `break`, execution falls into the next case.
+@61 Guard clause
+@62 An early `return` that deals with the odd case first.
+@63 Checking the unusual case at the top and returning early keeps the main path flat and readable, instead of nesting it inside an `if`.
+@64 Array
+@65 An ordered list of values, written in square brackets.
+@66 Items are numbered from 0. `list[0]` is the first item. Arrays have helpers such as `.map`, `.filter` and `.find` that avoid manual loops.
+@67 Loop
+@68 Code that runs again and again, once per item or until a condition is false.
+@69 `for (let i = 0; i < 3; i++)` counts; `for (const item of list)` visits each item; `while (condition)` repeats as long as the condition is true. A loop whose condition never becomes false never ends — this app stops it after two seconds.
+@70 Index
+@71 A position in an array, counting from zero.
+@72 The first item is at index 0, the second at 1. Asking for an index that does not exist gives `undefined`, not an error.
+@73 Object
+@74 A bundle of named values, written in curly braces.
+@75 Objects group related facts: a user has a name, an age, a favourite colour. Read a value with a dot: `user.name`.
+@76 Property
+@77 One named value inside an object.
+@78 `name` in `{ name: "Ada" }` is a property. Dot access reads it; `user.name = "Sam"` changes it when the object is not readonly.
+@79 Destructuring
+@80 Unpacking values into names in one line.
+@81 `const { name, age } = user` makes two variables. `const [first, second] = list` does the same for arrays.
+@82 Spread
+@83 Copying the contents of an array or object into a new one.
+@84 `{ ...user, age: 37 }` makes a new object with one property changed. The original is untouched, which is usually what you want.
+@85 .map
+@86 Turning every item into something else.
+@87 `map` returns a new array of the same length. `[1, 2].map(n => n * 2)` gives `[2, 4]`.
+@88 .filter
+@89 Keeping only the items that pass a test.
+@90 The callback returns true to keep an item, false to drop it. The result can be shorter than the original, but never longer.
+@91 .find
+@92 Getting the first item that matches.
+@93 Returns the item itself, or `undefined` if nothing matches. Since it can be undefined, check before using the result.
+@94 Function
+@95 A named recipe: some inputs, some work, one result.
+@96 Functions let you name an idea once and reuse it. Call one with brackets: `double(4)`.
+@97 Parameter
+@98 A named input a function expects.
+@99 In `function greet(name: string)`, `name` is the parameter. The `: string` part is its type.
+@100 Argument
+@101 The actual value you pass when calling a function.
+@102 In `greet("Ada")`, `"Ada"` is the argument. Parameters are the slots; arguments are what goes into them.
+@103 return
+@104 Handing a value back out of a function.
+@105 A function with no `return` gives back `undefined`. Calling `return` also stops the function immediately.
+@106 Arrow function
+@107 A shorter way to write a function, using `=>`.
+@108 `const double = (n: number) => n * 2;` is the same as a `function` declaration for most everyday uses, with an implicit return.
+@109 Callback
+@110 A function you hand to another function.
+@111 `.map(price => price * 2)` passes a callback. The array decides when to call it, and with which item.
+@112 Higher-order function
+@113 A function that takes or returns another function.
+@114 `map`, `filter`, `find` and `setTimeout` are all higher-order. They let one function describe a whole pattern of work.
+@115 Pure function
+@116 A function whose result depends only on its inputs.
+@117 No reading the clock, no changing outside values, no randomness. Pure functions are the easiest kind of code to test and reason about.
+@118 interface
+@119 A named description of an object’s shape.
+@120 `interface User { name: string }` says any `User` has a `name`. Interfaces are ideal for object shapes that several files share.
+@121 type alias
+@122 A name for any type, including unions.
+@123 `type Status = "open" | "closed"` is a type alias. Use `type` when you need a union; either is fine for objects.
+@124 Union
+@125 A value that could be one of several types.
+@126 `string | number` means either. TypeScript makes you check which one you have before using methods that only one of them has.
+@127 Literal type
+@128 A type made of exact allowed values.
+@129 `"small" | "medium" | "large"` allows those three words and nothing else. Typos become compile errors, and autocomplete lists the options.
+@130 Narrowing
+@131 Convincing TypeScript which member of a union you have.
+@132 `typeof value === "string"` narrows `string | number` to `string` inside that branch, so string methods become available.
+@133 Optional property
+@134 A property that may be missing, marked with `?`.
+@135 `age?: number` means `age` might not exist. Its type becomes `number | undefined`, so read it carefully.
+@136 readonly
+@137 A value that cannot be reassigned or changed.
+@138 `readonly id: string` stops accidental edits. It documents intent, and the compiler enforces it.
+@139 unknown
+@140 A value whose type is not known yet.
+@141 You must check an `unknown` before using it. That is the difference from `any`, which switches checking off entirely.
+@142 any
+@143 A type that turns checking off for that value.
+@144 `any` silences TypeScript instead of helping it. Prefer `unknown` when you genuinely do not know, then narrow.
+@145 Generic
+@146 A type that works with many types, filled in at use.
+@147 `firstOf<T>(items: T[]): T` keeps the item type. Call it with numbers and you get a number back; call it with strings and you get a string.
+@148 Module
+@149 One file that shares only what it chooses to.
+@150 A module has its own scope. Anything not exported stays private to the file, which keeps names from colliding.
+@151 import
+@152 Bringing a named value in from another module.
+@153 `import { add } from "./math";` uses the export named `add`.
+@154 export
+@155 Making a value available to other modules.
+@156 `export function add(...)` publishes it. Exports are the public face of a file; keep that face small.
+@157 Error
+@158 A problem the computer reports instead of continuing.
+@159 An error message names what happened and where. Read the first line, then the line number, then the code at that line. That is usually enough.
+@160 try / catch
+@161 Running risky code, with a plan if it fails.
+@162 Put the risky line in `try`. If it throws, `catch` runs instead of the whole program stopping. Do something useful there: log, retry, or return a safe value.
+@163 Promise
+@164 A value that will arrive later.
+@165 Work that takes time returns a promise. You either `await` it or attach `.then`. Either way, the code keeps the result rather than the promise.
+@166 async / await
+@167 Writing later-arriving work so it reads top to bottom.
+@168 Mark the function `async`, then `await` the promise. The function pauses there without blocking the rest of the program.
+@169 Class
+@170 A blueprint for objects that share behaviour.
+@171 A class bundles data and the functions that work on it. Useful for things with identity and state, such as a game character. For plain data, an object and a few functions is usually simpler.
+@172 Method
+@173 A function that belongs to an object or class.
+@174 `counter.increment()` calls the `increment` method on `counter`.
+@175 Mutation
+@176 Changing a value that already exists.
+@177 `list.push(x)` mutates the list. `[...list, x]` makes a new one. Both are fine; knowing which you did prevents most baffling bugs.
+@178 Saving progress
+@179 Keeping your place between visits.
+@180 This app stores progress in your own browser. Nothing leaves the device, and exporting gives you a copy you can move.
+@181 String method
+@182 A tool that every piece of text has, used with a dot.
+@183 Methods such as `trim`, `slice`, `split`, `includes` and `toUpperCase` work on a string and give back a result. They never change the original text.
+@184 Immutability
+@185 Never changing a value in place: making a new one instead.
+@186 Strings are always immutable. Objects and arrays can be changed, but treating them as immutable (copying with spread before changing) makes code easier to follow and test.
+@187 sort
+@188 Puts an array in order, using a comparator you give it.
+@189 `sort` changes the array it is called on. Without a comparator it compares items as text, so numbers need `(a, b) => a - b`. Sort a copy (`[...list].sort(...)`) to keep the original.
+@190 some and every
+@191 Ask a yes/no question about a whole array.
+@192 `some` is true when at least one item passes the test; `every` is true when all of them do. Both stop as soon as they know the answer. `every` on an empty array is `true`.
+@193 reduce
+@194 Folds an array into one value, step by step.
+@195 `reduce` calls your function with a running value (the accumulator) and each item in turn. Always give a starting value: it decides the result for an empty array and the accumulator’s type.
+@196 Map (collection)
+@197 Stores values under keys, and looks them up fast.
+@198 A `Map<K, V>` keeps key–value pairs in insertion order. Any value can be a key. `get` returns `V | undefined`, because the key might be missing. Not to be confused with the `map` method of arrays.
+@199 Set
+@200 A collection that keeps each value only once.
+@201 Adding a value that is already in a `Set` does nothing. `has` checks membership quickly, and `[...new Set(list)]` removes repeats from a list.
+@202 State
+@203 The data a program remembers, which changes over time.
+@204 A game’s score, a pet’s hunger, the items in a to-do list: all state. Keeping state in one place, and changing it only through small functions, makes programs easier to understand.
+@205 void
+@206 The return type of a function that gives nothing back.
+@207 A function returning `void` is used for what it does, not for a value. In a callback type, `void` means the return value is ignored, so a function that returns something still fits.
+@208 Function type
+@209 The type of a function: its parameters and what it returns.
+@210 Written `(value: number) => string`. Function types let you describe callbacks and store functions in variables, and TypeScript uses them to type a callback’s parameters for you.
+@211 Overload
+@212 Several signatures for one function, when the return type depends on the input.
+@213 Overload signatures are listed above one implementation. Callers see only the overloads, tried in order. Prefer a union or a generic when they can express the same thing.
+@214 Type predicate
+@215 A return type like `value is string` that makes a function narrow types.
+@216 When a function with a type predicate returns true, TypeScript narrows the argument to that type. TypeScript trusts the predicate without checking the body, so keep it simple and correct.
+@217 Assertion function
+@218 A function that throws unless a check passes, and narrows types after the call.
+@219 Its return type is `asserts value is T` (or `asserts condition`). If the call returns, TypeScript knows the check passed.
+@220 Tuple
+@221 An array with a fixed length and a type for each position.
+@222 `[string, number]` holds exactly a string then a number. Positions can have labels for readers: `[name: string, age: number]`.
+@223 as const
+@224 Tells TypeScript to keep exact values and make them read-only.
+@225 `as const` infers literal types and readonly tuples and properties. It only affects types; nothing is frozen at runtime.
+@226 Index signature
+@227 A type for objects whose keys are not known in advance.
+@228 `{ [key: string]: number }` allows any string key, each holding a number. Reading a key that is not there gives `undefined` at runtime, even though the type says `number` (unless `noUncheckedIndexedAccess` is on).
+@229 Record
+@230 `Record<Keys, Value>`: an object type with the given keys, each holding a value.
+@231 With a union of keys it requires every key; with `string` it allows any key.
+@232 Intersection
+@233 `A & B`: a type with everything from both `A` and `B`.
+@234 A union is "one or the other"; an intersection is "both at once". If two parts disagree about a property, that property becomes `never`.
+@235 satisfies
+@236 Checks a value against a type without changing the value’s inferred type.
+@237 `value satisfies Type` reports mistakes like an annotation would, but keeps the precise type TypeScript inferred, so keys and literal values are not lost.
+@238 Discriminated union
+@239 A union of object types that share a tag property with a literal type.
+@240 Checking the tag (for example `event.type`) narrows the union to one member, so only that member’s properties can be used.
+@241 never
+@242 The type with no values: what is left when every case is handled.
+@243 A function that always throws returns `never`, and a variable narrowed past every union member has type `never`. That makes it useful for exhaustiveness checks.
+@244 Exhaustiveness check
+@245 Making TypeScript report a union member that your code forgot.
+@246 Pass the value to a function taking `never` in the last branch. If a member is not handled, the value is not `never` and the call is a type error.
+@247 enum
+@248 A named set of constants that also exists at runtime.
+@249 Numeric enums count from 0 and map both ways; string enums map names to strings. Literal unions (and `as const` objects) are often simpler, and are erased when compiled.
+@250 Result type
+@251 A return value that says whether an operation worked: `{ ok: true, value }` or `{ ok: false, error }`.
+@252 Making failure part of the return type means callers must check it. Use it for expected failures, and exceptions for bugs.
+@253 State machine
+@254 A program that is always in exactly one of a fixed set of states.
+@255 Model states as a discriminated union, each carrying only its own data, and change state through one transition function. Impossible combinations cannot be written.
+@256 Generic constraint
+@257 `T extends Something`: a requirement on a type parameter.
+@258 A constraint lets the body use what the constraint promises while callers keep their exact type.
+@259 keyof
+@260 The union of a type’s property names.
+@261 `keyof { id: number; name: string }` is `"id" | "name"`. Combined with `K extends keyof T`, it makes functions accept only real keys.
+@262 Indexed access type
+@263 `T[K]`: the type of property `K` of `T`.
+@264 `User["name"]` is the type of `name`. With a union of keys it gives a union, and `T[number]` gives the element type of an array or tuple.
+@265 Type parameter default
+@266 A type used for a type parameter when none is given or inferred.
+@267 Written `<T = string>`. A default can refer to an earlier parameter, as in `Pair<A, B = A>`.
+@268 Utility type
+@269 A built-in type that builds a new type from one you have.
+@270 `Partial`, `Required`, `Readonly`, `Pick`, `Omit`, `Record`, `ReturnType`, `Parameters`, `Awaited`, `Exclude`, `Extract` and `NonNullable` are the everyday ones. Deriving types keeps them in step with their source.
+@271 Generator
+@272 A function (`function*`) that hands out values one at a time with `yield`.
+@273 Each `yield` gives one value and pauses until the next one is asked for. Generators are lazy, so they can even be endless; take only what you need.
+@274 Iterable
+@275 Anything `for…of` can loop over: arrays, strings, Maps, Sets, generators.
+@276 An iterable hands out its values one by one. `Iterable<T>` is the type for "anything I can loop over that gives `T`".
+@277 Access modifier
+@278 `public`, `private`, `protected` or `readonly` on a class member.
+@279 They say who may use a member. TypeScript checks them and then erases them; a `#name` field is private in JavaScript itself.
+@280 Getter and setter
+@281 Class members that look like properties but run code when read (`get`) or written (`set`).
+@282 Getters compute values on demand; setters can validate what is stored.
+@283 static
+@284 A class member that belongs to the class itself, not to each object.
+@285 Use `static` for shared counters, constants and named constructors such as `Temperature.fromFahrenheit(50)`.
+@286 Abstract class
+@287 A half-built class: it can share code and require subclasses to fill in methods.
+@288 Abstract methods have no body; every concrete subclass must implement them. You cannot create an abstract class directly.
+@289 Composition
+@290 Building objects from smaller parts they have, instead of long inheritance chains.
+@291 Pass the parts in (dependency injection) and depend on small interfaces, so parts can be swapped, for example for testing.
+@292 Reducer
+@293 A function `(state, action) => newState` that applies one change.
+@294 Actions are a discriminated union; the reducer returns a new state and never changes the old one. Replaying the actions rebuilds any state.
+@295 Mapped type
+@296 A type that goes through keys and builds a property for each: `{ [K in Keys]: … }`.
+@297 `Partial`, `Readonly` and `Record` are mapped types. Modifiers like `?` and `readonly` can be added or removed with `+` and `-`.
+@298 Conditional type
+@299 A type that chooses between two types: `A extends B ? X : Y`.
+@300 Like a ternary for types. Over a union it is applied to each member separately (distributive), which is how `Exclude` and `Extract` work.
+@301 infer
+@302 Names a piece of a type inside a conditional type, so you can use it.
+@303 In `T extends (infer Item)[] ? Item : never`, `infer Item` captures whatever the array holds. It is how `ReturnType`, `Parameters` and `Awaited` are built.
+@304 Template literal type
+@305 A string type built from a pattern, like `` `on${Capitalize<Name>}` ``.
+@306 Unions inside combine in every way. Together with `infer`, template literal types can also read pieces out of string types.
+@307 Recursive type
+@308 A type that refers to itself, for data nested to any depth.
+@309 `Json` and `DeepReadonly` are recursive. TypeScript limits how deep it will go and reports "excessively deep" when that limit is reached.
+@310 Branded type
+@311 A primitive with a type-only tag, so look-alike values cannot be mixed up.
+@312 `type UserId = string & { readonly __brand: "UserId" }` is still a string at runtime, but TypeScript keeps user ids and order ids apart. Create branded values in one checking function.
+@313 Variance
+@314 How a generic type’s compatibility follows its type parameter’s.
+@315 Things you read from are covariant (`Producer<Dog>` fits `Producer<Animal>`); things you give to are contravariant (`Consumer<Animal>` fits `Consumer<Dog>`). `in` and `out` annotations make it explicit.
+@316 Compiler flag
+@317 A setting that changes how strictly TypeScript checks code.
+@318 Set in `tsconfig.json`. `strict` turns on a family of checks; extra flags like `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitReturns` and `noImplicitOverride` catch even more.
+@319 Declaration file
+@320 A `.d.ts` file: types only, describing code that lives elsewhere.
+@321 `declare` describes something that exists without creating it. Libraries ship `.d.ts` files; DefinitelyTyped (`@types/…`) provides them for libraries that do not.
+@322 Type assertion
+@323 `value as Type`: telling TypeScript to trust you about a type.
+@324 Nothing is checked or converted at runtime. Prefer narrowing and validation; keep assertions rare and in one place.
+@325 Non-null assertion
+@326 `value!`: telling TypeScript a value is not `null` or `undefined`.
+@327 It silences the check without any runtime protection; if you are wrong, the code crashes later. A real check is usually better.
+@328 Migrating to TypeScript
+@329 Moving JavaScript code to TypeScript step by step.
+@330 Start with `allowJs` and `checkJs` (with JSDoc types), rename files one at a time, and turn strict flags on gradually, using `@ts-expect-error` for the few lines still to fix.
+@331 Structural typing
+@332 Types match by their shape, not by their name.
+@333 In TypeScript, any value with the right properties fits a type, whatever it was called. Two types with the same shape are interchangeable. Branded types are a way to opt out when names should matter.
+@334 Excess property check
+@335 An error for unknown properties in an object literal.
+@336 When you write an object literal directly where a type is expected, properties the type does not have are reported. It catches typos in keys.
+@337 Contextual typing
+@338 TypeScript types a value from where it is used.
+@339 A callback passed to `map`, or a function assigned to a typed variable, gets its parameter types from that context, so you do not have to annotate them.
+@340 Control flow analysis
+@341 TypeScript follows your `if`s and `return`s to narrow types.
+@342 After `if (typeof x === "string") return;`, TypeScript knows `x` is no longer a string. This is what makes narrowing work.
+@343 Type guard
+@344 Any check that narrows a type: `typeof`, `instanceof`, `in`, equality or a type predicate.
+@345 Type guards are how you go from a wide type (a union, `unknown`) to a specific one, safely.
+@346 Optional chaining
+@347 `a?.b` reads `b` only if `a` is not `null` or `undefined`.
+@348 If the left side is missing, the whole expression is `undefined` instead of a crash. Works for calls (`fn?.()`) and indexes (`list?.[0]`).
+@349 Nullish coalescing
+@350 `a ?? b` uses `b` only when `a` is `null` or `undefined`.
+@351 Unlike `||`, it keeps real values like `0`, `""` and `false`. `??=` assigns only when the left side is nullish.
+@352 Closure
+@353 A function that remembers variables from where it was created.
+@354 A function returned from another function can still use the outer function’s variables. Each call creates a fresh set.
+@355 Side effect
+@356 Anything a function does besides returning a value.
+@357 Printing, changing a variable outside, saving to storage, or changing an argument are side effects. Pure functions have none, which makes them easy to test.
+@358 Type erasure
+@359 Types disappear when TypeScript is turned into JavaScript.
+@360 Nothing about types exists while the program runs: no `interface`, no `private` check, no `as`. Runtime checks are needed for data you do not control.
+@361 Compile time and runtime
+@362 Checking happens before the code runs; running happens after.
+@363 TypeScript’s checks are compile time. What the program actually does (and data from outside) is runtime. Good code uses types for the first and validation for the second.
+@364 tsconfig.json
+@365 The file that configures a TypeScript project.
+@366 It lists compiler options (like `strict` and `target`), which files belong to the project, and how modules are resolved.
+@367 strict
+@368 A compiler option that turns on a family of safety checks.
+@369 `strict` includes `strictNullChecks`, `noImplicitAny`, `strictFunctionTypes` and others. Every lesson in this course checks code with it on.
+@370 Target and lib
+@371 Which JavaScript version TypeScript compiles to, and which built-ins it knows.
+@372 `lib` decides which methods exist for the type checker (for example `.at()` needs ES2022). This app checks Classic devices against ES2021 and Modern ones against ES2023.
+@373 Modern and Classic modes
+@374 How this app adapts lessons to what a phone’s JavaScript engine can run.
+@375 Older Android WebViews (Classic) run JavaScript up to ES2021; newer ones (Modern) also run ES2022 and ES2023 features. Steps that need newer features show a Classic version on older phones. Settings → Device engine.
+@376 Declaration merging
+@377 Two declarations with the same name combine into one.
+@378 Two `interface User` declarations merge their members. It is how libraries let you add to global types; `type` aliases never merge.
+@379 Module augmentation
+@380 Adding to a library’s types from your own code.
+@381 Inside a module, `declare module "lib" { … }` extends the library’s declarations, for example to add a custom option.
+@382 Subtype
+@383 A type that fits wherever another (its supertype) is expected.
+@384 `"red"` is a subtype of `string`, and `{ name: string; age: number }` is a subtype of `{ name: string }`. Assignability follows subtypes.
+@385 Top and bottom types
+@386 `unknown` holds every value; `never` holds none.
+@387 Every type is assignable to `unknown` (the top), and `never` (the bottom) is assignable to every type. `any` is a special escape that switches checking off.
+@388 Variadic tuple type
+@389 A tuple type built with spreads, like `[...A, ...B]`.
+@390 Spreads in tuple types concatenate tuples at the type level, which lets functions like `concat` or wrappers keep precise types.
+@391 Uppercase, Lowercase, Capitalize
+@392 Built-in types that change the case of string literal types.
+@393 `Capitalize<"click">` is `"Click"`. Combined with template literal types they build names like `onClick`.
+@394 typeof (in a type)
+@395 Turns a value into its type.
+@396 In a type position, `typeof value` gives the type TypeScript inferred for that value. Combine with `keyof`, indexed access or `ReturnType`.
+@397 const type parameter
+@398 `<const T>`: infer exact literal types from an argument.
+@399 A `const` type parameter makes a generic function infer `readonly ["a", "b"]` instead of `string[]`, without `as const` at the call.
+@400 NoInfer
+@401 `NoInfer<T>`: check a parameter against `T` without inferring `T` from it.
+@402 Use it for defaults and fallbacks, so a wrong argument is an error instead of widening the type.
+@403 Type test
+@404 A line that only compiles when types are right, like `Expect<Equal<A, B>>`.
+@405 Type tests check types the way unit tests check values. In this app, `Equal`, `Expect` and `// @ts-expect-error` lines grade type challenges.
+@406 Event loop
+@407 How JavaScript decides what runs next.
+@408 Your code runs first; then promise callbacks (microtasks); then timers and events (tasks), one at a time. That is why `.then` runs before `setTimeout(fn, 0)`.
+@409 JSON
+@410 A text format for data: objects, arrays, strings, numbers, booleans and null.
+@411 `JSON.stringify` turns data into text and `JSON.parse` reads it back. Parsed data is `unknown` in spirit: check it before trusting its type.
+@412 Dependency injection
+@413 Passing the parts an object needs in from outside.
+@414 Instead of creating its logger or database itself, an object receives them, usually through its constructor. Parts can then be swapped, for example for tests.
+@415 Exhaustive lookup table
+@416 A `Record` over a union of keys: every key must have an entry.
+@417 `Record<Element, number>` requires a value for every element, so adding a member to the union shows every table that needs updating.
+@418 Smart constructor
+@419 The one function that checks a value and gives it a branded type.
+@420 Branded types cannot be created by accident; a smart constructor validates and then asserts, so every branded value has passed the check.

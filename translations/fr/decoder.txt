@@ -1,0 +1,156 @@
+@1 Une fonctionnalité JavaScript plus récente que ce réglage ne le permet
+@2 La méthode ou l’objet global existe dans du JavaScript plus récent (par exemple `.at()` ou `Object.hasOwn`), mais la bibliothèque avec laquelle TypeScript vérifie est plus ancienne. Dans cette app, cela veut dire le mode d’appareil Classique.
+@3 Utilise l’équivalent classique (par exemple `items[items.length - 1]` pour `.at(-1)`), ou un réglage `lib` plus récent dans tes propres projets.
+@4 La valeur passée à une fonction n’a pas le bon type
+@5 Une fonction dit quel type prend chaque paramètre. L’argument que tu as passé est d’un autre type.
+@6 Convertis la valeur avant de la passer, ou regarde la signature de la fonction pour voir ce qu’elle attend.
+@7 Plusieurs propriétés obligatoires manquent
+@8 L’objet est censé correspondre à un type, mais certaines propriétés obligatoires ne sont pas là.
+@9 Ajoute les propriétés listées dans le message, ou rends-les facultatives dans le type avec `?`.
+@10 Une propriété obligatoire manque
+@11 L’objet est censé correspondre à un type, mais une propriété obligatoire n’est pas là.
+@12 Ajoute la propriété, ou marque-la facultative avec `?` si elle peut vraiment être absente.
+@13 Une propriété que le type n’a pas
+@14 Tu as écrit un littéral d’objet avec une propriété que le type cible ne déclare pas. C’est souvent une faute de frappe ou un reste.
+@15 Compare l’orthographe avec le type, ou ajoute la propriété au type si elle y a sa place.
+@16 Aucune des signatures de la fonction ne convient
+@17 La fonction a plusieurs signatures (surcharges) et tes arguments ne correspondent à aucune. Le message explique pourquoi chacune a échoué.
+@18 Lis d’abord la dernière tentative dans le message ; elle désigne en général l’argument fautif.
+@19 Utiliser une valeur unknown avant de la vérifier
+@20 `unknown` veut dire « ça peut être n’importe quoi », donc TypeScript ne te laisse pas l’utiliser tant que tu ne l’as pas affinée.
+@21 Vérifie-la d’abord avec `typeof`, `Array.isArray`, `instanceof` ou un prédicat de type.
+@22 Un type est trop profondément récursif
+@23 Un type récursif ou très complexe a demandé plus d’étapes que TypeScript n’en permet.
+@24 Simplifie le type, rends la récursion terminale, ou limite sa profondeur avec un compteur.
+@25 Un chemin de la fonction ne renvoie rien
+@26 Le type de retour promet une valeur, mais au moins un chemin se termine sans `return`.
+@27 Ajoute un `return` à la fin, ou traite le cas manquant (un switch exhaustif avec `assertNever` aide).
+@28 Certains chemins renvoient une valeur, d’autres non
+@29 Avec `noImplicitReturns`, chaque chemin doit renvoyer une valeur dès qu’un chemin le fait.
+@30 Ajoute un `return` aux chemins qui se terminent sans.
+@31 Chercher une clé que TypeScript ne peut pas vérifier
+@32 Tu as indexé un objet avec une clé dont le type est trop large (souvent `string`), donc TypeScript ne peut pas savoir ce qui revient.
+@33 Type l’objet avec une signature d’index ou `Record`, ou affine la clé en `keyof typeof object`.
+@34 Une variable est lue avant d’avoir une valeur
+@35 TypeScript a suivi le code et trouvé un chemin où la variable n’a jamais reçu de valeur.
+@36 Initialise-la quand tu la déclares, ou assure-toi que chaque chemin lui affecte d’abord une valeur.
+@37 Une propriété de classe ne reçoit jamais de valeur
+@38 Avec les vérifications strictes, chaque propriété de classe doit être définie dans sa déclaration ou dans le constructeur.
+@39 Donne-lui une valeur par défaut, définis-la dans le constructeur, ou rends-la facultative.
+@40 Une valeur ne correspond pas au type de `satisfies`
+@41 `satisfies` vérifie une valeur par rapport à un type sans changer son propre type. Celle-ci ne correspond pas.
+@42 Corrige la valeur (souvent une faute de frappe dans une clé, ou une valeur du mauvais type).
+@43 Un argument de type ne respecte pas une exigence
+@44 Un générique dit ce que son paramètre de type doit permettre (`T extends …`), et le type que tu as donné ne le permet pas.
+@45 Passe un type qui respecte la contrainte, ou assouplis la contrainte si elle est trop stricte.
+@46 L’erreur attendue n’est plus là
+@47 `@ts-expect-error` annonce une erreur à la ligne suivante. Il n’y en a plus, donc le commentaire est périmé.
+@48 Enlève le commentaire. (Dans un défi de types : la ligne devrait être refusée, mais tes types l’acceptent.)
+@49 Redéfinir une méthode demande `override`
+@50 Avec `noImplicitOverride`, remplacer une méthode d’une classe parente doit être marqué explicitement.
+@51 Ajoute `override` avant le nom de la méthode.
+@52 Une fonction d’assertion a besoin d’un type explicite
+@53 Les fonctions dont le type de retour est `asserts` doivent être déclarées avec une annotation de type explicite pour affiner à l’endroit de l’appel.
+@54 Utilise une déclaration de fonction, ou annote la `const` avec le type de fonction.
+@55 Un type a été utilisé comme une valeur
+@56 Les types disparaissent quand le code s’exécute, donc ils ne peuvent pas servir de valeurs (par exemple avec `new`, ou passés à une fonction).
+@57 Utilise une vraie valeur à cet endroit, ou utilise `typeof value` pour passer d’une valeur à son type.
+@58 Sans doute une faute de frappe
+@59 TypeScript a trouvé un nom presque identique et te le suggère.
+@60 Accepte la suggestion si c’est ce que tu voulais dire.
+@61 Une classe ne correspond pas à son interface
+@62 Une classe déclare `implements SomeInterface`, mais il lui manque des membres ou ils ont le mauvais type.
+@63 Ajoute les membres manquants, ou corrige leurs types pour qu’ils correspondent à l’interface.
+@64 Une classe abstraite ne peut pas être créée directement
+@65 Les classes abstraites sont à moitié construites : seules les sous-classes terminées peuvent être créées avec `new`.
+@66 Crée une sous-classe concrète et instancie-la.
+@67 Une sous-classe a oublié une méthode abstraite
+@68 La classe parente a déclaré une méthode abstraite, et cette classe ne la fournit pas.
+@69 Implémente la méthode dans la sous-classe.
+@70 Une annotation `in`/`out` ne correspond pas à l’usage du type
+@71 Un paramètre de type marqué `out` est utilisé comme entrée (ou `in` comme sortie).
+@72 Utilise `out` pour les valeurs que tu lis seulement, `in` pour celles que tu reçois seulement, ou enlève l’annotation.
+@73 Un nom n’existe pas (encore)
+@74 Le compilateur est tombé sur un nom qu’il n’a jamais vu. C’est en général une faute de frappe, une variable utilisée avant sa déclaration ou un import manquant.
+@75 Vérifie l’orthographe, puis vérifie que le nom est déclaré avant cette ligne et dans la même portée.
+@76 null dans un emplacement qui ne peut pas le contenir
+@77 Avec la vérification stricte des nuls, `null` est un type à part entière et ne devient pas discrètement une chaîne ou un nombre.
+@78 Soit tu l’autorises (`string | null`), soit tu traites le cas vide avant l’affectation.
+@79 Une valeur est arrivée à un endroit qui n’accepte rien
+@80 Un emplacement `never` veut dire « aucune valeur ne devrait arriver ici ». Cela suit souvent une vérification exhaustive qui a un cas de trop.
+@81 Vérifie que chaque membre de l’union est traité, et que la dernière branche est vraiment inatteignable.
+@82 Un type là où un autre type était attendu
+@83 La valeur est bien réelle, mais ce n’est pas la bonne sorte. Du texte qui va dans un emplacement de nombre, ou un nombre dans un emplacement oui/non : ce sont les deux grands classiques.
+@84 Décide quel type est le bon. Convertis la valeur (`Number(text)`, `String(n)`), ou change l’annotation si c’est elle qui était fausse.
+@85 Cette valeur pourrait manquer
+@86 La valeur pourrait être `undefined` à cet endroit, et l’utiliser à l’aveugle planterait à l’exécution. TypeScript te prévient avant que ça arrive.
+@87 Vérifie d’abord : `if (value === undefined) return;` ou utilise `value ?? fallback`.
+@88 Cette propriété ou méthode n’existe pas sur ce type
+@89 Tu as demandé quelque chose que la valeur n’a pas : souvent une méthode de chaîne appelée sur un nombre, ou une propriété mal orthographiée.
+@90 Vérifie le type, puis l’orthographe. Si l’union a plusieurs formes, affine-la d’abord.
+@91 Tu as appelé quelque chose qui ne s’appelle pas
+@92 Le nom existe, mais il contient une valeur et non une fonction. Causes fréquentes : une méthode mal orthographiée, ou un appel sans la propriété.
+@93 Vérifie l’orthographe, et vérifie que tu appelles la méthode sur le bon objet.
+@94 Quelque chose était vide quand tu l’as lu
+@95 Ce qui se trouvait à gauche du point valait `undefined` ou `null`. En général, une recherche n’a rien trouvé, ou une valeur n’est jamais arrivée.
+@96 Affiche la valeur une ligne plus tôt. Puis protège-toi avant le point, ou utilise le chaînage optionnel : `user?.name`.
+@97 Tu as essayé de réaffecter une const
+@98 `const` veut dire que le nom désigne toujours la même valeur. Tu peux encore modifier une propriété à l’intérieur d’un objet, mais pas faire désigner autre chose au nom.
+@99 Si la valeur change vraiment, utilise `let`. Sinon, modifie le contenu au lieu de remplacer le tout.
+@100 TypeScript a besoin d’un type ici
+@101 Avec la vérification stricte, chaque paramètre a besoin d’un type visible. Cela arrive avec les paramètres de fonctions, et avec les tableaux qui commencent vides.
+@102 Ajoute une annotation : `(items: string[])`, `(user: User)`.
+@103 Cette comparaison ne peut jamais être vraie
+@104 Tu as comparé deux choses dont les types n’ont rien en commun, donc un côté ne peut jamais être égal à l’autre. C’est en général un type périmé, pas une faute de frappe dans la comparaison.
+@105 Vérifie ce que contient vraiment chaque côté. L’un des deux n’est pas ce que tu pensais.
+@106 Un guillemet n’a jamais été fermé
+@107 Du texte a commencé par un guillemet et n’a jamais trouvé le guillemet correspondant avant la fin de la ligne.
+@108 Ajoute le guillemet fermant. Si le texte contient un guillemet, entoure-le de l’autre sorte de guillemets.
+@109 Il manque un petit signe de ponctuation
+@110 En général une parenthèse, un point-virgule ou une virgule qui a fini un peu trop tôt. La ligne signalée est souvent une ligne après le vrai problème.
+@111 Regarde aussi la ligne au-dessus de l’erreur, et compte ses parenthèses.
+@112 Ce texte n’est pas du JSON valide
+@113 JSON.parse a reçu un texte qui n’est pas du vrai JSON. JSON est plus strict que JavaScript : les clés demandent des guillemets doubles, il n’y a pas de virgule finale, et pas de commentaires.
+@114 Affiche le texte avant de l’analyser. Vérifie que chaque clé est entre guillemets doubles et que chaque parenthèse est fermée, ou entoure l’analyse d’un try/catch pour gérer une mauvaise entrée.
+@115 Le code se termine avant que tout soit fermé
+@116 Le compilateur a atteint la fin du code en attendant encore une fermeture, en général une `}` ou une `)`.
+@117 Compte les parenthèses et accolades ouvrantes et fermantes. Celle qui manque est souvent à la fin d’une fonction ou d’un bloc.
+@118 Un symbole que le compilateur n’attendait pas
+@119 Le symbole entre guillemets n’est pas à sa place ici : le plus souvent une `}` ou une `)` de trop, ou dont le partenaire ouvrant manque.
+@120 Regarde juste au-dessus de la ligne indiquée et associe chaque parenthèse ouvrante à sa fermante.
+@121 Modifier une const
+@122 Une valeur déclarée avec `const` ne peut pas recevoir de nouvelle valeur. Le programme s’est arrêté à la ligne qui a essayé.
+@123 Si la valeur doit changer, déclare-la avec `let`. Sinon, crée plutôt une nouvelle const avec un nouveau nom.
+@124 import a besoin de plus d’un fichier
+@125 Le bac à sable et les exercices exécutent un seul fichier à part, donc il n’y a rien à importer. Les vrais projets ont plusieurs fichiers et un bundler ou un environnement d’exécution qui les relie.
+@126 Mets pour l’instant le code que tu voulais importer dans ce même fichier. Le module 6 explique comment fonctionnent les imports dans un vrai projet.
+@127 await au premier niveau et export ensemble
+@128 Ici, `await` hors d’une fonction et `export` ne peuvent pas être utilisés dans le même fichier.
+@129 Déplace le `await` dans une `async function` et appelle-la, ou enlève le `export` : le bac à sable n’en a pas besoin.
+@130 La forme du code a dérouté l’analyseur
+@131 Quelque chose n’est pas à sa place : une parenthèse égarée, une `}` manquante, ou une valeur là où une instruction était attendue.
+@132 Indente correctement le bloc. Les accolades mal appariées sautent aux yeux dès que l’indentation est honnête.
+@133 Il manque quelque chose juste avant cet endroit
+@134 Le compilateur attendait une chose (nommée en premier) et en a trouvé une autre. La cause habituelle : une parenthèse, un guillemet, une virgule ou un point-virgule manquant un peu plus tôt.
+@135 Regarde la ligne indiquée et celle du dessus. Vérifie que chaque (, {, [ et chaque guillemet a son partenaire.
+@136 Le code cesse d’avoir du sens ici
+@137 À cet endroit, le compilateur avait besoin d’un morceau de code (une instruction, une valeur ou un nom) et a trouvé autre chose.
+@138 Cherche sur la ligne indiquée une parenthèse égarée ou manquante, et un mot-clé mal orthographié.
+@139 Mauvais nombre d’arguments
+@140 La fonction attend un autre nombre de valeurs que celui que tu lui as donné.
+@141 Compare l’appel avec la signature de la fonction. Ajoute l’argument manquant ou enlève celui en trop.
+@142 Ce nom n’a jamais été créé
+@143 Au moment où cette ligne s’est exécutée, le nom n’existait pas. Différent d’une erreur de type : celle-ci se produit pendant l’exécution du programme.
+@144 Cherche une faute de frappe, et vérifie que la ligne qui crée la valeur s’est bien exécutée avant celle-ci.
+@145 Une fonction n’arrêtait pas de s’appeler elle-même
+@146 Une récursion sans condition d’arrêt, ou deux fonctions qui s’appellent mutuellement à l’infini, remplissent la pile et s’arrêtent.
+@147 Trouve la condition qui devrait mettre fin à la répétition, et assure-toi qu’elle finit par devenir vraie.
+@148 import à un endroit qui ne le permet pas
+@149 `import` a sa place dans un module. Un simple script, ou un environnement sans prise en charge des modules, ne peut pas l’utiliser.
+@150 Garde les leçons sur les modules dans un projet ; n’utilise `export`/`import` que dans des fichiers chargés comme modules.
+@151 Le même nom deux fois
+@152 Deux déclarations du même nom partagent une portée, et le compilateur ne peut pas les distinguer.
+@153 Renomme l’une des deux, ou supprime le doublon. Attention aux deux fichiers qui déclarent le même nom global.
+@154 Indexer un objet avec une clé inconnue
+@155 L’objet a des clés connues, mais tu l’as consulté avec une simple `string`, donc le compilateur ne peut pas garantir que la clé existe.
+@156 Utilise un type de clé qui liste les noms autorisés, ou vérifie d’abord `key in object`.

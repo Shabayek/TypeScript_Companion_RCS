@@ -1,0 +1,194 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  padding-top: var(--safe-top);
+  background: var(--header-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.headerInner {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: var(--s-2) var(--s-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  text-decoration: none;
+  color: var(--ink);
+  min-height: 44px;
+  border-radius: var(--r-sm);
+}
+
+.brandMark {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  background: var(--accent);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.brandText {
+  font-weight: 700;
+  font-size: var(--text-0);
+  letter-spacing: -0.01em;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.pillButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: 0 var(--s-3);
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: var(--text--1);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pillLabel {
+  display: none;
+}
+
+@media (min-width: 560px) {
+  .pillLabel {
+    display: inline;
+  }
+}
+
+.kbd {
+  display: none;
+  padding: 1px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+}
+
+@media (min-width: 760px) {
+  .kbd {
+    display: inline;
+  }
+}
+
+.iconLink {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-pill);
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.iconLink:hover {
+  background: var(--surface-2);
+}
+
+button.iconLink {
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* The language button: a globe and the language's short code. */
+.langButton {
+  width: auto;
+  display: inline-flex;
+  gap: 4px;
+  padding-inline: var(--s-2);
+}
+
+.langCode {
+  font-size: var(--text--1);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.iconLinkActive {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.bottomNav {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-nav);
+  display: flex;
+  justify-content: space-around;
+  gap: var(--s-1);
+  padding: var(--s-1) var(--s-2) calc(var(--s-1) + var(--safe-bottom));
+  background: var(--nav-bg);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+}
+
+.navItem {
+  flex: 1 1 0;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-height: 52px;
+  padding: var(--s-1) 0;
+  border-radius: var(--r-md);
+  text-decoration: none;
+  color: var(--ink-muted);
+  font-size: var(--text--1);
+  font-weight: 600;
+}
+
+.navItemActive {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+@media (min-width: 900px) {
+  .bottomNav {
+    display: none;
+  }
+}
+
+.gate {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: center;
+  padding: var(--s-7) var(--s-4);
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .app-main {
+    padding-bottom: var(--s-8);
+  }
+}
+
+/* While code is being typed on a touch screen, the symbol bar owns the bottom
+   edge (just above the keyboard); this bar steps back into the page flow. */
+@media (pointer: coarse) {
+  :global(body:has(.cm-editor.cm-focused)) .bottomNav { position: static; }
+}

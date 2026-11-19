@@ -1,0 +1,226 @@
+@1 Functions name a piece of work.
+@2 Parameters in, `return` out.
+@3 No `return` means `undefined`.
+@4 Functions are machines with names.
+@5 Things go in; `return` gives the answer out.
+@6 No `return` means the answer is `undefined`.
+@7 A signature is a contract: parameter types in, return type out.
+@8 Declarations are hoisted; `const` functions are not.
+@9 Pure functions are the easiest code to test.
+@10 A function is a named recipe with one result.
+@11 A function is a little machine with a name. Put something in, get something out.
+@12 A **function** takes some inputs, does some work, and hands back a value:⏎⏎⟦F1⟧⏎⏎The name in brackets is a **parameter**. The value you pass is an **argument**. The `: number` after the brackets is the return type.⏎⏎A function with no `return` hands back `undefined`. That is legal, and usually not what someone meant.
+@13 A function is a small machine. You put something in, it does one job, and it gives something back.⏎⏎⟦F1⟧⏎⏎You build the machine once. After that, you can use it as many times as you like.
+@14 Always annotate parameters (a declaration gives nothing to infer them from) and the return types of anything exported. Under `strict` (`noImplicitAny`), an unannotated parameter is an error instead of a silent `any`.⏎⏎A function without `return` returns `undefined`, typed `void`. Function declarations are hoisted, so they can be called above the line that defines them; `const` arrow functions cannot.⏎⏎Arity is checked: too few or too many arguments is a compile error, whereas plain JavaScript quietly passes `undefined` for the missing ones.
+@15 What prints?
+@16 What will it show?
+@17 Run the body of `double` once for each call, with `n` set to the value in the brackets.
+@18 The machine doubles whatever you give it. What is double 4? Double 0?
+@19 Each call runs the same body with a different argument. Four becomes eight; zero stays zero.
+@20 Each time, the machine does the same job with a new number. 4 becomes 8, and 0 stays 0.
+@21 Each call gets its own `n`; nothing persists between calls. A pure function like `double` always maps the same input to the same output, which is what makes it trivial to test.
+@22 Hand the value back out.
+@23 Give the answer back.
+@24 Which keyword sends a value back out of a function?
+@25 Which word gives the answer back?
+@26 `return` is what passes a value back to whoever called the function.
+@27 `return` hands the answer back to whoever used the machine.
+@28 `return` ends the call and yields the value. With a declared return type of `number`, leaving it out is a compile error (TS2355: the function must return a value).
+@29 Write `add` so it returns the sum of two numbers.
+@30 Make `add` give back the two numbers added together.
+@31 Return `a + b`.
+@32 Give back `a + b` with `return`.
+@33 add(2, 3)
+@34 add(-1, 1)
+@35 add(1.5, 2.5)
+@36 The short version.
+@37 What you learned.
+@38 A function is a reusable recipe with a name.
+@39 Parameters are the slots; arguments are the values you pass.
+@40 `return` hands a value back.
+@41 A function is a machine with a name that you can use again and again.
+@42 What goes in is named in the brackets.
+@43 `return` gives the answer back.
+@44 Annotate parameters; annotate return types on exported functions.
+@45 No `return` means `undefined` (typed `void`).
+@46 The number of arguments is checked at compile time.
+@47 Go further: what is the type of the function `double`?
+@48 A challenge: what type is the machine `double`?
+@49 A function type looks like `(parameter: Type) => ReturnType`.
+@50 Machine types look like `(input: Type) => OutputType`.
+@51 The return type `number` is inferred from `n * 2`. Parameter names in a function type are only labels.
+@52 TypeScript works out that doubling a number gives a number.
+@53 Return types are inferred from `return` expressions; parameter names in function types do not affect assignability, only the positions and types do.
+@54 Arrow functions are just shorter functions.
+@55 Braces need `return`; no braces return automatically.
+@56 Write the return type — it is a contract.
+@57 `{ }` need `return`; without them, the answer comes back by itself.
+@58 Write the answer label — it is a promise.
+@59 Use arrow functions for callbacks and small helpers.
+@60 Write `() => ({ … })` to return an object literal.
+@61 Declare return types on public functions.
+@62 `=>` is the same idea in fewer words.
+@63 `=>` makes the same kind of machine, with fewer words.
+@64 An **arrow function** is a shorter spelling of the same thing:⏎⏎⟦F1⟧⏎⏎With no braces, the expression after `=>` is returned automatically. Add braces and you must write `return` yourself.⏎⏎Write the return type on purpose. It is a small contract that catches mistakes inside the function before they reach the caller.
+@65 Arrows are a quick way to write a machine: `const double = (n) => n * 2;`.⏎⏎If there are no curly braces, the answer comes back automatically. No `return` needed.
+@66 Arrow functions differ from declarations in more than spelling: they have no own `this`, `arguments` or `prototype`, and cannot be called with `new`. That lexical `this` is why they are the default for callbacks.⏎⏎A concise body (`=> expr`) returns the expression. To return an object literal, wrap it in parentheses, `() => ({ ok: true })`; otherwise the braces are read as a block.⏎⏎An explicit return type stops inference from widening an accidental result (say, `number | undefined`) and reports the mistake in the function that made it, not in its callers.
+@67 Same function, two shapes.
+@68 One machine, two ways to write it.
+@69 Declaration
+@70 Clear, and easy to read in a stack trace.
+@71 Clear, with its name at the front.
+@72 Arrow
+@73 Shorter. Common when passing a function to another function.
+@74 Shorter. Handy when you give a machine to another machine.
+@75 Which arrow function actually returns a value?
+@76 Which arrow machine really gives an answer back?
+@77 An arrow function with braces needs an explicit `return`; without braces it returns the expression.
+@78 Look at the `{ }`. With them, you need the word `return`.
+@79 Without braces, the expression is returned. `{ n * 2 }` is a block, so it returns `undefined`.
+@80 Without `{ }`, the answer is given back by itself. With `{ }` you must write `return`, or the answer is `undefined`.
+@81 `=> { n * 2 }` is a block body whose expression statement is discarded, so the function returns `undefined` (typed `void`). `->` is not JavaScript syntax at all.
+@82 `const f = (n: number) => n * 2;`
+@83 `const f = (n: number) => { n * 2 };`
+@84 Braces make a block. A block with no `return` gives `undefined`.
+@85 The `{ }` make a block. Without `return` inside, it gives back `undefined`.
+@86 `const f = (n: number) -> n * 2;`
+@87 Arrow functions use `=>`, with an equals sign.
+@88 Arrows are written `=>`, with an equals sign.
+@89 Write `square` as an arrow function with a return type.
+@90 Make `square` as an arrow machine with an answer label.
+@91 Drop the braces and put `n * n` straight after `=>`.
+@92 Take away the `{ }` and write `n * n` straight after `=>`.
+@93 square(4)
+@94 square(0)
+@95 square(-3)
+@96 `=>` is the short form of a function.
+@97 No braces means the expression is returned.
+@98 Annotate the return type; it catches real bugs.
+@99 `=>` is the short way to make a function.
+@100 With no `{ }`, the answer comes back by itself.
+@101 A label for the answer helps catch mistakes.
+@102 Arrow functions have lexical `this` and no `arguments`.
+@103 A concise body returns its expression; wrap an object literal in `()`.
+@104 An explicit return type keeps errors where they start.
+@105 Go further: write `twice`: it takes a function and returns a new function that calls it two times.
+@106 A challenge: make `twice`, a machine that makes a machine run two times!
+@107 Return an arrow function: `(n) => fn(fn(n))`.
+@108 Give back a new arrow machine that feeds the answer of `fn` into `fn` again.
+@109 `twice` returns a function, so its return type is a function type. The inner `n` is typed from that return type.
+@110 `twice` builds a new machine and hands it back. Cool!
+@111 A higher-order function returning a closure; the returned arrow’s parameter is contextually typed by the declared return type.
+@112 add one twice
+@113 double twice
+@114 Defaults are plain values: `name = "friend"`.
+@115 `?` means the caller can leave it out.
+@116 Rest parameters are just arrays.
+@117 Spare values are plain values: `name = "friend"`.
+@118 `?` means it can be left out.
+@119 `...numbers` is just a list.
+@120 Defaults do not cover `null`; normalise it explicitly.
+@121 Optional parameters go after the required ones.
+@122 Rest parameters can be typed as tuples.
+@123 Parameters can have a fallback, or accept many values.
+@124 A machine can have a spare value, or take as many things as you like.
+@125 Three small tools make functions more forgiving:⏎⏎- A **default** fills in when the argument is `undefined`: `function greet(name = "friend")`.⏎- An **optional** parameter is marked with `?`: `shout?: boolean`. Its type becomes `boolean | undefined`.⏎- **Rest** collects the remaining arguments into an array: `(...numbers: number[])`.⏎⏎Defaults catch `undefined`, not `null`. That distinction matters when data comes from elsewhere.
+@126 Functions can have fallbacks. If nobody says a name, call them "friend".⏎⏎A parameter with a `?` is allowed to be missing.⏎⏎`...numbers` scoops up every extra value into one list.
+@127 A default applies when the argument is `undefined`, passed explicitly or left out, but not when it is `null`. Defaults are evaluated at call time, so `(list = [])` creates a fresh array on every call (unlike Python).⏎⏎An optional parameter `x?: T` is `T | undefined` inside the body; a parameter with a default is optional for callers but plain `T` inside. Optional parameters must come after required ones.⏎⏎Rest parameters are real arrays (`...nums: number[]`) and must come last. A tuple type, `...args: [string, number]`, types them position by position.
+@128 What prints when no name is given?
+@129 What will it show when no name is given?
+@130 A default value is used only when the argument is missing. Check each call.
+@131 The first time, no name is given. The second time, "Ada" is given.
+@132 The default only appears when the argument is missing or `undefined`.
+@133 The spare value is only used when nothing is given.
+@134 Leaving the argument out passes `undefined`, which triggers the default; `greet(undefined)` behaves the same. `greet(null)` would not, and TypeScript rejects `null` for a `string` parameter anyway.
+@135 Give `name` a sensible fallback.
+@136 Give `name` a spare value.
+@137 The default must be a string value, so it needs quotes.
+@138 The spare value is a word. Words need quotes.
+@139 The default is a value, so it needs quotes: `"friend"`. Without them it would be a variable called friend.
+@140 The spare value is a word, so it needs quotes: `"friend"`. Without quotes, it would be the name of a box.
+@141 A default is an expression evaluated at call time, here a string literal. It also lets TypeScript infer the parameter type, so the `: string` annotation is optional.
+@142 Write `sumAll` so it adds any number of arguments. `sumAll()` must be 0.
+@143 Make `sumAll` add up any amount of numbers. `sumAll()` with nothing must give 0.
+@144 `numbers` is already an array. Add its items with `reduce`, starting from 0.
+@145 `numbers` is already a list. Add them up with `reduce`, starting from 0.
+@146 no numbers
+@147 three numbers
+@148 one number
+@149 Defaults fill in for `undefined`.
+@150 `?` marks a parameter that may be missing.
+@151 `...rest` collects extra arguments into an array.
+@152 A spare value is used when nothing is given.
+@153 `?` means "you may leave this out".
+@154 `...` collects all the extra things into a list.
+@155 Defaults apply to `undefined` only, and are evaluated on every call.
+@156 `x?: T` is `T | undefined` inside the body.
+@157 Rest parameters are arrays and must come last.
+@158 Go further: write `listOf(...items)` so `listOf("tea", "cake", "jam")` gives `"tea, cake and jam"`.
+@159 A challenge: make `listOf` turn any number of words into "tea, cake and jam".
+@160 All but the last: `items.slice(0, -1).join(", ")`; then `" and "` and the last item. Handle 0 or 1 items first.
+@161 Glue all but the last word with commas, then add " and " and the last word. For 0 or 1 words, just glue them.
+@162 A rest parameter collects any number of arguments into an array, so the usual array tools work on it.
+@163 `...items` catches all the words into one list.
+@164 Rest parameters are typed as arrays (`string[]`). For real UI, `Intl.ListFormat` produces this in every language.
+@165 three
+@166 two
+@167 one
+@168 none
+@169 Functions are values.
+@170 `map` and `filter` take callbacks.
+@171 Passing behaviour in is often cleaner than branching inside.
+@172 Functions are values, like numbers and words.
+@173 `map` and `filter` take a little machine.
+@174 Handing over a machine is often simpler than lots of `if`s.
+@175 Pass behaviour in as a value instead of a flag.
+@176 Let contextual typing annotate inline callbacks.
+@177 Give a callback a name once it carries real logic.
+@178 A function can be passed to another function.
+@179 You can give a machine to another machine.
+@180 Functions are values. You can put one in a variable, pass it as an argument, or return it.⏎⏎A **callback** is a function you hand to another function so it can call it later:⏎⏎⟦F1⟧⏎⏎A function that takes or returns another function is a **higher-order function**. `map`, `filter` and `find` are all like this, and they are why lists stopped needing manual loops.
+@181 You can give a machine to another machine. "Here, use this rule on every item."⏎⏎That little rule is called a **callback**.
+@182 Functions are first-class values with structural types: `(value: number) => number` describes any function with that signature. Callback parameters are typed from context, which is why `items.map(item => item.name)` needs no annotations.⏎⏎Under `strictFunctionTypes`, parameters of function types are checked contravariantly: a callback that only accepts a `Dog` cannot be passed where any `Animal` may be handed to it.⏎⏎Passing a method as a callback detaches it from its object (`list.map(obj.method)` loses `this`); wrap it in an arrow function or bind it.
+@183 The same rule, named or inline.
+@184 The same rule, with a name or without.
+@185 Named callback
+@186 Easier to reuse and to test on its own.
+@187 Easy to use again, and to test on its own.
+@188 Inline arrow
+@189 Reads well when the rule is short and used once.
+@190 Easy to read when the rule is short and used once.
+@191 In `prices.map(p => p * 2)`, what is the callback?
+@192 In `prices.map(p => p * 2)`, which part is the little machine you hand over?
+@193 A callback is a function passed as an argument. Which part inside the brackets is a function?
+@194 Look inside the brackets of `map(...)`. Which part is a machine with `=>`?
+@195 The callback is the arrow function. `map` calls it once per item.
+@196 The arrow machine is the one handed over. `map` uses it once for every price.
+@197 `map` is the higher-order function; `p => p * 2` is the callback it invokes for each element with `(value, index, array)`. Only the first parameter is used here; the extra arguments are ignored.
+@198 `map`
+@199 `map` is the higher-order function doing the calling.
+@200 `map` is the big machine that uses the little one.
+@201 `p => p * 2`
+@202 `prices`
+@203 That is the array being worked on.
+@204 That is the list being worked on.
+@205 Write `applyTwice` so it calls the given function twice, passing the result along.
+@206 Make `applyTwice` use the machine two times, passing the answer along.
+@207 Call `fn` on `start`, then call `fn` again on the result.
+@208 Use `fn` on `start`, then use `fn` again on that answer.
+@209 Functions can be stored and passed like any value.
+@210 A callback is a function handed to another function.
+@211 Higher-order functions take or return functions.
+@212 Functions can be kept in boxes and passed around.
+@213 A machine you hand to another machine is called a callback.
+@214 Some machines take other machines as input.
+@215 Function types are structural: `(x: A) => B`.
+@216 Inline callbacks get their parameter types from context.
+@217 Methods lose `this` when passed on their own; wrap or bind them.
+@218 Go further: write `makeCounter`. Each counter it makes remembers its own count.
+@219 A challenge: make `makeCounter`, a machine that builds counters that remember their number.
+@220 Keep `let count = 0` inside `makeCounter`, and return a function that adds one and returns it.
+@221 Put a `let count = 0` inside, and give back a little machine that adds one and says the number.
+@222 The returned function keeps access to `count` after `makeCounter` has finished. That is a *closure*, and each call makes a fresh one.
+@223 The little machine remembers its own `count`, even later. Each counter has its own.
+@224 Closures capture bindings, not values; each invocation of `makeCounter` creates a new environment, which is how modules kept private state before classes had `#private`.
+@225 counts up
+@226 counters are separate

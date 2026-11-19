@@ -1,0 +1,253 @@
+@1 Exiger quelque chose d’un paramètre de type avec `extends`.
+@2 Garder le type exact de l’appelant tout en utilisant ce que promet la contrainte.
+@3 Voir pourquoi un simple type de paramètre perd de l’information.
+@4 Dire « n’importe quelle sorte, tant qu’elle a une longueur ».
+@5 Rendre exactement la sorte qui est entrée.
+@6 Voir pourquoi ça compte.
+@7 Contraindre les paramètres de type avec `extends`.
+@8 Renvoyer `T` pour préserver le type de l’appelant.
+@9 Garder les contraintes minimales.
+@10 Les machines génériques peuvent avoir des exigences.
+@11 Elles se souviennent quand même de ce qui est entré.
+@12 Ne pas trop en demander.
+@13 Polymorphisme borné en TypeScript.
+@14 Les types de retour génériques préservent l’information.
+@15 Des exigences structurelles minimales.
+@16 Des génériques avec des exigences.
+@17 N’importe quelle sorte de chose, tant qu’elle sait faire quelque chose.
+@18 Un `<T>` nu peut être n’importe quoi, donc le corps ne peut utiliser aucune de ses propriétés. Une **contrainte** dit ce que `T` doit avoir :⏎⏎⟦F1⟧⏎⏎Pourquoi pas simplement `a: { length: number }` ? Alors le résultat serait aussi un `{ length: number }`, et les appelants perdraient le fait que c’est une chaîne ou un tableau.
+@19 Parfois, une machine marche sur n’importe quelle sorte de chose, tant qu’elle a une certaine partie. `longest` marche sur tout ce qui a une longueur : des mots, des listes…⏎⏎`T extends { length: number }` veut dire « n’importe quelle sorte, tant qu’elle a une longueur ». Et ce qui sort est de la même sorte que ce qui est entré.
+@20 Une contrainte borne le paramètre de type : dans le corps, `T` est affectable à la contrainte, donc ses membres sont utilisables ; aux endroits d’appel, les arguments doivent la respecter, et `T` est inféré comme le type précis de l’argument. Sans le générique, le type de retour se dégrade en la contrainte elle-même.⏎⏎Les contraintes peuvent faire référence à d’autres paramètres (`K extends keyof T`) et peuvent être récursives. Garde-les minimales : n’exige que ce que le corps utilise.
+@21 Rends `longest` générique avec une contrainte, pour qu’elle renvoie le même type que celui qu’on lui a donné.
+@22 Fais en sorte que `longest` rende la même sorte de chose que celle qu’on lui a donnée, pour tout ce qui a une longueur.
+@23 `function longest<T extends { length: number }>(a: T, b: T): T`.
+@24 Ajoute `<T extends { length: number }>` après le nom, et utilise `T` pour les deux entrées et la sortie.
+@25 Le corps peut utiliser `.length` grâce à la contrainte, et les appelants récupèrent leur propre type.
+@26 À l’intérieur, tu peux utiliser `.length`. À l’extérieur, ce qui est entré ressort.
+@27 `T` est inféré à chaque appel et borné par la contrainte ; le type de retour de la version non générique était la contrainte, ce qui effaçait le type de l’appelant.
+@28 des chaînes donnent une chaîne
+@29 des tableaux donnent un tableau
+@30 les nombres sont refusés
+@31 mot le plus long
+@32 liste la plus longue
+@33 Avec l’ancienne version `a: { length: number }`, quel type renvoyait `longest("a", "bc")` ?
+@34 Avec l’ancienne version, que savait TypeScript de la réponse ?
+@35 Regarde l’ancienne annotation du type de retour.
+@36 Que disait l’ancienne machine qu’elle rendait ?
+@37 Juste `{ length: number }` : TypeScript ne savait plus que c’était une chaîne, donc `.toUpperCase()` sur le résultat serait une erreur.
+@38 Seulement « quelque chose avec une longueur ». Elle avait oublié que c’était un mot !
+@39 Sans paramètre de type, le type de retour est le type structurel déclaré, donc la relation entre entrée et sortie est perdue.
+@40 `{ length: number }`, et elle avait oublié que c’était une chaîne
+@41 `string`
+@42 Seul un générique peut faire passer le type d’entrée jusqu’à la sortie.
+@43 Seule une machine générique se souvient de ce qui est entré.
+@44 La version courte.
+@45 Ce que tu as appris.
+@46 `T extends Something` exige que `T` ait ce qu’a `Something`.
+@47 Le corps peut utiliser ces membres ; les appelants gardent leur type exact.
+@48 N’exiger que ce dont le corps a besoin.
+@49 « N’importe quelle sorte, tant qu’elle a… », c’est une contrainte.
+@50 Ce qui sort est de la même sorte que ce qui est entré.
+@51 Ne demande que ce dont tu as besoin.
+@52 Les contraintes bornent l’inférence et permettent l’accès aux membres.
+@53 Elles peuvent faire référence à d’autres paramètres.
+@54 Des contraintes minimales maximisent la réutilisation.
+@55 Obtenir les clés d’un type sous forme d’union avec `keyof`.
+@56 Trouver le type d’une propriété avec `T[K]`.
+@57 Écrire des fonctions qui n’acceptent que de vraies clés.
+@58 Obtenir la liste des étiquettes d’une forme.
+@59 Trouver quelle sorte de chose se cache derrière une étiquette.
+@60 N’autoriser que les vraies étiquettes.
+@61 Laisser les types parler des clés d’autres types.
+@62 Remplacer les accesseurs `any` par `K extends keyof T`.
+@63 Les fautes de frappe deviennent des erreurs.
+@64 Les formes connaissent leurs propres étiquettes.
+@65 Seules les vraies étiquettes sont autorisées.
+@66 Les fautes d’orthographe sont attrapées.
+@67 `keyof` + accès indexé = des API sûres pour les clés.
+@68 La base des types mappés et utilitaires.
+@69 Fini l’accès aux propriétés par de simples chaînes non vérifiées.
+@70 Les types peuvent lister des clés et trouver des propriétés.
+@71 Demande à une forme : quelles sont tes étiquettes ?
+@72 `keyof T` est l’union des noms de propriétés de `T` ; `T[K]` est le type de la propriété `K` :⏎⏎⟦F1⟧⏎⏎`K extends keyof T` relie la clé à l’objet, et `T[K]` rend le bon type pour cette clé.
+@73 `keyof` demande à une forme sa liste d’étiquettes. Pour un utilisateur avec un `id` et un `name`, c’est `"id" | "name"`.⏎⏎`User["name"]` demande : quelle sorte de chose se cache derrière l’étiquette `name` ? La réponse est `string`.⏎⏎Ensemble, ils font une machine qui n’accepte que de vraies étiquettes, et qui sait ce qui revient.
+@74 `keyof` produit des unions de littéraux `string | number | symbol` (les signatures d’index apportent `string | number`). L’accès indexé `T[K]` se distribue sur les unions de clés (`User["id" | "name"]` vaut `number | string`) et marche avec `number` sur les tableaux (`T[number]`).⏎⏎Le motif `<T, K extends keyof T>(obj: T, key: K): T[K]` corrèle la clé et le résultat à chaque appel. C’est la base de `Pick`, des fonctions de chemins de propriétés, des tables d’événements typées et des bibliothèques de formulaires.
+@75 Qu’est-ce que `Keys` ?
+@76 Quelles sont les étiquettes de `User` ?
+@77 `keyof` donne une union des noms de propriétés, sous forme de types littéraux de chaîne.
+@78 Liste les étiquettes, reliées par `|`, chacune entre guillemets.
+@79 `keyof User` est l’union de ses trois noms de propriétés. Ajoute une propriété à `User` et `Keys` grandit avec.
+@80 Les trois étiquettes, reliées par `|`. Si la forme reçoit une nouvelle étiquette, la liste grandit toute seule.
+@81 Une union de types littéraux de chaîne ; l’ordre ne compte pas pour l’identité, c’est pourquoi n’importe quel ordre est accepté.
+@82 Rends `pluck` sûr pour les types : la clé doit être une vraie clé des éléments, et le résultat est un tableau du type de cette propriété.
+@83 Rends `pluck` sûre : seules les vraies étiquettes sont permises, et TypeScript sait quelle sorte de liste revient.
+@84 `function pluck<T, K extends keyof T>(items: T[], key: K): T[K][]`.
+@85 Utilise `<T, K extends keyof T>`, prends `items: T[]` et `key: K`, et rends `T[K][]`.
+@86 Le corps peut rester le même : `return items.map((item) => item[key]);`.
+@87 Seule la première ligne change ; l’intérieur reste pareil.
+@88 La faute de frappe `"nmae"` est maintenant une erreur de compilation, et le type du résultat suit la clé que tu passes.
+@89 Maintenant, les fautes d’orthographe sont attrapées, et TypeScript sait que les noms sont des mots et les âges des nombres.
+@90 `K extends keyof T` refuse les clés invalides ; `T[K][]` associe la clé choisie à son type d’élément. La version `any` compilait toutes les fautes de frappe.
+@91 les noms sont des chaînes
+@92 les âges sont des nombres
+@93 les clés inconnues sont refusées
+@94 extrait les noms
+@95 `keyof T` est l’union des clés de `T`.
+@96 `T[K]` est le type de la propriété `K`.
+@97 `K extends keyof T` rend les paramètres de clé sûrs.
+@98 `keyof` liste les étiquettes d’une forme.
+@99 `T["label"]` trouve ce qui se cache derrière une étiquette.
+@100 Les machines sûres ne prennent que de vraies étiquettes.
+@101 L’accès indexé se distribue sur les unions de clés.
+@102 `T[number]` pour les éléments d’un tableau.
+@103 Corréler les types de clé et de valeur à chaque appel.
+@104 Écrire une interface générique comme `Box<T>`.
+@105 Écrire une classe générique, une `Stack<T>`.
+@106 Savoir ce que renvoient les méthodes d’un conteneur.
+@107 Fabriquer une boîte qui se souvient de la sorte de chose qu’elle contient.
+@108 Construire une pile d’assiettes en code.
+@109 Savoir ce que tu récupères.
+@110 Les conteneurs génériques gardent le type de leur contenu.
+@111 Inférer les arguments de type quand c’est possible.
+@112 Être honnête sur le vide.
+@113 Une boîte sait ce qu’il y a dedans.
+@114 Une pile sait quelle sorte d’assiettes elle contient.
+@115 Les piles vides donnent `undefined`.
+@116 Des conteneurs paramétrés.
+@117 L’inférence pilotée par le constructeur.
+@118 `Map`, `Set` et `Promise` sont des interfaces génériques.
+@119 Les interfaces et les classes peuvent aussi prendre des paramètres de type.
+@120 Un conteneur qui se souvient de la sorte de chose qu’il contient.
+@121 Les paramètres de type marchent sur les interfaces et les classes, et c’est ainsi que les conteneurs restent précis :⏎⏎⟦F1⟧
+@122 Une pile, c’est comme une pile d’assiettes : tu poses des assiettes dessus et tu les reprends par le dessus.⏎⏎`Stack<string>` est une pile qui ne contient que des mots. Essaie d’y mettre un nombre et TypeScript dit non.
+@123 Les paramètres de type d’une classe sont visibles dans les membres d’instance (pas dans les membres statiques). Ils sont en général inférés à partir des arguments du constructeur (`new Box(3)` est un `Box<number>`) ou donnés explicitement quand rien n’est passé (`new Stack<string>()`).⏎⏎Expose le minimum : `pop(): T | undefined` est honnête sur le vide ; une vue `readonly` (`ReadonlyArray<T>`) protège l’intérieur. Les conteneurs standard (`Map<K, V>`, `Set<T>`, `Promise<T>`) sont exactement de telles interfaces génériques.
+@124 Rends `Stack` générique : `push` prend un `T`, `pop` renvoie `T | undefined`, et `size` est le nombre d’éléments.
+@125 Fais en sorte que `Stack` se souvienne de la sorte de chose qu’elle contient : `push` prend cette sorte, `pop` la rend (ou `undefined`).
+@126 `class Stack<T>`, stocke `#items: T[]`, et utilise `T` dans `push` et `pop`.
+@127 Ajoute `<T>` après `Stack`, garde une liste `#items: T[] = []`, et utilise `T` dans `push` et `pop`.
+@128 `Stack<number>` n’accepte que des nombres et rend des nombres, donc les appelants n’ont jamais besoin de forcer le type.
+@129 Une pile de nombres ne prend que des nombres, et tu sais toujours que tu récupères des nombres.
+@130 Le paramètre de type de la classe traverse le stockage privé et les deux méthodes ; le `T | undefined` de `pop` reflète `Array.prototype.pop`.
+@131 pop donne le type des éléments
+@132 push vérifie l’élément
+@133 dernier entré, premier sorti
+@134 taille
+@135 pop sur une pile vide
+@136 Quel type obtient `box` ?
+@137 De quel type est `box` ?
+@138 Le paramètre de type est inféré à partir de ce qui est passé au constructeur.
+@139 Ce qui entre dans la boîte dit à TypeScript quelle sorte de boîte c’est.
+@140 TypeScript infère `T` comme `string[]` à partir de l’argument du constructeur, donc `box` est un `Box<string[]>`.
+@141 Une liste de mots est entrée, donc c’est une boîte de listes de mots.
+@142 Les arguments du constructeur pilotent l’inférence des paramètres de type d’une classe, exactement comme les appels de fonctions.
+@143 Les interfaces et les classes peuvent avoir des paramètres de type.
+@144 Un conteneur générique renvoie exactement ce que tu y as mis.
+@145 Les arguments de type sont inférés à partir des arguments du constructeur, ou écrits explicitement.
+@146 Les boîtes et les piles peuvent se souvenir de la sorte de chose qu’elles contiennent.
+@147 Tu sais toujours ce que tu récupères.
+@148 TypeScript trouve souvent la sorte tout seul.
+@149 Les génériques de classe s’appliquent aux membres d’instance.
+@150 Des types de retour honnêtes (`T | undefined`).
+@151 La bibliothèque standard est construite ainsi.
+@152 Utiliser deux paramètres de type quand deux types varient indépendamment.
+@153 Donner une valeur par défaut à un paramètre de type.
+@154 Écrire `zip`, qui apparie deux listes.
+@155 Gérer deux sortes différentes à la fois.
+@156 Donner une valeur par défaut à une sorte, comme une roue de secours.
+@157 Apparier deux listes.
+@158 Plusieurs paramètres de type pour plusieurs types qui varient.
+@159 Des valeurs par défaut pour le cas courant.
+@160 Chaque paramètre doit mériter sa place.
+@161 Un emplacement pour chaque sorte.
+@162 Des valeurs de secours pour quand personne ne dit rien.
+@163 Rester simple.
+@164 Génériques à plusieurs paramètres.
+@165 Les valeurs par défaut et leur résolution.
+@166 Éviter les paramètres inutilisés ou utilisés une seule fois.
+@167 Deux choses peuvent varier indépendamment.
+@168 Parfois, deux sortes différentes vont ensemble.
+@169 Utilise un paramètre de type par type qui peut varier. Une paire de deux choses différentes en demande deux :⏎⏎⟦F1⟧⏎⏎Un paramètre de type peut avoir une **valeur par défaut**, utilisée quand il n’est pas donné et ne peut pas être inféré :⏎⏎⟦F2⟧
+@170 Certaines machines gèrent deux sortes de choses à la fois : un nom et un âge, un mot et un nombre. Elles ont besoin de deux emplacements, comme `<A, B>`.⏎⏎Un emplacement peut avoir une valeur de secours (par défaut) : `B = A` veut dire « si tu ne dis rien, prends la même sorte que A ».
+@171 Chaque paramètre de type devrait apparaître au moins deux fois dans une signature (entrées et sorties) pour mériter sa place. Les valeurs par défaut (`<T = string>`) s’appliquent quand un argument de type est omis et que l’inférence n’a aucun candidat ; elles peuvent faire référence à des paramètres précédents. Les paramètres obligatoires ne peuvent pas suivre ceux qui ont une valeur par défaut.⏎⏎L’inférence partielle des arguments de type n’existe pas : en fournir un oblige à fournir tous ceux qui n’ont pas de valeur par défaut, c’est pourquoi les bibliothèques curryfient parfois (`create<State>()(…)`).
+@172 Qu’est-ce que `Point` ?
+@173 De quel type est `Point` ?
+@174 `B` n’a pas été donné, donc il prend sa valeur par défaut : `A`.
+@175 La deuxième sorte n’a pas été donnée, donc elle utilise la valeur de secours : la même que la première.
+@176 `B` vaut `A` par défaut, donc `Pair<number>` est `[number, number]`.
+@177 La sorte de secours est « la même que la première », donc les deux sont des nombres.
+@178 Les valeurs par défaut sont résolues à l’instanciation ; `B = A` fait référence au paramètre précédent.
+@179 Écris `zip` : apparie les éléments de deux listes, sous forme de `[A, B][]`, en s’arrêtant à la liste la plus courte.
+@180 Fais en sorte que `zip` apparie deux listes, comme une fermeture éclair : `[1, 2]` et `["a", "b"]` donnent `[[1, "a"], [2, "b"]]`.
+@181 `function zip<A, B>(left: A[], right: B[]): [A, B][]` ; boucle jusqu’à la longueur la plus courte et ajoute `[left[i], right[i]]`.
+@182 Utilise `<A, B>`. Parcours la liste la plus courte et fais une paire à chaque position.
+@183 Deux paramètres de type gardent les deux types d’éléments, donc le résultat est une liste précise de paires.
+@184 TypeScript se souvient des deux sortes, donc il sait que chaque paire est un nombre et un mot.
+@185 Les paramètres indépendants `A` et `B` apparaissent chacun dans une entrée et dans la sortie. Le `as A` n’est nécessaire que parce que l’indexation est déjà typée `A` (ou `A | undefined` avec `noUncheckedIndexedAccess`).
+@186 paires des deux types
+@187 apparie
+@188 s’arrête à la liste la plus courte
+@189 vide
+@190 Utilise un paramètre de type par type indépendant.
+@191 `<B = A>` donne une valeur par défaut.
+@192 Les valeurs par défaut s’appliquent quand rien n’est donné ni inféré.
+@193 Deux sortes ont besoin de deux emplacements.
+@194 Un emplacement peut avoir une valeur de secours.
+@195 Les fermetures éclair apparient des listes.
+@196 Chaque paramètre doit relier des entrées à des sorties.
+@197 Les valeurs par défaut peuvent faire référence aux paramètres précédents.
+@198 Pas d’inférence partielle : curryfier si besoin.
+@199 Prédire ce que TypeScript infère pour un paramètre de type.
+@200 Écrire soi-même les arguments de type quand rien ne peut être inféré.
+@201 Garder les valeurs exactes avec un paramètre de type `const`.
+@202 Deviner ce que TypeScript devine.
+@203 Lui dire la sorte quand il ne peut pas deviner.
+@204 Lui faire retenir les mots exacts.
+@205 Laisser l’inférence travailler ; ne l’aider que quand elle ne peut pas.
+@206 Les types littéraux survivent dans les contextes `const`.
+@207 Les paramètres de type `const` pour des arguments exacts.
+@208 TypeScript est doué pour deviner.
+@209 L’aider quand il ne peut pas deviner.
+@210 Les mots exacts demandent `const`.
+@211 Comprendre l’élargissement pour prédire l’inférence.
+@212 Annoter les collections vides.
+@213 Concevoir des API qui s’infèrent bien.
+@214 TypeScript infère les arguments de type d’après ce que tu passes.
+@215 TypeScript devine la sorte d’après ce que tu lui donnes.
+@216 Tu écris rarement les arguments de type : TypeScript les infère d’après les arguments.⏎⏎⟦F1⟧⏎⏎Un **paramètre de type `const`** garde les valeurs littérales exactes, comme `as const` à l’endroit de l’appel :⏎⏎⟦F2⟧
+@217 En général, tu ne dis pas la sorte : TypeScript la devine d’après ce que tu donnes à la machine.⏎⏎S’il n’y a rien à partir de quoi deviner (comme une Map vide), tu la lui dis : `new Map<string, number>()`.⏎⏎Un emplacement `const` fait retenir à TypeScript les mots exacts que tu lui as donnés.
+@218 L’inférence rassemble des candidats pour chaque paramètre de type à partir des arguments (et du type de retour attendu par le contexte), puis choisit le meilleur type commun ; les candidats littéraux s’élargissent sauf si le contexte de déclaration les préserve (une liaison `const`, une contrainte faisant intervenir des primitives, ou un paramètre de type `const`).⏎⏎N’écris les arguments de type explicitement que quand l’inférence n’a aucun candidat (collections vides, `useState<T[]>([])`) ou choisit un type plus large que voulu. Le `const T` de TS 5.0 applique l’inférence des assertions const aux arguments littéraux de tableau et d’objet ; le `NoInfer<T>` de TS 5.4 empêche une position de fournir des candidats.
+@219 Quel type obtient `n` ?
+@220 De quel type est `n` ?
+@221 `n` est une `const`, et `T` est inféré à partir de l’argument `42`.
+@222 `n` ne peut jamais changer, et la machine rend exactement ce qu’elle a reçu.
+@223 Pour une `const`, TypeScript garde le littéral : `T` vaut `42`. Avec `let n = identity(42)`, il s’élargirait en `number`.
+@224 Comme `n` est une `const`, TypeScript se souvient du nombre exact, 42.
+@225 Le candidat littéral `42` est gardé parce que le résultat atterrit dans une déclaration `const` ; un `let` modifiable l’élargirait.
+@226 Modifie `keep` pour que `keep(["a", "b"])` soit typé `readonly ["a", "b"]`, et pas `string[]`.
+@227 Fais en sorte que `keep` retienne les mots exacts qu’on lui a donnés.
+@228 Ajoute `const` devant le paramètre de type : `function keep<const T>(value: T): T`.
+@229 Écris `<const T>` au lieu de `<T>`.
+@230 L’appelant n’a plus besoin d’écrire `as const` : la fonction demande elle-même une inférence exacte.
+@231 Maintenant, la machine retient toujours les mots exacts.
+@232 Les paramètres de type `const` appliquent l’inférence en contexte const aux arguments littéraux (tuples readonly, propriétés littérales). Utile pour les tables de routes, les listes d’options et les builders.
+@233 garde la liste exacte
+@234 garde les valeurs exactes d’un objet
+@235 Quand dois-tu écrire l’argument de type toi-même ?
+@236 Quand dois-tu dire la sorte à TypeScript ?
+@237 Quand n’y a-t-il rien à partir de quoi TypeScript puisse inférer ?
+@238 Quand n’y a-t-il rien à partir de quoi deviner ?
+@239 Une collection vide ne donne rien à inférer, donc `new Map()` serait un `Map<any, any>`. Écris `new Map<string, number>()`.
+@240 Une Map vide n’a rien dedans pour deviner, alors tu dis les sortes.
+@241 Sans candidat d’inférence, les paramètres de type se rabattent sur leur contrainte (souvent `unknown`, ou `any` pour certains types de bibliothèques). Fournis-les explicitement.
+@242 `const scores = new Map<string, number>();`, une collection vide
+@243 Toujours, par sécurité : `identity<number>(42)`
+@244 Ça répète ce que l’inférence sait déjà, et ça élargit `42` en `number`.
+@245 TypeScript le sait déjà. L’écrire, c’est juste en plus.
+@246 Les arguments de type sont inférés à partir des arguments que tu passes.
+@247 Les écrire quand il n’y a rien à partir de quoi inférer.
+@248 `<const T>` garde les valeurs littérales exactes.
+@249 Dis-le-lui quand il n’y a rien à partir de quoi deviner.
+@250 `const` lui fait retenir les valeurs exactes.
+@251 L’inférence rassemble et élargit les candidats selon le contexte.
+@252 Des arguments explicites pour les entrées vides.
+@253 `const T` et `NoInfer` règlent l’inférence.

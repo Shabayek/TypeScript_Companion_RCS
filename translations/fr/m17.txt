@@ -1,0 +1,330 @@
+@1 Écrire un type qui fait référence à lui-même, comme `Json`.
+@2 Mettre chaque niveau en lecture seule avec un type mappé récursif.
+@3 Savoir que la récursion a des limites.
+@4 Fabriquer un type qui se contient lui-même, comme des poupées dans des poupées.
+@5 Verrouiller chaque niveau, jusqu’en bas.
+@6 Savoir qu’il faut s’arrêter quelque part.
+@7 Modéliser des données imbriquées avec des types récursifs.
+@8 Appliquer des transformations à toutes les profondeurs.
+@9 Attention aux limites.
+@10 Des poupées dans des poupées.
+@11 Verrouiller jusqu’en bas.
+@12 Rester raisonnable.
+@13 Les alias récursifs sont des citoyens à part entière.
+@14 Les utilitaires profonds demandent du soin.
+@15 Préférer la récursion terminale.
+@16 Les types peuvent se contenir eux-mêmes.
+@17 Comme une poupée avec une poupée plus petite dedans, et encore une autre dedans.
+@18 Certaines données sont imbriquées à n’importe quelle profondeur. Un **type récursif** se mentionne lui-même :⏎⏎⟦F1⟧⏎⏎Une valeur JSON est du texte, un nombre, vrai/faux, null, une liste *de valeurs JSON*, ou un objet *de valeurs JSON*. `DeepReadonly` s’applique à lui-même sur chaque objet imbriqué.
+@19 Pense aux poupées russes : chaque poupée peut en contenir une autre, qui peut en contenir une autre. Une valeur JSON peut contenir d’autres valeurs JSON, aussi profondément que tu veux.⏎⏎`DeepReadonly` verrouille la poupée extérieure, puis l’ouvre et verrouille celle de l’intérieur, et ainsi de suite, jusqu’en bas.
+@20 Les alias de type peuvent être récursifs à travers des types objet, des tableaux, des tuples et (depuis 4.1) des types conditionnels. La profondeur d’instanciation est limitée (environ 50 pour les conditionnels non terminaux, 1 000 pour les récursifs terminaux depuis 4.5) ; au-delà, tu obtiens TS2589 « Type instantiation is excessively deep ».⏎⏎Les types mappés récursifs traitent les tableaux et les tuples de façon homomorphe ; les fonctions sont aussi des objets, donc protège-les (`T[K] extends (...args: never[]) => unknown ? T[K] : …`) quand ça compte.
+@21 Définis `Json` : du texte, des nombres, des booléens, `null`, et des tableaux et des objets de `Json`.
+@22 Fabrique le type `Json` : des mots, des nombres, des oui/non, `null`, et des listes et des objets remplis d’autre `Json`.
+@23 Une union qui mentionne `Json[]` et `{ [key: string]: Json }`.
+@24 Liste les sortes simples avec `|`, puis ajoute `Json[]` et `{ [key: string]: Json }`.
+@25 Le type décrit exactement ce que garde `JSON.stringify` : les fonctions, `undefined` et les objets `Date` ne sont pas du JSON.
+@26 Seules les choses que JSON peut vraiment contenir sont permises.
+@27 Un type `Json` précis documente la sérialisabilité ; `Date` échoue parce que ses méthodes ne sont pas du `Json`.
+@28 données imbriquées
+@29 pas de fonctions
+@30 pas d’undefined
+@31 pas de dates
+@32 Construis `DeepReadonly<T>` : rien ne peut être modifié, à aucune profondeur.
+@33 Construis `DeepReadonly` : verrouille chaque poupée, jusqu’en bas.
+@34 `{ readonly [K in keyof T]: T[K] extends object ? DeepReadonly<T[K]> : T[K] }`.
+@35 Verrouille chaque étiquette, et si ce qu’il y a derrière est un objet, verrouille-le aussi (en réutilisant `DeepReadonly`).
+@36 `Readonly` ne verrouille que le premier niveau ; la version récursive atteint chaque objet et tableau imbriqué.
+@37 Le simple verrou ne verrouillait que la poupée extérieure. Maintenant, chaque poupée est verrouillée.
+@38 Le type mappé homomorphe transforme aussi les tableaux en tableaux readonly, donc `push` disparaît.
+@39 lire, ça va
+@40 le premier niveau est verrouillé
+@41 plus profond aussi
+@42 les tableaux sont verrouillés
+@43 Que se passe-t-il si un type récursif va trop loin ?
+@44 Et si les poupées continuaient pour toujours ?
+@45 TypeScript doit s’arrêter quelque part.
+@46 TypeScript peut-il ouvrir des poupées pour toujours ?
+@47 TypeScript s’arrête et signale « Type instantiation is excessively deep and possibly infinite » (TS2589). Garde la récursion peu profonde ou terminale.
+@48 TypeScript abandonne et dit que c’est trop profond. Il faut donc s’arrêter quelque part.
+@49 Les limites de profondeur protègent le vérificateur ; les types conditionnels récursifs terminaux ont une limite bien plus haute.
+@50 TypeScript signale que le type est trop profond
+@51 L’éditeur gèle pour toujours
+@52 Il y a une limite, justement pour que ça n’arrive pas.
+@53 TypeScript a une limite, donc il ne gèle pas.
+@54 La version courte.
+@55 Ce que tu as appris.
+@56 Un type récursif fait référence à lui-même.
+@57 `Json` et `DeepReadonly` sont des exemples classiques.
+@58 La profondeur de récursion est limitée.
+@59 Les types peuvent se contenir eux-mêmes, comme des poupées.
+@60 Tu peux verrouiller chaque poupée.
+@61 Il faut s’arrêter quelque part.
+@62 Récursion à travers objets, tableaux et conditionnels.
+@63 Limites de profondeur et TS2589.
+@64 Protéger les fonctions dans les types mappés profonds.
+@65 Distinguer des valeurs qui sont toutes des chaînes : identifiants d’utilisateurs, de commandes, e-mails.
+@66 Ne créer des valeurs marquées que via une fonction de vérification.
+@67 Savoir que les marques n’existent que dans les types.
+@68 Mettre des étiquettes sur des choses qui se ressemblent.
+@69 Ne distribuer les étiquettes qu’après vérification.
+@70 Savoir que l’étiquette n’est que pour TypeScript.
+@71 Marquer les identifiants et les valeurs validées.
+@72 Un constructeur par marque.
+@73 Sûreté à la compilation, chaînes à l’exécution.
+@74 Étiqueter les choses qui se ressemblent.
+@75 Vérifier avant d’étiqueter.
+@76 Les étiquettes empêchent les confusions.
+@77 Des types fantômes pour la sûreté du domaine.
+@78 Centraliser les assertions.
+@79 Des abstractions sans coût.
+@80 Même forme, sens différent.
+@81 Deux clés peuvent se ressembler mais ouvrir des portes différentes.
+@82 TypeScript est structurel : n’importe quelle `string` convient à n’importe quelle autre `string`. Donc un identifiant d’utilisateur peut être passé là où un identifiant de commande est attendu. Une **marque** les rend différents :⏎⏎⟦F1⟧
+@83 Deux clés peuvent se ressembler exactement, mais l’une ouvre la porte d’entrée et l’autre la cabane du jardin. TypeScript voit deux chaînes et ne peut pas les distinguer.⏎⏎Une marque, c’est une étiquette : « cette chaîne est un identifiant de commande ». Seule une machine spéciale distribue l’étiquette, après vérification.
+@84 Le marquage simule le typage nominal avec une intersection de la primitive et d’une propriété fantôme ; aucune propriété de ce genre n’existe à l’exécution, donc la seule façon d’entrer est une assertion dans une fonction constructeur, qui devrait valider (un « constructeur intelligent »). Les marques en `unique symbol` évitent les conflits de noms de marques entre bibliothèques.⏎⏎Utilise les marques pour les identifiants, les unités (`Meters` ou `Feet`), les chaînes validées (`Email`, `NonEmptyString`) et le HTML assaini. Elles ne coûtent rien à l’exécution.
+@85 Marque `UserId` et `OrderId` pour qu’on ne puisse pas les confondre.
+@86 Mets des étiquettes sur `UserId` et `OrderId` pour qu’on ne puisse pas les confondre.
+@87 `type OrderId = string & { readonly __brand: "OrderId" };` (et pareil pour `UserId`) ; `toOrderId` renvoie `raw as OrderId`.
+@88 Ajoute `& { readonly __brand: "OrderId" }` à chaque type, et utilise `as OrderId` dans `toOrderId`.
+@89 La marque n’existe que dans les types : à l’exécution, un `OrderId` est une simple chaîne. Confondre les identifiants est maintenant une erreur de compilation.
+@90 L’étiquette n’est que pour TypeScript, mais elle empêche les confusions avant qu’elles arrivent.
+@91 Les intersections fantômes donnent un comportement nominal sans coût ; `toOrderId` est l’unique assertion contrôlée.
+@92 un identifiant de commande marche
+@93 un identifiant d’utilisateur est refusé
+@94 une simple chaîne est refusée
+@95 toujours utilisable comme une chaîne
+@96 rien ne change à l’exécution
+@97 Écris `toEmail` : renvoie le texte en tant qu’`Email` s’il a exactement un `@` avec du texte des deux côtés, sinon `null`.
+@98 Fabrique `toEmail` : ne distribue l’étiquette Email que si le texte a un seul `@` avec quelque chose de chaque côté.
+@99 `split("@")` doit donner exactement deux parties non vides ; puis `return text as Email`.
+@100 Coupe au niveau du `@`. Il te faut exactement deux morceaux, aucun vide. Puis rends `text as Email`.
+@101 Un constructeur intelligent : la seule façon d’obtenir un `Email`, c’est de passer la vérification, donc chaque `Email` du programme l’a passée.
+@102 Seules les adresses vérifiées reçoivent l’étiquette Email.
+@103 Une validation plus un seul forçage ; le code en aval peut exiger un `Email` au lieu de revalider des chaînes.
+@104 une vraie adresse
+@105 pas de @
+@106 deux @
+@107 rien avant le @
+@108 Une marque (`string & { __brand: … }`) rend différentes des valeurs qui se ressemblent.
+@109 Ne créer des valeurs marquées que dans une fonction de vérification.
+@110 Les marques ne coûtent rien à l’exécution.
+@111 Les étiquettes distinguent les valeurs qui se ressemblent.
+@112 Seule une machine de vérification distribue les étiquettes.
+@113 Les étiquettes ne sont que pour TypeScript.
+@114 Typage nominal via des intersections fantômes.
+@115 Les constructeurs intelligents portent l’assertion.
+@116 À utiliser pour les identifiants, les unités et les chaînes validées.
+@117 Savoir quand `Box<Dog>` convient là où `Box<Animal>` est attendu.
+@118 Voir pourquoi les paramètres de fonctions vont dans l’autre sens.
+@119 Annoter les paramètres de type avec `in` et `out`.
+@120 Savoir quand une boîte de chiens compte comme une boîte d’animaux.
+@121 Voir pourquoi un vétérinaire pour chiens seulement n’est pas un vétérinaire pour animaux.
+@122 Indiquer dans quel sens marche une boîte.
+@123 Lecture : covariant. Écriture : contravariant. Les deux : invariant.
+@124 Utiliser `readonly` pour rendre les tableaux sûrs.
+@125 Annoter la variance sur les génériques complexes.
+@126 Les boîtes où l’on prend et les boîtes où l’on met marchent différemment.
+@127 Verrouiller les listes pour rester en sécurité.
+@128 Comprendre le défaut de solidité délibéré.
+@129 Readonly pour une covariance solide.
+@130 Une variance explicite pour la clarté et la vitesse.
+@131 Les choses dans lesquelles on lit, et celles à qui on donne.
+@132 Une boîte où l’on prend, et une boîte où l’on met.
+@133 Si chaque `Dog` est un `Animal`, est-ce qu’un `Dog[]` est un `Animal[]` ? TypeScript dit oui (les tableaux sont **covariants**). C’est pratique, mais pas totalement sûr : par le nom `Animal[]`, tu pourrais ajouter un chat dans la liste de chiens.⏎⏎Les fonctions vont dans l’autre sens pour leurs paramètres (**contravariantes**) : une fonction qui gère n’importe quel `Animal` peut remplacer une fonction qui gère des `Dog`, mais pas l’inverse.⏎⏎⟦F1⟧
+@134 Un sac de chiens est un sac d’animaux, tant qu’on ne fait qu’en sortir des choses. Mais si quelqu’un y met un chat en passant par l’étiquette « animaux », le sac de chiens contient maintenant un chat !⏎⏎Un vétérinaire qui soigne n’importe quel animal peut soigner ton chien. Un vétérinaire pour chiens seulement ne peut pas soigner tous les animaux. Donc les « preneurs » marchent dans l’autre sens.
+@135 La variance, c’est la façon dont le sous-typage de `F<T>` suit celui de `T` : covariant (sorties), contravariant (entrées), invariant (les deux), bivariant (l’un ou l’autre, non solide). TypeScript infère la variance structurellement ; les tableaux et les paramètres de méthodes sont délibérément non solides (covariants/bivariants) pour l’ergonomie, tandis que les propriétés typées comme fonctions sont vérifiées de façon contravariante sous `strictFunctionTypes`.⏎⏎Les annotations explicites `in`/`out` (TS 4.7) documentent l’intention, accélèrent la vérification des types complexes et sont vérifiées par rapport à la structure (TS2636 si elles la contredisent).
+@136 TypeScript accepte ceci. Qu’est-ce qui s’affiche ?
+@137 TypeScript dit que c’est bon. Qu’est-ce que ça va montrer ?
+@138 `animals` et `dogs` sont le même tableau. Le chat n’a pas de `bark`.
+@139 Les deux noms désignent la même liste, et un chat est entré.
+@140 La covariance des tableaux a laissé entrer un non-chien dans `dogs`. TypeScript accepte ce trou en échange du confort ; `readonly Animal[]` l’aurait fermé.
+@141 Un chat est entré dans la liste des chiens par le nom « animals », et les chats ne savent pas aboyer.
+@142 Les tableaux modifiables sont covariants de façon non solide ; les tableaux readonly sont covariants de façon solide parce qu’on ne peut pas y écrire.
+@143 Sous `strict`, quelle affectation est une erreur ?
+@144 Laquelle TypeScript refuse-t-il ?
+@145 Un gestionnaire doit s’en sortir avec tout ce que son emplacement peut lui passer.
+@146 Un vétérinaire pour chiens seulement peut-il soigner tous les animaux ?
+@147 Un gestionnaire réservé aux `Dog` ne peut pas remplacer un gestionnaire d’`Animal` : il pourrait être appelé avec un chat. L’inverse ne pose pas de problème.
+@148 Le vétérinaire pour chiens seulement ne peut pas être le vétérinaire pour animaux. Le vétérinaire pour animaux, lui, peut soigner les chiens.
+@149 `strictFunctionTypes` vérifie les paramètres typés comme fonctions de façon contravariante.
+@150 `const handleAnimal: (a: Animal) => void = (d: Dog) => d.bark();`
+@151 `const handleDog: (d: Dog) => void = (a: Animal) => console.log(a.name);`
+@152 Celle-là ne pose pas de problème : un gestionnaire pour n’importe quel animal peut gérer les chiens.
+@153 Ça, c’est bon : le vétérinaire pour animaux peut soigner les chiens.
+@154 Les annotations `in`/`out` sont inversées. Corrige-les.
+@155 Les marques « donner » et « prendre » sont inversées. Corrige-les !
+@156 `Producer` ne fait que renvoyer `T` (`out`) ; `Consumer` ne fait que recevoir `T` (`in`).
+@157 Le fabricant donne des choses ; le preneur en prend.
+@158 `out` pour les positions où l’on lit, `in` pour celles où l’on écrit. TypeScript vérifie que l’annotation correspond à l’usage de `T`.
+@159 Les fabricants donnent ; les preneurs prennent. TypeScript vérifie que tu les as bien marqués.
+@160 Les annotations de variance sont vérifiées par rapport à l’usage structurel (TS2636), puis utilisées pour l’affectabilité.
+@161 un fabricant de chiens est un fabricant d’animaux
+@162 un preneur d’animaux peut prendre des chiens
+@163 pas dans l’autre sens
+@164 Les sorties sont covariantes : `Producer<Dog>` convient pour `Producer<Animal>`.
+@165 Les entrées sont contravariantes : `Consumer<Animal>` convient pour `Consumer<Dog>`.
+@166 Les tableaux modifiables sont covariants, ce qui est pratique mais pas totalement sûr.
+@167 Les boîtes où l’on prend : les chiens comptent comme des animaux.
+@168 Les boîtes où l’on met : ça marche dans l’autre sens.
+@169 Les listes modifiables peuvent laisser entrer la mauvaise chose.
+@170 La variance suit le flux des données.
+@171 `in`/`out` la documentent et l’imposent.
+@172 Préférer les collections readonly dans les API.
+@173 Voir un mauvais argument élargir un paramètre de type au lieu d’être une erreur.
+@174 Bloquer l’inférence depuis un paramètre avec `NoInfer<T>`.
+@175 Garder les littéraux exacts avec `const T`.
+@176 Voir comment une mauvaise supposition se faufile.
+@177 Dire à TypeScript de ne pas deviner à partir d’une entrée.
+@178 Garder les mots exacts.
+@179 Choisir quels arguments pilotent l’inférence.
+@180 Attraper les erreurs qui élargiraient les types.
+@181 Garder les littéraux exacts quand ils comptent.
+@182 Guider les suppositions de TypeScript.
+@183 Attraper les mauvais choix.
+@184 Retenir les mots exacts.
+@185 Concevoir l’inférence, c’est concevoir l’API.
+@186 Intrinsèques : `NoInfer`.
+@187 Paramètres de type const.
+@188 Décider d’où TypeScript infère.
+@189 Dire à TypeScript à partir de quelles entrées deviner.
+@190 TypeScript infère un paramètre de type à partir de *chaque* endroit où il apparaît, donc une erreur peut l’élargir au lieu d’être signalée :⏎⏎⟦F1⟧⏎⏎`NoInfer<T>` (TypeScript 5.4) veut dire « vérifie ceci par rapport à `T`, mais ne t’en sers pas pour trouver `T` ».
+@191 TypeScript devine la sorte à partir de toutes les entrées, donc une mauvaise entrée ("blue") est ajoutée à la supposition au lieu d’être attrapée !⏎⏎`NoInfer` dit : « ne devine pas à partir de cette entrée ; contente-toi de la vérifier ».
+@192 `NoInfer<T>` est un marqueur intrinsèque qui retire sa position des candidats d’inférence tout en gardant `T` pour la vérification. Usages typiques : valeurs par défaut, valeurs de repli et paramètres « l’un de ceux-ci ». Combine-le avec `const T` pour inférer des unions de littéraux exactes à partir du seul argument qui fait autorité.
+@193 Fais en sorte que `pick` refuse un `initial` qui ne fait pas partie des `options`.
+@194 Fais en sorte que `pick` refuse un choix de départ qui n’est pas dans la liste.
+@195 Remplace `initial: T` par `initial: NoInfer<T>`.
+@196 Entoure le type de `initial` de `NoInfer< >`.
+@197 `T` n’est maintenant inféré qu’à partir d’`options`, et `initial` est vérifié par rapport à lui, donc "blue" est attrapé.
+@198 Maintenant, TypeScript ne devine qu’à partir de la liste, et vérifie le choix de départ.
+@199 Les candidats d’inférence viennent uniquement d’`options` ; `initial` est vérifié après l’inférence.
+@200 une vraie option
+@201 une mauvaise option est une erreur
+@202 choisit
+@203 Fais en sorte que `defineRoutes` garde les noms exacts des routes, pour que `go` n’accepte que ceux-là.
+@204 Fais en sorte que `defineRoutes` retienne les noms exacts des routes.
+@205 Utilise un paramètre de type `const` : `function defineRoutes<const T extends readonly string[]>(routes: T): T`.
+@206 Écris `<const T extends readonly string[]>`.
+@207 L’appelant écrit un simple tableau ; `const T` fait inférer à TypeScript `readonly ["home", "about"]`.
+@208 Maintenant, les noms exacts sont retenus, sans `as const` à chaque appel.
+@209 Les paramètres de type `const` appliquent l’inférence en contexte const ; la contrainte `readonly` est nécessaire pour admettre les tuples readonly.
+@210 noms exacts
+@211 routes inconnues refusées
+@212 Les paramètres de type sont inférés à partir de chaque endroit où ils apparaissent.
+@213 `NoInfer<T>` vérifie un paramètre sans inférer à partir de lui.
+@214 `const T` garde les littéraux exacts.
+@215 TypeScript devine à partir de chaque entrée.
+@216 `NoInfer` dit « contente-toi de vérifier celle-ci ».
+@217 `const` garde les mots exacts.
+@218 Contrôler délibérément les sites d’inférence.
+@219 `NoInfer` pour les valeurs par défaut et de repli.
+@220 `const T` plus des contraintes readonly.
+@221 Faire dépendre un type de retour d’un argument avec un type conditionnel.
+@222 Comparer avec les surcharges et les simples génériques.
+@223 Choisir le plus simple qui marche.
+@224 Faire dépendre ce qui sort de ce qui entre.
+@225 Comparer trois façons de faire.
+@226 Choisir la plus facile.
+@227 Commencer par le typage le plus simple qui marche.
+@228 Monter d’un cran seulement si nécessaire.
+@229 Contenir les forçages non vérifiés.
+@230 Choisir la façon la plus facile.
+@231 N’utiliser des règles que si nécessaire.
+@232 Garder `as` à un seul endroit.
+@233 Les stratégies de typage d’API ont des compromis.
+@234 Savoir ce que vérifie le vérificateur.
+@235 Contenir les assertions.
+@236 Trois outils pour « la sortie dépend de l’entrée ».
+@237 Trois façons de dire ce qui sort.
+@238 ⟦F1⟧⏎⏎Un type de retour conditionnel a besoin d’un forçage à l’intérieur : TypeScript ne peut pas vérifier le corps par rapport à un type qui dépend d’un `K` non résolu.
+@239 Parfois, ce qui sort d’une machine dépend de ce que tu y mets. Il y a trois façons de le dire à TypeScript.⏎⏎La plus simple : « la même sorte revient ». Ensuite : une liste de cas. Ensuite : une règle, comme le choixpeau.
+@240 Préfère, dans l’ordre : un générique qui transmet (entièrement vérifié), des surcharges (vérifiées à chaque appel, corps non vérifié pour chaque surcharge), des types de retour conditionnels (expressifs et composables, mais l’implémentation a besoin d’assertions parce que TypeScript n’affine pas les paramètres de type par le flot de contrôle, même si TS 5.8 affine certaines expressions de retour).⏎⏎Les types de retour conditionnels se composent mieux quand les appelants sont eux-mêmes génériques ; les surcharges donnent de meilleurs messages d’erreur et infobulles pour un petit ensemble fixe de cas.
+@241 Donne à `parseAs` un type de retour conditionnel : `number` pour `"number"`, `boolean` pour `"boolean"`.
+@242 Fais en sorte que `parseAs` dise : "number" donne un nombre, "boolean" donne un oui/non.
+@243 Type de retour `K extends "number" ? number : boolean`, et force le résultat du corps vers ce type.
+@244 Utilise le choixpeau comme type de retour, et le même type avec `as` sur le résultat.
+@245 Les appelants obtiennent le type précis ; l’unique `as` à l’intérieur est le prix d’un type de retour que TypeScript ne peut pas vérifier tout seul.
+@246 Maintenant, chaque façon de l’utiliser rend la bonne sorte.
+@247 L’assertion est inévitable pour les types de retour conditionnels sur un `K` non résolu ; garde-la à un seul endroit.
+@248 un nombre
+@249 un booléen
+@250 les autres sortes refusées
+@251 analyse un nombre
+@252 analyse un booléen
+@253 `identity(value)` renvoie exactement ce qu’elle reçoit. Quel outil ?
+@254 Une machine rend exactement ce qu’elle reçoit. Quelle façon est la meilleure ?
+@255 Lequel n’a besoin ni de forçage ni de liste de cas ?
+@256 Lequel est le plus simple ?
+@257 Un simple générique : `function identity<T>(value: T): T`. Entièrement vérifié, rien à maintenir.
+@258 Le simple générique « la même sorte revient ».
+@259 Un générique qui transmet exprime la relation exactement, sans code non vérifié.
+@260 Un générique : `<T>(value: T): T`
+@261 Un type de retour conditionnel
+@262 Possible, mais ça ajoute un forçage pour rien.
+@263 Trop compliqué pour ça.
+@264 Une surcharge par type possible
+@265 Il y a une infinité de types ; un générique les couvre tous.
+@266 Il y en aurait beaucoup trop !
+@267 Générique qui transmet : le plus simple et entièrement vérifié.
+@268 Surcharges : une courte liste fixe de cas.
+@269 Types de retour conditionnels : une règle, avec un forçage à l’intérieur.
+@270 La même sorte revient : utilise un générique.
+@271 Quelques cas fixes : des surcharges.
+@272 Une règle : le choixpeau.
+@273 Préférer les génériques, puis les surcharges, puis les conditionnels.
+@274 Cantonner les assertions à une seule ligne.
+@275 Composabilité contre messages d’erreur.
+@276 Décrire les événements et leurs données avec un type table d’événements.
+@277 Typer `on` et `emit` avec `K extends keyof Events`.
+@278 Faire des mauvais noms d’événements et des mauvaises données des erreurs de compilation.
+@279 Noter chaque message et ce qu’il transporte.
+@280 S’assurer que les écouteurs reçoivent les bonnes données.
+@281 Attraper les mauvais noms de messages.
+@282 Décrire les événements une seule fois, dans une table.
+@283 Laisser les génériques relier noms et contenus.
+@284 Le même motif fait tourner beaucoup de bibliothèques.
+@285 Écrire les règles une seule fois.
+@286 TypeScript vérifie chaque message.
+@287 Les vraies bibliothèques marchent comme ça.
+@288 Les tables d’événements sont un motif avancé essentiel.
+@289 Des tuples pour les contenus.
+@290 Pas de `any`, même à l’intérieur.
+@291 Une table d’événements relie les noms aux données.
+@292 Un tableau de messages où chaque message a des règles.
+@293 Les émetteurs non typés (`on(name: string, fn: (...args: any[]) => void)`) acceptent les fautes de frappe et les mauvaises données. Un type **table d’événements** règle ça :⏎⏎⟦F1⟧
+@294 Imagine un tableau de messages. Chaque sorte de message a un nom ("login") et transporte des données (qui s’est connecté).⏎⏎Les règles listent chaque nom de message et ses données. Ensuite, TypeScript empêche quiconque d’envoyer un message avec un mauvais nom ou de mauvaises données.
+@295 Les valeurs de la table sont des tuples, donc `...args: Events[K]` type les paramètres du reste avec des noms et une arité. `K extends keyof Events` corrèle le nom avec son contenu à chaque appel. À l’intérieur, un type mappé `{ [K in keyof Events]?: Listener<K>[] }` garde le stockage typé sans `any`.⏎⏎C’est le motif derrière les tables d’événements typées du DOM (`HTMLElementEventMap`), l’`EventEmitter` typé de Node et les API d’abonnement de la plupart des bibliothèques d’état.
+@296 Type `Emitter` avec une table d’événements : `on` et `emit` n’acceptent que de vrais noms d’événements, avec exactement les données de cet événement.
+@297 Donne des règles au tableau de messages : seulement de vrais noms de messages, et seulement les bonnes données pour chacun.
+@298 Rends la classe générique : `class Emitter<Events extends Record<string, unknown[]>>`, puis `on<K extends keyof Events>(name: K, listener: (...args: Events[K]) => void)` et `emit<K extends keyof Events>(name: K, ...args: Events[K])`.
+@299 Ajoute `<Events extends Record<string, unknown[]>>` à la classe. Ensuite, `on` et `emit` utilisent `K extends keyof Events` et `Events[K]` pour les données.
+@300 Stocke les écouteurs comme `{ [K in keyof Events]?: ((...args: Events[K]) => void)[] }`, et ajoute avec `(this.#listeners[name] ??= []).push(listener)`.
+@301 Garde les écouteurs dans un objet avec une liste par nom de message.
+@302 Le code d’exécution a à peine changé ; les types relient maintenant chaque nom d’événement à ses données, donc les fautes de frappe et les mauvais contenus ne compilent plus.
+@303 Le tableau marche pareil, mais maintenant TypeScript fait respecter les règles.
+@304 Corrélation de `K` entre les paramètres via `Events[K]` ; le type de stockage mappé garde l’implémentation libre de `any`.
+@305 les écouteurs reçoivent des données typées
+@306 les mauvaises données sont refusées
+@307 les événements inconnus sont refusés
+@308 le bon appel compile
+@309 livre à chaque écouteur, dans l’ordre
+@310 aucun écouteur, ça va
+@311 Pourquoi les contenus des événements sont-ils écrits comme des tuples, par exemple `[done: number, total: number]` ?
+@312 Pourquoi les données de chaque message sont-elles écrites comme une liste, par exemple `[done: number, total: number]` ?
+@313 Regarde comment `emit` et l’écouteur reçoivent les données.
+@314 Regarde comment les données sont remises à l’écouteur.
+@315 Un tuple type un paramètre du reste : `...args: Events[K]` devient exactement deux nombres, avec des noms, donc les écouteurs peuvent prendre `(done, total)`.
+@316 La liste dit exactement combien il y a de données, et de quelle sorte est chacune.
+@317 Les types tuple donnent aux paramètres du reste une arité précise, des types par position et des noms (affichés dans les infobulles de l’éditeur).
+@318 Ils typent `...args` : combien de valeurs, et le type de chacune
+@319 Les tuples sont plus rapides que les objets à l’exécution
+@320 Le contenu est passé en arguments séparés ; le tuple n’existe que dans les types.
+@321 Ce n’est qu’une question de types, pas de vitesse.
+@322 Un type table d’événements liste les noms d’événements et leurs données sous forme de tuples.
+@323 `K extends keyof Events` relie le nom de chaque appel à ses données.
+@324 Les fautes de frappe et les mauvaises données deviennent des erreurs de compilation.
+@325 Les règles listent chaque message et ses données.
+@326 Les écouteurs reçoivent toujours les bonnes données.
+@327 Les mauvais noms sont attrapés.
+@328 Les tables à valeurs tuple typent les paramètres du reste.
+@329 Corrélation à chaque appel via les génériques.
+@330 Le stockage mappé évite `any`.

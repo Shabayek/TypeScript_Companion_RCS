@@ -1,0 +1,242 @@
+@1 Les fichiers sont des modules avec une portée privée.
+@2 Les exports sont des promesses faites aux autres fichiers.
+@3 N’importer que ce qu’on utilise.
+@4 Les fichiers gardent leurs affaires pour eux.
+@5 `export` est une promesse faite aux autres fichiers.
+@6 N’`import` que ce que tu utilises.
+@7 Garder les modules cohérents et leurs exports minimaux.
+@8 Les imports de types seuls disparaissent à la compilation.
+@9 Éviter les cycles d’import ; déplacer le code partagé dans son propre module.
+@10 Un fichier, un travail. Ne partager que le nécessaire.
+@11 Un fichier, un travail. Ne partage que ce dont les autres ont besoin.
+@12 Un **module** est un fichier avec sa propre portée. Rien ne sort sans que tu l’`export`es, et rien n’entre sans que tu l’`import`es.⏎⏎⟦F1⟧⏎⏎Cette frontière est une qualité. Quelqu’un qui lit `app.ts` voit exactement d’où vient `add`, et un nom d’un module ne peut pas entrer en collision en silence avec un nom d’un autre.⏎⏎Garde la surface exportée petite. Moins un module fait de promesses, plus tu es libre de changer ce qu’il y a dedans.
+@13 Un grand programme, c’est plus facile en petites pièces. Chaque pièce est un fichier.⏎⏎Les portes, ce sont `export` (laisser sortir quelque chose) et `import` (faire entrer quelque chose).⏎⏎Si tu n’ouvres pas de porte, personne ne peut voir dans la pièce.
+@14 Chaque module ES a sa propre portée de premier niveau et n’est évalué qu’une fois, au premier import ; les imports sont des liaisons vivantes en lecture seule. Préfère les exports nommés au `default` : les noms restent cohérents d’un fichier à l’autre et supportent bien les refactorisations.⏎⏎Utilise `import type { User } from "./user"` pour les imports de types seuls. Ils sont entièrement effacés, ce qui évite les cycles et les effets de bord à l’exécution ; `verbatimModuleSyntax` rend cette distinction obligatoire.⏎⏎Les exports d’un module sont son API : tout ce qui est exporté est une chose que tu as promis de ne pas casser.
+@15 Un long fichier, ou deux fichiers ciblés.
+@16 Un long fichier, ou deux petits ?
+@17 Un fichier
+@18 Bien pour une démo. Pénible à quatre cents lignes.
+@19 Bien pour quelque chose de petit. Dur quand ça devient long.
+@20 Deux modules
+@21 Chaque fichier peut être lu, testé et modifié séparément.
+@22 Chaque fichier peut être lu, testé et modifié tout seul.
+@23 Que fait `export` ?
+@24 `export` et `import` vont ensemble. Que doit faire un fichier pour qu’un autre puisse `import`er depuis lui ?
+@25 Pense au partage : qu’est-ce qui permet à un autre fichier d’utiliser quelque chose de celui-ci ?
+@26 Il rend une valeur importable depuis d’autres modules. Tout le reste reste privé au fichier.
+@27 Il permet aux autres fichiers d’utiliser la valeur. Tout le reste reste privé dans le fichier, comme une pièce à la porte fermée.
+@28 `export` ajoute une liaison à l’interface publique du module. Les modules n’écrivent jamais dans l’objet global, et c’est ce qui a mis fin à l’ère des variables globales des balises script.
+@29 Rend une valeur disponible pour d’autres modules
+@30 Exécute le fichier immédiatement
+@31 Importer exécute un fichier, mais `export` lui-même ne fait que publier une valeur.
+@32 Faire entrer un fichier l’exécute, mais `export` ne fait que partager une valeur.
+@33 Met la valeur sur l’objet global
+@34 C’est justement ce que les modules permettent d’éviter. Les exports sont explicites, pas globaux.
+@35 Mettre des choses partout, c’est justement ce que les fichiers évitent. Tu choisis ce que tu partages.
+@36 Remets le fichier dans un ordre qui marche.
+@37 Remets le fichier dans le bon ordre.
+@38 Les imports viennent en premier. Une fonction doit être déclarée avant que la ligne qui l’appelle s’exécute.
+@39 Commence par l’`import`. Fabrique la fonction avant de t’en servir.
+@40 Les imports vont en haut pour que la dépendance soit visible tout de suite. La fonction est déclarée, puis appelée en bas.
+@41 L’`import` va en haut, pour qu’on voie ce dont le fichier a besoin. Puis la fonction est fabriquée, et en bas, on l’utilise.
+@42 Les déclarations `import` sont résolues avant que le corps du module s’exécute, où qu’elles soient ; la convention les met en premier pour que les dépendances soient visibles. La déclaration de fonction est ensuite appelée en bas.
+@43 La version courte.
+@44 Ce que tu as appris.
+@45 Un module est un fichier avec sa propre portée.
+@46 `export` publie ; `import` fait entrer.
+@47 Les petites surfaces publiques sont plus faciles à changer.
+@48 Un module est un fichier avec son propre espace privé.
+@49 `export` partage ; `import` fait entrer.
+@50 Ne partage que ce qui est nécessaire.
+@51 Les modules ont une portée de premier niveau privée et ne sont évalués qu’une fois.
+@52 Préfère les exports nommés ; utilise `import type` pour les types.
+@53 Chaque export est un engagement d’API publique.
+@54 Pour aller plus loin : que fait `import type { User } from "./user";` ?
+@55 Un défi : que veut dire `import type` ?
+@56 Pense à ce qui reste une fois les types effacés.
+@57 Les types disparaissent quand le code s’exécute. Que devient un import qui ne contient que des types ?
+@58 `import type` ne fait entrer que des types. Il est entièrement retiré du JavaScript, donc il ne peut jamais charger un fichier ni créer de cycle de dépendances à l’exécution.
+@59 Il n’emprunte que des étiquettes (des types). Quand le code s’exécute, cette ligne a disparu.
+@60 Les imports de types seuls sont toujours supprimés ; avec `verbatimModuleSyntax`, les imports normaux sont gardés tels qu’écrits, donc `import type` (ou les modificateurs `type` en ligne) est la façon de marquer les dépendances de types seuls.
+@61 N’importe que le type ; la ligne disparaît du JavaScript
+@62 Charge le module, puis copie ses types
+@63 Rien n’est chargé à l’exécution : les types n’y existent pas.
+@64 Rien n’est chargé quand le code s’exécute. Les types ont déjà disparu.
+@65 C’est pareil qu’`import`, juste plus court à taper
+@66 Un `import` normal peut charger le module à l’exécution. `import type`, jamais.
+@67 Un import normal peut charger un fichier. `import type`, jamais.
+@68 Les échecs font partie de la conception.
+@69 Entourer la ligne risquée, pas tout.
+@70 `catch` doit faire quelque chose d’utile.
+@71 Les choses qui tournent mal font partie du plan.
+@72 Ne mettre que la ligne risquée dans `try`.
+@73 Les exceptions pour l’inattendu, les résultats pour l’attendu.
+@74 Ne jamais avaler une erreur sans prendre de décision.
+@75 Affiner les erreurs `unknown` avec `instanceof Error`.
+@76 Prévoir le mauvais cas, pas seulement le bon.
+@77 Prévoir le moment où ça tourne mal, pas seulement celui où tout va bien.
+@78 Certains échecs sont attendus : un fichier manque, un texte n’est pas du JSON valide, une requête réseau expire. `try` / `catch` te permet de continuer au lieu d’arrêter tout le programme.⏎⏎⟦F1⟧⏎⏎Deux habitudes rendent ça utile :⏎⏎- N’entoure que la ligne risquée, pas toute la fonction.⏎- Fais quelque chose de sensé dans `catch` : journaliser, réessayer ou renvoyer une valeur sûre. Avaler une erreur en silence, c’est comme ça que les bugs deviennent des mystères.
+@79 Parfois, ça tourne mal : le texte n’est pas valide, le fichier manque.⏎⏎`try`, c’est là que tu mets la partie risquée. `catch`, c’est ton plan B.⏎⏎Sans plan, tout le programme s’arrête.
+@80 Dans une clause `catch`, l’erreur est typée `unknown` (`useUnknownInCatchVariables`, inclus dans `strict`), parce que n’importe quoi peut être levé. Affine avec `error instanceof Error` avant de lire `.message`.⏎⏎Garde les blocs `try` petits pour n’attraper que l’échec que tu attends, et relance ce que tu ne sais pas gérer. `finally` s’exécute dans tous les cas et sert au nettoyage.⏎⏎Pour les échecs attendus, envisage de renvoyer un résultat plutôt que de lever une erreur : `{ ok: true; value: T } | { ok: false; error: string }`. Le compilateur oblige alors chaque appelant à traiter le cas d’échec.
+@81 La même mauvaise entrée, deux issues.
+@82 La même mauvaise entrée, deux fins.
+@83 Sans plan
+@84 Une seule mauvaise chaîne arrête tout ce qui suit.
+@85 Un seul mauvais bout de texte arrête tout ce qui vient après.
+@86 Avec un plan
+@87 Une mauvaise entrée devient un zéro banal au lieu d’une panne.
+@88 Le mauvais texte devient juste 0, et le programme continue.
+@89 Où va la ligne risquée ?
+@90 Où se met la ligne risquée ?
+@91 `catch` ne traite que les erreurs levées dans le bloc `try` correspondant.
+@92 `try`, c’est le filet de sécurité. Où doit se trouver la ligne risquée ?
+@93 Dans `try`. `catch` ne s’exécute que quand quelque chose dans `try` lève une erreur.
+@94 Dans `try`. `catch` ne s’exécute que si quelque chose tourne mal dans `try`.
+@95 Seules les exceptions levées pendant l’exécution du bloc `try` atteignent `catch`. Le code en dehors n’est pas protégé, et une erreur levée dans `catch` se propage normalement.
+@96 Dans le bloc `try`
+@97 Dans le bloc `catch`
+@98 `catch` s’exécute après un échec, donc il ne peut pas l’empêcher.
+@99 `catch` s’exécute après que quelque chose a mal tourné, donc il ne peut pas l’empêcher d’arriver.
+@100 En dehors des deux blocs
+@101 Alors rien n’attrape l’échec.
+@102 Alors il n’y a rien pour attraper le problème.
+@103 Écris `readCount` pour qu’un mauvais JSON donne 0 au lieu de planter.
+@104 Fais en sorte que `readCount` donne 0 pour un mauvais texte, au lieu de casser.
+@105 `JSON.parse` lève une erreur sur une mauvaise entrée, donc entoure-le de `try` et renvoie 0 depuis `catch`.
+@106 `JSON.parse` casse sur un mauvais texte, alors mets-le dans `try`, et rends 0 dans `catch`.
+@107 JSON valide
+@108 pas du JSON du tout
+@109 le compte manque
+@110 `try` contient le code risqué ; `catch` s’exécute en cas d’échec.
+@111 Renvoie une valeur sûre pour que les appelants puissent continuer.
+@112 `try` contient le code risqué ; `catch` s’exécute si ça tourne mal.
+@113 Rends une réponse sûre pour que le programme puisse continuer.
+@114 Décide toujours quoi faire quand quelque chose casse.
+@115 Une erreur attrapée est `unknown` : affine-la avant de t’en servir.
+@116 Des blocs `try` petits ; relance ce que tu ne sais pas gérer ; `finally` pour le nettoyage.
+@117 Un type résultat fait de l’échec une partie de la signature.
+@118 Pour aller plus loin : écris `parseAge` : un nombre entier de 0 à 150, sinon lève une `Error` avec le message `"Not an age: <text>"`.
+@119 Un défi : fais en sorte que `parseAge` transforme du texte en âge, ou lève une erreur si ce n’est pas un vrai âge.
+@120 `Number(text)` donne `NaN` pour des mots. `Number.isInteger` est faux pour `NaN` et pour les décimaux. Attention : `Number("")` vaut `0`.
+@121 Transforme le texte en nombre. Si ce n’est pas un nombre entier de 0 à 150 (ou si le texte est vide), `throw new Error(...)`.
+@122 Lève l’erreur à la frontière, là où arrive la mauvaise entrée, pour que le reste du programme ne voie jamais que de vrais âges.
+@123 Vérifier le texte dès qu’il arrive veut dire que le reste de ton code peut faire confiance à l’âge.
+@124 `Number("")` vaut `0` et `Number(" 7 ")` vaut `7`, donc valide le texte autant que le nombre. En TypeScript, `catch (error)` donne `unknown` : affine avec `instanceof Error`.
+@125 un vrai âge
+@126 pas un nombre
+@127 trop vieux
+@128 texte vide
+@129 Les promesses représentent un travail en cours.
+@130 `async`/`await` se lit comme du code normal.
+@131 L’ordre d’exécution n’est pas l’ordre des lignes.
+@132 Une promesse, c’est un travail qui est encore en train de se faire.
+@133 `async` et `await` se lisent comme du code normal.
+@134 Ce qui s’exécute en premier n’est pas toujours la ligne du haut.
+@135 Les microtâches passent avant les minuteurs ; l’ordre des lignes n’est pas l’ordre d’exécution.
+@136 Traiter chaque rejet.
+@137 `Promise.all` pour la concurrence, `allSettled` pour les échecs partiels.
+@138 Une promesse est une valeur qui arrive plus tard.
+@139 Une promesse est une réponse qui arrive plus tard.
+@140 Certains travaux prennent du temps. Une **promesse** représente un résultat qui n’est pas encore prêt.⏎⏎⟦F1⟧⏎⏎`async` marque une fonction qui fera une pause à `await`. Cette pause ne bloque pas le reste du programme : les autres travaux continuent pendant l’attente.⏎⏎Ce qui piège les gens, c’est l’ordre. Le code après un `await` s’exécute plus tard, même si la promesse est déjà résolue.
+@141 Une promesse, c’est un petit mot qui dit « ta réponse arrive ».⏎⏎`await` veut dire « attends ici, mais laisse tout le reste continuer ».⏎⏎Ça ne gèle pas la page. Ça met en pause seulement cette fonction-là.
+@142 Une `Promise<T>` est en attente, tenue avec un `T`, ou rejetée. Une fonction `async` renvoie toujours une promesse ; `await` suspend cette fonction et la reprend dans une microtâche une fois la promesse réglée.⏎⏎Les microtâches (réactions des promesses) s’exécutent après le code synchrone en cours et avant la tâche suivante (minuteurs, E/S, événements). C’est pourquoi les callbacks de `.then` s’exécutent après le reste du script en cours, mais avant `setTimeout(…, 0)`.⏎⏎Des `await` consécutifs sérialisent des travaux indépendants : lance-les tous les deux et attends-les ensemble avec `Promise.all([a(), b()])`, ou `Promise.allSettled` quand un échec ne doit pas faire perdre les autres. Un rejet non traité est un bug : fais toujours `await` ou `.catch`.
+@143 Regarde bien l’ordre.
+@144 Regarde bien l’ordre !
+@145 Le code dans `.then(...)` s’exécute après que le code en cours a fini, même si la promesse est déjà résolue.
+@146 La partie `.then` attend son tour. Elle s’exécute après les lignes qui sont en dessous d’elle.
+@147 `.then` programme son callback pour après la fin du code en cours. Donc `three` s’affiche avant `two`, même si la promesse était déjà résolue.
+@148 `.then` dit « fais ça plus tard, quand tu seras libre ». Donc "three" s’affiche avant "two", même si la promesse était prête tout de suite.
+@149 La réaction `.then` est mise en file comme microtâche, qui ne s’exécute qu’une fois le script synchrone en cours terminé. Donc `three` s’affiche avant `two`, même si la promesse était déjà tenue.
+@150 Deux façons d’attendre.
+@151 .then
+@152 Ça marche, mais le déroulement se lit de travers.
+@153 Ça marche, mais ça se lit de travers.
+@154 async / await
+@155 De haut en bas, comme du code synchrone.
+@156 Ça se lit de haut en bas, comme du code normal.
+@157 Que fait `await` au reste de l’app ?
+@158 `await` n’est permis que dans les fonctions `async`. Que met-il en pause : cette fonction, ou tout ?
+@159 Pense à quand tu attends un ami : tu arrêtes le monde entier, ou tu attends juste toi-même ?
+@160 Il ne met en pause que la fonction async. Les autres événements, les clics et les affichages continuent pendant que la valeur est en attente.
+@161 Il ne met en pause que cette fonction-là. Le reste de l’app (les clics, les boutons, le dessin) continue pendant l’attente.
+@162 `await` rend la main à la boucle d’événements ; le reste de la fonction async reprend plus tard, comme microtâche. Rien d’autre n’est bloqué entre-temps.
+@163 Gèle toute la page jusqu’à ce que la valeur arrive
+@164 Ce serait une attente bloquante. JavaScript l’évite exprès.
+@165 Ça gèlerait tout. JavaScript l’évite exprès.
+@166 Met cette fonction en pause pendant que le reste du travail continue
+@167 Transforme immédiatement la promesse en valeur simple
+@168 Il attend la valeur ; il ne peut pas la faire arriver plus tôt.
+@169 Il attend la réponse. Il ne peut pas la faire arriver plus vite.
+@170 Une promesse est une valeur future.
+@171 `await` met en pause une fonction, pas tout le programme.
+@172 Le code après un `await` s’exécute plus tard qu’on ne le croirait.
+@173 Une promesse est une réponse qui arrive plus tard.
+@174 Le code après un `await` peut s’exécuter plus tard que tu ne le penses.
+@175 Une promesse est en attente, tenue ou rejetée.
+@176 `await` reprend dans une microtâche, après le code synchrone en cours.
+@177 Lancer les travaux indépendants en parallèle avec `Promise.all`.
+@178 Pour aller plus loin : un minuteur, une promesse et du code simple. Qu’est-ce qui s’affiche ?
+@179 Un défi : un minuteur, une promesse et du code normal. Qu’est-ce que ça va montrer, dans l’ordre ?
+@180 Le code simple s’exécute d’abord, puis les callbacks des promesses, puis les minuteurs, même un minuteur de 0 ms.
+@181 D’abord les lignes normales, puis les travaux des promesses, puis les minuteurs, même un minuteur à 0.
+@182 Les callbacks des promesses (microtâches) s’exécutent dès que le code en cours a fini ; les minuteurs attendent le prochain tour de la boucle d’événements.
+@183 Les travaux des promesses passent devant les minuteurs dans la file. Donc "c" vient avant "d".
+@184 Après le script, la file des microtâches est vidée (`c`) avant la macrotâche suivante (le minuteur, `d`). C’est pourquoi les suites d’`await` s’exécutent avant `setTimeout(fn, 0)`.
+@185 Les classes regroupent état et comportement.
+@186 `new` crée une instance ; `private` protège l’intérieur.
+@187 Les utiliser avec discernement, pas par défaut.
+@188 Les classes gardent ensemble les informations et les actions.
+@189 `new` en construit une ; `private` protège son intérieur.
+@190 Les utiliser quand elles aident, pas à chaque fois.
+@191 Utiliser une classe pour l’identité, l’état et les règles qui les gardent cohérents.
+@192 Préférer `#private` quand l’encapsulation doit tenir à l’exécution.
+@193 Sinon, partir par défaut sur des données et des fonctions.
+@194 Une classe est un plan ; une instance est la chose construite à partir de ce plan.
+@195 Une classe est un plan. Une instance est la chose construite d’après le plan.
+@196 Une **classe** regroupe des données avec les fonctions qui travaillent dessus :⏎⏎⟦F1⟧⏎⏎`private` empêche de modifier `value` depuis l’extérieur, donc la classe contrôle ses propres règles.⏎⏎Sois honnête sur les cas où ça aide. Une classe mérite sa place quand il y a **une identité et un état qui doivent changer ensemble** : un personnage de jeu, une session d’éditeur, une connexion. Pour de simples données, un objet et quelques fonctions pures sont en général plus simples et plus faciles à tester.
+@197 Une classe est un plan pour fabriquer des objets. `new Counter()` en construit un d’après le plan.⏎⏎Le plan peut garder des secrets : `private` veut dire « seule cette classe a le droit d’y toucher ».⏎⏎Pour de simples informations, un objet simple suffit. Les classes, c’est pour les choses qui changent avec le temps.
+@198 TypeScript ajoute aux classes des modificateurs d’accès (`private`, `protected`, `public`), des champs `readonly`, des propriétés de paramètre et des vérifications `implements`. `private` n’existe qu’à la compilation ; le `#field` de JavaScript est imposé à l’exécution.⏎⏎Les classes restent typées structurellement : tout objet avec les mêmes membres publics est affectable au type de la classe, sauf si la classe a des membres `private` ou `#`, ce qui la rend de fait nominale.⏎⏎Choisis une classe quand l’identité et un état modifiable doivent rester cohérents ensemble. Pour des données plus des transformations, les objets simples et les fonctions pures sont plus faciles à tester et à sérialiser.
+@199 Le même comportement, deux styles.
+@200 Le même travail, deux styles.
+@201 Objet + fonctions
+@202 Simple, testable, pas de `this`. Parfait pour de simples données.
+@203 Simple et facile à tester. Parfait pour de simples informations.
+@204 Classe
+@205 Protège son propre état. Ça vaut le coup quand il y a plusieurs règles à respecter.
+@206 S’occupe de son propre intérieur. Ça vaut le coup quand il y a des règles à respecter.
+@207 Construis une instance.
+@208 Construis un compteur d’après le plan.
+@209 Quel mot-clé crée une instance à partir d’une classe ?
+@210 Quel mot construit quelque chose de nouveau d’après un plan ?
+@211 `new` crée une instance à partir du plan de la classe.
+@212 `new` construit une vraie chose d’après le plan de la classe.
+@213 `new` crée un objet dont le prototype est `Counter.prototype` et exécute le constructeur, ici juste l’initialiseur du champ. Appeler une classe sans `new` lève une `TypeError`.
+@214 Termine la classe `Counter` pour que `increment()` ajoute un et renvoie la nouvelle valeur.
+@215 Termine `Counter` pour que `increment()` ajoute un et rende le nouveau nombre.
+@216 Utilise `this.value += 1;` avant le `return`.
+@217 Écris `this.value += 1;` avant le `return`.
+@218 Chaque instance a son propre `value`. C’est la différence entre une classe et un objet partagé.
+@219 Chaque compteur que tu construis a son propre `value`. C’est à ça que sert une classe.
+@220 Chaque instance a son propre `value`, initialisé à sa construction. `private` bloque les écritures extérieures à la compilation ; utilise `#value` si tu veux aussi la garantie à l’exécution.
+@221 premier incrément
+@222 deux incréments partagent l’état
+@223 chaque instance est séparée
+@224 Une classe est un plan ; `new` construit une instance.
+@225 `this` désigne l’instance sur laquelle la méthode a été appelée.
+@226 Préfère de simples données et des fonctions, sauf si l’état et les règles vont ensemble.
+@227 Une classe est un plan ; `new` construit une chose d’après lui.
+@228 `this` veut dire « la chose à laquelle ceci appartient ».
+@229 De simples informations et des fonctions suffisent souvent.
+@230 `new` construit une instance ; les initialiseurs de champs s’exécutent pour chacune.
+@231 `private` n’existe qu’à la compilation ; `#private` est imposé à l’exécution.
+@232 Les classes avec des membres privés se comportent de façon nominale.
+@233 Pour aller plus loin : termine `Wallet` : un champ privé `#coins`, `add(n)` et un getter `coins`. Ajouter un montant négatif lève une erreur.
+@234 Un défi : termine la classe `Wallet`. Personne à l’extérieur ne doit toucher directement aux pièces !
+@235 Déclare `#coins = 0;`, modifie-le dans `add` avec `this.#coins += amount`, et renvoie-le depuis le getter.
+@236 Écris `#coins = 0;` en haut. `add` ajoute à `this.#coins`, et le getter le rend.
+@237 Un champ `#` est vraiment privé : le code hors de la classe ne peut ni le lire ni le modifier, donc chaque changement passe par `add`, qui le vérifie.
+@238 Le `#` rend les pièces secrètes. La seule façon d’entrer, c’est `add`, et `add` vérifie le montant.
+@239 Les champs `#private` sont imposés à l’exécution (contrairement au `private` de TypeScript, qui est effacé). Un getter expose une vue en lecture seule, donc la règle vit dans une seule méthode.
+@240 additionne
+@241 refuse les négatifs
+@242 commence vide

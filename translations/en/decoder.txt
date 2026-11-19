@@ -1,0 +1,156 @@
+@1 A newer JavaScript feature than this setting allows
+@2 The method or global exists in newer JavaScript (for example `.at()` or `Object.hasOwn`), but the library TypeScript checks against is older. In this app, that means the Classic device mode.
+@3 Use the classic equivalent (for example `items[items.length - 1]` for `.at(-1)`), or a newer `lib` setting in your own projects.
+@4 The value passed to a function has the wrong type
+@5 A function says what type each parameter takes. The argument you passed is a different type.
+@6 Convert the value before passing it, or check the function’s signature to see what it expects.
+@7 Several required properties are missing
+@8 The object is supposed to match a type, but some required properties are not there.
+@9 Add the properties listed in the message, or make them optional in the type with `?`.
+@10 A required property is missing
+@11 The object is supposed to match a type, but one required property is not there.
+@12 Add the property, or mark it optional with `?` if it really can be absent.
+@13 A property the type does not have
+@14 You wrote an object literal with a property that the target type does not declare. Usually a typo or a leftover.
+@15 Check the spelling against the type, or add the property to the type if it belongs there.
+@16 None of the function’s signatures fit
+@17 The function has several signatures (overloads) and your arguments match none of them. The message lists why each one failed.
+@18 Read the last attempt in the message first; it usually points at the argument that is wrong.
+@19 Using an unknown value before checking it
+@20 `unknown` means "could be anything", so TypeScript will not let you use it until you have narrowed it.
+@21 Check it first with `typeof`, `Array.isArray`, `instanceof` or a type predicate.
+@22 A type recurses too deeply
+@23 A recursive or very complex type needed more steps than TypeScript allows.
+@24 Simplify the type, make recursion tail-recursive, or limit its depth with a counter.
+@25 A path through the function returns nothing
+@26 The return type promises a value, but at least one path ends without `return`.
+@27 Add a `return` at the end, or handle the missing case (an exhaustive switch with `assertNever` helps).
+@28 Some paths return a value, others do not
+@29 With `noImplicitReturns`, every path must return when any path does.
+@30 Add a `return` to the paths that end without one.
+@31 Looking up a key TypeScript cannot check
+@32 You indexed an object with a key whose type is too wide (often `string`), so TypeScript cannot tell what comes back.
+@33 Type the object with an index signature or `Record`, or narrow the key to `keyof typeof object`.
+@34 A variable is read before it has a value
+@35 TypeScript followed the code and found a path where the variable was never given a value.
+@36 Initialise it when you declare it, or make sure every path assigns it first.
+@37 A class property is never given a value
+@38 With strict checks, every class property must be set in its declaration or in the constructor.
+@39 Give it a default value, set it in the constructor, or make it optional.
+@40 A value does not fit the `satisfies` type
+@41 `satisfies` checks a value against a type without changing its own type. This one does not fit.
+@42 Fix the value (often a typo in a key, or a wrong value type).
+@43 A type argument does not meet a requirement
+@44 A generic says what its type parameter must support (`T extends …`), and the type you gave does not.
+@45 Pass a type that meets the constraint, or relax the constraint if it is too strict.
+@46 The expected error is not there any more
+@47 `@ts-expect-error` says the next line has an error. It no longer does, so the comment is stale.
+@48 Remove the comment. (In a type challenge: the line should be rejected, but your types accept it.)
+@49 Overriding a method needs `override`
+@50 With `noImplicitOverride`, replacing a method from a parent class must be marked explicitly.
+@51 Add `override` before the method name.
+@52 An assertion function needs an explicit type
+@53 Functions with `asserts` return types must be declared with an explicit type annotation to narrow at the call site.
+@54 Use a function declaration, or annotate the `const` with the function type.
+@55 A type was used as if it were a value
+@56 Types disappear when the code runs, so they cannot be used as values (for example with `new`, or passed to a function).
+@57 Use a real value there, or use `typeof value` to go from a value to its type.
+@58 Probably a typo
+@59 TypeScript found a name that is almost the same and suggests it.
+@60 Accept the suggestion if it is what you meant.
+@61 A class does not match its interface
+@62 A class declared `implements SomeInterface`, but is missing members or has them with the wrong types.
+@63 Add the missing members, or fix their types to match the interface.
+@64 An abstract class cannot be created directly
+@65 Abstract classes are half-built: only finished subclasses can be created with `new`.
+@66 Create a concrete subclass and instantiate that.
+@67 A subclass forgot an abstract method
+@68 The parent declared an abstract method, and this class does not provide it.
+@69 Implement the method in the subclass.
+@70 An `in`/`out` annotation does not match how the type is used
+@71 A type parameter marked `out` is used as an input (or `in` as an output).
+@72 Use `out` for values you only read, `in` for values you only receive, or remove the annotation.
+@73 A name does not exist (yet)
+@74 The compiler reached a name it has never seen. It is usually a typo, a variable used before it was declared, or a missing import.
+@75 Check the spelling, then check that the name is declared before this line and in the same scope.
+@76 null in a slot that cannot hold it
+@77 With strict null checks, `null` is its own type and does not quietly become a string or a number.
+@78 Either allow it — `string | null` — or handle the empty case before assigning.
+@79 A value reached a place that accepts nothing
+@80 A `never` slot means "no value should arrive here". It often follows an exhaustive check that has one case too many.
+@81 Check that every union member is handled, and that the last branch is genuinely unreachable.
+@82 One type where a different type was expected
+@83 The value is real, but it is the wrong kind. Text going into a number slot, or a number going into a yes/no slot, are the two classics.
+@84 Decide which type is correct. Convert the value (`Number(text)`, `String(n)`), or change the annotation if it was wrong.
+@85 This might be missing
+@86 The value could be `undefined` at this point, and using it blindly would crash at runtime. TypeScript is warning you before that happens.
+@87 Check first: `if (value === undefined) return;` or use `value ?? fallback`.
+@88 That property or method is not on this type
+@89 You asked for something the value does not have — often a string method called on a number, or a misspelled property.
+@90 Check the type, then check the spelling. If the union has several shapes, narrow it first.
+@91 You called something that is not callable
+@92 The name exists, but it holds a value rather than a function. Common causes: a misspelled method, or calling without a property.
+@93 Check the spelling, and check that you are calling the method on the right object.
+@94 Something was empty when you read it
+@95 The thing on the left of the dot was `undefined` or `null`. It usually means a lookup found nothing, or a value never arrived.
+@96 Log the value one line earlier. Then guard before the dot, or use optional chaining: `user?.name`.
+@97 You tried to reassign a const
+@98 `const` means the name always points at the same value. You can still change a property inside an object, but not point the name somewhere new.
+@99 If the value really changes, use `let`. If not, change the value inside instead of replacing the whole thing.
+@100 TypeScript needs a type here
+@101 With strict checking on, every parameter needs a type it can see. This happens with function parameters, and with arrays that start empty.
+@102 Add an annotation: `(items: string[])`, `(user: User)`.
+@103 This comparison can never be true
+@104 You compared two things whose types have nothing in common, so one side can never equal the other. It is usually a stale type, not a typo in the comparison.
+@105 Check what each side actually holds. One of them is not what you expected.
+@106 A quote was never closed
+@107 Text started with a quote and never found the matching one before the line ended.
+@108 Add the closing quote. If the text contains a quote, use the other kind around it.
+@109 A small piece of punctuation is missing
+@110 Usually a bracket, semicolon, or comma that ended a bit early. The reported line is often one line after the real problem.
+@111 Look at the line above the error too, and count the brackets on it.
+@112 That text is not valid JSON
+@113 JSON.parse was given text that is not proper JSON. JSON is stricter than JavaScript: keys need double quotes, there are no trailing commas, and no comments.
+@114 Print the text before parsing it. Check every key is in double quotes and every bracket is closed — or wrap the parse in try/catch to handle bad input.
+@115 The code ends before everything is closed
+@116 The compiler reached the end of the code while still waiting for something to close — usually a `}` or a `)`.
+@117 Count the opening and closing brackets. The missing one is often at the end of a function or a block.
+@118 A symbol the compiler did not expect
+@119 The symbol in quotes is out of place here — most often one `}` or `)` too many, or one whose opening partner is missing.
+@120 Look just above the line it names and match every opening bracket to its closing one.
+@121 Changing a const
+@122 A value declared with `const` cannot be given a new value. The program stopped at the line that tried.
+@123 If the value needs to change, declare it with `let`. If it should not, create a new const with a new name instead.
+@124 import needs more than one file
+@125 The playground and the exercises run a single file on its own, so there is nothing to import from. Real projects have many files and a bundler or runtime that joins them.
+@126 Put the code you wanted to import into this same file for now. Module 6 explains how imports work in a real project.
+@127 Top-level await and export together
+@128 Here, `await` outside a function and `export` cannot be used in the same file.
+@129 Move the `await` into an `async function` and call it, or drop the `export` — the playground does not need it.
+@130 The shape of the code confused the parser
+@131 Something is out of place: a stray bracket, a missing `}`, or a value where a statement was expected.
+@132 Indent the block properly. Mismatched braces become obvious once the indentation is honest.
+@133 Something is missing just before this spot
+@134 The compiler expected one thing (named first) and found another. A missing bracket, quote, comma, or semicolon a little earlier is the usual cause.
+@135 Look at the line it names and the line above. Check that every (, {, [ and quote has its partner.
+@136 The code stops making sense here
+@137 At this point the compiler needed a piece of code — a statement, a value, or a name — and found something else instead.
+@138 Check the line it names for a stray or missing bracket, and for a keyword spelled wrong.
+@139 Wrong number of arguments
+@140 The function expects a different count of values than you gave it.
+@141 Compare the call with the function signature. Add the missing argument or remove the extra one.
+@142 That name was never created
+@143 At the moment this line ran, the name did not exist. Different from a type error: this one happens while the program runs.
+@144 Check for a typo, and check that the line creating the value actually ran before this one.
+@145 A function kept calling itself
+@146 Recursion without a stopping condition, or two functions calling each other forever, fills the stack and stops.
+@147 Find the condition that should end the repetition, and make sure it eventually becomes true.
+@148 import in a place that does not support it
+@149 `import` belongs in a module. A plain script, or a runner without module support, cannot use it.
+@150 Keep module lessons inside a project; use `export`/`import` only in files that are loaded as modules.
+@151 The same name twice
+@152 Two declarations with the same name share a scope, and the compiler cannot tell them apart.
+@153 Rename one of them, or remove the duplicate. Watch for two files that both declare the same global.
+@154 Indexing an object with an unknown key
+@155 The object has known keys, but you looked it up with a plain `string`, so the compiler cannot promise that key exists.
+@156 Use a key type that lists the allowed names, or check `key in object` first.

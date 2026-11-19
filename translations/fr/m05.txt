@@ -1,0 +1,269 @@
+@1 Nommer les formes, ne pas les répéter.
+@2 `type` pour les unions, `interface` pour les objets extensibles.
+@3 La cohérence vaut mieux que l’astuce.
+@4 Donner un nom aux formes au lieu de les réécrire encore et encore.
+@5 `type` pour « ceci ou cela », `interface` pour les formes de sacs.
+@6 Choisir une façon et s’y tenir.
+@7 `type` pour les unions, les tuples et les types calculés.
+@8 `interface` là où la fusion de déclarations ou `extends` aide.
+@9 Nommer une forme partagée une fois et y faire référence partout.
+@10 Deux façons de nommer la forme d’un objet.
+@11 Deux façons de donner un nom à une forme.
+@12 `interface` et `type` nomment tous les deux une forme :⏎⏎⟦F1⟧⏎⏎La règle pratique : **`type` quand il te faut une union**, `interface` pour les formes d’objets que d’autres fichiers étendront. Choisis-en une par projet et reste cohérent : les mélanger sans raison oblige le lecteur à trancher à chaque fois.⏎⏎Une fois qu’une forme a un nom, tu l’utilises comme n’importe quel autre type. C’est ça, le vrai gain : `User` apparaît dans cinq signatures, et se modifie à un seul endroit.
+@13 Une forme peut avoir un nom. Au lieu de répéter « une chose avec un nom et un âge », tu l’appelles `User`.⏎⏎`interface` et `type` font tous les deux ce travail. Utilise `type` quand la chose peut être une option parmi plusieurs, comme `"open" | "closed"`.
+@14 Les déclarations `interface` sont ouvertes : deux déclarations du même nom fusionnent, et c’est ainsi que les bibliothèques complètent les types globaux. Les alias `type` sont fermés et peuvent nommer n’importe quoi : unions, tuples, types mappés et conditionnels.⏎⏎Pour les formes d’objets, les deux sont largement interchangeables, et tous deux structurels. `interface ... extends` signale clairement les membres en conflit, alors qu’une intersection (`A & B`) peut discrètement produire des propriétés `never`. Choisis une convention et fais-la respecter par une règle de lint (`@typescript-eslint/consistent-type-definitions`).⏎⏎`readonly` et `?` fonctionnent de la même façon dans les deux.
+@15 La même forme, deux mots-clés.
+@16 La même forme, deux mots.
+@17 interface
+@18 Bien pour les formes d’objets que d’autre code étendra.
+@19 Bien pour les formes que d’autre code complétera plus tard.
+@20 type
+@21 La même forme, et ça peut aussi être une union si besoin.
+@22 La même forme, et ça peut aussi vouloir dire « ceci ou cela ».
+@23 Lequel peut décrire une union ?
+@24 Lequel peut dire « ceci ou cela » ?
+@25 Une union (`A | B`) n’est pas une forme d’objet. Quel mot-clé peut nommer des choses qui ne sont pas des objets ?
+@26 L’un d’eux ne décrit que des sacs avec des étiquettes. L’autre peut nommer n’importe quoi.
+@27 Seul `type` peut nommer une union, parce qu’une union n’est pas une forme d’objet.
+@28 Seul `type` peut dire « ceci ou cela », parce que « ceci ou cela » n’est pas la forme d’un sac.
+@29 Une union n’est pas un type objet, donc seul un alias `type` peut la nommer. Les interfaces ne décrivent que des formes d’objets (ou de fonctions, ou de constructeurs).
+@30 `interface`
+@31 Les interfaces décrivent des formes d’objets. Elles ne peuvent pas être une union.
+@32 `interface` décrit la forme d’un sac. Elle ne peut pas dire « ceci ou cela ».
+@33 `type`
+@34 Nomme cette union.
+@35 Donne un nom à ce « ceci ou cela ».
+@36 Le côté droit est une union, pas un objet entre accolades. Quel mot-clé permet ça ?
+@37 C’est « ceci ou cela », pas une forme de sac. Quel mot peut le nommer ?
+@38 Une union a besoin de `type`. `interface` attend un corps d’objet entre accolades.
+@39 « Ouvert ou fermé » a besoin de `type`. `interface` veut une forme de sac dans des `{ }`.
+@40 `type` introduit un alias pour n’importe quelle expression de type. `Status` est une union de types littéraux de chaîne, donc `"open"` et `"closed"` sont les seules valeurs qu’il accepte.
+@41 Écris `labelFor` pour qu’elle renvoie le nom, plus l’âge entre parenthèses quand il y en a un.
+@42 Fais en sorte que `labelFor` renvoie le nom, et l’âge entre parenthèses s’il y en a un.
+@43 Vérifie `person.age === undefined` plutôt que `if (person.age)`, parce que 0 est un vrai âge.
+@44 Vérifie `person.age === undefined`, pas juste `if (person.age)`, parce que 0 est un vrai âge.
+@45 Comparer avec `undefined` fait que `0` continue de marcher. Un test de « truthiness » le laisserait tomber sans rien dire : un bug classique.
+@46 Vérifier `undefined` fait qu’un âge de 0 marche toujours. `if (person.age)` traiterait 0 comme « pas d’âge » : une erreur sournoise.
+@47 `age === undefined` affine précisément, là où un test de « truthiness » traiterait `0` comme absent. Avec `exactOptionalPropertyTypes`, TypeScript distingue même un `age` absent de `age: undefined`.
+@48 avec âge
+@49 sans âge
+@50 l’âge zéro est un vrai âge
+@51 `rex` ne correspond pas à la forme `Pet`. Rex a 3 ans : corrige l’objet pour que TypeScript et la vérification soient contents tous les deux.
+@52 Il manque à Rex quelque chose que l’étiquette Pet demande. Rex a 3 ans. Ajoute-le !
+@53 Lis l’interface : quelle propriété `rex` n’a-t-il pas encore ?
+@54 L’étiquette Pet liste un nom et un âge. Rex n’a qu’un nom.
+@55 Ajoute `age: 3` dans l’objet.
+@56 Écris `age: 3` à côté du nom.
+@57 Une interface est une promesse sur une forme. TypeScript a vérifié la promesse, trouvé qu’il manquait `age`, et l’a dit avant que `describePet` n’affiche "Rex is undefined".
+@58 L’étiquette disait que chaque animal a un âge. Le vérificateur a regardé, n’en a pas trouvé, et te l’a dit avant que quoi que ce soit ne tourne mal.
+@59 TS2741 (`Property 'age' is missing`), c’est le typage structurel à l’œuvre : le littéral n’a pas un membre obligatoire de `Pet`, et le décalage est signalé à l’affectation plutôt qu’à l’endroit où `age` est lu pour la première fois.
+@60 décrit Rex
+@61 La version courte.
+@62 Ce que tu as appris.
+@63 `interface` et `type` nomment tous les deux des formes.
+@64 `type` est obligatoire pour les unions.
+@65 Nomme une forme une fois ; utilise le nom partout.
+@66 `interface` et `type` donnent tous les deux un nom à une forme.
+@67 Seul `type` peut dire « ceci ou cela ».
+@68 Nomme une forme une fois, puis utilise le nom partout.
+@69 Les interfaces fusionnent et s’étendent ; les alias de type peuvent nommer n’importe quel type.
+@70 Les deux sont structurels pour les formes d’objets.
+@71 Choisis une convention et fais-la respecter avec une règle de lint.
+@72 Pour aller plus loin : fais en sorte que `Employee` étende `Person`, en ajoutant un `team: string`.
+@73 Un défi : fais pousser la forme `Employee` à partir de la forme `Person`, avec une `team` en plus.
+@74 `interface Employee extends Person { team: string }`.
+@75 Écris `interface Employee extends Person` et ajoute `team: string` à l’intérieur.
+@76 `extends` copie chaque membre de `Person` dans `Employee`. Un `Employee` peut être utilisé partout où une `Person` est attendue.
+@77 Un Employee a tout ce qu’a une Person, plus une équipe. Donc chaque Employee est aussi une Person.
+@78 L’extension d’interface crée un sous-type ; les membres en conflit sont signalés à la déclaration, ce qui est le principal avantage pratique par rapport aux intersections.
+@79 a une équipe
+@80 un employé est une personne
+@81 l’équipe est obligatoire
+@82 `string | number` veut dire l’un ou l’autre.
+@83 Vérifier d’abord, puis utiliser le membre précis.
+@84 Les unions de littéraux rendent les fautes de frappe impossibles.
+@85 `string | number` veut dire un mot ou un nombre.
+@86 Regarder d’abord, puis utiliser.
+@87 Une liste de mots autorisés empêche les fautes d’orthographe.
+@88 Une union dit « l’un de » ; l’affinage prouve lequel.
+@89 Union discriminée + `switch` + `never` = traitement exhaustif.
+@90 Les assertions de type sont des promesses non vérifiées : les garder rares.
+@91 Une union dit « l’un de ceux-ci ».
+@92 « Ceci ou cela » : une boîte qui peut contenir une sorte de chose ou une autre.
+@93 Une **union** autorise plus d’un type : `string | number`. Un **type littéral** se limite à des valeurs exactes : `"small" | "medium" | "large"`.⏎⏎Dans une union, tu ne peux utiliser que ce que tous les membres ont en commun. Pour utiliser quelque chose de spécifique, **affine** d’abord :⏎⏎⟦F1⟧⏎⏎Ce n’est pas du cérémonial. À l’exécution, la valeur peut vraiment être l’un ou l’autre, et c’est la vérification qui rend le code correct.
+@94 Une union veut dire « ça peut être ceci, ou cela ». Comme une boîte qui contient un crayon ou un stylo.⏎⏎Tu dois regarder dedans avant de t’en servir. Ce coup d’œil s’appelle l’**affinage**.⏎⏎Un type littéral est une courte liste de mots autorisés : `"small" | "medium"`. Rien d’autre ne rentre.
+@95 Une union `A | B` admet une valeur de l’un ou l’autre type, et tant que tu n’as pas affiné, seuls les membres communs à tous les constituants sont disponibles. TypeScript affine en suivant le flot de contrôle : `typeof`, `instanceof`, `in`, égalité avec des littéraux, « truthiness » et prédicats de type définis par l’utilisateur.⏎⏎Les unions discriminées, des types objet qui partagent un champ littéral `kind`, sont la façon idiomatique de modéliser des variantes :⏎⏎⟦F1⟧⏎⏎Un `switch` sur `shape.kind` affine chaque branche à un seul membre. Préfère l’affinage aux assertions `as`, que le compilateur ne vérifie pas.
+@96 Qu’est-ce qui s’affiche ?
+@97 Qu’est-ce que ça va montrer ?
+@98 `typeof value === "string"` est vrai pour "hello" et faux pour 4. Suis chaque appel dans sa branche.
+@99 Pour "hello", la boîte contient un mot. Pour 4, elle contient un nombre. Quel chemin prend chacun ?
+@100 Le test `typeof` coupe la fonction en deux. Le texte prend la première branche ; un nombre prend la seconde et devient 5.
+@101 Le test `typeof` regarde dans la boîte. Les mots prennent le premier chemin ; un nombre prend le second et devient 5.
+@102 `typeof value === "string"` affine `value` en `string` dans la première branche ; après le return de cette branche, l’analyse du flot de contrôle l’affine en `number` pour le reste de la fonction.
+@103 Quelle fonction est sûre pour `string | number` ?
+@104 Quelle machine est sûre pour un mot *ou* un nombre ?
+@105 Quelle version vérifie le type avant d’appeler une méthode réservée aux chaînes ?
+@106 Les nombres ne peuvent pas être mis en majuscules. Quelle machine vérifie d’abord ?
+@107 Seule la version qui vérifie avec `typeof` peut appeler `.toUpperCase()` sans risque. L’autre planterait si on lui donnait un nombre.
+@108 Seule celle qui regarde d’abord avec `typeof` peut utiliser `.toUpperCase()` sans risque. L’autre casserait si on lui donnait un nombre.
+@109 Appeler `.toUpperCase()` sur `string | number` donne TS2339 (`Property 'toUpperCase' does not exist on type 'string | number'`), parce que `number` n’a pas cette méthode. Seule la version affinée passe la vérification de types.
+@110 `function f(v: string | number) { return v.toUpperCase(); }`
+@111 Les nombres n’ont pas `toUpperCase`. Ceci ne compile que si tu forces le type, et plante à l’exécution.
+@112 Les nombres ne savent pas faire `toUpperCase`. Celle-ci casserait en recevant un nombre.
+@113 `function f(v: string | number) { return typeof v === "string" ? v.toUpperCase() : String(v); }`
+@114 Le cas `boolean` a déjà fait son return. Quel type TypeScript donne-t-il à `rest` ?
+@115 Le cas oui-ou-non a déjà quitté la machine. Que peut encore être `rest` ?
+@116 Pars de `string | number | boolean` et enlève ce que le `if` a déjà traité.
+@117 La boîte pouvait contenir un mot, un nombre ou un oui/non. Lequel est déjà parti ?
+@118 Il reste deux types, reliés par `|`.
+@119 Il reste deux sortes. Relie-les avec `|`.
+@120 Après le return de la branche `boolean`, TypeScript sait que `value` ne peut plus être qu’une `string` ou un `number`. L’affinage enlève les cas que tu as déjà traités.
+@121 Le cas oui/non est sorti tôt, donc il ne peut plus y avoir qu’un mot ou un nombre dans la boîte. TypeScript le suit pour toi.
+@122 Analyse du flot de contrôle : le `return` anticipé enlève `boolean` de l’union pour le reste de la fonction, donc `rest` est `string | number`. L’ordre dans une union ne compte pas.
+@123 Écris `formatId` pour qu’une chaîne comme un nombre reviennent précédés d’un `#`.
+@124 Fais en sorte que `formatId` rende un `#` devant, pour un mot ou un nombre.
+@125 Les littéraux de gabarit convertissent les deux types en texte, donc aucune branche n’est nécessaire ici.
+@126 Les accents graves transforment les mots et les nombres en texte, donc tu n’as pas besoin de vérifier lequel c’est.
+@127 Quand chaque membre de l’union permet la même opération, tu n’as pas besoin d’affiner. `String()` et les littéraux de gabarit acceptent les deux.
+@128 Quand les deux sortes savent faire la même chose, pas besoin de regarder dedans d’abord. Les accents graves marchent pour les mots et les nombres.
+@129 Un littéral de gabarit accepte n’importe quel type, donc les deux constituants marchent sans affinage. N’affine que quand il te faut un membre que tous les constituants n’ont pas.
+@130 nombre
+@131 chaîne
+@132 Une union autorise plusieurs types ; un type littéral autorise des valeurs exactes.
+@133 Affine avec `typeof`, `in` ou un test d’égalité avant d’utiliser des méthodes propres à un type.
+@134 Préfère l’affinage au forçage de type.
+@135 Un type « ceci ou cela » autorise plusieurs sortes ; `"small" | "medium"` n’autorise que ces mots exacts.
+@136 Regarde dedans avec `typeof` avant d’utiliser quelque chose que seule une sorte sait faire.
+@137 Regarder d’abord vaut mieux que faire semblant.
+@138 Seuls les membres communs sont disponibles sur une union.
+@139 Affine avec `typeof`, `in`, `instanceof`, une égalité de littéraux ou un prédicat de type.
+@140 Modélise les variantes comme des unions discriminées ; évite `as`.
+@141 Pour aller plus loin : écris `area` pour une union discriminée de formes, avec `shape.kind`.
+@142 Un défi : fais marcher `area` pour les cercles et les carrés, en vérifiant `shape.kind`.
+@143 `switch (shape.kind)` : dans `case "circle"`, TypeScript sait que `shape.radius` existe.
+@144 Vérifie `shape.kind`. Dans le cas du cercle, TypeScript te laisse utiliser `shape.radius`.
+@145 Vérifier le champ commun `kind` affine `shape` à un seul membre de l’union, donc ses propres propriétés deviennent disponibles.
+@146 Regarder `kind` dit à TypeScript de quelle forme il s’agit, donc il sait quels nombres la forme possède.
+@147 Une union discriminée (étiquetée) s’affine sur le discriminant littéral ; comme chaque cas fait un return, le switch est exhaustif et n’a pas besoin de default.
+@148 carré
+@149 cercle, arrondi
+@150 Les valeurs facultatives doivent être traitées.
+@151 `??` est plus sûr que `||` pour les vraies valeurs comme 0.
+@152 Dire `unknown`, puis affiner.
+@153 Les choses qui peuvent manquer doivent être traitées.
+@154 `??` est plus sûr que `||` quand 0 est une vraie réponse.
+@155 Dire `unknown`, puis regarder dedans.
+@156 Modéliser l’absence explicitement et la traiter avec `?.` et `??`.
+@157 Valider les données externes, en partant de `unknown`.
+@158 `any` est contagieux ; `unknown` est honnête.
+@159 Les valeurs manquantes sont normales. Prévois-les.
+@160 Parfois, une boîte est vide. Prévois-le.
+@161 Une propriété **facultative** peut ne pas exister : `age?: number`. La lire donne `number | undefined`, donc tu dois traiter ce cas.⏎⏎`readonly` empêche la réaffectation et documente l’intention : `readonly id: string`.⏎⏎Et le plus important : **`unknown`** ou **`any`**.⏎⏎- `any` désactive la vérification. Tout ce qui en découle n’est plus vérifié.⏎- `unknown` dit « je ne sais pas encore », et oblige à vérifier avant d’utiliser.⏎⏎Quand des données viennent de l’extérieur de ton programme (un fichier, un formulaire, le réseau), elles sont réellement inconnues. Dis-le, puis affine.
+@162 Certaines boîtes peuvent être vides. Une valeur facultative est une boîte avec un `?`, et tu dois regarder dedans avant de t’en servir.⏎⏎`unknown` est une boîte mystère : tu dois regarder dedans avant d’utiliser ce qu’elle contient.⏎⏎`any` est une boîte qui dit « pas la peine de regarder ». C’est comme ça que les erreurs se cachent.
+@163 `age?: number` veut dire que la propriété peut être absente, donc sous `strictNullChecks`, la lire donne `number | undefined`. Traite-le avec `?.`, `??` ou une vérification explicite.⏎⏎`readonly` n’existe qu’à la compilation ; rien n’est gelé à l’exécution. Pour les tableaux, `ReadonlyArray<T>` retire du type les méthodes qui modifient.⏎⏎`any` désactive la vérification, et il se propage : tout ce qui en est dérivé est `any` aussi. `unknown` est le type sommet sûr : tu dois l’affiner (avec `typeof`, `Array.isArray` ou un validateur de schéma) avant de l’utiliser. Type les entrées externes, comme `JSON.parse`, `fetch` ou `localStorage`, en `unknown` et valide-les à la frontière.
+@164 Lequel est plus sûr pour des données que tu n’as pas créées ?
+@165 Lequel est plus sûr pour des choses que tu n’as pas fabriquées toi-même ?
+@166 L’un d’eux t’oblige à vérifier la valeur avant de l’utiliser. L’autre saute toute vérification.
+@167 L’un d’eux t’oblige à regarder d’abord dans la boîte mystère. Lequel ?
+@168 `unknown` oblige à vérifier avant d’utiliser. `any` te laisse tout appeler dessus, y compris des choses qui vont planter.
+@169 `unknown` est une boîte mystère : tu dois la vérifier avant de t’en servir. `any` te laisse tout faire, même des choses qui vont casser.
+@170 `unknown` accepte n’importe quelle valeur mais n’autorise aucune opération tant qu’il n’est pas affiné ; `any` autorise toutes les opérations et désactive la vérification en aval. Utilise `unknown` aux frontières de confiance.
+@171 `any`
+@172 `any` désactive la vérification, donc un mauvais appel compile et échoue plus tard.
+@173 `any` coupe la vérification, donc une erreur n’apparaît que plus tard.
+@174 `unknown`
+@175 `readName` plante quand le nom manque. Protège-toi du cas vide.
+@176 `readName` casse quand il n’y a pas de nom. Traite le cas vide.
+@177 Utilise `??` pour fournir une valeur de secours, puis mets le résultat en majuscules.
+@178 Utilise `??` pour donner une valeur de secours, puis mets-la en majuscules.
+@179 `??` ne se rabat sur la valeur de secours que pour `null` et `undefined`. Contrairement à `||`, il garde `0` et `""` comme de vraies valeurs.
+@180 `??` n’utilise la valeur de secours que quand la boîte est vide (`null` ou `undefined`). Il garde 0 et les mots vides comme de vraies valeurs.
+@181 `??` ne remplace que `null` ou `undefined` ; `||` remplacerait aussi `""`. `user.name?.toUpperCase() ?? "ANON"` est une écriture équivalente.
+@182 un vrai nom
+@183 un nom manquant
+@184 Écris `describeUser`. Renvoie le surnom s’il existe, sinon le nom. Ne renvoie jamais une chaîne vide.
+@185 Fais `describeUser` : rends le surnom s’il y en a un, sinon le nom. Ne rends jamais des mots vides.
+@186 Un ternaire : utilise `user.nickname` quand il est « truthy », sinon `user.name`.
+@187 Utilise `? :` : choisis `user.nickname` s’il a des lettres, sinon `user.name`.
+@188 Ici, la « truthiness » est le bon test, parce qu’un surnom vide ne sert à rien. Pour les nombres, préfère `=== undefined`.
+@189 Ici, « a des lettres » est le bon test, parce qu’un surnom vide ne sert à rien. Pour les nombres, vérifie plutôt `undefined`.
+@190 La « truthiness » est voulue ici : un surnom vide doit se rabattre sur le nom. Pour les nombres facultatifs, compare avec `undefined`, car `0` est une donnée valide.
+@191 préfère le surnom
+@192 se rabat sur le nom
+@193 un surnom vide se rabat sur le nom
+@194 `?` rend une propriété facultative, et son type inclut `undefined`.
+@195 `readonly` empêche la réaffectation.
+@196 `unknown` oblige à vérifier ; `any` cache les problèmes.
+@197 `?` veut dire que la chose peut manquer.
+@198 `readonly` veut dire qu’on ne peut jamais la changer.
+@199 `unknown` t’oblige à vérifier ; `any` cache les problèmes.
+@200 `?` ajoute `undefined` au type de la propriété.
+@201 `readonly` n’existe qu’à la compilation.
+@202 `unknown` aux frontières, puis affiner ; jamais `any`.
+@203 Avec `noUncheckedIndexedAccess` activé, `names[0]` peut valoir `undefined`. Fais en sorte que `initial` renvoie `"?"` pour une liste vide.
+@204 Avec ce réglage plus strict, TypeScript sait que la liste peut être vide. Rends `"?"` quand il n’y a pas de premier nom.
+@205 Range `names[0]` dans une variable, compare-la avec `undefined`, et sors tôt.
+@206 Mets d’abord `names[0]` dans une boîte. Si la boîte est vide (`undefined`), rends `"?"`.
+@207 Sans l’option, TypeScript type `names[0]` comme `string`, et une liste vide plante à l’exécution. L’option rend le type honnête (`string | undefined`), donc la vérification devient obligatoire.
+@208 D’habitude, TypeScript fait confiance : `names[0]` est là. Le réglage plus strict dit « il pourrait manquer », alors tu vérifies, et la liste vide ne casse plus rien.
+@209 `noUncheckedIndexedAccess` ajoute `undefined` à chaque lecture par indice (`T[number]` et signatures d’index). Elle n’est pas incluse dans `strict`, mais attrape toute une catégorie de bugs hors limites ; l’affinage qu’elle impose tient en un `if`.
+@210 premier nom
+@211 liste vide
+@212 Les génériques gardent le type qu’on leur donne.
+@213 `<T>` se place avant la liste des paramètres.
+@214 Les utiliser pour supprimer la duplication, pas pour faire malin.
+@215 Les machines génériques gardent la sorte que tu y mets.
+@216 `<T>` se place avant les parenthèses.
+@217 Les utiliser pour éviter les copies, pas pour faire malin.
+@218 Les génériques relient les types d’entrée aux types de sortie.
+@219 Contraindre avec `extends` au lieu d’élargir à `any`.
+@220 Laisser l’inférence faire l’instanciation.
+@221 Un générique garde le type qu’on lui a donné, quel qu’il soit.
+@222 Une machine générique marche pour n’importe quelle sorte de chose, et se souvient de laquelle.
+@223 Sans génériques, soit tu dupliques une fonction, soit tu perds son type :⏎⏎⟦F1⟧⏎⏎`T` est un paramètre fictif qui remplace le type qu’utilise l’appelant, quel qu’il soit. Donne-lui des chaînes et `T` est `string` ; donne-lui des nombres et `T` est `number`. Le type traverse la fonction au lieu de devenir `any`.⏎⏎C’est toute l’idée. Pas besoin de la théorie pour bien s’en servir : nomme-le d’après ce qu’il contient, et laisse l’appelant le fournir.
+@224 Un générique est un outil qui garde la sorte de chose que tu lui as donnée.⏎⏎Donne-lui une liste de mots, il te rend un mot. Donne-lui une liste de nombres, il te rend un nombre. Il ne les mélange jamais.
+@225 Un paramètre de type est inféré à partir des arguments à chaque appel : `firstOf(["a"])` instancie `T` en `string`. Ne l’écris explicitement (`firstOf<number>([])`) que quand il n’y a rien à partir de quoi l’inférer.⏎⏎Contrains un paramètre avec `extends` pour exiger ce dont le corps a besoin : `function longest<T extends { length: number }>(a: T, b: T): T`. La contrainte permet au corps d’utiliser `.length` tout en renvoyant le type exact de l’appelant.⏎⏎Un test utile : un paramètre de type qui n’apparaît qu’une fois dans une signature est probablement inutile ; utilise plutôt le type concret ou `unknown`.
+@226 Deux fonctions presque identiques.
+@227 Deux machines presque pareilles.
+@228 Dupliqué
+@229 Le même corps deux fois, et une troisième copie la semaine prochaine.
+@230 La même machine écrite deux fois, et une troisième copie la semaine prochaine.
+@231 Générique
+@232 Un seul corps, et le type de retour suit l’entrée.
+@233 Une seule machine, et ce qui sort est de la même sorte que ce qui est entré.
+@234 Nomme le paramètre de type.
+@235 Nomme l’emplacement « n’importe quelle sorte ».
+@236 Le paramètre fictif doit correspondre au nom utilisé dans `T[]` et `T | undefined`.
+@237 Regarde le reste de la ligne : quelle lettre est utilisée comme sorte ?
+@238 `T` est le nom conventionnel, et il doit correspondre aux `T[]` et `T` utilisés dans le corps. `any` effacerait le type.
+@239 `T` est le nom habituel, et il doit correspondre aux `T[]` et `T` de la machine. `any` oublierait la sorte.
+@240 Déclarer `T` dans `<…>` est ce qui fait que les autres `T` désignent un paramètre de type au lieu d’un nom inconnu. Utiliser `any` à la place casserait le lien entre ce qui entre et ce qui sort.
+@241 Écris `firstItem` comme un générique qui renvoie le premier élément, ou `undefined`.
+@242 Fais de `firstItem` une machine générique qui rend la première chose, ou `undefined`.
+@243 Renvoie `items[0]`. Le type générique le fait revenir avec la même sorte que la liste.
+@244 Rends `items[0]`. Le `<T>` le fait revenir avec la même sorte que la liste.
+@245 des nombres
+@246 des chaînes
+@247 vide
+@248 `<T>` est un type fictif que l’appelant remplit.
+@249 Les génériques préservent l’information de type au lieu de l’effacer.
+@250 Penses-y quand tu dupliques une fonction pour chaque type.
+@251 `<T>` remplace « la sorte que tu lui donnes, quelle qu’elle soit ».
+@252 Un générique se souvient de la sorte au lieu de l’oublier.
+@253 Utilise-en un quand tu copierais sinon une machine pour chaque sorte.
+@254 Les paramètres de type sont inférés à chaque appel.
+@255 `extends` contraint ce que `T` doit permettre.
+@256 Un paramètre de type utilisé une seule fois est suspect.
+@257 Un défi de types : termine `Box<T>` pour que toutes les vérifications de types ci-dessous passent.
+@258 Une énigme pour le vérificateur de types : corrige l’étiquette `Box` pour que toutes les vérifications ci-dessous soient contentes.
+@259 La boîte doit contenir une valeur du type qu’on lui a donné, pas `unknown`.
+@260 Quelle que soit la sorte qui entre, la boîte doit s’en souvenir. Quelle lettre représente cette sorte ?
+@261 Utilise le paramètre de type : `value: T;`
+@262 Écris `value: T;` dans la boîte.
+@263 `value: T` relie ce que contient la boîte au type avec lequel elle a été créée. `unknown` acceptait n’importe quoi, donc une boîte de nombres contenait tranquillement du texte.
+@264 Avec `T` à l’intérieur, une boîte de nombres ne contient que des nombres. `unknown` laissait tout entrer, même des mots.
+@265 Un test de type n’existe qu’à la compilation : `Expect<Equal<A, B>>` ne compile pas sauf si `A` et `B` sont identiques, et une ligne marquée `@ts-expect-error` ne doit pas compiler. Les bibliothèques de types se testent exactement comme ça.
+@266 une boîte de nombres contient un nombre
+@267 box("hi") est une boîte de chaînes
+@268 une boîte de nombres refuse le texte
+@269 une boîte n’est jamais vide

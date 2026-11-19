@@ -1,0 +1,246 @@
+/* ------------------------------------------------------------------ *
+ * Design tokens. Everything visual is derived from these.
+ * ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+
+  /* Warm paper palette */
+  --paper: #f6f1e7;
+  --surface: #fffdf8;
+  --surface-2: #f0e9dc;
+  --surface-3: #e6dccb;
+  --ink: #1e2430;
+  --ink-soft: #4c5566;
+  --ink-muted: #5b6270; /* 4.5:1 even on --surface-3 (was #6b7280, 3.6:1) */
+  --line: #e2d8c6;
+  --line-strong: #cdbfa6;
+
+  --accent: #1f6f6b;
+  --accent-strong: #14504d;
+  --accent-soft: #d9ece9;
+  --accent-ink: #0f3b39;
+
+  --warm: #c2820f;
+  --warm-soft: #fbeecb;
+  /* Text on --warm-soft. --warm itself is too light for text (2.8:1). */
+  --warm-ink: #8a5a00;
+
+  --success: #2a7147; /* text too: 4.9:1 on --success-soft (was 4.2:1) */
+  --success-soft: #dcefe2;
+  --warn: #965c15; /* text too: 4.8:1 on --warn-soft (was 3.9:1) */
+  --warn-soft: #fbeed3;
+  --error: #a63a3a;
+  --error-soft: #f8e0dd;
+
+  --teal: #1f6f6b;
+  --indigo: #4453b8;
+  --amber: #8c5c10; /* also used for text: 5.1:1 on paper (was #b8791a, 3.2:1) */
+  --rose: #a94a63;
+  --moss: #4a7a3d;
+  --clay: #a85a34;
+  --sky: #2b6f95;
+  --plum: #6c4a8f;
+
+  /* Syntax colours for light code blocks (.codeblock--light). */
+  --code-kw: #8a3fa8;
+  --code-str: #346616;
+  --code-num: #a4501a;
+  --code-com: #625c50;
+  --code-fn: #2b5fa8;
+  --code-type: #8a5a00;
+
+  /* Space: 4px scale */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(40, 32, 20, 0.06), 0 1px 3px rgba(40, 32, 20, 0.05);
+  --shadow-md: 0 4px 12px rgba(40, 32, 20, 0.08), 0 2px 4px rgba(40, 32, 20, 0.05);
+  --shadow-lg: 0 18px 40px rgba(40, 32, 20, 0.14);
+
+  --font-ui: 'Inter Variable', 'Inter', 'Noto Sans Arabic Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-dyslexia: 'Atkinson Hyperlegible', 'Inter Variable', 'Inter', 'Noto Sans Arabic Variable', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Menlo, monospace;
+
+  --text--1: 0.8125rem;
+  --text-0: 0.9375rem;
+  --text-1: 1.0625rem;
+  --text-2: 1.25rem;
+  --text-3: 1.5rem;
+  --text-4: 1.875rem;
+  --text-5: 2.25rem;
+
+  --prose-measure: 64ch;
+  --dur-fast: 120ms;
+  --dur-mid: 220ms;
+  --dur-slow: 420ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  --z-header: 20;
+  --z-nav: 30;
+  --z-sheet: 60;
+  --z-dialog: 70;
+  --z-toast: 80;
+
+  --safe-top: 0px;
+  --safe-right: 0px;
+  --safe-bottom: 0px;
+  --safe-left: 0px;
+
+  font-family: var(--font-ui);
+  font-size: 100%;
+  line-height: 1.55;
+  text-size-adjust: 100%;
+}
+
+/* Text size steps drive the root size, so everything (including rem-based
+   spacing inside prose) scales together. Percentages of the learner's own
+   browser/OS font size: fixed pixels used to override that preference. At the
+   default 16px these are 14, 15, 16, 18 and 20px, as before. */
+:root[data-text-size='1'] { font-size: 87.5%; }
+:root[data-text-size='2'] { font-size: 93.75%; }
+:root[data-text-size='3'] { font-size: 100%; }
+:root[data-text-size='4'] { font-size: 112.5%; }
+:root[data-text-size='5'] { font-size: 125%; }
+
+:root[data-font='dyslexia'] {
+  --font-ui: var(--font-dyslexia);
+  letter-spacing: 0.01em;
+  word-spacing: 0.06em;
+}
+
+/* ---- Dark theme: designed, not inverted ---------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --paper: #171a26;
+    --surface: #1e2233;
+    --surface-2: #252a3d;
+    --surface-3: #2f3549;
+    --ink: #eef0f6;
+    --ink-soft: #c3c8d6;
+    --ink-muted: #98a0b3;
+    --line: #313748;
+    --line-strong: #434a60;
+    --accent: #5ec8bf;
+    --accent-strong: #8fe0d8;
+    --accent-soft: #1d3b3b;
+    --accent-ink: #d5f4f0;
+    --warm: #e5b556;
+    --warm-soft: #3a2f14;
+    --warm-ink: #e5b556;
+    --success: #7fd3a0;
+    --success-soft: #1c3527;
+    --warn: #ecc077;
+    --warn-soft: #3a2d14;
+    --error: #f0a09a;
+    --error-soft: #3c2222;
+    --teal: #5ec8bf;
+    --indigo: #9aa6f2;
+    --amber: #e5b556;
+    --rose: #e79bb0;
+    --moss: #9ccc86;
+    --clay: #e2a181;
+    --sky: #8cc6e8;
+    --plum: #c3a6e6;
+    --code-kw: #c792ea;
+    --code-str: #a5e075;
+    --code-num: #f7a76c;
+    --code-com: #9aa6bd;
+    --code-fn: #82aaff;
+    --code-type: #ffcb6b;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 20px 44px rgba(0, 0, 0, 0.55);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #171a26;
+  --surface: #1e2233;
+  --surface-2: #252a3d;
+  --surface-3: #2f3549;
+  --ink: #eef0f6;
+  --ink-soft: #c3c8d6;
+  --ink-muted: #98a0b3;
+  --line: #313748;
+  --line-strong: #434a60;
+  --accent: #5ec8bf;
+  --accent-strong: #8fe0d8;
+  --accent-soft: #1d3b3b;
+  --accent-ink: #d5f4f0;
+  --warm: #e5b556;
+  --warm-soft: #3a2f14;
+  --warm-ink: #e5b556;
+  --success: #7fd3a0;
+  --success-soft: #1c3527;
+  --warn: #ecc077;
+  --warn-soft: #3a2d14;
+  --error: #f0a09a;
+  --error-soft: #3c2222;
+  --teal: #5ec8bf;
+  --indigo: #9aa6f2;
+  --amber: #e5b556;
+  --rose: #e79bb0;
+  --moss: #9ccc86;
+  --clay: #e2a181;
+  --sky: #8cc6e8;
+  --plum: #c3a6e6;
+  --code-kw: #c792ea;
+  --code-str: #a5e075;
+  --code-num: #f7a76c;
+  --code-com: #9aa6bd;
+  --code-fn: #82aaff;
+  --code-type: #ffcb6b;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 20px 44px rgba(0, 0, 0, 0.55);
+}
+
+/* Accent helpers for modules */
+[data-accent='teal'] { --module-accent: var(--teal); }
+[data-accent='indigo'] { --module-accent: var(--indigo); }
+[data-accent='amber'] { --module-accent: var(--amber); }
+[data-accent='rose'] { --module-accent: var(--rose); }
+[data-accent='moss'] { --module-accent: var(--moss); }
+[data-accent='clay'] { --module-accent: var(--clay); }
+[data-accent='sky'] { --module-accent: var(--sky); }
+[data-accent='plum'] { --module-accent: var(--plum); }
+
+/* ---- Mixed colours ------------------------------------------------- *
+ * color-mix() needs Chrome 111+. The app supports Chrome 90 WebViews, where
+ * any declaration using it is dropped: the sticky header and bottom bar
+ * became transparent, and the editor lost its selection highlight. Plain
+ * values first; mixed ones only where the browser supports them. */
+:root {
+  --header-bg: var(--paper);
+  --nav-bg: var(--surface);
+  --editor-active-line: var(--surface-2);
+  --editor-selection: var(--accent-soft);
+  --danger-border: var(--error);
+}
+
+@supports (color: color-mix(in srgb, red 50%, blue)) {
+  :root {
+    --header-bg: color-mix(in srgb, var(--paper) 88%, transparent);
+    --nav-bg: color-mix(in srgb, var(--surface) 94%, transparent);
+    --editor-active-line: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+    --editor-selection: color-mix(in srgb, var(--accent) 24%, transparent);
+    --danger-border: color-mix(in srgb, var(--error) 45%, var(--line));
+  }
+}
